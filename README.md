@@ -3,16 +3,88 @@
 A web application that helps communities <ins>preserve</ins> and <ins>revitalize</ins> their languages by offering an interactive platform where they can easily <ins>contribute</ins> content in their native languages.
 
 ## 💻 Technology stack
+
 - Frontend
-  - React
+  - Next.js
 - Backend
-  - Django
+  - Django REST Framework
 
 ## 🔌 Installation
-WIP
+
+1. Clone the repository
+
+```
+git clone https://github.com/Miagao-Valley/kulasisi.git
+```
+
+2. Set up backend
+
+Navigate to the backend directory:
+
+```
+cd backend
+```
+
+Activate a virtual environment:
+
+```
+python -m venv venv
+source venv/bin/activate
+```
+
+Install the dependencies:
+
+```
+pip install -r requirements.txt
+```
+
+Make database migrations:
+
+```
+python manage.py makemigrations
+python manage.py migrate
+```
+
+Create admin superuser:
+
+```
+python manage.py createsuperuser
+```
+
+Enter a username, email, and password.
+
+Create environment variables
+
+```
+echo "DEBUG=True" >> .env
+```
+
+3. Set up frontend
+
+Navigate to the frontend directory:
+
+```
+cd frontend
+```
+
+Install the dependencies:
+
+```
+npm install
+```
+
+Create environment variables:
+
+```
+echo "DJANGO_API=http://127.0.0.1:8000" >> .env.local
+```
 
 ## 🧞 Usage
-WIP
+
+| Current Working Directory | Command                      | Action                                           |
+| ------------------------- | :--------------------------- | ------------------------------------------------ |
+| `/backend`                | `python manage.py runserver` | Starts backend local server at `127.0.0.1:8000`  |
+| `/frontend`               | `npm run dev`                | Starts frontend local server at `localhost:3000` |
 
 ## 💪🏼 Contributing
 
@@ -31,7 +103,7 @@ Use the issue tracker to find ways to contribute. Find a bug or a feature, menti
 5. Create a pull request.
 
 ## 🤲 Getting involved
+
 This project belongs to the open-source community named Miagao Valley 🇵🇭. We have interesting projects you might want to check out 👀. Visit our community [here](https://discord.gg/kzAKWghs)!
 
 ![Miagao Valley Logo-04](https://github.com/Miagao-Valley/mv-site/assets/113810517/d92a2263-b553-4939-b946-ac8997ca407b)
-
