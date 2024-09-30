@@ -1,0 +1,22 @@
+{
+  "files.autoSave": "onFocusChange",
+  "files.trimTrailingWhitespace": true,
+  "files.trimFinalNewlines": true,
+  "editor.tabSize": 4,
+  "[javascript][typescript][javascriptreact][typescriptreact][css][sass][scss]": {
+    "editor.tabSize": 2
+  },
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  },
+  "tailwindCSS.includeLanguages": {
+    "html": "HTML",
+    "javascript": "javascript",
+    "typescript": "typescript",
+    "javascriptreact": "javascriptreact",
+    "typescriptreact": "typescriptreact"
+  }
+}
