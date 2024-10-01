@@ -18,3 +18,8 @@ class RetrieveLanguageView(generics.RetrieveAPIView):
 class ListCreateTextEntryView(generics.ListCreateAPIView):
     queryset = TextEntry.objects.all()
     serializer_class = TextEntrySerializer
+
+
+class RetrieveUpdateDestroyTextEntryView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = TextEntry.objects.all()
+    serializer_class = TextEntrySerializer
