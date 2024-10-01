@@ -1,0 +1,106 @@
+[
+  {
+    "model": "content.language",
+    "pk": 1,
+    "fields": {
+      "code": "eng",
+      "name": "English"
+    }
+  },
+  {
+    "model": "content.language",
+    "pk": 2,
+    "fields": {
+      "code": "tgl",
+      "name": "Tagalog"
+    }
+  },
+  {
+    "model": "content.language",
+    "pk": 3,
+    "fields": {
+      "code": "ceb",
+      "name": "Cebuano"
+    }
+  },
+  {
+    "model": "content.language",
+    "pk": 4,
+    "fields": {
+      "code": "ilo",
+      "name": "Ilocano"
+    }
+  },
+  {
+    "model": "content.language",
+    "pk": 5,
+    "fields": {
+      "code": "hil",
+      "name": "Hiligaynon"
+    }
+  },
+  {
+    "model": "content.language",
+    "pk": 6,
+    "fields": {
+      "code": "war",
+      "name": "Waray-Waray"
+    }
+  },
+  {
+    "model": "content.language",
+    "pk": 7,
+    "fields": {
+      "code": "bcl",
+      "name": "Central Bikol"
+    }
+  },
+  {
+    "model": "content.language",
+    "pk": 8,
+    "fields": {
+      "code": "pam",
+      "name": "Kapampangan"
+    }
+  },
+  {
+    "model": "content.language",
+    "pk": 9,
+    "fields": {
+      "code": "pag",
+      "name": "Pangasinan"
+    }
+  },
+  {
+    "model": "content.language",
+    "pk": 10,
+    "fields": {
+      "code": "mrw",
+      "name": "Maranao"
+    }
+  },
+  {
+    "model": "content.language",
+    "pk": 11,
+    "fields": {
+      "code": "krj",
+      "name": "Kinaray-a"
+    }
+  },
+  {
+    "model": "content.language",
+    "pk": 12,
+    "fields": {
+      "code": "akl",
+      "name": "Aklanon"
+    }
+  },
+  {
+    "model": "content.language",
+    "pk": 13,
+    "fields": {
+      "code": "cps",
+      "name": "Capiznon"
+    }
+  }
+]
