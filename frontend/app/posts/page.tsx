@@ -11,7 +11,7 @@ export default async function PostsPage() {
   return (
     <>
       <h1>Posts</h1>
-      <AddTextEntryForm langs={langs} />
+      <AddTextEntryForm langs={langs} className="mb-4" />
       <TextEntriesList textEntries={textEntries} />
     </>
   );

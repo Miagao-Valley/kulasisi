@@ -6,21 +6,23 @@ import addTextEntry from '@/lib/textEntries/addTextEntry';
 
 interface Props {
   langs: Lang[];
+  className?: string;
 }
 
-export default function AddTextEntryForm({ langs }: Props) {
+export default function AddTextEntryForm({ langs, className = '' }: Props) {
   const ref = useRef<HTMLFormElement>(null);
 
   return (
     <>
       <form
+        className={`flex flex-col gap-3 ${className}`}
         ref={ref}
         action={async (formData) => {
           await addTextEntry(formData);
           ref.current?.reset();
         }}
       >
-        <select name="lang" id="lang-select">
+        <select className="select select-bordered" name="lang" id="lang-select">
           {langs.map((lang) => (
             <option key={lang.id} value={lang.code}>
               {lang.name}
@@ -28,13 +30,17 @@ export default function AddTextEntryForm({ langs }: Props) {
           ))}
         </select>
         <textarea
+          className="textarea textarea-bordered"
           name="content"
           id="content-field"
           cols={15}
           rows={5}
+          placeholder="Say something..."
         ></textarea>
-        <div>
-          <button type="submit">Post</button>
+        <div className="flex justify-end">
+          <button className="btn btn-primary" type="submit">
+            Post
+          </button>
         </div>
       </form>
     </>
