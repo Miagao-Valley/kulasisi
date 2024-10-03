@@ -7,12 +7,14 @@ import deleteTextEntry from '@/lib/textEntries/deleteTextEntry';
 interface Props {
   id: number;
   initialContent?: string;
+  onUpdate: () => void;
   className?: string;
 }
 
 export default function UpdateTextEntryForm({
   id,
   initialContent = '',
+  onUpdate,
   className = '',
 }: Props) {
   const ref = useRef<HTMLFormElement>(null);
@@ -23,6 +25,7 @@ export default function UpdateTextEntryForm({
       ref={ref}
       action={async (data: FormData) => {
         await updateTextEntry(id, data);
+        onUpdate();
       }}
     >
       <textarea
@@ -31,6 +34,7 @@ export default function UpdateTextEntryForm({
         id="content-field"
         cols={15}
         rows={5}
+        autoFocus={true}
         placeholder="Enter updated text"
       >
         {initialContent}
