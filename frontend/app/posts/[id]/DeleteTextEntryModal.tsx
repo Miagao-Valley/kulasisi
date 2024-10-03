@@ -1,5 +1,7 @@
 import React from 'react';
+import toast from 'react-hot-toast';
 import deleteTextEntry from '@/lib/textEntries/deleteTextEntry';
+import { FaTrash } from 'react-icons/fa';
 
 interface Props {
   id: number;
@@ -22,6 +24,9 @@ export default function DeleteTextEntryModal({ id }: Props) {
           <form
             action={async () => {
               await deleteTextEntry(id);
+              toast.error((t) => <span>Post deleted</span>, {
+                icon: <FaTrash />,
+              });
             }}
           >
             <button className="btn btn-error">Delete</button>

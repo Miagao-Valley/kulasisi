@@ -3,6 +3,7 @@
 import React, { useRef } from 'react';
 import updateTextEntry from '@/lib/textEntries/updateTextEntry';
 import DeleteTextEntryModal from './DeleteTextEntryModal';
+import toast from 'react-hot-toast';
 
 interface Props {
   id: number;
@@ -25,7 +26,12 @@ export default function UpdateTextEntryForm({
         className={`flex flex-col gap-3 ${className}`}
         ref={ref}
         action={async (data: FormData) => {
-          await updateTextEntry(id, data);
+          const promise = updateTextEntry(id, data);
+          toast.promise(promise, {
+            loading: 'Updating',
+            success: 'Updated',
+            error: 'Failed to update',
+          });
           onUpdate();
         }}
       >
