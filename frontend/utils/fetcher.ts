@@ -1,4 +1,5 @@
 import { API_BASE_URL } from '@/constants';
+import { FetchError } from '@/types';
 
 export default async function fetcher(
   endpoint: string,
@@ -6,21 +7,25 @@ export default async function fetcher(
   baseUrl: string = API_BASE_URL
 ): Promise<any> {
   const url = new URL(endpoint, baseUrl);
-
   try {
-    const response = await fetch(url.toString(), options);
+    const res = await fetch(url.toString(), options);
 
-    if (!response.ok) {
-      const errorBody = await response.text();
-      throw new Error(`${response.status}: ${errorBody}`);
+    if (!res.ok) {
+      const resBody = await res.json();
+      const error: FetchError = new Error(
+        `${res.status}: ${JSON.stringify(resBody)}`
+      );
+      error.info = resBody;
+      error.status = res.status;
+      throw error;
     }
 
-    const contentType = response.headers.get('content-type');
+    const contentType = res.headers.get('content-type');
     if (contentType?.includes('application/json')) {
-      return await response.json();
+      return await res.json();
     }
 
-    return response;
+    return res;
   } catch (error) {
     throw new Error(`${(error as Error).message}`);
   }
