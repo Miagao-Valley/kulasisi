@@ -1,6 +1,12 @@
+import { JWTPayload } from 'jose';
+
 export interface FetchError extends Error {
   info?: any;
   status?: number;
+}
+
+export interface Payload extends JWTPayload {
+  username: string;
 }
 
 export interface User {
