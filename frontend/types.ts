@@ -3,6 +3,16 @@ export interface FetchError extends Error {
   status?: number;
 }
 
+export interface User {
+  id: number;
+  username: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  last_login: Date;
+  date_joined: Date;
+}
+
 export interface Lang {
   id: number;
   code: string;
