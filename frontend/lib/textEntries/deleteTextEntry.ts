@@ -5,7 +5,7 @@ import fetcher from '@/utils/fetcher';
 import { redirect } from 'next/navigation';
 
 export default async function deleteTextEntry(id: number): Promise<Response> {
-  const res = await fetcher(`text-entries/${id}/`, {
+  const res = await fetcher(`/text-entries/${id}/`, {
     method: 'DELETE',
   });
 

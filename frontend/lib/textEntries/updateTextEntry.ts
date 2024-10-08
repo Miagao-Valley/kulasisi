@@ -7,7 +7,7 @@ export default async function updateTextEntry(
   id: number,
   data: FormData
 ): Promise<Response> {
-  const res = await fetcher(`text-entries/${id}/`, {
+  const res = await fetcher(`/text-entries/${id}/`, {
     method: 'PUT',
     body: data,
   });
