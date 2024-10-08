@@ -3,10 +3,10 @@ import Link from 'next/link';
 import { FaUser } from 'react-icons/fa';
 import { MdLogout } from 'react-icons/md';
 import logout from '@/lib/auth/logout';
-import verifyToken from '@/lib/tokens/verifyToken';
+import getPayload from '@/lib/tokens/getPayload';
 
 export default async function Navbar() {
-  const authToken = await verifyToken();
+  const authData = await getPayload();
 
   return (
     <nav className="navbar custom-container mb-5">
@@ -29,7 +29,7 @@ export default async function Navbar() {
         </ul>
       </div>
       <div className="navbar-end flex gap-2">
-        {authToken ? (
+        {authData ? (
           <div className="dropdown dropdown-bottom dropdown-end">
             <div
               tabIndex={0}
@@ -45,9 +45,9 @@ export default async function Navbar() {
               <li>
                 <Link
                   className="font-bold"
-                  href={`/users/${authToken.username}/`}
+                  href={`/users/${authData.username}/`}
                 >
-                  @{authToken.username}
+                  @{authData.username}
                 </Link>
               </li>
               <li>

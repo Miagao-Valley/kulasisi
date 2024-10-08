@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
-import { Lang } from '../../types';
+import React, { useEffect, useRef, useState } from 'react';
+import { Lang, Payload } from '../../types';
 import addTextEntry from '@/lib/textEntries/addTextEntry';
+import getAuthData from '@/lib/auth/getAuthData';
 
 interface Props {
   langs: Lang[];
@@ -11,8 +12,19 @@ interface Props {
 
 export default function AddTextEntryForm({ langs, className = '' }: Props) {
   const ref = useRef<HTMLFormElement>(null);
+
+  const [authData, setAuthData] = useState<Payload | null>(null);
   const [content, setContent] = useState('');
   const [selectedLang, setSelectedLang] = useState('');
+
+  useEffect(() => {
+    const fetchAuthData = async () => {
+      const result = await getAuthData();
+      setAuthData(result);
+    };
+
+    fetchAuthData();
+  }, []);
 
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
@@ -44,7 +56,7 @@ export default function AddTextEntryForm({ langs, className = '' }: Props) {
         id="lang-select"
         value={selectedLang}
         onChange={handleLangChange}
-        required
+        disabled={!authData}
       >
         <option value="" disabled>
           Select a language
@@ -64,12 +76,13 @@ export default function AddTextEntryForm({ langs, className = '' }: Props) {
         placeholder="Say something..."
         value={content}
         onChange={handleContentChange}
+        disabled={!authData}
       ></textarea>
       <div className="flex justify-end">
         <button
           className="btn btn-primary"
           type="submit"
-          disabled={!content.trim() || !selectedLang}
+          disabled={!content.trim() || !selectedLang || !authData}
         >
           Post
         </button>
