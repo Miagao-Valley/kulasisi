@@ -1,3 +1,5 @@
+'use server';
+
 import 'server-only';
 
 import { jwtVerify } from 'jose';
@@ -21,7 +23,6 @@ export default async function decrypt(
 
     return payload;
   } catch (error) {
-    console.log(error);
     return null;
   }
 }

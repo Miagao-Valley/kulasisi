@@ -1,10 +1,12 @@
+'use server';
+
 import 'server-only';
 
 import decrypt from './decrypt';
 import getToken from './getToken';
 import updateToken from './updateToken';
 
-export default async function verifyToken(type: string = 'access') {
+export default async function getPayload(type: string = 'access') {
   const authToken = getToken(type);
   const payload = await decrypt(authToken);
 
