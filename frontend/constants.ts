@@ -1,3 +1,4 @@
+export const BASE_URL: string = process.env.BASE_URL || 'http://localhost:3000';
 export const API_BASE_URL: string =
   process.env.API_BASE_URL || 'http://127.0.0.1:8000';
 export const secretKey: string =
