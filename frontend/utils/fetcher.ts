@@ -1,5 +1,6 @@
 import { API_BASE_URL } from '@/constants';
 import { FetchError } from '@/types';
+import getToken from '@/lib/tokens/getToken';
 
 export default async function fetcher(
   endpoint: string,
@@ -7,6 +8,15 @@ export default async function fetcher(
   baseUrl: string = API_BASE_URL
 ): Promise<any> {
   const url = new URL(endpoint, baseUrl);
+
+  const token = getToken();
+
+  if (token) {
+    options.headers = {
+      ...options.headers,
+      Authorization: `Bearer ${token}`,
+    };
+  }
 
   try {
     const res = await fetch(url.toString(), options);
