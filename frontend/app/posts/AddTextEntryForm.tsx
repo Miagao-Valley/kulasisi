@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import { useAuth } from '../components/AuthProvider';
 import { Lang } from '../../types';
 import addTextEntry from '@/lib/textEntries/addTextEntry';

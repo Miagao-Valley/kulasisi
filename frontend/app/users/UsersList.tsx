@@ -1,7 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
 import { User } from '@/types';
-import { FaAt } from 'react-icons/fa';
 
 interface Props {
   users: User[];

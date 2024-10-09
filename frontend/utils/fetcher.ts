@@ -5,7 +5,7 @@ import getToken from '@/lib/tokens/getToken';
 export default async function fetcher(
   endpoint: string,
   options: RequestInit = {},
-  baseUrl: string = API_BASE_URL
+  baseUrl: string = API_BASE_URL,
 ): Promise<any> {
   const url = new URL(endpoint, baseUrl);
 
@@ -24,7 +24,7 @@ export default async function fetcher(
     if (!res.ok) {
       const resBody = await res.json();
       const error: FetchError = new Error(
-        `Fetching ${url}: ${res.status}: ${JSON.stringify(resBody)}`
+        `Fetching ${url}: ${res.status}: ${JSON.stringify(resBody)}`,
       );
       error.info = resBody;
       error.status = res.status;

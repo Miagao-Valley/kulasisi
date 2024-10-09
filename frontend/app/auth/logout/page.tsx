@@ -20,7 +20,7 @@ export default function LogoutPage() {
     };
 
     logout();
-  }, [router]);
+  }, [router, auth]);
 
   return <Loading />;
 }

@@ -5,7 +5,7 @@ import { revalidatePath } from 'next/cache';
 
 export default async function updateTextEntry(
   id: number,
-  data: FormData
+  data: FormData,
 ): Promise<Response> {
   const res = await fetcher(`/text-entries/${id}/`, {
     method: 'PUT',

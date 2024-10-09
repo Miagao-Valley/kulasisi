@@ -10,7 +10,7 @@ const tokenRefreshName = 'auth-refresh-token';
 
 export default async function setToken(
   authToken?: string,
-  type: string = 'access'
+  type: string = 'access',
 ) {
   if (!authToken) {
     return null;

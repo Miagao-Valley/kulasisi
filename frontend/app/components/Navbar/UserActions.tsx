@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { useAuth } from '../AuthProvider';
 import { FaUser } from 'react-icons/fa';
 import { MdLogout } from 'react-icons/md';
-import logout from '@/lib/auth/logout';
 
 export default function UserActions() {
   const auth = useAuth();

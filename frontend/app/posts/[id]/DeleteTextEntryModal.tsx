@@ -6,6 +6,7 @@ import { FaTrash } from 'react-icons/fa';
 interface Props {
   id: number;
 }
+
 export default function DeleteTextEntryModal({ id }: Props) {
   return (
     <dialog
@@ -24,7 +25,7 @@ export default function DeleteTextEntryModal({ id }: Props) {
           <form
             action={async () => {
               await deleteTextEntry(id);
-              toast.error((t) => <span>Post deleted</span>, {
+              toast.error(() => <span>Post deleted</span>, {
                 icon: <FaTrash />,
               });
             }}
