@@ -31,11 +31,9 @@ export default function UserActions() {
               </Link>
             </li>
             <li>
-              <form action={logout}>
-                <button className="flex items-center gap-1">
-                  Sign out <MdLogout />
-                </button>
-              </form>
+              <Link href={`/auth/logout/`} className="flex items-center gap-1">
+                Sign out <MdLogout />
+              </Link>
             </li>
           </ul>
         </div>

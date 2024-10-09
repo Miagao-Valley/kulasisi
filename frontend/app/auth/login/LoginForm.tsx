@@ -2,45 +2,32 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { FaLock, FaAt } from 'react-icons/fa';
-import { MdEmail } from 'react-icons/md';
-import register from '@/lib/auth/register';
+import { FaLock, FaUser } from 'react-icons/fa';
+import { useAuth } from '@/app/components/AuthProvider';
+import login from '@/lib/auth/login';
 
-export default function RegisterForm() {
+export default function LoginForm() {
+  const auth = useAuth();
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
-    register(formData);
+    await login(formData);
+    auth.updateAuth();
   };
 
   return (
     <form className="flex flex-col gap-3" onSubmit={handleSubmit} method="POST">
-      <input
-        className="input input-bordered"
-        name="first_name"
-        type="text"
-        placeholder="First name"
-        autoFocus={true}
-      />
-      <input
-        className="input input-bordered"
-        name="last_name"
-        type="text"
-        placeholder="Last name"
-      />
       <label className="input input-bordered flex items-center gap-3">
-        <FaAt />
+        <FaUser />
         <input
           className="grow"
           name="username"
           type="text"
           placeholder="Username"
+          autoFocus={true}
         />
-      </label>
-      <label className="input input-bordered flex items-center gap-3">
-        <MdEmail />
-        <input className="grow" name="email" type="text" placeholder="Email" />
       </label>
       <label className="input input-bordered flex items-center gap-3">
         <FaLock />
@@ -52,12 +39,12 @@ export default function RegisterForm() {
         />
       </label>
       <button className="btn btn-primary" type="submit">
-        Sign up
+        Sign in
       </button>
       <p className="flex gap-1">
-        Already have an account?
-        <Link className="link text-primary link-hover" href={`login`}>
-          Sign in
+        Don't have an account?
+        <Link className="link text-primary link-hover" href={`register`}>
+          Sign up
         </Link>
       </p>
     </form>

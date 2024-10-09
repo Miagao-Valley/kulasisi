@@ -6,5 +6,5 @@ import deleteTokens from '../tokens/deleteToken';
 export default async function logout() {
   await deleteTokens();
 
-  return redirect('/login/');
+  return redirect('/auth/login/');
 }
