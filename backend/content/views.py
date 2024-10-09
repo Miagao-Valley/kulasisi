@@ -1,4 +1,5 @@
 from rest_framework import generics
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from .models import Language, TextEntry
 from .serializers import LanguageSerializer, TextEntrySerializer
@@ -18,6 +19,7 @@ class RetrieveLanguageView(generics.RetrieveAPIView):
 class ListCreateTextEntryView(generics.ListCreateAPIView):
     queryset = TextEntry.objects.all()
     serializer_class = TextEntrySerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
     def perform_create(self, serializer):
         if serializer.is_valid():
@@ -29,3 +31,4 @@ class ListCreateTextEntryView(generics.ListCreateAPIView):
 class RetrieveUpdateDestroyTextEntryView(generics.RetrieveUpdateDestroyAPIView):
     queryset = TextEntry.objects.all()
     serializer_class = TextEntrySerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
