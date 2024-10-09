@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useRef } from 'react';
+import { useFormStatus } from 'react-dom';
 import updateTextEntry from '@/lib/textEntries/updateTextEntry';
 import DeleteTextEntryModal from './DeleteTextEntryModal';
 import toast from 'react-hot-toast';
@@ -10,6 +11,10 @@ interface Props {
   initialContent?: string;
   onUpdate: () => void;
   className?: string;
+}
+
+interface UpdateButtonProps {
+  disabled?: boolean;
 }
 
 export default function UpdateTextEntryForm({
@@ -32,6 +37,7 @@ export default function UpdateTextEntryForm({
             success: 'Updated',
             error: 'Failed to update',
           });
+          await promise;
           onUpdate();
         }}
       >
@@ -52,19 +58,31 @@ export default function UpdateTextEntryForm({
             onClick={() =>
               (
                 document.getElementById(
-                  'delete-text-entry-modal',
+                  'delete-text-entry-modal'
                 ) as HTMLFormElement
               )?.showModal()
             }
           >
             Delete
           </button>
-          <button className="btn btn-primary" type="submit">
-            Update
-          </button>
+          <UpdateButton />
         </div>
       </form>
       <DeleteTextEntryModal id={id} />
     </>
+  );
+}
+
+function UpdateButton({ disabled = false }: UpdateButtonProps) {
+  const { pending } = useFormStatus();
+
+  return (
+    <button
+      className="btn btn-primary"
+      type="submit"
+      disabled={disabled || pending}
+    >
+      {pending ? 'Updating...' : 'Update'}
+    </button>
   );
 }

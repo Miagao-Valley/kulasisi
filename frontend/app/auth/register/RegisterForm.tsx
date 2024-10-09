@@ -1,25 +1,27 @@
 'use client';
 
 import React from 'react';
+import { useFormStatus } from 'react-dom';
 import Link from 'next/link';
 import { FaLock, FaAt } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
 import { useAuth } from '@/app/components/AuthProvider';
 import register from '@/lib/auth/register';
 
+interface SubmitButtonProps {
+  disabled?: boolean;
+}
+
 export default function RegisterForm() {
   const auth = useAuth();
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const formData = new FormData(e.currentTarget);
+  const handleSubmit = async (formData: FormData) => {
     await register(formData);
     auth.updateAuth();
   };
 
   return (
-    <form className="flex flex-col gap-3" onSubmit={handleSubmit} method="POST">
+    <form className="flex flex-col gap-3" action={handleSubmit} method="POST">
       <input
         className="input input-bordered"
         name="first_name"
@@ -55,9 +57,7 @@ export default function RegisterForm() {
           placeholder="Password"
         />
       </label>
-      <button className="btn btn-primary" type="submit">
-        Sign up
-      </button>
+      <SubmitButton />
       <p className="flex gap-1">
         Already have an account?
         <Link className="link text-primary link-hover" href={`login`}>
@@ -65,5 +65,19 @@ export default function RegisterForm() {
         </Link>
       </p>
     </form>
+  );
+}
+
+function SubmitButton({ disabled = false }: SubmitButtonProps) {
+  const { pending } = useFormStatus();
+
+  return (
+    <button
+      className="btn btn-primary"
+      type="submit"
+      disabled={disabled || pending}
+    >
+      {pending ? 'Signing up...' : 'Sign up'}
+    </button>
   );
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import toast from 'react-hot-toast';
 import deleteTextEntry from '@/lib/textEntries/deleteTextEntry';
 import { FaTrash } from 'react-icons/fa';
+import { useFormStatus } from 'react-dom';
 
 interface Props {
   id: number;
@@ -30,10 +31,20 @@ export default function DeleteTextEntryModal({ id }: Props) {
               });
             }}
           >
-            <button className="btn btn-error">Delete</button>
+            <DeleteButton />
           </form>
         </div>
       </div>
     </dialog>
+  );
+}
+
+function DeleteButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <button className="btn btn-error" type="submit" disabled={pending}>
+      {pending ? 'Deleteting...' : 'Delete'}
+    </button>
   );
 }

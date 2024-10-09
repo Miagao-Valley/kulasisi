@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useRef, useState, useEffect } from 'react';
+import { useFormStatus } from 'react-dom';
 import { useAuth } from '../components/AuthProvider';
 import { Lang } from '../../types';
 import addTextEntry from '@/lib/textEntries/addTextEntry';
@@ -8,6 +9,10 @@ import getLangs from '@/lib/langs/getLangs';
 
 interface Props {
   className?: string;
+}
+
+interface SubmitButtonProps {
+  disabled?: boolean;
 }
 
 export default function AddTextEntryForm({ className = '' }: Props) {
@@ -51,9 +56,8 @@ export default function AddTextEntryForm({ className = '' }: Props) {
     <form
       className={`flex flex-col gap-3 ${className}`}
       ref={ref}
-      onSubmit={(e) => {
-        e.preventDefault();
-        handleSubmit(new FormData(ref.current!));
+      action={async () => {
+        await handleSubmit(new FormData(ref.current!));
       }}
     >
       <select
@@ -85,14 +89,24 @@ export default function AddTextEntryForm({ className = '' }: Props) {
         disabled={!auth.isAuthenticated}
       ></textarea>
       <div className="flex justify-end">
-        <button
-          className="btn btn-primary"
-          type="submit"
+        <SubmitButton
           disabled={!content.trim() || !selectedLang || !auth.isAuthenticated}
-        >
-          Post
-        </button>
+        />
       </div>
     </form>
+  );
+}
+
+function SubmitButton({ disabled = false }: SubmitButtonProps) {
+  const { pending } = useFormStatus();
+
+  return (
+    <button
+      className="btn btn-primary"
+      type="submit"
+      disabled={disabled || pending}
+    >
+      {pending ? 'Posting...' : 'Post'}
+    </button>
   );
 }
