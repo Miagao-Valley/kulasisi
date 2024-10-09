@@ -1,4 +1,5 @@
 from django.db import models
+from users.models import User
 
 
 class Language(models.Model):
@@ -15,6 +16,7 @@ class Language(models.Model):
 class TextEntry(models.Model):
     content = models.TextField()
     lang = models.ForeignKey(Language, on_delete=models.PROTECT)
+    author = models.ForeignKey(User, on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

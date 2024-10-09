@@ -19,6 +19,12 @@ class ListCreateTextEntryView(generics.ListCreateAPIView):
     queryset = TextEntry.objects.all()
     serializer_class = TextEntrySerializer
 
+    def perform_create(self, serializer):
+        if serializer.is_valid():
+            serializer.save(author=self.request.user)
+        else:
+            print(serializer.errors)
+
 
 class RetrieveUpdateDestroyTextEntryView(generics.RetrieveUpdateDestroyAPIView):
     queryset = TextEntry.objects.all()
