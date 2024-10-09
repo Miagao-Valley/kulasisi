@@ -9,6 +9,12 @@ export interface Payload extends JWTPayload {
   username: string;
 }
 
+export interface AuthType {
+  isAuthenticated: boolean;
+  id: number | null;
+  username: string;
+}
+
 export interface User {
   id: number;
   username: string;
