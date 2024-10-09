@@ -1,14 +1,15 @@
 import React from 'react';
 import Link from 'next/link';
-import { TextEntry } from '@/types';
+import getTextEntries from '@/lib/textEntries/getTextEntries';
 import TextEntryFooter from './TextEntryFooter';
 
 interface Props {
-  textEntries: TextEntry[];
   className?: string;
 }
 
-export default function PostsList({ textEntries, className = '' }: Props) {
+export default async function TextEntriesList({ className = '' }: Props) {
+  const textEntries = await getTextEntries();
+
   return (
     <ul className={`flex flex-col gap-3 ${className}`}>
       {textEntries.map((textEntry) => {

@@ -1,22 +1,36 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useAuth } from '../components/AuthProvider';
 import { Lang } from '../../types';
 import addTextEntry from '@/lib/textEntries/addTextEntry';
+import getLangs from '@/lib/langs/getLangs';
 
 interface Props {
-  langs: Lang[];
   className?: string;
 }
 
-export default function AddTextEntryForm({ langs, className = '' }: Props) {
+export default function AddTextEntryForm({ className = '' }: Props) {
   const auth = useAuth();
 
   const ref = useRef<HTMLFormElement>(null);
 
   const [content, setContent] = useState('');
   const [selectedLang, setSelectedLang] = useState('');
+  const [langs, setLangs] = useState<Lang[]>([]);
+
+  useEffect(() => {
+    const fetchLangs = async () => {
+      try {
+        const fetchedLangs = await getLangs();
+        setLangs(fetchedLangs);
+      } catch (error) {
+        console.error('Failed to fetch languages:', error);
+      }
+    };
+
+    fetchLangs();
+  }, []);
 
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);

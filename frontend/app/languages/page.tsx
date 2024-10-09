@@ -1,15 +1,14 @@
-import React from 'react';
-import { Lang } from '@/types';
-import getLangs from '@/lib/langs/getLangs';
+import React, { Suspense } from 'react';
 import LangsList from './LangsList';
+import LangsListSkeleton from './LangsListSkeleton';
 
 export default async function LangsPage() {
-  const langs: Lang[] = await getLangs();
-
   return (
     <>
       <h1>Languages</h1>
-      <LangsList langs={langs} />
+      <Suspense fallback={<LangsListSkeleton />}>
+        <LangsList />
+      </Suspense>
     </>
   );
 }

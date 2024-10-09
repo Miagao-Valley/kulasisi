@@ -1,14 +1,14 @@
-import React from 'react';
-import getUsers from '@/lib/users/getUsers';
+import React, { Suspense } from 'react';
 import UsersList from './UsersList';
+import UsersListSkeleton from './UsersListSkeleton';
 
 export default async function UsersPage() {
-  const users = await getUsers();
-
   return (
     <>
       <h1>Users</h1>
-      <UsersList users={users} />
+      <Suspense fallback={<UsersListSkeleton />}>
+        <UsersList />
+      </Suspense>
     </>
   );
 }

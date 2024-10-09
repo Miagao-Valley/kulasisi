@@ -1,18 +1,16 @@
-import React from 'react';
-import getTextEntries from '@/lib/textEntries/getTextEntries';
-import getLangs from '@/lib/langs/getLangs';
-import TextEntriesList from './TextEntriesList';
+import React, { Suspense } from 'react';
 import AddTextEntryForm from './AddTextEntryForm';
+import TextEntriesList from './TextEntriesList';
+import TextEntriesListSkeleton from './TextEntriesListSkeleton';
 
 export default async function PostsPage() {
-  const textEntries = await getTextEntries();
-  const langs = await getLangs();
-
   return (
     <>
       <h1>Posts</h1>
-      <AddTextEntryForm langs={langs} className="mb-4" />
-      <TextEntriesList textEntries={textEntries} />
+      <AddTextEntryForm className="mb-4" />
+      <Suspense fallback={<TextEntriesListSkeleton />}>
+        <TextEntriesList />
+      </Suspense>
     </>
   );
 }

@@ -1,13 +1,15 @@
 import React from 'react';
 import Link from 'next/link';
 import { Lang } from '@/types';
+import getLangs from '@/lib/langs/getLangs';
 
 interface Props {
-  langs: Lang[];
   className?: string;
 }
 
-export default function LangsList({ langs, className = '' }: Props) {
+export default async function LangsList({ className = '' }: Props) {
+  const langs: Lang[] = await getLangs();
+
   return (
     <ul
       className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 ${className}`}

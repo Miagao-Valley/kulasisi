@@ -1,13 +1,14 @@
 import React from 'react';
 import Link from 'next/link';
-import { User } from '@/types';
+import getUsers from '@/lib/users/getUsers';
 
 interface Props {
-  users: User[];
   className?: string;
 }
 
-export default function UsersList({ users, className = '' }: Props) {
+export default async function UsersList({ className = '' }: Props) {
+  const users = await getUsers();
+
   return (
     <ul
       className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 ${className}`}
