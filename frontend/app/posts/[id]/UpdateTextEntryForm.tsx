@@ -43,9 +43,8 @@ export default function UpdateTextEntryForm({
           rows={5}
           autoFocus={true}
           placeholder="Enter updated text"
-        >
-          {initialContent}
-        </textarea>
+          defaultValue={initialContent}
+        ></textarea>
         <div className="flex justify-end gap-2">
           <button
             className="btn btn-error"

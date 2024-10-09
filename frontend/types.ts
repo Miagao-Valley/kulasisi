@@ -34,6 +34,7 @@ export interface Lang {
 export interface TextEntry {
   id: number;
   content: string;
+  author: string;
   lang: string;
   created_at: Date;
   updated_at: Date;
