@@ -1,15 +1,13 @@
 import { API_BASE_URL } from '@/constants';
 import { FetchError } from '@/types';
-import getToken from '@/lib/tokens/getToken';
 
 export default async function fetcher(
   endpoint: string,
   options: RequestInit = {},
-  baseUrl: string = API_BASE_URL,
+  token: string = '',
+  baseUrl: string = API_BASE_URL
 ): Promise<any> {
   const url = new URL(endpoint, baseUrl);
-
-  const token = getToken();
 
   if (token) {
     options.headers = {
@@ -24,7 +22,7 @@ export default async function fetcher(
     if (!res.ok) {
       const resBody = await res.json();
       const error: FetchError = new Error(
-        `Fetching ${url}: ${res.status}: ${JSON.stringify(resBody)}`,
+        `Fetching ${url}: ${res.status}: ${JSON.stringify(resBody)}`
       );
       error.info = resBody;
       error.status = res.status;
@@ -38,6 +36,6 @@ export default async function fetcher(
 
     return res;
   } catch (error) {
-    throw new Error(`Fetching ${url}: ${(error as Error).message}`);
+    throw error;
   }
 }
