@@ -76,7 +76,7 @@ export default function UpdateTextEntryForm({
             onClick={() =>
               (
                 document.getElementById(
-                  'delete-text-entry-modal'
+                  'delete-text-entry-modal',
                 ) as HTMLFormElement
               )?.showModal()
             }

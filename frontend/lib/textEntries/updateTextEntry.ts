@@ -12,7 +12,7 @@ export default async function updateTextEntry(id: number, data: FormData) {
         method: 'PUT',
         body: data,
       },
-      getToken()
+      getToken(),
     );
     await promise;
   } catch (error) {

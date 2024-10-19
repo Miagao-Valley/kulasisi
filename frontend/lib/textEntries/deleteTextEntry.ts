@@ -11,7 +11,7 @@ export default async function deleteTextEntry(id: number) {
     {
       method: 'DELETE',
     },
-    getToken()
+    getToken(),
   );
 
   revalidatePath(`/posts`);

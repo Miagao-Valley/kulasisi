@@ -17,7 +17,7 @@ export default async function fetcher(
   endpoint: string,
   options: RequestInit = {},
   token: string = '',
-  baseUrl: string = API_BASE_URL
+  baseUrl: string = API_BASE_URL,
 ): Promise<any> {
   const url = new URL(endpoint, baseUrl);
 
@@ -40,7 +40,7 @@ export default async function fetcher(
     throw new FetchError(
       `${res.status} error while fetching ${url}: ${resBody}`,
       res.status,
-      resBody
+      resBody,
     );
   }
 
