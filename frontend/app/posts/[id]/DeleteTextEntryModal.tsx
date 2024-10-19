@@ -44,7 +44,7 @@ function DeleteButton() {
 
   return (
     <button className="btn btn-error" type="submit" disabled={pending}>
-      {pending ? 'Deleteting...' : 'Delete'}
+      {pending ? 'Deleting...' : 'Delete'}
     </button>
   );
 }

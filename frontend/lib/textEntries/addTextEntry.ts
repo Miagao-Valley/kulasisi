@@ -1,20 +1,24 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import fetcher from '@/utils/fetcher';
+import fetcher, { FetchError } from '@/utils/fetcher';
 import getToken from '../tokens/getToken';
 
-export default async function addText(data: FormData): Promise<Response> {
-  const res = await fetcher(
-    `/text-entries/`,
-    {
-      method: 'POST',
-      body: data,
-    },
-    getToken()
-  );
+export default async function addTextEntry(data: FormData) {
+  try {
+    await fetcher(
+      `/text-entries/`,
+      {
+        method: 'POST',
+        body: data,
+      },
+      getToken()
+    );
+  } catch (error) {
+    const fetchError = error as FetchError;
+    return { error: fetchError.resBody };
+  }
 
   revalidatePath(`/posts`);
-
-  return res;
+  return null;
 }

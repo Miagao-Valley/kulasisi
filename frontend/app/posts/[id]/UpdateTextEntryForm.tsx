@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useRef } from 'react';
-import { useFormStatus } from 'react-dom';
+import React, { useState } from 'react';
+import { useFormState, useFormStatus } from 'react-dom';
 import updateTextEntry from '@/lib/textEntries/updateTextEntry';
 import DeleteTextEntryModal from './DeleteTextEntryModal';
 import toast from 'react-hot-toast';
@@ -23,34 +23,52 @@ export default function UpdateTextEntryForm({
   onUpdate,
   className = '',
 }: Props) {
-  const ref = useRef<HTMLFormElement>(null);
+  const [content, setContent] = useState('');
+
+  const handleSubmit = async (prevState: any, formData: FormData) => {
+    const promise = updateTextEntry(id, formData);
+    const res = await promise;
+    if (!res?.error) {
+      setContent('');
+      toast.success('Updated');
+      onUpdate();
+    }
+    return res;
+  };
+
+  const [formState, formAction] = useFormState(handleSubmit, null);
 
   return (
     <>
-      <form
-        className={`flex flex-col gap-3 ${className}`}
-        ref={ref}
-        action={async (data: FormData) => {
-          const promise = updateTextEntry(id, data);
-          toast.promise(promise, {
-            loading: 'Updating',
-            success: 'Updated',
-            error: 'Failed to update',
-          });
-          await promise;
-          onUpdate();
-        }}
-      >
-        <textarea
-          className="textarea textarea-bordered"
-          name="content"
-          id="content-field"
-          cols={15}
-          rows={5}
-          autoFocus={true}
-          placeholder="Enter updated text"
-          defaultValue={initialContent}
-        ></textarea>
+      <form className={`flex flex-col gap-3 ${className}`} action={formAction}>
+        {formState?.error?.detail && (
+          <div role="alert" className="text-sm text-error">
+            {formState.error.detail}
+          </div>
+        )}
+        {formState?.error?.non_field_errors && (
+          <div role="alert" className="text-sm text-error">
+            {formState.error.non_field_errors[0]}
+          </div>
+        )}
+        <div>
+          <textarea
+            className="textarea textarea-bordered w-full"
+            name="content"
+            id="content-field"
+            cols={15}
+            rows={5}
+            autoFocus={true}
+            placeholder="Enter updated text"
+            defaultValue={initialContent}
+            onChange={(e) => setContent(e.target.value)}
+          ></textarea>
+          {formState?.error?.content && (
+            <div role="alert" className="text-sm text-error">
+              {formState.error.content[0]}
+            </div>
+          )}
+        </div>
         <div className="flex justify-end gap-2">
           <button
             className="btn btn-error"
@@ -65,7 +83,9 @@ export default function UpdateTextEntryForm({
           >
             Delete
           </button>
-          <UpdateButton />
+          <UpdateButton
+            disabled={!content.trim() || content == initialContent}
+          />
         </div>
       </form>
       <DeleteTextEntryModal id={id} />
