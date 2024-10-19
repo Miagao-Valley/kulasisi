@@ -1,16 +1,26 @@
 import { NextRequest, NextResponse } from 'next/server';
-import getPayload from './lib/tokens/getPayload';
+import getAuth from './lib/auth/getAuth';
 
 const protectedRoutes: string[] = [];
+const restrictedRoutes: string[] = ['/auth/login', '/auth/register'];
 
 export default async function middleware(req: NextRequest) {
-  const path = req.nextUrl.pathname;
+  const path =
+    req.nextUrl.pathname.endsWith('/') && req.nextUrl.pathname !== '/'
+      ? req.nextUrl.pathname.slice(0, -1)
+      : req.nextUrl.pathname;
+
   const isProtectedRoute = protectedRoutes.includes(path);
+  const isRestrictedRoute = restrictedRoutes.includes(path);
 
-  const payload = await getPayload();
+  const { isAuthenticated } = await getAuth();
 
-  if (isProtectedRoute && !payload) {
-    return NextResponse.redirect(new URL(`/register/`, req.nextUrl));
+  if (isProtectedRoute && !isAuthenticated) {
+    return NextResponse.redirect(new URL(`/auth/register/`, req.nextUrl));
+  }
+
+  if (isRestrictedRoute && isAuthenticated) {
+    return NextResponse.redirect(new URL(`/`, req.nextUrl));
   }
 
   return NextResponse.next();
