@@ -1,11 +1,12 @@
 'use client';
 
 import React from 'react';
-import { useFormStatus } from 'react-dom';
+import { useFormState, useFormStatus } from 'react-dom';
 import Link from 'next/link';
 import { FaLock, FaUser } from 'react-icons/fa';
 import { useAuth } from '@/app/components/AuthProvider';
 import login from '@/lib/auth/login';
+import AuthInputField from '../AuthInputField';
 
 interface SubmitButtonProps {
   disabled?: boolean;
@@ -14,32 +15,41 @@ interface SubmitButtonProps {
 export default function LoginForm() {
   const auth = useAuth();
 
-  const handleSubmit = async (formData: FormData) => {
-    await login(formData);
+  const handleSubmit = async (prevState: any, formData: FormData) => {
+    const res = await login(formData);
     auth.updateAuth();
+    return res;
   };
 
+  const [formState, formAction] = useFormState(handleSubmit, null);
+
   return (
-    <form className="flex flex-col gap-3" action={handleSubmit} method="POST">
-      <label className="input input-bordered flex items-center gap-3">
-        <FaUser />
-        <input
-          className="grow"
-          name="username"
-          type="text"
-          placeholder="Username"
-          autoFocus={true}
-        />
-      </label>
-      <label className="input input-bordered flex items-center gap-3">
-        <FaLock />
-        <input
-          className="grow"
-          name="password"
-          type="password"
-          placeholder="Password"
-        />
-      </label>
+    <form className="flex flex-col gap-3" action={formAction}>
+      {formState?.error?.detail && (
+        <div role="alert" className="text-sm text-error">
+          {formState.error.detail}
+        </div>
+      )}
+      {formState?.error?.non_field_errors && (
+        <div role="alert" className="text-sm text-error">
+          {formState.error.non_field_errors[0]}
+        </div>
+      )}
+      <AuthInputField
+        name="username"
+        type="text"
+        placeholder="Username"
+        icon={<FaUser />}
+        error={formState?.error?.username}
+        autoFocus={true}
+      />
+      <AuthInputField
+        name="password"
+        type="password"
+        placeholder="Password"
+        icon={<FaLock />}
+        error={formState?.error?.password}
+      />
       <SubmitButton />
       <p className="flex gap-1">
         Don't have an account?
