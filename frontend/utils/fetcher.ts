@@ -1,5 +1,17 @@
 import { API_BASE_URL } from '@/constants';
-import { FetchError } from '@/types';
+
+export class FetchError extends Error {
+  public status: number;
+  public resBody: any;
+
+  constructor(message: string, status: number, resBody: any) {
+    super(message);
+    this.name = this.constructor.name;
+    this.status = status;
+    this.resBody = resBody;
+    Error.captureStackTrace(this, this.constructor);
+  }
+}
 
 export default async function fetcher(
   endpoint: string,
@@ -16,26 +28,26 @@ export default async function fetcher(
     };
   }
 
-  try {
-    const res = await fetch(url.toString(), options);
+  const res = await fetch(url.toString(), options);
 
-    if (!res.ok) {
-      const resBody = await res.json();
-      const error: FetchError = new Error(
-        `Fetching ${url}: ${res.status}: ${JSON.stringify(resBody)}`
-      );
-      error.info = resBody;
-      error.status = res.status;
-      throw error;
+  if (!res.ok) {
+    let resBody;
+    try {
+      resBody = await res.json();
+    } catch {
+      resBody = 'Unable to parse response';
     }
-
-    const contentType = res.headers.get('content-type');
-    if (contentType?.includes('application/json')) {
-      return await res.json();
-    }
-
-    return res;
-  } catch (error) {
-    throw error;
+    throw new FetchError(
+      `${res.status} error while fetching ${url}: ${resBody}`,
+      res.status,
+      resBody
+    );
   }
+
+  const contentType = res.headers.get('content-type');
+  if (contentType?.includes('application/json')) {
+    return await res.json();
+  }
+
+  return res;
 }
