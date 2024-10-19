@@ -1,4 +1,7 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 interface Props {
   name: string;
@@ -17,6 +20,9 @@ export default function AuthInputField({
   error,
   autoFocus,
 }: Props) {
+  const [fieldType, setFieldType] = useState(type);
+  const [content, setContent] = useState('');
+
   return (
     <div>
       <label
@@ -28,10 +34,22 @@ export default function AuthInputField({
         <input
           className="grow w-full"
           name={name}
-          type={type}
+          type={fieldType}
           placeholder={placeholder}
           autoFocus={autoFocus}
+          onChange={(e) => setContent(e.target.value)}
         />
+        {type == 'password' && content && (
+          <button
+            className="btn btn-ghost btn-circle btn-sm"
+            type="button"
+            onClick={() =>
+              setFieldType(fieldType == 'password' ? 'text' : 'password')
+            }
+          >
+            {fieldType == 'password' ? <FaEyeSlash /> : <FaEye />}
+          </button>
+        )}
       </label>
       {error && (
         <div role="alert" className="text-sm text-error">
