@@ -12,6 +12,7 @@ import { AuthType } from '@/types';
 import fetchAuth from '@/lib/auth/fetchAuth';
 
 interface AuthContextType extends AuthType {
+  isLoading: boolean;
   setAuth: (auth: AuthType) => void;
   updateAuth: () => void;
 }
@@ -22,6 +23,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [id, setId] = useState<number | null>(null);
   const [username, setUsername] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const setAuth = useCallback(({ isAuthenticated, id, username }: AuthType) => {
     setIsAuthenticated(isAuthenticated);
@@ -65,6 +67,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     } else {
       fetchAuthWrapper();
     }
+
+    setIsLoading(false);
   }, [fetchAuthWrapper, setAuth]);
 
   useEffect(() => {
@@ -79,6 +83,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         isAuthenticated,
         id,
         username,
+        isLoading,
         setAuth,
         updateAuth,
       }}

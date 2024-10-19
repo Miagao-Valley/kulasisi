@@ -9,6 +9,10 @@ import { MdLogout } from 'react-icons/md';
 export default function UserActions() {
   const auth = useAuth();
 
+  if (auth.isLoading) {
+    return;
+  }
+
   return (
     <>
       {auth.isAuthenticated ? (
