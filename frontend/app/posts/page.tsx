@@ -1,29 +1,54 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { TextEntry, PaginationDetails } from '@/types';
+import getTextEntries from '@/lib/textEntries/getTextEntries';
 import AddTextEntryForm from './AddTextEntryForm';
-import TextEntriesList from './TextEntriesList';
+import TextEntriesList, { TextEntriesListSkeleton } from './TextEntriesList';
 import SearchInput from '../components/SearchInput';
 import SortDropdown, { SortOption } from '../components/SortDropdown';
 import FilterMenu, { Filter, FilterOption } from '../components/FilterMenu';
+import Pagination from '../components/Pagination';
 import { Lang } from '@/types';
 import getLangs from '@/lib/langs/getLangs';
 
 export default function PostsPage() {
+  const [langs, setLangs] = useState<Lang[]>([]);
+  const [textEntries, setTextEntries] = useState<
+    PaginationDetails & { results: TextEntry[] }
+  >();
+  const [isLoading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [sortOption, setSortOption] = useState('updated_at');
   const [isDescending, setIsDescending] = useState(true);
   const [filters, setFilters] = useState<Filter>({});
-  const [langs, setLangs] = useState<Lang[]>([]);
+  const [offset, setOffset] = useState<number | null>(null);
 
   useEffect(() => {
     const fetch = async () => {
-      const data = await getLangs();
-      setLangs(data);
+      const { results } = await getLangs();
+      setLangs(results);
     };
 
     fetch();
   }, []);
+
+  useEffect(() => {
+    const fetch = async () => {
+      setLoading(true);
+      const data = await getTextEntries({
+        search: searchTerm,
+        ordering: isDescending ? `-${sortOption}` : sortOption,
+        lang__code: filters?.lang || '',
+        limit: 15,
+        offset: offset || '',
+      });
+      setTextEntries(data);
+    };
+
+    fetch();
+    setLoading(false);
+  }, [searchTerm, sortOption, isDescending, filters, offset]);
 
   const sortingOptions: SortOption[] = [
     { label: 'Content', value: 'content' },
@@ -63,11 +88,19 @@ export default function PostsPage() {
           currentFilters={filters}
         />
       </div>
-      <TextEntriesList
-        searchTerm={searchTerm}
-        sortOption={sortOption}
-        isDescending={isDescending}
-        filters={filters}
+      {isLoading ? (
+        <TextEntriesListSkeleton />
+      ) : (
+        <TextEntriesList textEntries={textEntries} />
+      )}
+      <Pagination
+        className="my-5 flex justify-center"
+        num_pages={textEntries?.num_pages || 1}
+        current_page={textEntries?.current_page || 1}
+        limit={textEntries?.limit || 1}
+        next_offset={textEntries?.next?.offset ?? null}
+        prev_offset={textEntries?.previous?.offset ?? null}
+        setOffset={setOffset}
       />
     </>
   );

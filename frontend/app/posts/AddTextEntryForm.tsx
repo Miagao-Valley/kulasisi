@@ -6,6 +6,7 @@ import { useAuth } from '../components/AuthProvider';
 import { Lang } from '../../types';
 import addTextEntry from '@/lib/textEntries/addTextEntry';
 import getLangs from '@/lib/langs/getLangs';
+import { useRouter } from 'next/navigation';
 
 interface Props {
   className?: string;
@@ -17,6 +18,7 @@ interface SubmitButtonProps {
 
 export default function AddTextEntryForm({ className = '' }: Props) {
   const auth = useAuth();
+  const router = useRouter();
 
   const [selectedLang, setSelectedLang] = useState('');
   const [content, setContent] = useState('');
@@ -24,8 +26,8 @@ export default function AddTextEntryForm({ className = '' }: Props) {
 
   useEffect(() => {
     const fetchLangs = async () => {
-      const fetchedLangs = await getLangs();
-      setLangs(fetchedLangs);
+      const { results } = await getLangs();
+      setLangs(results);
     };
 
     fetchLangs();
@@ -37,6 +39,7 @@ export default function AddTextEntryForm({ className = '' }: Props) {
       setSelectedLang('');
       setContent('');
     }
+    router.refresh();
     return res;
   };
 

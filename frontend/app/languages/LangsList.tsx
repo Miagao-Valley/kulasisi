@@ -1,52 +1,17 @@
-'use client';
-
-import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Lang } from '@/types';
-import { Filter } from '../components/FilterMenu';
-import getLangs from '@/lib/langs/getLangs';
+import { Lang, PaginationDetails } from '@/types';
 
 interface Props {
-  searchTerm: string;
-  sortOption: string;
-  isDescending: boolean;
-  filters: Filter;
+  langs?: PaginationDetails & { results: Lang[] };
   className?: string;
 }
 
-export default function LangsList({
-  searchTerm,
-  sortOption,
-  isDescending,
-  filters,
-  className = '',
-}: Props) {
-  const [isLoading, setLoading] = useState(true);
-  const [langs, setLangs] = useState<Lang[]>([]);
-
-  useEffect(() => {
-    setLoading(true);
-    const fetch = async () => {
-      const data = await getLangs({
-        search: searchTerm,
-        ordering: isDescending ? `-${sortOption}` : sortOption,
-      });
-      setLangs(data);
-    };
-
-    fetch();
-    setLoading(false);
-  }, [searchTerm, sortOption, isDescending, filters]);
-
-  if (isLoading) {
-    return <LangsListSkeleton />;
-  }
-
+export default function LangsList({ langs, className = '' }: Props) {
   return (
     <ul
       className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 ${className}`}
     >
-      {langs.map((lang) => {
+      {langs?.results?.map((lang) => {
         return (
           <li key={lang.code}>
             <Link
@@ -74,9 +39,9 @@ export function LangsListSkeleton({ className = '' }: SkeletonProps) {
     <ul
       className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 ${className}`}
     >
-      {Array.from({ length: 40 }, (_, i) => i).map((i) => {
-        return <li key={i} className="skeleton w-full h-8"></li>;
-      })}
+      {Array.from({ length: 40 }, (_, i) => (
+        <li key={i} className="skeleton w-full h-8"></li>
+      ))}
     </ul>
   );
 }

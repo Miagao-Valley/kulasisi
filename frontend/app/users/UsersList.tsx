@@ -1,52 +1,17 @@
-'use client';
-
-import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { User } from '@/types';
-import getUsers from '@/lib/users/getUsers';
+import { PaginationDetails, User } from '@/types';
 
 interface Props {
-  searchTerm: string;
-  sortOption: string;
-  isDescending: boolean;
-  filters: object;
+  users?: PaginationDetails & { results: User[] };
   className?: string;
 }
 
-export default function UsersList({
-  searchTerm,
-  sortOption,
-  isDescending,
-  filters,
-  className = '',
-}: Props) {
-  const [isLoading, setLoading] = useState(true);
-  const [users, setUsers] = useState<User[]>([]);
-
-  useEffect(() => {
-    setLoading(true);
-    const fetch = async () => {
-      const data = await getUsers({
-        search: searchTerm,
-        ordering: isDescending ? `-${sortOption}` : sortOption,
-        is_staff: filters?.is_staff ? 'true' : '',
-      });
-      setUsers(data);
-    };
-
-    fetch();
-    setLoading(false);
-  }, [searchTerm, sortOption, isDescending, filters]);
-
-  if (isLoading) {
-    return <UsersListSkeleton />;
-  }
-
+export default function UsersList({ users, className = '' }: Props) {
   return (
     <ul
       className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 ${className}`}
     >
-      {users.map((user) => (
+      {users?.results?.map((user) => (
         <li key={user.id}>
           <Link
             className="hover:text-primary flex flex-col"

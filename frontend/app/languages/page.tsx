@@ -1,16 +1,34 @@
 'use client';
 
-import React, { useState } from 'react';
-import LangsList from './LangsList';
+import React, { useState, useEffect } from 'react';
+import { Lang, PaginationDetails } from '@/types';
+import getLangs from '@/lib/langs/getLangs';
+import LangsList, { LangsListSkeleton } from './LangsList';
 import SearchInput from '../components/SearchInput';
 import SortDropdown, { SortOption } from '../components/SortDropdown';
 import FilterMenu, { Filter, FilterOption } from '../components/FilterMenu';
 
 export default function LangsPage() {
+  const [langs, setLangs] = useState<PaginationDetails & { results: Lang[] }>();
+  const [isLoading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [sortOption, setSortOption] = useState('name');
   const [isDescending, setIsDescending] = useState(false);
   const [filters, setFilters] = useState<Filter>({});
+
+  useEffect(() => {
+    const fetch = async () => {
+      setLoading(true);
+      const data = await getLangs({
+        search: searchTerm,
+        ordering: isDescending ? `-${sortOption}` : sortOption,
+      });
+      setLangs(data);
+    };
+
+    fetch();
+    setLoading(false);
+  }, [searchTerm, sortOption, isDescending, filters]);
 
   const sortingOptions: SortOption[] = [
     { label: 'Name', value: 'name' },
@@ -41,12 +59,7 @@ export default function LangsPage() {
           currentFilters={filters}
         />
       </div>
-      <LangsList
-        searchTerm={searchTerm}
-        sortOption={sortOption}
-        isDescending={isDescending}
-        filters={filters}
-      />
+      {isLoading ? <LangsListSkeleton /> : <LangsList langs={langs} />}
     </>
   );
 }
