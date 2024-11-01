@@ -1,9 +1,9 @@
 import fetcher from '@/utils/fetcher';
-import { User } from '@/types';
+import { PaginationDetails, User } from '@/types';
 
 export default async function getUsers(
   queryParams: Record<string, any> = {}
-): Promise<User[]> {
+): Promise<PaginationDetails & { results: User[] }> {
   const queryString = new URLSearchParams(queryParams).toString();
   const url = `/users/${queryString ? `?${queryString}` : ''}`;
 

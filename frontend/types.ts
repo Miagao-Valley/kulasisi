@@ -34,3 +34,18 @@ export interface TextEntry {
   created_at: Date;
   updated_at: Date;
 }
+
+export interface PaginationDetails {
+  num_pages: number;
+  current_page: number;
+  count: number;
+  limit: number;
+  next: {
+    offset: number;
+    link: string;
+  };
+  previous: {
+    offset: number;
+    link: string;
+  };
+}
