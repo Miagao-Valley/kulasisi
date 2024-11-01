@@ -3,7 +3,7 @@ import { TextEntry, PaginationDetails } from '@/types';
 import TextEntryFooter from './TextEntryFooter';
 
 interface Props {
-  textEntries: (PaginationDetails & { results: TextEntry[] }) | undefined;
+  textEntries?: PaginationDetails & { results: TextEntry[] };
   className?: string;
 }
 
@@ -13,8 +13,8 @@ export default function TextEntriesList({
 }: Props) {
   return (
     <ul className={`flex flex-col gap-3 ${className}`}>
-      {textEntries?.results?.map((textEntry) => {
-        return (
+      {textEntries && textEntries.results && textEntries.results.length > 0 ? (
+        textEntries.results.map((textEntry) => (
           <li
             className="px-4 py-3 border rounded-lg flex flex-col"
             key={textEntry.id}
@@ -24,8 +24,12 @@ export default function TextEntriesList({
             </Link>
             <TextEntryFooter textEntry={textEntry} />
           </li>
-        );
-      })}
+        ))
+      ) : (
+        <li className="w-full col-span-full p-3 text-center">
+          <div>No posts found</div>
+        </li>
+      )}
     </ul>
   );
 }
@@ -37,9 +41,9 @@ interface SkeletonProps {
 export function TextEntriesListSkeleton({ className = '' }: SkeletonProps) {
   return (
     <ul className={`flex flex-col gap-3 ${className}`}>
-      {Array.from({ length: 10 }, (_, i) => i).map((i) => {
-        return <li className="skeleton rounded-lg w-full h-24" key={i}></li>;
-      })}
+      {Array.from({ length: 10 }, (_, i) => (
+        <li className="skeleton rounded-lg w-full h-24" key={i}></li>
+      ))}
     </ul>
   );
 }

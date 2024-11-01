@@ -11,8 +11,8 @@ export default function LangsList({ langs, className = '' }: Props) {
     <ul
       className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 ${className}`}
     >
-      {langs?.results?.map((lang) => {
-        return (
+      {langs && langs.results && langs.results.length > 0 ? (
+        langs.results.map((lang) => (
           <li key={lang.code}>
             <Link
               className="hover:text-primary flex gap-2"
@@ -24,8 +24,12 @@ export default function LangsList({ langs, className = '' }: Props) {
               <span className="font-semibold">{lang.name}</span>
             </Link>
           </li>
-        );
-      })}
+        ))
+      ) : (
+        <li className="w-full col-span-full text-center p-3">
+          <div>No languages found</div>
+        </li>
+      )}
     </ul>
   );
 }
