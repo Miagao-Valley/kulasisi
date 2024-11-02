@@ -5,14 +5,15 @@ import fetcher, { FetchError } from '@/utils/fetcher';
 import getToken from '../tokens/getToken';
 
 export default async function addTextEntry(data: FormData) {
+  let res = null;
   try {
-    await fetcher(
+    res = await fetcher(
       `/text-entries/`,
       {
         method: 'POST',
         body: data,
       },
-      getToken(),
+      getToken()
     );
   } catch (error) {
     const fetchError = error as FetchError;
@@ -20,5 +21,5 @@ export default async function addTextEntry(data: FormData) {
   }
 
   revalidatePath(`/posts`);
-  return null;
+  return res;
 }

@@ -2,11 +2,12 @@
 
 import React, { useState, useEffect } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
+import { useRouter } from 'next/navigation';
 import { useAuth } from '../components/AuthProvider';
 import { Lang } from '../../types';
 import addTextEntry from '@/lib/textEntries/addTextEntry';
 import getLangs from '@/lib/langs/getLangs';
-import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 
 interface Props {
   className?: string;
@@ -48,12 +49,14 @@ export default function AddTextEntryForm({ className = '' }: Props) {
 
   const handleSubmit = async (prevState: any, formData: FormData) => {
     const res = await addTextEntry(formData);
+    console.log(res);
     if (!res?.error) {
       setSelectedLang('');
       setContent('');
       localStorage.removeItem('textEntryContentDraft');
+      router.push(`/posts/${res.id}/`);
+      toast.success('Posted');
     }
-    router.refresh();
     return res;
   };
 
