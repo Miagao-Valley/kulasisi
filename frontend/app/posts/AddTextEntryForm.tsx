@@ -33,11 +33,25 @@ export default function AddTextEntryForm({ className = '' }: Props) {
     fetchLangs();
   }, []);
 
+  useEffect(() => {
+    const savedContent = localStorage.getItem('textEntryContentDraft');
+    if (savedContent) {
+      setContent(savedContent);
+    }
+  }, []);
+
+  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const newValue = e.target.value;
+    setContent(newValue);
+    localStorage.setItem('textEntryContentDraft', newValue);
+  };
+
   const handleSubmit = async (prevState: any, formData: FormData) => {
     const res = await addTextEntry(formData);
     if (!res?.error) {
       setSelectedLang('');
       setContent('');
+      localStorage.removeItem('textEntryContentDraft');
     }
     router.refresh();
     return res;
@@ -90,7 +104,7 @@ export default function AddTextEntryForm({ className = '' }: Props) {
           rows={5}
           placeholder="Say something..."
           value={content}
-          onChange={(e) => setContent(e.target.value)}
+          onChange={handleContentChange}
           disabled={!auth.isAuthenticated}
         ></textarea>
         {formState?.error?.content && (
