@@ -35,6 +35,13 @@ export interface TextEntry {
   updated_at: Date;
 }
 
+export interface TextEntryRevision {
+  history_id: number;
+  content: string;
+  history_user: string;
+  history_date: string;
+}
+
 export interface PaginationDetails {
   num_pages: number;
   current_page: number;

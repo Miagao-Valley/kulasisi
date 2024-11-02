@@ -3,13 +3,12 @@
 import React, { useState } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
 import updateTextEntry from '@/lib/textEntries/updateTextEntry';
-import DeleteTextEntryModal from './DeleteTextEntryModal';
 import toast from 'react-hot-toast';
 
 interface Props {
   id: number;
   initialContent?: string;
-  onUpdate: () => void;
+  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
   className?: string;
 }
 
@@ -20,18 +19,17 @@ interface UpdateButtonProps {
 export default function UpdateTextEntryForm({
   id,
   initialContent = '',
-  onUpdate,
+  setIsEditing,
   className = '',
 }: Props) {
   const [content, setContent] = useState('');
 
   const handleSubmit = async (prevState: any, formData: FormData) => {
-    const promise = updateTextEntry(id, formData);
-    const res = await promise;
+    const res = await updateTextEntry(id, formData);
     if (!res?.error) {
       setContent('');
       toast.success('Updated');
-      onUpdate();
+      setIsEditing(false);
     }
     return res;
   };
@@ -71,24 +69,17 @@ export default function UpdateTextEntryForm({
         </div>
         <div className="flex justify-end gap-2">
           <button
-            className="btn btn-error"
+            className="btn"
             type="button"
-            onClick={() =>
-              (
-                document.getElementById(
-                  'delete-text-entry-modal',
-                ) as HTMLFormElement
-              )?.showModal()
-            }
+            onClick={() => setIsEditing(false)}
           >
-            Delete
+            Cancel
           </button>
           <UpdateButton
             disabled={!content.trim() || content == initialContent}
           />
         </div>
       </form>
-      <DeleteTextEntryModal id={id} />
     </>
   );
 }
@@ -102,7 +93,7 @@ function UpdateButton({ disabled = false }: UpdateButtonProps) {
       type="submit"
       disabled={disabled || pending}
     >
-      {pending ? 'Updating...' : 'Update'}
+      {pending ? 'Saving...' : 'Save'}
     </button>
   );
 }
