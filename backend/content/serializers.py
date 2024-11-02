@@ -28,3 +28,13 @@ class TextEntrySerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         validated_data.pop("lang", None)
         return super().update(instance, validated_data)
+
+
+class TextEntryHistorySerializer(serializers.ModelSerializer):
+    history_user = serializers.SlugRelatedField(
+        queryset=User.objects.all(), slug_field="username", required=False
+    )
+
+    class Meta:
+        model = TextEntry.history.model
+        fields = ["history_id", "content", "history_user", "history_date"]

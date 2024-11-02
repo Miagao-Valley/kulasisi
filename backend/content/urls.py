@@ -14,4 +14,9 @@ urlpatterns = [
         views.RetrieveUpdateDestroyTextEntryView.as_view(),
         name="text_entry",
     ),
+    path(
+        "text-entries/<int:pk>/history/",
+        views.ListTextEntryHistoryView.as_view(),
+        name="text_entry_history",
+    ),
 ]

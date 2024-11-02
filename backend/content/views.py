@@ -1,10 +1,15 @@
 from django_filters.rest_framework import DjangoFilterBackend
+from django.shortcuts import get_object_or_404
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.filters import SearchFilter, OrderingFilter
 
 from .models import Language, TextEntry
-from .serializers import LanguageSerializer, TextEntrySerializer
+from .serializers import (
+    LanguageSerializer,
+    TextEntrySerializer,
+    TextEntryHistorySerializer,
+)
 
 
 class ListLanguageView(generics.ListAPIView):
@@ -37,6 +42,15 @@ class ListCreateTextEntryView(generics.ListCreateAPIView):
             serializer.save(author=self.request.user)
         else:
             print(serializer.errors)
+
+
+class ListTextEntryHistoryView(generics.ListAPIView):
+    serializer_class = TextEntryHistorySerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+    def get_queryset(self):
+        text_entry = get_object_or_404(TextEntry, id=self.kwargs["pk"])
+        return text_entry.history.all()
 
 
 class RetrieveUpdateDestroyTextEntryView(generics.RetrieveUpdateDestroyAPIView):
