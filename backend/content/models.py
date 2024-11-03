@@ -16,8 +16,12 @@ class Language(models.Model):
 
 class TextEntry(models.Model):
     content = models.TextField()
-    lang = models.ForeignKey(Language, on_delete=models.PROTECT)
-    author = models.ForeignKey(User, on_delete=models.PROTECT)
+    lang = models.ForeignKey(
+        Language, on_delete=models.PROTECT, related_name="text_entries"
+    )
+    author = models.ForeignKey(
+        User, on_delete=models.PROTECT, related_name="text_entries"
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     history = HistoricalRecords()
