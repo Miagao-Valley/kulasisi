@@ -31,3 +31,25 @@ class TextEntry(models.Model):
 
     def __str__(self):
         return f"{self.content} ({self.lang.code})"
+
+
+class Translation(models.Model):
+    text_entry = models.ForeignKey(
+        TextEntry, on_delete=models.CASCADE, related_name="translations"
+    )
+    content = models.TextField()
+    lang = models.ForeignKey(
+        Language, on_delete=models.PROTECT, related_name="translations"
+    )
+    author = models.ForeignKey(
+        User, on_delete=models.PROTECT, related_name="translations"
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    history = HistoricalRecords()
+
+    class Meta:
+        unique_together = ("content", "lang", "text_entry")
+
+    def __str__(self):
+        return f"{self.content} ({self.lang.code})"
