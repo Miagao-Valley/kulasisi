@@ -2,10 +2,12 @@
 
 import React, { useState } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
-import updateTextEntry from '@/lib/textEntries/updateTextEntry';
+import updateTranslation from '@/lib/translations/updateTranslation';
 import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 interface Props {
+  textEntryId: number;
   id: number;
   initialContent?: string;
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
@@ -16,20 +18,24 @@ interface UpdateButtonProps {
   disabled?: boolean;
 }
 
-export default function UpdateTextEntryForm({
+export default function UpdateTranslationForm({
+  textEntryId,
   id,
   initialContent = '',
   setIsEditing,
   className = '',
 }: Props) {
+  const router = useRouter();
+
   const [content, setContent] = useState('');
 
   const handleSubmit = async (prevState: any, formData: FormData) => {
-    const res = await updateTextEntry(id, formData);
+    const res = await updateTranslation(textEntryId, id, formData);
     if (!res?.error) {
       setContent('');
-      toast.success('Post updated');
+      toast.success('Translation updated');
       setIsEditing(false);
+      router.refresh();
     }
     return res;
   };
@@ -51,7 +57,7 @@ export default function UpdateTextEntryForm({
         )}
         <div>
           <textarea
-            className="textarea w-full"
+            className="textarea textarea-bordered w-full"
             name="content"
             id="content-field"
             cols={15}

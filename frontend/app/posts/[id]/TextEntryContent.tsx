@@ -1,13 +1,14 @@
 'use client';
 
-import React, { useState } from 'react';
-import Link from 'next/link';
+import React, { useEffect, useState } from 'react';
 import { useAuth } from '@/app/components/AuthProvider';
-import { TextEntry } from '@/types';
+import { TextEntry, TextEntryRevision } from '@/types';
 import UpdateTextEntryForm from './UpdateTextEntryForm';
 import DeleteTextEntryModal from './DeleteTextEntryModal';
 import { FaClock, FaLink, FaPen, FaTrash } from 'react-icons/fa';
 import { MdMenu } from 'react-icons/md';
+import TextEntryRevisionsModal from './revisions/TextEntryRevisionsModal';
+import getTextEntryRevisions from '@/lib/textEntries/getTextEntryRevisions';
 
 interface Props {
   textEntry: TextEntry;
@@ -16,15 +17,19 @@ interface Props {
 export default function TextEntryContent({ textEntry }: Props) {
   const auth = useAuth();
   const [isEditing, setIsEditing] = useState(false);
+  const [revisions, setRevisions] = useState<TextEntryRevision[]>([]);
+
+  useEffect(() => {
+    const fetch = async () => {
+      const { results } = await getTextEntryRevisions(textEntry.id);
+      setRevisions(results);
+    };
+
+    fetch();
+  }, [textEntry.id]);
 
   const handleEdit = () => {
     setIsEditing(true);
-  };
-
-  const showDeleteModal = () => {
-    (
-      document.getElementById('delete-text-entry-modal') as HTMLFormElement
-    )?.showModal();
   };
 
   const copyLinkToClipboard = () => {
@@ -32,9 +37,15 @@ export default function TextEntryContent({ textEntry }: Props) {
     navigator.clipboard.writeText(link);
   };
 
+  const showDeleteModal = () => {
+    const modal = document.getElementById(
+      'delete-text-entry-modal'
+    ) as HTMLDialogElement;
+    modal?.showModal();
+  };
+
   return (
     <>
-      <DeleteTextEntryModal id={textEntry.id} />
       {isEditing ? (
         <div className="mb-2">
           <UpdateTextEntryForm
@@ -44,7 +55,7 @@ export default function TextEntryContent({ textEntry }: Props) {
           />
         </div>
       ) : (
-        <div className="flex">
+        <div className="flex gap-3">
           <p className="flex-1 mb-2 whitespace-pre-line">{textEntry.content}</p>
           <details className="dropdown dropdown-bottom dropdown-end">
             <summary className="btn btn-ghost btn-sm btn-circle">
@@ -57,9 +68,9 @@ export default function TextEntryContent({ textEntry }: Props) {
                 </a>
               </li>
               <li>
-                <Link href={`/posts/${textEntry.id}/revisions`}>
+                <a href={`#revisions`}>
                   <FaClock /> Edits
-                </Link>
+                </a>
               </li>
               {auth.username === textEntry.author && (
                 <>
@@ -79,6 +90,8 @@ export default function TextEntryContent({ textEntry }: Props) {
           </details>
         </div>
       )}
+      <DeleteTextEntryModal id={textEntry.id} />
+      <TextEntryRevisionsModal revisions={revisions} />
     </>
   );
 }
