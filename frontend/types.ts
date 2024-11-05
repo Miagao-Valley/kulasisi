@@ -42,6 +42,23 @@ export interface TextEntryRevision {
   history_date: string;
 }
 
+export interface Translation {
+  id: number;
+  text_entry: number;
+  content: string;
+  author: string;
+  lang: string;
+  created_at: Date;
+  updated_at: Date;
+}
+
+export interface TranslationRevision {
+  history_id: number;
+  content: string;
+  history_user: string;
+  history_date: string;
+}
+
 export interface PaginationDetails {
   num_pages: number;
   current_page: number;
