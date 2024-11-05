@@ -13,7 +13,7 @@ export default async function addTranslation(id: number, data: FormData) {
         method: 'POST',
         body: data,
       },
-      getToken()
+      getToken(),
     );
   } catch (error) {
     const fetchError = error as FetchError;

@@ -42,8 +42,8 @@ export default function TextEntryRevisionsList({ revisions }: Props) {
                       part.added
                         ? 'bg-green-200'
                         : part.removed
-                        ? 'line-through bg-red-200'
-                        : ''
+                          ? 'line-through bg-red-200'
+                          : ''
                     }`}
                   >
                     {part.value}

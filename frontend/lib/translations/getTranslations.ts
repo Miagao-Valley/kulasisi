@@ -3,7 +3,7 @@ import { Translation, PaginationDetails } from '@/types';
 
 export default async function getTranslations(
   id: number,
-  queryParams: Record<string, any> = {}
+  queryParams: Record<string, any> = {},
 ): Promise<PaginationDetails & { results: Translation[] }> {
   const queryString = new URLSearchParams(queryParams).toString();
   const url = `/text-entries/${id}/translations/${

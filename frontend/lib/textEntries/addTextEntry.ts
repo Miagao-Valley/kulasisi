@@ -13,7 +13,7 @@ export default async function addTextEntry(data: FormData) {
         method: 'POST',
         body: data,
       },
-      getToken()
+      getToken(),
     );
   } catch (error) {
     const fetchError = error as FetchError;

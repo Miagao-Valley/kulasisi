@@ -53,7 +53,7 @@ export function TranslationsListItem({
     const fetch = async () => {
       const { results } = await getTranslationRevisions(
         translation.text_entry,
-        translation.id
+        translation.id,
       );
       setRevisions(results);
     };
@@ -68,7 +68,7 @@ export function TranslationsListItem({
   const showDeleteModal = (id: number) => {
     (
       document.getElementById(
-        `delete-translation-modal-${id}`
+        `delete-translation-modal-${id}`,
       ) as HTMLFormElement
     )?.showModal();
   };
