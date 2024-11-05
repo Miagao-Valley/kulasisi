@@ -19,4 +19,19 @@ urlpatterns = [
         views.ListTextEntryHistoryView.as_view(),
         name="text_entry_history",
     ),
+    path(
+        "text-entries/<int:text_entry_pk>/translations/",
+        views.ListCreateTranslationsView.as_view(),
+        name="text_entry_translations",
+    ),
+    path(
+        "text-entries/<int:text_entry_pk>/translations/<int:pk>/",
+        views.RetrieveUpdateDestroyTranslationsView.as_view(),
+        name="text_entry_translation",
+    ),
+    path(
+        "text-entries/<int:text_entry_pk>/translations/<int:pk>/history/",
+        views.ListTranslationHistoryView.as_view(),
+        name="text_entry_translation_history",
+    ),
 ]
