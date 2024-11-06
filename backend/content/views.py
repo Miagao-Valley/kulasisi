@@ -62,31 +62,29 @@ class ListTextEntryHistoryView(generics.ListAPIView):
 
 
 class ListCreateTranslationsView(generics.ListCreateAPIView):
+    queryset = Translation.objects.all()
     serializer_class = TranslationSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ["lang__code"]
+    filterset_fields = ["text_entry", "lang__code"]
     search_fields = ["content"]
     ordering_fields = ["content", "created_at", "updated_at"]
     ordering = ["-updated_at"]
 
-    def get_queryset(self):
-        return Translation.objects.filter(text_entry__pk=self.kwargs["text_entry_pk"])
-
     def perform_create(self, serializer):
-        text_entry = get_object_or_404(TextEntry, id=self.kwargs["text_entry_pk"])
-        serializer.save(text_entry=text_entry, author=self.request.user)
+        if serializer.is_valid():
+            text_entry = get_object_or_404(
+                TextEntry, id=self.request.POST.get("text_entry")
+            )
+            serializer.save(text_entry=text_entry, author=self.request.user)
+        else:
+            print(serializer.errors)
 
 
 class RetrieveUpdateDestroyTranslationsView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Translation.objects.all()
     serializer_class = TranslationSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
-
-    def get_queryset(self):
-        text_entry_pk = self.kwargs["text_entry_pk"]
-        pk = self.kwargs["pk"]
-
-        return Translation.objects.filter(text_entry__pk=text_entry_pk, id=pk)
 
 
 class ListTranslationHistoryView(generics.ListAPIView):
@@ -94,7 +92,5 @@ class ListTranslationHistoryView(generics.ListAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get_queryset(self):
-        pk = self.kwargs["pk"]
-
         translation = get_object_or_404(Translation, id=self.kwargs["pk"])
         return translation.history.all()

@@ -1,5 +1,6 @@
 'use server';
 
+import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import fetcher, { FetchError } from '@/utils/fetcher';
 import getToken from '../tokens/getToken';
@@ -7,16 +8,16 @@ import getToken from '../tokens/getToken';
 export default async function updateTranslation(
   textEntryId: number,
   id: number,
-  data: FormData,
+  data: FormData
 ) {
   try {
     const promise = fetcher(
-      `/text-entries/${textEntryId}/translations/${id}/`,
+      `/translations/${id}/`,
       {
         method: 'PUT',
         body: data,
       },
-      getToken(),
+      getToken()
     );
     await promise;
   } catch (error) {
@@ -24,6 +25,6 @@ export default async function updateTranslation(
     return { error: fetchError.resBody };
   }
 
-  revalidatePath(`posts/${id}`);
-  return null;
+  revalidatePath(`/posts/${textEntryId}`);
+  redirect(`/posts/${textEntryId}`);
 }

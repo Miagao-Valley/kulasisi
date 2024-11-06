@@ -51,10 +51,7 @@ export function TranslationsListItem({
 
   useEffect(() => {
     const fetch = async () => {
-      const { results } = await getTranslationRevisions(
-        translation.text_entry,
-        translation.id,
-      );
+      const { results } = await getTranslationRevisions(translation.id);
       setRevisions(results);
     };
 
@@ -68,7 +65,7 @@ export function TranslationsListItem({
   const showDeleteModal = (id: number) => {
     (
       document.getElementById(
-        `delete-translation-modal-${id}`,
+        `delete-translation-modal-${id}`
       ) as HTMLFormElement
     )?.showModal();
   };

@@ -41,6 +41,9 @@ class TextEntryHistorySerializer(serializers.ModelSerializer):
 
 
 class TranslationSerializer(serializers.ModelSerializer):
+    text_entry = serializers.PrimaryKeyRelatedField(
+        queryset=TextEntry.objects.all(), required=False
+    )
     lang = serializers.SlugRelatedField(
         queryset=Language.objects.all(), slug_field="code", required=False
     )
@@ -61,22 +64,13 @@ class TranslationSerializer(serializers.ModelSerializer):
         ]
         extra_kwargs = {
             "author": {"read_only": True},
-            "text_entry": {"read_only": True},
         }
 
     def validate(self, attrs):
-        text_entry_id = self.context["request"].parser_context["kwargs"][
-            "text_entry_pk"
-        ]
+        text_entry = attrs.get("text_entry")
+        lang = attrs.get("lang")
 
-        try:
-            text_entry = TextEntry.objects.get(id=text_entry_id)
-        except TextEntry.DoesNotExist:
-            raise serializers.ValidationError(
-                "The specified text entry does not exist."
-            )
-
-        if attrs.get("lang") == text_entry.lang:
+        if text_entry and lang and lang == text_entry.lang:
             raise serializers.ValidationError(
                 "The translation language must be different from the original text entry language."
             )
@@ -85,6 +79,7 @@ class TranslationSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         validated_data.pop("lang", None)
+        validated_data.pop("text_entry", None)
         return super().update(instance, validated_data)
 
 

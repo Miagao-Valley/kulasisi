@@ -7,14 +7,14 @@ import getToken from '../tokens/getToken';
 
 export default async function deleteTranslation(
   textEntryId: number,
-  id: number,
+  id: number
 ) {
   await fetcher(
-    `/text-entries/${textEntryId}/translations/${id}/`,
+    `/translations/${id}/`,
     {
       method: 'DELETE',
     },
-    getToken(),
+    getToken()
   );
 
   revalidatePath(`/posts/${textEntryId}`);

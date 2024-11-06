@@ -10,7 +10,7 @@ import getLangs from '@/lib/langs/getLangs';
 import toast from 'react-hot-toast';
 
 interface Props {
-  id: number;
+  textEntryId: number;
   original_lang: string;
   className?: string;
 }
@@ -20,7 +20,7 @@ interface SubmitButtonProps {
 }
 
 export default function AddTranslationForm({
-  id,
+  textEntryId,
   original_lang,
   className = '',
 }: Props) {
@@ -46,7 +46,7 @@ export default function AddTranslationForm({
   };
 
   const handleSubmit = async (prevState: any, formData: FormData) => {
-    const res = await addTranslation(id, formData);
+    const res = await addTranslation(textEntryId, formData);
     console.log(res);
     if (!res?.error) {
       setSelectedLang('');
@@ -61,6 +61,7 @@ export default function AddTranslationForm({
 
   return (
     <form className={`flex flex-col gap-3 ${className}`} action={formAction}>
+      <input type="hidden" name="text_entry" value={textEntryId} />
       {formState?.error?.detail && (
         <div role="alert" className="text-sm text-error">
           {formState.error.detail}

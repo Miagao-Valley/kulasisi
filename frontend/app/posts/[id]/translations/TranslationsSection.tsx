@@ -15,6 +15,7 @@ import getLangs from '@/lib/langs/getLangs';
 interface Props {
   textEntry: TextEntry;
 }
+
 export default function TranslationsSection({ textEntry }: Props) {
   const [langs, setLangs] = useState<Lang[]>([]);
   const [translations, setTranslations] = useState<
@@ -73,7 +74,7 @@ export default function TranslationsSection({ textEntry }: Props) {
   return (
     <>
       <AddTranslationForm
-        id={textEntry.id}
+        textEntryId={textEntry.id}
         original_lang={textEntry.lang}
         className="mb-4"
       />
