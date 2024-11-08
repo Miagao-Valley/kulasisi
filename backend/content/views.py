@@ -34,7 +34,7 @@ class ListCreateTextEntryView(generics.ListCreateAPIView):
     serializer_class = TextEntrySerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ["lang__code"]
+    filterset_fields = ["lang__code", "author__username"]
     search_fields = ["content"]
     ordering_fields = ["content", "created_at", "updated_at"]
     ordering = ["-updated_at"]
@@ -66,7 +66,7 @@ class ListCreateTranslationsView(generics.ListCreateAPIView):
     serializer_class = TranslationSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ["text_entry", "lang__code"]
+    filterset_fields = ["text_entry", "lang__code", "author__username"]
     search_fields = ["content"]
     ordering_fields = ["content", "created_at", "updated_at"]
     ordering = ["-updated_at"]

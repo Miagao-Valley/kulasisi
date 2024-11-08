@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import naturalTime from '@/utils/naturalTime';
@@ -14,7 +16,10 @@ export default function TextEntryFooter({ textEntry, className = '' }: Props) {
   return (
     <div className={`${className} flex`}>
       <div className="flex gap-2">
-        <Link href={`/languages/${textEntry.lang}/`}>
+        <Link
+          href={`/languages/${textEntry.lang}/`}
+          onClick={(e) => e.stopPropagation()}
+        >
           <span className="badge badge-primary [&:not(:hover)]:badge-outline">
             {textEntry.lang}
           </span>
@@ -24,6 +29,7 @@ export default function TextEntryFooter({ textEntry, className = '' }: Props) {
         <Link
           href={`/users/${textEntry.author}`}
           className="text-sm font-bold hover:text-primary"
+          onClick={(e) => e.stopPropagation()}
         >
           {textEntry.author}
         </Link>

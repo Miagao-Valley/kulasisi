@@ -12,7 +12,7 @@ interface Props {
   id: number;
 }
 
-export function DeleteTranslationModal({ textEntryId, id }: Props) {
+export default function DeleteTranslationModal({ textEntryId, id }: Props) {
   const router = useRouter();
 
   return (

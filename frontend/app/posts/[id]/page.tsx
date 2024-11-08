@@ -1,6 +1,7 @@
 import React from 'react';
 import getTextEntry from '@/lib/textEntries/getTextEntry';
-import TextEntryItem from './TextEntryItem';
+import TextEntryFooter from '../TextEntryFooter';
+import TextEntryContent from '../TextEntryContent';
 import TranslationsSection from './translations/TranslationsSection';
 
 interface Props {
@@ -15,8 +16,11 @@ export default async function PostPage({ params }: Props) {
 
   return (
     <>
-      <TextEntryItem textEntry={textEntry} className="mb-5" />
-      <div role="tablist" className="tabs tabs-lifted">
+      <div className="mb-3">
+        <TextEntryContent textEntry={textEntry} />
+        <TextEntryFooter textEntry={textEntry} />
+      </div>
+      <div role="tablist" className="tabs tabs-bordered">
         <input
           type="radio"
           name="post_tabs"
@@ -25,10 +29,7 @@ export default async function PostPage({ params }: Props) {
           aria-label="Translations"
           defaultChecked
         />
-        <div
-          role="tabpanel"
-          className="tab-content bg-base-100 border-base-300 rounded-box p-6"
-        >
+        <div role="tabpanel" className="tab-content p-10">
           <TranslationsSection textEntry={textEntry} />
         </div>
       </div>

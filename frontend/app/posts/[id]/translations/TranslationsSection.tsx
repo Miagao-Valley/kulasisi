@@ -40,13 +40,16 @@ export default function TranslationsSection({ textEntry }: Props) {
   useEffect(() => {
     const fetch = async () => {
       setLoading(true);
-      const data = await getTranslations(textEntry.id, {
-        search: searchTerm,
-        ordering: isDescending ? `-${sortOption}` : sortOption,
-        lang__code: filters?.lang || '',
-        limit: 15,
-        offset: offset || '',
-      });
+      const data = await getTranslations(
+        {
+          search: searchTerm,
+          ordering: isDescending ? `-${sortOption}` : sortOption,
+          lang__code: filters?.lang || '',
+          limit: 15,
+          offset: offset || '',
+        },
+        textEntry.id
+      );
       setTranslations(data);
     };
 

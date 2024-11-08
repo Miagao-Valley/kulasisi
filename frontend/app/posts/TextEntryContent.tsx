@@ -3,18 +3,19 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '@/app/components/AuthProvider';
 import { TextEntry, TextEntryRevision } from '@/types';
-import UpdateTextEntryForm from './UpdateTextEntryForm';
-import DeleteTextEntryModal from './DeleteTextEntryModal';
+import getTextEntryRevisions from '@/lib/textEntries/getTextEntryRevisions';
+import UpdateTextEntryForm from './[id]/UpdateTextEntryForm';
+import DeleteTextEntryModal from './[id]/DeleteTextEntryModal';
+import TextEntryRevisionsModal from './[id]/revisions/TextEntryRevisionsModal';
 import { FaClock, FaLink, FaPen, FaTrash } from 'react-icons/fa';
 import { MdMenu } from 'react-icons/md';
-import TextEntryRevisionsModal from './revisions/TextEntryRevisionsModal';
-import getTextEntryRevisions from '@/lib/textEntries/getTextEntryRevisions';
 
 interface Props {
   textEntry: TextEntry;
+  className?: string;
 }
 
-export default function TextEntryContent({ textEntry }: Props) {
+export default function TextEntryContent({ textEntry, className = '' }: Props) {
   const auth = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [revisions, setRevisions] = useState<TextEntryRevision[]>([]);
@@ -33,21 +34,21 @@ export default function TextEntryContent({ textEntry }: Props) {
   };
 
   const copyLinkToClipboard = () => {
-    const link = `${window.location.origin}/text-entries/${textEntry.id}`;
+    const link = `${window.location.origin}/posts/${textEntry.id}/`;
     navigator.clipboard.writeText(link);
   };
 
   const showDeleteModal = () => {
     const modal = document.getElementById(
-      'delete-text-entry-modal',
+      'delete-text-entry-modal'
     ) as HTMLDialogElement;
     modal?.showModal();
   };
 
   return (
-    <>
+    <div className={`${className}`}>
       {isEditing ? (
-        <div className="mb-2">
+        <div className="mb-2" onClick={(e) => e.stopPropagation()}>
           <UpdateTextEntryForm
             id={textEntry.id}
             initialContent={textEntry.content}
@@ -57,7 +58,10 @@ export default function TextEntryContent({ textEntry }: Props) {
       ) : (
         <div className="flex gap-3">
           <p className="flex-1 mb-2 whitespace-pre-line">{textEntry.content}</p>
-          <details className="dropdown dropdown-bottom dropdown-end">
+          <details
+            className="dropdown dropdown-bottom dropdown-end"
+            onClick={(e) => e.stopPropagation()}
+          >
             <summary className="btn btn-ghost btn-sm btn-circle">
               <MdMenu />
             </summary>
@@ -68,7 +72,7 @@ export default function TextEntryContent({ textEntry }: Props) {
                 </a>
               </li>
               <li>
-                <a href={`#revisions`}>
+                <a href={`#revisions-${textEntry.id}`}>
                   <FaClock /> Edits
                 </a>
               </li>
@@ -90,8 +94,10 @@ export default function TextEntryContent({ textEntry }: Props) {
           </details>
         </div>
       )}
-      <DeleteTextEntryModal id={textEntry.id} />
-      <TextEntryRevisionsModal revisions={revisions} />
-    </>
+      <div onClick={(e) => e.stopPropagation()}>
+        <DeleteTextEntryModal id={textEntry.id} />
+        <TextEntryRevisionsModal revisions={revisions} id={textEntry.id} />
+      </div>
+    </div>
   );
 }

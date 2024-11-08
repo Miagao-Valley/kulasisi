@@ -4,15 +4,16 @@ import TextEntryRevisionsList from './TextEntryRevisionsList';
 
 interface Props {
   revisions: TextEntryRevision[];
+  id: number;
 }
 
-export default function TextEntryRevisionsModal({ revisions }: Props) {
+export default function TextEntryRevisionsModal({ revisions, id }: Props) {
   return (
     <>
       <div
         className="modal modal-bottom sm:modal-middle"
         role="dialog"
-        id="revisions"
+        id={`revisions-${id}`}
       >
         <div className="modal-box">
           <div className="flex mb-1">
