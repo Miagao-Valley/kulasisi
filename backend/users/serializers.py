@@ -1,15 +1,14 @@
-import django.contrib.auth.password_validation as validators
-from django.core import exceptions
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-
+from django.contrib.auth import password_validation as validators
+from django.core import exceptions
 from .models import User
-
+from content.models import LanguageProficiency
 from content.serializers import LanguageProficiencySerializer
 
 
 class UserSerializer(serializers.ModelSerializer):
-    language_proficiencies = LanguageProficiencySerializer(many=True, read_only=True)
+    language_proficiencies = LanguageProficiencySerializer(many=True)
 
     class Meta:
         model = User
@@ -37,10 +36,10 @@ class UserSerializer(serializers.ModelSerializer):
         }
 
     def validate(self, data):
+        language_proficiencies_data = data.pop("language_proficiencies", [])
+
         user = User(**data)
-
         password = data.get("password")
-
         errors = dict()
         try:
             validators.validate_password(password=password, user=user)
@@ -50,10 +49,24 @@ class UserSerializer(serializers.ModelSerializer):
         if errors:
             raise serializers.ValidationError(errors)
 
-        return super(UserSerializer, self).validate(data)
+        data["language_proficiencies"] = language_proficiencies_data
+
+        return data
 
     def create(self, validated_data):
+        language_proficiencies_data = validated_data.pop("language_proficiencies", [])
+
         user = User.objects.create_user(**validated_data)
+
+        for proficiency_data in language_proficiencies_data:
+            lang = proficiency_data.get("lang")
+            if lang:
+                LanguageProficiency.objects.create(
+                    user=user,
+                    lang=lang,
+                    level=proficiency_data.get("level"),
+                )
+
         return user
 
 

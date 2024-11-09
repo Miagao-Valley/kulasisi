@@ -10,7 +10,7 @@ export interface AuthType {
   username: string;
 }
 
-export type Gender = 'M' | 'F' | 'O' | '';
+export type Gender = 'M' | 'F' | 'O' | 'N';
 
 export type LangProficiencyLevel = 1 | 2 | 3 | 4 | 5;
 

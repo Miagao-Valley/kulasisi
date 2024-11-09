@@ -5,7 +5,7 @@ const displayGender = (gender: Gender): string => {
     M: 'Male',
     F: 'Female',
     O: 'Other',
-    '': 'Prefer not to say',
+    N: 'Prefer not to say',
   };
 
   return genderLookup[gender] || 'Unknown';
