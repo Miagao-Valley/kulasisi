@@ -5,16 +5,24 @@ import { redirect } from 'next/navigation';
 import fetcher, { FetchError } from '@/utils/fetcher';
 import setToken from '../tokens/setToken';
 
-export default async function register(data: FormData) {
+export default async function register(data: object) {
   try {
     await fetcher(`/register/`, {
       method: 'POST',
-      body: data,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
     });
 
     const { access, refresh } = await fetcher(`/token/`, {
       method: 'POST',
-      body: data,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
     });
 
     setToken(access);
