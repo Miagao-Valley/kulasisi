@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Language, TextEntry, Translation
+from .models import Language, LanguageProficiency, TextEntry, Translation
 from users.models import User
 
 
@@ -8,6 +8,16 @@ class LanguageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Language
         fields = ["id", "code", "name"]
+
+
+class LanguageProficiencySerializer(serializers.ModelSerializer):
+    lang = serializers.SlugRelatedField(
+        queryset=Language.objects.all(), slug_field="code", required=False
+    )
+
+    class Meta:
+        model = LanguageProficiency
+        fields = ["lang", "level"]
 
 
 class TextEntrySerializer(serializers.ModelSerializer):

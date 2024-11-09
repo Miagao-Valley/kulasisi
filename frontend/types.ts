@@ -10,6 +10,10 @@ export interface AuthType {
   username: string;
 }
 
+export type Gender = 'M' | 'F' | 'O' | '';
+
+export type LangProficiencyLevel = 1 | 2 | 3 | 4 | 5;
+
 export interface User {
   id: number;
   username: string;
@@ -18,6 +22,13 @@ export interface User {
   email: string;
   last_login: Date;
   date_joined: Date;
+  phone_number?: string;
+  date_of_birth?: Date;
+  location?: string;
+  gender?: Gender;
+  bio?: string;
+  website?: string;
+  language_proficiencies?: { lang: string; level: LangProficiencyLevel }[];
 }
 
 export interface Lang {

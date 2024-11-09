@@ -5,8 +5,12 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from .models import User
 
+from content.serializers import LanguageProficiencySerializer
+
 
 class UserSerializer(serializers.ModelSerializer):
+    language_proficiencies = LanguageProficiencySerializer(many=True, read_only=True)
+
     class Meta:
         model = User
         fields = [
@@ -16,8 +20,15 @@ class UserSerializer(serializers.ModelSerializer):
             "first_name",
             "last_name",
             "password",
+            "phone_number",
+            "date_of_birth",
+            "location",
+            "gender",
+            "bio",
+            "website",
             "last_login",
             "date_joined",
+            "language_proficiencies",
         ]
         extra_kwargs = {
             "last_login": {"read_only": True},
