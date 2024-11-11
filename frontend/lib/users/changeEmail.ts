@@ -12,7 +12,7 @@ export default async function changeEmail(username: string, data: FormData) {
         method: 'POST',
         body: data,
       },
-      getToken()
+      getToken(),
     );
     await promise;
   } catch (error) {

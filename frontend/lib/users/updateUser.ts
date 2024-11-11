@@ -16,7 +16,7 @@ export default async function updateUser(username: string, data: object) {
         },
         body: JSON.stringify(data),
       },
-      getToken()
+      getToken(),
     );
     await promise;
   } catch (error) {

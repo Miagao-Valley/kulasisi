@@ -25,7 +25,7 @@ export default function TranslationsList({ translations, className }: Props) {
             key={translation.id}
             onClick={() =>
               router.push(
-                `/posts/${translation.text_entry}/#translation-${translation.id}`
+                `/posts/${translation.text_entry}/#translation-${translation.id}`,
               )
             }
           >

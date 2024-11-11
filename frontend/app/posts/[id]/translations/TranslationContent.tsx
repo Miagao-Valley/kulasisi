@@ -39,7 +39,7 @@ export function TranslationsContent({ translation, className = '' }: Props) {
   const showDeleteModal = (id: number) => {
     (
       document.getElementById(
-        `delete-translation-modal-${id}`
+        `delete-translation-modal-${id}`,
       ) as HTMLFormElement
     )?.showModal();
   };

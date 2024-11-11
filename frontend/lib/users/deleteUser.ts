@@ -13,7 +13,7 @@ export default async function deleteUser(username: string, data: FormData) {
         method: 'DELETE',
         body: data,
       },
-      getToken()
+      getToken(),
     );
     await promise;
   } catch (error) {

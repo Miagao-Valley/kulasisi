@@ -6,7 +6,7 @@ import { redirect } from 'next/navigation';
 
 export default async function changePhoneNumber(
   username: string,
-  data: FormData
+  data: FormData,
 ) {
   try {
     const promise = fetcher(
@@ -15,7 +15,7 @@ export default async function changePhoneNumber(
         method: 'POST',
         body: data,
       },
-      getToken()
+      getToken(),
     );
     await promise;
   } catch (error) {

@@ -31,7 +31,7 @@ export default function LanguagesTab({ user }: Props) {
 
   const handleLanguageSelection = (
     event: React.ChangeEvent<HTMLInputElement>,
-    lang: string
+    lang: string,
   ) => {
     if (event.target.checked) {
       setSelectedLanguages((prev) => [
@@ -55,11 +55,11 @@ export default function LanguagesTab({ user }: Props) {
 
   const handleRangeChange = (
     event: React.ChangeEvent<HTMLInputElement>,
-    lang: string
+    lang: string,
   ) => {
     const level = parseInt(event.target.value) as LangProficiencyLevel;
     setSelectedLanguages((prev) =>
-      prev.map((item) => (item.lang === lang ? { ...item, level } : item))
+      prev.map((item) => (item.lang === lang ? { ...item, level } : item)),
     );
   };
 

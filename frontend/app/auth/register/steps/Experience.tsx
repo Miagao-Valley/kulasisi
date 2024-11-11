@@ -7,11 +7,11 @@ interface Props {
   selectedLanguages: { lang: string; level: LangProficiencyLevel }[];
   handleLanguageSelection: (
     e: React.ChangeEvent<HTMLInputElement>,
-    lang: string
+    lang: string,
   ) => void;
   handleRangeChange: (
     e: React.ChangeEvent<HTMLInputElement>,
-    lang: string
+    lang: string,
   ) => void;
 }
 

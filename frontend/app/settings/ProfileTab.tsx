@@ -34,7 +34,7 @@ export default function ProfileTab({ user }: Props) {
     event: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >,
-    field: string
+    field: string,
   ) => {
     const { value } = event.target;
     setFormData((prev) => ({ ...prev, [field]: value }));

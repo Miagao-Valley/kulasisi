@@ -61,7 +61,7 @@ export default function RegisterForm() {
     event: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >,
-    field: string
+    field: string,
   ) => {
     const { value } = event.target;
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -69,7 +69,7 @@ export default function RegisterForm() {
 
   const handleLanguageSelection = (
     event: React.ChangeEvent<HTMLInputElement>,
-    lang: string
+    lang: string,
   ) => {
     if (event.target.checked) {
       setSelectedLanguages((prev) => [
@@ -83,11 +83,11 @@ export default function RegisterForm() {
 
   const handleRangeChange = (
     event: React.ChangeEvent<HTMLInputElement>,
-    lang: string
+    lang: string,
   ) => {
     const level = parseInt(event.target.value) as LangProficiencyLevel;
     setSelectedLanguages((prev) =>
-      prev.map((item) => (item.lang === lang ? { ...item, level } : item))
+      prev.map((item) => (item.lang === lang ? { ...item, level } : item)),
     );
   };
 

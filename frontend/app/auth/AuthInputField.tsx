@@ -14,7 +14,7 @@ interface Props {
   onChange?: (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    >,
   ) => void;
   className?: string;
 }
@@ -34,7 +34,7 @@ export default function AuthInputField({
   const [content, setContent] = useState(value || '');
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const newValue = e.target.value;
     setContent(newValue);

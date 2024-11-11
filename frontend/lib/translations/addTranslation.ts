@@ -6,7 +6,7 @@ import getToken from '../tokens/getToken';
 
 export default async function addTranslation(
   textEntryId: number,
-  data: FormData
+  data: FormData,
 ) {
   let res = null;
   try {
@@ -16,7 +16,7 @@ export default async function addTranslation(
         method: 'POST',
         body: data,
       },
-      getToken()
+      getToken(),
     );
   } catch (error) {
     const fetchError = error as FetchError;

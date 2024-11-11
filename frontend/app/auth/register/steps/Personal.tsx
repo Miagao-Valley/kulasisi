@@ -9,7 +9,7 @@ interface Props {
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >,
-    field: string
+    field: string,
   ) => void;
 }
 

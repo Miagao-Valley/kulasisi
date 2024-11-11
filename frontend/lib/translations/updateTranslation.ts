@@ -8,7 +8,7 @@ import getToken from '../tokens/getToken';
 export default async function updateTranslation(
   textEntryId: number,
   id: number,
-  data: FormData
+  data: FormData,
 ) {
   try {
     const promise = fetcher(
@@ -17,7 +17,7 @@ export default async function updateTranslation(
         method: 'PUT',
         body: data,
       },
-      getToken()
+      getToken(),
     );
     await promise;
   } catch (error) {

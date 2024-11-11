@@ -40,7 +40,7 @@ export default function TextEntryContent({ textEntry, className = '' }: Props) {
 
   const showDeleteModal = () => {
     const modal = document.getElementById(
-      'delete-text-entry-modal'
+      'delete-text-entry-modal',
     ) as HTMLDialogElement;
     modal?.showModal();
   };

@@ -38,14 +38,14 @@ export default function NavButtons({ step, steps, setStep, formData }: Props) {
             step === 0
               ? !(formData.username && formData.password)
               : step === 1
-              ? !formData.email
-              : step === 2
-              ? !(
-                  formData.first_name &&
-                  formData.last_name &&
-                  formData.date_of_birth
-                )
-              : false
+                ? !formData.email
+                : step === 2
+                  ? !(
+                      formData.first_name &&
+                      formData.last_name &&
+                      formData.date_of_birth
+                    )
+                  : false
           }
         >
           Next
