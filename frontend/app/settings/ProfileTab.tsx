@@ -34,7 +34,7 @@ export default function ProfileTab({ user }: Props) {
     event: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >,
-    field: string,
+    field: string
   ) => {
     const { value } = event.target;
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -57,7 +57,6 @@ export default function ProfileTab({ user }: Props) {
                 value={formData.first_name}
                 onChange={(e) => handleInputChange(e, 'first_name')}
                 error={formState?.error?.first_name}
-                autoFocus={true}
                 className="w-full"
               />
               <AuthInputField

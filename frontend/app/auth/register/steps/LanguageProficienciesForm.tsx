@@ -8,11 +8,11 @@ interface Props {
   selectedLanguages: { lang: string; level: LangProficiencyLevel }[];
   handleLanguageSelection: (
     e: React.ChangeEvent<HTMLInputElement>,
-    lang: string,
+    lang: string
   ) => void;
   handleRangeChange: (
     e: React.ChangeEvent<HTMLInputElement>,
-    lang: string,
+    lang: string
   ) => void;
   disabled?: boolean;
 }
@@ -45,7 +45,7 @@ export default function LanguageProficienciesForm({
                       value={lang.code}
                       onChange={(e) => handleLanguageSelection(e, lang.code)}
                       defaultChecked={selectedLanguages.some(
-                        (langObj) => langObj.lang === lang.code,
+                        (langObj) => langObj.lang === lang.code
                       )}
                       className="checkbox checkbox-sm mr-2"
                     />
@@ -88,7 +88,7 @@ export default function LanguageProficienciesForm({
               max={5}
               value={langProf.level}
               step={1}
-              className="range range-sm w-full"
+              className="range range-primary range-sm w-full"
               onChange={(e) => handleRangeChange(e, langProf.lang)}
               disabled={disabled}
             />

@@ -3,16 +3,22 @@ import getTextEntry from '@/lib/textEntries/getTextEntry';
 import TextEntryFooter from '../TextEntryFooter';
 import TextEntryContent from '../TextEntryContent';
 import TranslationsSection from './translations/TranslationsSection';
+import Link from 'next/link';
 
 interface Props {
   params: {
     id: string;
   };
+  searchParams: {
+    tab?: string;
+  };
 }
 
-export default async function PostPage({ params }: Props) {
+export default async function PostPage({ params, searchParams }: Props) {
   const id = Number(params.id);
   const textEntry = await getTextEntry(id);
+
+  const currentTab = searchParams?.tab || 'translations';
 
   return (
     <>
@@ -20,19 +26,22 @@ export default async function PostPage({ params }: Props) {
         <TextEntryContent textEntry={textEntry} />
         <TextEntryFooter textEntry={textEntry} />
       </div>
-      <div role="tablist" className="tabs tabs-bordered">
-        <input
-          type="radio"
-          name="post_tabs"
+
+      <div role="tablist" className="tabs tabs-bordered w-fit">
+        <Link
+          href="?tab=translations"
           role="tab"
-          className="tab"
+          className={`tab ${currentTab === 'translations' ? 'tab-active' : ''}`}
           aria-label="Translations"
-          defaultChecked
-        />
-        <div role="tabpanel" className="tab-content p-10">
+        >
+          Translations
+        </Link>
+      </div>
+      {currentTab === 'translations' ? (
+        <div role="tabpanel" className="p-6">
           <TranslationsSection textEntry={textEntry} />
         </div>
-      </div>
+      ) : null}
     </>
   );
 }

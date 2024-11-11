@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '../components/AuthProvider';
 import { User } from '@/types';
@@ -10,9 +9,15 @@ import Loading from '../loading';
 import AccountTab from './AccountTab';
 import ProfileTab from './ProfileTab';
 
-export default function SettingsPage() {
+interface Props {
+  searchParams: {
+    tab?: string;
+  };
+}
+
+export default function SettingsPage({ searchParams }: Props) {
   const auth = useAuth();
-  const searchParams = useSearchParams();
+
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
@@ -26,7 +31,7 @@ export default function SettingsPage() {
     fetch();
   }, [auth.username, auth.isAuthenticated]);
 
-  const currentTab = searchParams.get('tab') || 'account';
+  const currentTab = searchParams?.tab || 'account';
 
   if (!user) {
     return <Loading />;
@@ -45,7 +50,6 @@ export default function SettingsPage() {
         >
           Account
         </Link>
-
         <Link
           href="?tab=profile"
           role="tab"
@@ -55,7 +59,6 @@ export default function SettingsPage() {
           Profile
         </Link>
       </div>
-
       {currentTab === 'account' ? (
         <div role="tabpanel" className="p-6">
           <AccountTab user={user} />
