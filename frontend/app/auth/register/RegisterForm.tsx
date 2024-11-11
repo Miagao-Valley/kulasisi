@@ -58,7 +58,9 @@ export default function RegisterForm() {
   };
 
   const handleInputChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
     field: string
   ) => {
     const { value } = event.target;

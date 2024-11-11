@@ -28,9 +28,7 @@ export default async function UserPage({ params }: Props) {
           defaultChecked
         />
         <div role="tabpanel" className="tab-content p-10">
-          <LanguagesTab
-            language_proficiencies={user.language_proficiencies || []}
-          />
+          <LanguagesTab user={user} />
         </div>
 
         <input

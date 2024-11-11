@@ -6,7 +6,9 @@ interface Props {
   formData: any;
   formState: any;
   handleInputChange: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
     field: string
   ) => void;
 }
