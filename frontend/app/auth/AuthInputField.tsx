@@ -11,7 +11,12 @@ interface Props {
   error?: string;
   autoFocus?: boolean;
   value?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => void;
+  className?: string;
 }
 
 export default function AuthInputField({
@@ -23,11 +28,14 @@ export default function AuthInputField({
   autoFocus,
   value,
   onChange,
+  className = '',
 }: Props) {
   const [fieldType, setFieldType] = useState(type);
   const [content, setContent] = useState(value || '');
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const newValue = e.target.value;
     setContent(newValue);
 
@@ -40,7 +48,7 @@ export default function AuthInputField({
     switch (type) {
       case 'password':
         return (
-          <>
+          <div className={`flex w-full ${className}`}>
             <input
               className="grow w-full"
               name={name}
@@ -61,7 +69,7 @@ export default function AuthInputField({
                 {fieldType === 'password' ? <FaEyeSlash /> : <FaEye />}
               </button>
             )}
-          </>
+          </div>
         );
       case 'email':
       case 'tel':
@@ -69,9 +77,20 @@ export default function AuthInputField({
       case 'date':
         return (
           <input
-            className="grow w-full"
+            className={`${className} grow w-full`}
             name={name}
             type={type}
+            placeholder={placeholder}
+            autoFocus={autoFocus}
+            value={content}
+            onChange={handleChange}
+          />
+        );
+      case 'textarea':
+        return (
+          <textarea
+            className={`${className} textarea textarea-bordered grow w-full`}
+            name={name}
             placeholder={placeholder}
             autoFocus={autoFocus}
             value={content}
@@ -81,7 +100,7 @@ export default function AuthInputField({
       default:
         return (
           <input
-            className="grow w-full"
+            className={`${className} grow w-full`}
             name={name}
             type={type}
             placeholder={placeholder}
@@ -94,15 +113,20 @@ export default function AuthInputField({
   };
 
   return (
-    <div>
-      <label
-        className={`input input-bordered ${
-          error && 'input-error'
-        } flex items-center gap-3`}
-      >
-        {icon && <span>{icon}</span>}
-        {renderInputField()}
-      </label>
+    <div className={`${className}`}>
+      {type === 'textarea' ? (
+        renderInputField()
+      ) : (
+        <label
+          className={`input input-bordered ${
+            error && 'input-error'
+          } flex items-center gap-3`}
+        >
+          {icon && <span>{icon}</span>}
+          {renderInputField()}
+        </label>
+      )}
+
       {error && (
         <div role="alert" className="text-sm text-error">
           {error[0]}
