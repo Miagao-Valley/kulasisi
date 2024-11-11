@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import getAuth from './lib/auth/getAuth';
 
-const protectedRoutes: string[] = [];
+const protectedRoutes: string[] = ['/settings'];
 const restrictedRoutes: string[] = ['/auth/login', '/auth/register'];
 
 export default async function middleware(req: NextRequest) {
