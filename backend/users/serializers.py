@@ -1,7 +1,8 @@
+from django.contrib.auth import authenticate, password_validation as validators
+from django.core import exceptions
+from django.db import transaction
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from django.contrib.auth import password_validation as validators
-from django.core import exceptions
 from .models import User
 from content.models import LanguageProficiency
 from content.serializers import LanguageProficiencySerializer
@@ -40,11 +41,13 @@ class UserSerializer(serializers.ModelSerializer):
 
         user = User(**data)
         password = data.get("password")
-        errors = dict()
-        try:
-            validators.validate_password(password=password, user=user)
-        except exceptions.ValidationError as e:
-            errors["password"] = list(e.messages)
+        errors = {}
+
+        if password:
+            try:
+                validators.validate_password(password=password, user=user)
+            except exceptions.ValidationError as e:
+                errors["password"] = list(e.messages)
 
         if errors:
             raise serializers.ValidationError(errors)
@@ -68,6 +71,99 @@ class UserSerializer(serializers.ModelSerializer):
                 )
 
         return user
+
+    def update(self, instance, validated_data):
+        validated_data.pop("email", None)
+        validated_data.pop("phone_number", None)
+
+        language_proficiencies_data = validated_data.pop("language_proficiencies", [])
+
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+
+        instance.save()
+
+        with transaction.atomic():
+            instance.language_proficiencies.all().delete()
+
+            for proficiency_data in language_proficiencies_data:
+                lang = proficiency_data.get("lang")
+                if lang:
+                    LanguageProficiency.objects.create(
+                        user=instance,
+                        lang=lang,
+                        level=proficiency_data.get("level"),
+                    )
+
+        return instance
+
+
+class ChangeEmailSerializer(serializers.Serializer):
+    new_email = serializers.EmailField()
+    password = serializers.CharField(write_only=True)
+
+    def validate_new_email(self, value):
+        if User.objects.filter(email=value).exists():
+            raise serializers.ValidationError("This email address is already in use.")
+        return value
+
+    def validate_password(self, value):
+        user = self.context["request"].user
+        if not user.check_password(value):
+            raise serializers.ValidationError("The provided password is incorrect.")
+        return value
+
+
+class ChangePhoneNumberSerializer(serializers.Serializer):
+    new_phone_number = serializers.CharField(max_length=15)
+    password = serializers.CharField(write_only=True)
+
+    def validate_new_phone_number(self, value):
+        if User.objects.filter(phone_number=value).exists():
+            raise serializers.ValidationError("This phone number is already in use.")
+        return value
+
+    def validate_password(self, value):
+        user = self.context["request"].user
+        if not user.check_password(value):
+            raise serializers.ValidationError("The provided password is incorrect.")
+        return value
+
+
+class ChangePasswordSerializer(serializers.Serializer):
+    current_password = serializers.CharField(write_only=True)
+    new_password = serializers.CharField(write_only=True)
+
+    def validate_current_password(self, value):
+        user = self.context["request"].user
+        if not user.check_password(value):
+            raise serializers.ValidationError("Current password is incorrect.")
+        return value
+
+    def validate_new_password(self, value):
+        user = self.context["request"].user
+        try:
+            validators.validate_password(value, user)
+        except exceptions.ValidationError as e:
+            raise serializers.ValidationError(list(e.messages))
+        return value
+
+
+class DeleteUserSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    password = serializers.CharField(write_only=True)
+
+    def validate_username(self, value):
+        if not User.objects.filter(username=value).exists():
+            raise serializers.ValidationError("The provided username does not exist.")
+        return value
+
+    def validate_password(self, value):
+        username = self.initial_data.get("username")
+        user = authenticate(username=username, password=value)
+        if user is None:
+            raise serializers.ValidationError("The provided password is incorrect.")
+        return value
 
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
