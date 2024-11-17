@@ -31,7 +31,7 @@ export default function TranslationsList({ translations, className }: Props) {
           >
             <div id={`translation-${translation.id}`}>
               <TranslationsContent translation={translation} />
-              <TextEntryFooter textEntry={translation} />
+              <TextEntryFooter entry={translation} type="translations" />
             </div>
           </li>
         ))

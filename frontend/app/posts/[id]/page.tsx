@@ -24,7 +24,7 @@ export default async function PostPage({ params, searchParams }: Props) {
     <>
       <div className="mb-3">
         <TextEntryContent textEntry={textEntry} />
-        <TextEntryFooter textEntry={textEntry} />
+        <TextEntryFooter entry={textEntry} type='text-entries' />
       </div>
 
       <div role="tablist" className="tabs tabs-bordered w-fit">

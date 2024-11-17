@@ -26,7 +26,7 @@ export default function TextEntriesList({
             onClick={() => router.push(`/posts/${textEntry.id}`)}
           >
             <TextEntryContent textEntry={textEntry} />
-            <TextEntryFooter textEntry={textEntry} />
+            <TextEntryFooter entry={textEntry} type="text-entries" />
           </li>
         ))
       ) : (
