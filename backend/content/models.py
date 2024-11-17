@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
 from simple_history.models import HistoricalRecords
 from users.models import User
 
@@ -81,3 +82,55 @@ class Translation(models.Model):
 
     def __str__(self):
         return f"{self.content} ({self.lang.code})"
+
+
+class Vote(models.Model):
+    VOTE_CHOICES = [(1, "Upvote"), (-1, "Downvote"), (0, "Unvote")]
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="votes")
+    text_entry = models.ForeignKey(
+        TextEntry, on_delete=models.CASCADE, related_name="votes", null=True, blank=True
+    )
+    translation = models.ForeignKey(
+        Translation,
+        on_delete=models.CASCADE,
+        related_name="votes",
+        null=True,
+        blank=True,
+    )
+    value = models.SmallIntegerField(choices=VOTE_CHOICES)
+    voted_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user", "text_entry"],
+                name="unique_textentry_vote",
+                condition=models.Q(text_entry__isnull=False),
+            ),
+            models.UniqueConstraint(
+                fields=["user", "translation"],
+                name="unique_translation_vote",
+                condition=models.Q(translation__isnull=False),
+            ),
+        ]
+
+    def clean(self):
+        if not self.text_entry and not self.translation:
+            raise ValidationError(
+                "A vote must be assigned to either a text entry or a translation."
+            )
+        if self.text_entry and self.translation:
+            raise ValidationError(
+                "A vote cannot be assigned to both a text entry and a translation."
+            )
+
+    def save(self, *args, **kwargs):
+        self.clean()
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        if self.text_entry:
+            return f"Vote by {self.user.username} on Text Entry {self.text_entry.pk}"
+        elif self.translation:
+            return f"Vote by {self.user.username} on Translation {self.translation.pk}"
