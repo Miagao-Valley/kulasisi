@@ -10,14 +10,19 @@ urlpatterns = [
     ),
     path("text-entries/", views.ListCreateTextEntryView.as_view(), name="text_entries"),
     path(
-        "text-entries/<int:pk>/",
+        "text-entries/<int:text_entry_pk>/",
         views.RetrieveUpdateDestroyTextEntryView.as_view(),
         name="text_entry",
     ),
     path(
-        "text-entries/<int:pk>/history/",
+        "text-entries/<int:text_entry_pk>/history/",
         views.ListTextEntryHistoryView.as_view(),
         name="text_entry_history",
+    ),
+    path(
+        "text-entries/<int:text_entry_pk>/votes/",
+        views.ListCreateVoteView.as_view(),
+        name="text_entry_votes",
     ),
     path(
         "translations/",
@@ -25,13 +30,18 @@ urlpatterns = [
         name="translations",
     ),
     path(
-        "translations/<int:pk>/",
+        "translations/<int:translation_pk>/",
         views.RetrieveUpdateDestroyTranslationsView.as_view(),
         name="translation",
     ),
     path(
-        "translations/<int:pk>/history/",
+        "translations/<int:translation_pk>/history/",
         views.ListTranslationHistoryView.as_view(),
         name="translation_history",
+    ),
+    path(
+        "translations/<int:translation_pk>/votes/",
+        views.ListCreateVoteView.as_view(),
+        name="translations_votes",
     ),
 ]

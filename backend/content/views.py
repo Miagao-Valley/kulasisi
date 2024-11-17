@@ -1,16 +1,19 @@
-from django_filters.rest_framework import DjangoFilterBackend
 from django.shortcuts import get_object_or_404
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.decorators import action
 from rest_framework.filters import SearchFilter, OrderingFilter
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
-from .models import Language, TextEntry, Translation
+
+from .models import Language, TextEntry, Translation, Vote
 from .serializers import (
     LanguageSerializer,
     TextEntrySerializer,
     TextEntryHistorySerializer,
     TranslationSerializer,
     TranslationHistorySerializer,
+    VoteSerializer,
 )
 
 
@@ -50,6 +53,7 @@ class RetrieveUpdateDestroyTextEntryView(generics.RetrieveUpdateDestroyAPIView):
     queryset = TextEntry.objects.all()
     serializer_class = TextEntrySerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
+    lookup_url_kwarg = "text_entry_pk"
 
 
 class ListTextEntryHistoryView(generics.ListAPIView):
@@ -57,7 +61,7 @@ class ListTextEntryHistoryView(generics.ListAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get_queryset(self):
-        text_entry = get_object_or_404(TextEntry, id=self.kwargs["pk"])
+        text_entry = get_object_or_404(TextEntry, id=self.kwargs.get("text_entry_pk"))
         return text_entry.history.all()
 
 
@@ -85,6 +89,7 @@ class RetrieveUpdateDestroyTranslationsView(generics.RetrieveUpdateDestroyAPIVie
     queryset = Translation.objects.all()
     serializer_class = TranslationSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
+    lookup_url_kwarg = "translation_pk"
 
 
 class ListTranslationHistoryView(generics.ListAPIView):
@@ -92,5 +97,21 @@ class ListTranslationHistoryView(generics.ListAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get_queryset(self):
-        translation = get_object_or_404(Translation, id=self.kwargs["pk"])
+        translation = get_object_or_404(
+            Translation, id=self.kwargs.get("translation_pk")
+        )
         return translation.history.all()
+
+
+class ListCreateVoteView(generics.ListCreateAPIView):
+    serializer_class = VoteSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    pagination_class = None
+
+    def get_queryset(self):
+        if text_entry_pk := self.kwargs.get("text_entry_pk"):
+            text_entry = get_object_or_404(TextEntry, id=text_entry_pk)
+            return text_entry.votes.all()
+        elif translation_pk := self.kwargs.get("translation_pk"):
+            translation = get_object_or_404(Translation, id=translation_pk)
+            return translation.votes.all()
