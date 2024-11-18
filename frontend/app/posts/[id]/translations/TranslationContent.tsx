@@ -1,31 +1,26 @@
-import React, { useEffect, useState } from 'react';
+'use client'
+
+import React, { useState } from 'react';
+import Link from 'next/link';
 import { useAuth } from '@/app/components/AuthProvider';
 import { Translation, TranslationRevision } from '@/types';
-import getTranslationRevisions from '@/lib/translations/getTranslationRevisions';
+import PostHeader from '../../PostHeader';
 import UpdateTranslationForm from './UpdateTranslationForm';
 import DeleteTranslationModal from './DeleteTranslationModal';
 import TranslationRevisionsModal from '../revisions/TranslationRevisionsModal';
 import { FaClock, FaLink, FaPen, FaTrash } from 'react-icons/fa';
 import { MdMenu } from 'react-icons/md';
 
+
 interface Props {
   translation: Translation;
+  revisions: TranslationRevision[];
   className?: string;
 }
 
-export function TranslationsContent({ translation, className = '' }: Props) {
+export function TranslationsContent({ translation, revisions, className = '' }: Props) {
   const auth = useAuth();
   const [isEditing, setIsEditing] = useState(false);
-  const [revisions, setRevisions] = useState<TranslationRevision[]>([]);
-
-  useEffect(() => {
-    const fetch = async () => {
-      const { results } = await getTranslationRevisions(translation.id);
-      setRevisions(results);
-    };
-
-    fetch();
-  }, [translation.text_entry, translation.id]);
 
   const handleEdit = () => {
     setIsEditing(true);
@@ -62,11 +57,9 @@ export function TranslationsContent({ translation, className = '' }: Props) {
           />
         </div>
       ) : (
-        <div className="flex gap-3">
-          <p className="flex-1 mb-2 whitespace-pre-line">
-            {translation.content}
-          </p>
-          <div>
+        <>
+          <div className="flex gap-3 mb-2">
+            <PostHeader entry={translation} className='flex-1' />
             <details
               className="dropdown dropdown-bottom dropdown-end"
               onClick={(e) => e.stopPropagation()}
@@ -105,7 +98,13 @@ export function TranslationsContent({ translation, className = '' }: Props) {
               </ul>
             </details>
           </div>
-        </div>
+
+          <div className="flex gap-3">
+            <Link href={`/posts/${translation.text_entry}#translation${translation.id}`} className='flex-1 mb-2 hover:text-primary'>
+              <p className="whitespace-pre-line">{translation.content}</p>
+            </Link>
+          </div>
+        </>
       )}
       <div onClick={(e) => e.stopPropagation()}>
         <TranslationRevisionsModal id={translation.id} revisions={revisions} />

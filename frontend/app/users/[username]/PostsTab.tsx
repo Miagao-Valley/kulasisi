@@ -1,6 +1,5 @@
 import React from 'react';
 import { User } from '@/types';
-import getTextEntries from '@/lib/textEntries/getTextEntries';
 import TextEntriesList from '@/app/posts/TextEntriesList';
 
 interface Props {
@@ -8,11 +7,10 @@ interface Props {
 }
 
 export default async function PostsTab({ user }: Props) {
-  const textEntries = await getTextEntries({ author__username: user.username });
-
+  const filters = { author: user.username }
   return (
     <>
-      <TextEntriesList textEntries={textEntries} />
+      <TextEntriesList filters={filters} />
     </>
   );
 }

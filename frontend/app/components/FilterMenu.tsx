@@ -1,4 +1,7 @@
-import React from 'react';
+'use client'
+
+import React, { useEffect, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { FaFilter } from 'react-icons/fa';
 
 export interface Filter {
@@ -13,18 +16,40 @@ export interface FilterOption {
 }
 
 interface Props {
-  filterOptions: FilterOption[];
-  setFilters: React.Dispatch<React.SetStateAction<Filter>>;
   currentFilters: Filter;
+  filterOptions: FilterOption[];
   className?: string;
 }
 
 export default function FilterMenu({
   filterOptions,
-  setFilters,
   currentFilters,
   className,
 }: Props) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const [filters, setFilters] = useState(currentFilters);
+
+  useEffect(() => {
+    const currentSearchParams = new URLSearchParams(Array.from(searchParams.entries()));
+
+    for (const [key, value] of Object.entries(filters)) {
+      if (value) {
+        let processedValue = value;
+        if (typeof processedValue === 'boolean') {
+          processedValue = processedValue ? 'true' : 'false';
+        }
+        currentSearchParams.set(key, processedValue);
+      } else {
+        currentSearchParams.delete(key)
+      }
+    }
+
+    router.push(`?${currentSearchParams.toString()}`);
+  }, [filters, searchParams, router]);
+
+
   return (
     <div className={`dropdown dropdown-hover dropdown-end ${className}`}>
       <div tabIndex={0} role="button" className="btn btn-outline btn-sm">

@@ -1,6 +1,7 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import {
   MdFirstPage,
   MdLastPage,
@@ -9,45 +10,47 @@ import {
 } from 'react-icons/md';
 
 interface Props {
-  num_pages: number;
-  current_page: number;
-  limit: number;
-  next_offset: number | null;
-  prev_offset: number | null;
-  setOffset: React.Dispatch<React.SetStateAction<number | null>>;
+  numPages: number;
+  currentPage: number;
+  next: boolean;
+  prev: boolean
   className: string;
 }
 
 export default function Pagination({
-  num_pages,
-  current_page,
-  limit,
-  next_offset,
-  prev_offset,
-  setOffset,
+  numPages,
+  currentPage,
+  next,
+  prev,
   className = '',
 }: Props) {
-  if (num_pages <= 1) {
-    return;
-  }
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
-  const handlePageClick = (page: number) => {
-    const newOffset = (page - 1) * limit;
-    setOffset(newOffset);
-  };
+  const [page, setPage] = useState(currentPage);
+
+  useEffect(() => {
+    const currentSearchParams = new URLSearchParams(Array.from(searchParams.entries()));
+    if (page && page > 1) {
+      currentSearchParams.set('page', String(page))
+    } else {
+      currentSearchParams.delete('page')
+    }
+    router.push(`?${currentSearchParams.toString()}`);
+  }, [page, searchParams, router])
 
   const getPageNumbers = () => {
     const pageNumbers = [];
     const totalPagesToShow = 5;
     const halfRange = Math.floor(totalPagesToShow / 2);
 
-    let startPage = Math.max(1, current_page - halfRange);
-    let endPage = Math.min(num_pages, current_page + halfRange);
+    let startPage = Math.max(1, currentPage - halfRange);
+    let endPage = Math.min(numPages, currentPage + halfRange);
 
-    if (current_page <= halfRange) {
-      endPage = Math.min(totalPagesToShow, num_pages);
-    } else if (current_page + halfRange > num_pages) {
-      startPage = Math.max(1, num_pages - totalPagesToShow + 1);
+    if (currentPage <= halfRange) {
+      endPage = Math.min(totalPagesToShow, numPages);
+    } else if (currentPage + halfRange > numPages) {
+      startPage = Math.max(1, numPages - totalPagesToShow + 1);
     }
 
     for (let i = startPage; i <= endPage; i++) {
@@ -59,48 +62,48 @@ export default function Pagination({
 
   const pageNumbers = getPageNumbers();
 
+  if (numPages <= 1) {
+    return;
+  }
+
   return (
     <div className={`join ${className}`}>
       <button
         className={`join-item btn btn-sm`}
-        onClick={() => setOffset(0)}
-        disabled={current_page === 1}
+        onClick={() => setPage(1)}
+        disabled={currentPage === 1}
       >
         <MdFirstPage />
       </button>
       <button
-        className={`join-item btn btn-sm ${
-          prev_offset == null ? 'btn-disabled' : ''
-        }`}
-        onClick={() => setOffset(prev_offset)}
-        disabled={prev_offset == null}
+        className={`join-item btn btn-sm ${!prev && 'btn-disabled'}`}
+        onClick={() => setPage(page - 1)}
+        disabled={!prev}
       >
         <MdNavigateBefore />
       </button>
       {pageNumbers.map((n) => (
         <button
           className={`join-item btn btn-sm ${
-            n === current_page ? 'btn-active btn-primary' : ''
+            n === currentPage ? 'btn-active btn-primary' : ''
           }`}
           key={n}
-          onClick={() => handlePageClick(n)}
+          onClick={() => setPage(n)}
         >
           {n}
         </button>
       ))}
       <button
-        className={`join-item btn btn-sm ${
-          next_offset == null ? 'btn-disabled' : ''
-        }`}
-        onClick={() => setOffset(next_offset)}
-        disabled={next_offset == null}
+        className={`join-item btn btn-sm ${!next && 'btn-disabled'}`}
+        onClick={() => setPage(page + 1)}
+        disabled={!next}
       >
         <MdNavigateNext />
       </button>
       <button
         className={`join-item btn btn-sm`}
-        onClick={() => setOffset((num_pages - 1) * limit)}
-        disabled={current_page === num_pages}
+        onClick={() => setPage(numPages)}
+        disabled={currentPage === numPages}
       >
         <MdLastPage />
       </button>

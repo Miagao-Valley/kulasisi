@@ -29,8 +29,8 @@ class TextEntrySerializer(serializers.ModelSerializer):
     author = serializers.SlugRelatedField(
         queryset=User.objects.all(), slug_field="username", required=False
     )
-    upvotes = serializers.SerializerMethodField()
-    downvotes = serializers.SerializerMethodField()
+    vote_count = serializers.SerializerMethodField()
+    translation_count = serializers.SerializerMethodField()
 
     class Meta:
         model = TextEntry
@@ -41,18 +41,20 @@ class TextEntrySerializer(serializers.ModelSerializer):
             "author",
             "created_at",
             "updated_at",
-            "upvotes",
-            "downvotes",
+            "vote_count",
+            "translation_count",
         ]
         extra_kwargs = {
             "author": {"read_only": True},
+            "vote_count": {"read_only": True},
+            "translation_count": {"read_only": True},
         }
 
-    def get_upvotes(self, obj):
-        return obj.votes.filter(value=1).count()
+    def get_vote_count(self, obj):
+        return obj.votes.filter(value=1).count() - obj.votes.filter(value=-1).count()
 
-    def get_downvotes(self, obj):
-        return obj.votes.filter(value=-1).count()
+    def get_translation_count(self, obj):
+        return obj.translations.count()
 
     def update(self, instance, validated_data):
         validated_data.pop("lang", None)
@@ -79,8 +81,7 @@ class TranslationSerializer(serializers.ModelSerializer):
     author = serializers.SlugRelatedField(
         queryset=User.objects.all(), slug_field="username", required=False
     )
-    upvotes = serializers.SerializerMethodField()
-    downvotes = serializers.SerializerMethodField()
+    vote_count = serializers.SerializerMethodField()
 
     class Meta:
         model = Translation
@@ -92,18 +93,15 @@ class TranslationSerializer(serializers.ModelSerializer):
             "author",
             "created_at",
             "updated_at",
-            "upvotes",
-            "downvotes",
+            "vote_count",
         ]
         extra_kwargs = {
             "author": {"read_only": True},
+            "vote_count": {"read_only": True},
         }
 
-    def get_upvotes(self, obj):
-        return obj.votes.filter(value=1).count()
-
-    def get_downvotes(self, obj):
-        return obj.votes.filter(value=-1).count()
+    def get_vote_count(self, obj):
+        return obj.votes.filter(value=1).count() - obj.votes.filter(value=-1).count()
 
     def validate(self, attrs):
         text_entry = attrs.get("text_entry")

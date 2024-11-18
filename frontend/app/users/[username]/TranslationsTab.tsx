@@ -1,6 +1,5 @@
 import React from 'react';
 import { User } from '@/types';
-import getTranslations from '@/lib/translations/getTranslations';
 import TranslationsList from '@/app/posts/[id]/translations/TranslationsList';
 
 interface Props {
@@ -8,13 +7,10 @@ interface Props {
 }
 
 export default async function TranslationsTab({ user }: Props) {
-  const translations = await getTranslations({
-    author__username: user.username,
-  });
-
+  const filters = { author: user.username }
   return (
     <>
-      <TranslationsList translations={translations} />
+      <TranslationsList filters={filters} />
     </>
   );
 }

@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
-import { useRouter } from 'next/navigation';
 import { useAuth } from '../../../components/AuthProvider';
 import { Lang } from '@/types';
 import addTranslation from '@/lib/translations/addTranslation';
@@ -25,7 +24,6 @@ export default function AddTranslationForm({
   className = '',
 }: Props) {
   const auth = useAuth();
-  const router = useRouter();
 
   const [selectedLang, setSelectedLang] = useState('');
   const [content, setContent] = useState('');
@@ -51,7 +49,6 @@ export default function AddTranslationForm({
     if (!res?.error) {
       setSelectedLang('');
       setContent('');
-      router.refresh();
       toast.success('Translation added');
     }
     return res;

@@ -5,7 +5,6 @@ import { useFormStatus } from 'react-dom';
 import toast from 'react-hot-toast';
 import deleteTranslation from '@/lib/translations/deleteTranslation';
 import { FaTrash } from 'react-icons/fa';
-import { useRouter } from 'next/navigation';
 
 interface Props {
   textEntryId: number;
@@ -13,8 +12,6 @@ interface Props {
 }
 
 export default function DeleteTranslationModal({ textEntryId, id }: Props) {
-  const router = useRouter();
-
   return (
     <dialog
       id={`delete-translation-modal-${id}`}
@@ -36,7 +33,6 @@ export default function DeleteTranslationModal({ textEntryId, id }: Props) {
               toast.error(() => <span>Translation deleted</span>, {
                 icon: <FaTrash />,
               });
-              router.refresh();
             }}
           >
             <DeleteButton />

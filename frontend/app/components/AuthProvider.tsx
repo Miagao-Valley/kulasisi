@@ -11,7 +11,7 @@ import {
 import { AuthType } from '@/types';
 import fetchAuth from '@/lib/auth/fetchAuth';
 
-interface AuthContextType extends AuthType {
+export interface AuthContextType extends AuthType {
   isLoading: boolean;
   setAuth: (auth: AuthType) => void;
   updateAuth: () => void;

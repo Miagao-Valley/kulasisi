@@ -1,61 +1,27 @@
-'use client';
-
-import React, { useEffect, useState } from 'react';
-import { TextEntry, PaginationDetails, Translation } from '@/types';
-import getTranslations from '@/lib/translations/getTranslations';
+import React, { Suspense } from 'react';
+import { TextEntry } from '@/types';
 import AddTranslationForm from './AddTranslationForm';
 import TranslationsList, { TranslationsListSkeleton } from './TranslationsList';
 import SearchInput from '@/app/components/SearchInput';
 import SortDropdown, { SortOption } from '@/app/components/SortDropdown';
-import FilterMenu, { Filter, FilterOption } from '@/app/components/FilterMenu';
-import Pagination from '@/app/components/Pagination';
-import { Lang } from '@/types';
+import FilterMenu, { FilterOption } from '@/app/components/FilterMenu';
 import getLangs from '@/lib/langs/getLangs';
 
 interface Props {
   textEntry: TextEntry;
+  searchParams: { [key: string]: string | undefined }
 }
 
-export default function TranslationsSection({ textEntry }: Props) {
-  const [langs, setLangs] = useState<Lang[]>([]);
-  const [translations, setTranslations] = useState<
-    PaginationDetails & { results: Translation[] }
-  >();
-  const [isLoading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [sortOption, setSortOption] = useState('updated_at');
-  const [isDescending, setIsDescending] = useState(true);
-  const [filters, setFilters] = useState<Filter>({});
-  const [offset, setOffset] = useState<number | null>(null);
+export default async function TranslationsSection({ searchParams, textEntry }: Props) {
+  const searchTerm = searchParams.q || '';
+  const sortOption = searchParams.sort || 'content';
+  const isDescending = searchParams.isDescending === "true";
+  const lang = searchParams.lang || ''
+  const page = Number(searchParams.page || 1);
 
-  useEffect(() => {
-    const fetch = async () => {
-      const { results } = await getLangs();
-      setLangs(results);
-    };
+  const filters = { lang: lang }
 
-    fetch();
-  }, []);
-
-  useEffect(() => {
-    const fetch = async () => {
-      setLoading(true);
-      const data = await getTranslations(
-        {
-          search: searchTerm,
-          ordering: isDescending ? `-${sortOption}` : sortOption,
-          lang__code: filters?.lang || '',
-          limit: 15,
-          offset: offset || '',
-        },
-        textEntry.id,
-      );
-      setTranslations(data);
-    };
-
-    fetch();
-    setLoading(false);
-  }, [searchTerm, sortOption, isDescending, filters, offset, textEntry.id]);
+  const langs = await getLangs();
 
   const sortingOptions: SortOption[] = [
     { label: 'Content', value: 'content' },
@@ -68,7 +34,7 @@ export default function TranslationsSection({ textEntry }: Props) {
       label: 'Language',
       value: 'lang',
       type: 'select',
-      options: langs
+      options: langs.results
         .filter(({ code }) => code !== textEntry.lang)
         .map(({ code, name }) => ({ label: name, value: code })),
     },
@@ -83,37 +49,22 @@ export default function TranslationsSection({ textEntry }: Props) {
       />
       <div className="mb-4 flex gap-3">
         <SearchInput
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
+          currentSearchTerm={searchTerm}
           className="me-auto"
         />
         <SortDropdown
-          sortOption={sortOption}
-          setSortOption={setSortOption}
-          isDescending={isDescending}
-          setIsDescending={setIsDescending}
+          currentSortOption={sortOption}
+          currentIsDescending={isDescending}
           sortingOptions={sortingOptions}
         />
         <FilterMenu
-          filterOptions={filterOptions}
-          setFilters={setFilters}
           currentFilters={filters}
+          filterOptions={filterOptions}
         />
       </div>
-      {isLoading ? (
-        <TranslationsListSkeleton />
-      ) : (
-        <TranslationsList translations={translations} />
-      )}
-      <Pagination
-        className="my-5 flex justify-center"
-        num_pages={translations?.num_pages || 1}
-        current_page={translations?.current_page || 1}
-        limit={translations?.limit || 1}
-        next_offset={translations?.next?.offset ?? null}
-        prev_offset={translations?.previous?.offset ?? null}
-        setOffset={setOffset}
-      />
+      <Suspense fallback={<TranslationsListSkeleton />}>
+        <TranslationsList textEntryId={textEntry.id} searchTerm={searchTerm} sortOption={sortOption} isDescending={isDescending} filters={filters} page={page} />
+      </Suspense>
     </>
   );
 }

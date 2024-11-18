@@ -42,8 +42,8 @@ export interface TextEntry {
   content: string;
   author: string;
   lang: string;
-  upvotes: number;
-  downvotes: number;
+  vote_count: number;
+  translation_count: number;
   created_at: Date;
   updated_at: Date;
 }
@@ -61,8 +61,7 @@ export interface Translation {
   content: string;
   author: string;
   lang: string;
-  upvotes: number;
-  downvotes: number;
+  vote_count: number;
   created_at: Date;
   updated_at: Date;
 }
@@ -83,13 +82,6 @@ export interface PaginationDetails {
   num_pages: number;
   current_page: number;
   count: number;
-  limit: number;
-  next: {
-    offset: number;
-    link: string;
-  };
-  previous: {
-    offset: number;
-    link: string;
-  };
+  next: string;
+  previous: string;
 }

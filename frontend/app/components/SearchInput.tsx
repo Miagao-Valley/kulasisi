@@ -1,17 +1,35 @@
-import React from 'react';
+'use client'
+
+import React, { useEffect, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useDebounce } from 'use-debounce';
 import { FaSearch } from 'react-icons/fa';
 
 interface Props {
-  searchTerm: string;
-  setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
+  currentSearchTerm: string;
   className?: string;
 }
 
 export default function SearchInput({
-  searchTerm,
-  setSearchTerm,
+  currentSearchTerm,
   className,
 }: Props) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const [searchTerm, setSearchTerm] = useState(currentSearchTerm);
+  const [query] = useDebounce(searchTerm, 500);
+
+  useEffect(() => {
+    const currentSearchParams = new URLSearchParams(Array.from(searchParams.entries()));
+    if (query) {
+      currentSearchParams.set('q', query)
+    } else {
+      currentSearchParams.delete('q')
+    }
+    router.push(`?${currentSearchParams.toString()}`);
+  }, [query, searchParams, router])
+
   return (
     <label
       className={`input input-bordered input-sm max-w-80 flex items-center gap-3 ${className}`}

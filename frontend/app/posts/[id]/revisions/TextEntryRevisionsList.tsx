@@ -9,9 +9,11 @@ interface Props {
 }
 
 export default function TextEntryRevisionsList({ revisions }: Props) {
+
   return (
     <div className="flex flex-col gap-3">
-      {revisions.map((revision, index) => {
+      {revisions && revisions.length > 0 ? (
+      revisions.map((revision, index) => {
         const content = revision.content;
         const previousContent =
           index < revisions.length - 1 ? revisions[index + 1].content : '';
@@ -64,7 +66,9 @@ export default function TextEntryRevisionsList({ revisions }: Props) {
             </div>
           </div>
         );
-      })}
+      })) : (
+        <div>No revisions</div>
+      )}
     </div>
   );
 }

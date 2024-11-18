@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
 import updateTranslation from '@/lib/translations/updateTranslation';
 import toast from 'react-hot-toast';
-import { useRouter } from 'next/navigation';
 
 interface Props {
   textEntryId: number;
@@ -25,8 +24,6 @@ export default function UpdateTranslationForm({
   setIsEditing,
   className = '',
 }: Props) {
-  const router = useRouter();
-
   const [content, setContent] = useState('');
 
   const handleSubmit = async (prevState: any, formData: FormData) => {
@@ -35,7 +32,6 @@ export default function UpdateTranslationForm({
       setContent('');
       toast.success('Translation updated');
       setIsEditing(false);
-      router.refresh();
     }
     return res;
   };

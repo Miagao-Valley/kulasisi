@@ -1,12 +1,19 @@
 import Link from 'next/link';
-import { Lang, PaginationDetails } from '@/types';
+import getLangs from '@/lib/langs/getLangs';
 
 interface Props {
-  langs?: PaginationDetails & { results: Lang[] };
+  searchTerm: string;
+  sortOption: string;
+  isDescending: boolean;
   className?: string;
 }
 
-export default function LangsList({ langs, className = '' }: Props) {
+export default async function LangsList({ searchTerm, sortOption, isDescending, className = '' }: Props) {
+  const langs = await getLangs({
+    search: searchTerm,
+    ordering: isDescending ? `-${sortOption}` : sortOption,
+  });
+
   return (
     <ul
       className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 ${className}`}
@@ -15,7 +22,7 @@ export default function LangsList({ langs, className = '' }: Props) {
         langs.results.map((lang) => (
           <li key={lang.code}>
             <Link
-              className="hover:text-primary flex gap-2"
+              className="hover:text-primary flex gap-2 items-center"
               href={`/languages/${lang.code}/`}
             >
               <span className="badge badge-primary badge-outline">
