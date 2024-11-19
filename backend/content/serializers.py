@@ -29,6 +29,7 @@ class TextEntrySerializer(serializers.ModelSerializer):
     author = serializers.SlugRelatedField(
         queryset=User.objects.all(), slug_field="username", required=False
     )
+    author_reputation = serializers.SerializerMethodField()
     vote_count = serializers.SerializerMethodField()
     translation_count = serializers.SerializerMethodField()
 
@@ -39,6 +40,7 @@ class TextEntrySerializer(serializers.ModelSerializer):
             "content",
             "lang",
             "author",
+            "author_reputation",
             "created_at",
             "updated_at",
             "vote_count",
@@ -55,6 +57,9 @@ class TextEntrySerializer(serializers.ModelSerializer):
 
     def get_translation_count(self, obj):
         return obj.translations.count()
+
+    def get_author_reputation(self, obj):
+        return obj.author.get_reputation()
 
     def update(self, instance, validated_data):
         validated_data.pop("lang", None)
@@ -81,6 +86,7 @@ class TranslationSerializer(serializers.ModelSerializer):
     author = serializers.SlugRelatedField(
         queryset=User.objects.all(), slug_field="username", required=False
     )
+    author_reputation = serializers.SerializerMethodField()
     vote_count = serializers.SerializerMethodField()
 
     class Meta:
@@ -91,6 +97,7 @@ class TranslationSerializer(serializers.ModelSerializer):
             "content",
             "lang",
             "author",
+            "author_reputation",
             "created_at",
             "updated_at",
             "vote_count",
@@ -102,6 +109,9 @@ class TranslationSerializer(serializers.ModelSerializer):
 
     def get_vote_count(self, obj):
         return obj.votes.filter(value=1).count() - obj.votes.filter(value=-1).count()
+
+    def get_reputation(self, obj):
+        return obj.author.get_reputation()
 
     def validate(self, attrs):
         text_entry = attrs.get("text_entry")

@@ -20,15 +20,19 @@ export interface User {
   first_name: string;
   last_name: string;
   email: string;
-  last_login: Date;
-  date_joined: Date;
   phone_number?: string;
   date_of_birth?: Date;
   location?: string;
   gender?: Gender;
   bio?: string;
   website?: string;
+  reputation: number;
+  text_entries_count: number;
+  translations_count: number;
+  vote_count: number;
   language_proficiencies?: { lang: string; level: LangProficiencyLevel }[];
+  last_login: Date;
+  date_joined: Date;
 }
 
 export interface Lang {
@@ -41,6 +45,7 @@ export interface TextEntry {
   id: number;
   content: string;
   author: string;
+  author_reputation: number;
   lang: string;
   vote_count: number;
   translation_count: number;
@@ -60,6 +65,7 @@ export interface Translation {
   text_entry: number;
   content: string;
   author: string;
+  author_reputation: number;
   lang: string;
   vote_count: number;
   created_at: Date;

@@ -23,5 +23,14 @@ class User(AbstractUser):
     bio = models.TextField(max_length=200, blank=True, null=True)
     website = models.URLField(blank=True, null=True)
 
+    def get_reputation(self):
+        base_points = self.text_entries.count() + self.translations.count()
+
+        upvote_points = self.votes.filter(value=1).count() * 10
+        downvote_points = self.votes.filter(value=-1).count() * -2
+
+        total_reputation = base_points + upvote_points + downvote_points
+        return total_reputation
+
     def __str__(self):
         return self.username

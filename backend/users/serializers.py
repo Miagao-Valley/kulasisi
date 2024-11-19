@@ -10,31 +10,53 @@ from content.serializers import LanguageProficiencySerializer
 
 class UserSerializer(serializers.ModelSerializer):
     language_proficiencies = LanguageProficiencySerializer(many=True)
+    reputation = serializers.SerializerMethodField()
+    text_entries_count = serializers.SerializerMethodField()
+    translations_count = serializers.SerializerMethodField()
+    vote_count = serializers.SerializerMethodField()
 
     class Meta:
         model = User
         fields = [
             "id",
             "username",
+            "password",
             "email",
+            "phone_number",
             "first_name",
             "last_name",
-            "password",
-            "phone_number",
             "date_of_birth",
             "location",
             "gender",
             "bio",
             "website",
+            "reputation",
+            "text_entries_count",
+            "translations_count",
+            "vote_count",
+            "language_proficiencies",
             "last_login",
             "date_joined",
-            "language_proficiencies",
         ]
         extra_kwargs = {
+            "password": {"write_only": True},
             "last_login": {"read_only": True},
             "date_joined": {"read_only": True},
-            "password": {"write_only": True},
+            "reputation": {"read_only": True},
         }
+
+    def get_reputation(self, obj):
+        return obj.get_reputation()
+
+    def get_text_entries_count(self, obj):
+        return obj.text_entries.count()
+
+    def get_translations_count(self, obj):
+        return obj.translations.count()
+
+    def get_vote_count(self, obj):
+        return obj.votes.count()
+
 
     def validate(self, data):
         language_proficiencies_data = data.pop("language_proficiencies", [])
