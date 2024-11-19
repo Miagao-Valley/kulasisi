@@ -13,10 +13,12 @@ export default async function PostHeader({ entry, className = '' }: Props) {
   return (
     <>
       <div className={`${className} flex gap-1 items-center text-sm`}>
-        <Username
-          username={entry.author}
-          reputation={entry.author_reputation}
-        />
+        <Link href={`/users/${entry.author}/`}>
+          <Username
+            username={entry.author}
+            reputation={entry.author_reputation}
+          />
+        </Link>
         •
         <span className="text-sm">
           {naturalTime(new Date(entry.updated_at))}

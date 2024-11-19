@@ -36,7 +36,7 @@ export default async function UsersList({
             <li key={user.id}>
               <Link
                 className="btn btn-ghost w-full flex flex-col gap-1 items-start"
-                href={`/users/${user.username}`}
+                href={`/users/${user.username}/`}
               >
                 <Username
                   username={user.username}
