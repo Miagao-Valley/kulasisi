@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { useAuth } from '../../../components/AuthProvider';
 import { Lang } from '@/types';
@@ -22,6 +22,7 @@ export default function AddTranslationForm({
 }: Props) {
   const auth = useAuth();
   const router = useRouter();
+  const pathname = usePathname();
 
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
@@ -51,7 +52,7 @@ export default function AddTranslationForm({
   const handleSubmit = async (prevState: any, formData: FormData) => {
     if (!auth.isAuthenticated) {
       toast.error('You need to sign in to post.')
-      router.push(`/auth/login/`)
+      router.push(`/auth/login?next=${pathname}`)
       return
     }
     const res = await addTranslation(textEntryId, formData);

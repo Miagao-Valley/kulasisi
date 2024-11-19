@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { FaLock, FaUser } from 'react-icons/fa';
 import { useAuth } from '@/app/components/AuthProvider';
@@ -13,11 +14,21 @@ interface SubmitButtonProps {
 }
 
 export default function LoginForm() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const auth = useAuth();
+
+  const next = searchParams.get('next')
 
   const handleSubmit = async (prevState: any, formData: FormData) => {
     const res = await login(formData);
-    auth.updateAuth();
+    if (!res?.error) {
+      auth.updateAuth();
+      console.log(next)
+      if (next) {
+        router.push(next)
+      }
+    }
     return res;
   };
 

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from './AuthProvider';
 import toast from 'react-hot-toast';
 import { TextEntry, Translation, Vote } from '@/types';
@@ -23,6 +23,7 @@ interface Props {
 export default function VoteActions({ entry, type, votes }: Props) {
   const auth = useAuth();
   const router = useRouter();
+  const pathname = usePathname();
 
   const [currentVote, setCurrentVote] = useState<Vote | undefined>();
 
@@ -33,7 +34,7 @@ export default function VoteActions({ entry, type, votes }: Props) {
   const handleSubmit = async (prevState: any, formData: FormData) => {
     if (!auth.isAuthenticated) {
       toast.error('You need to sign in to vote.');
-      router.push(`/auth/login/`);
+      router.push(`/auth/login?next=${pathname}`);
       return;
     }
 

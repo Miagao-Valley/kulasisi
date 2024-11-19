@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '../AuthProvider';
 import { FaUserCircle } from 'react-icons/fa';
@@ -9,6 +10,7 @@ import { MdLogout } from 'react-icons/md';
 
 export default function UserActions() {
   const auth = useAuth();
+  const pathname = usePathname();
 
   if (auth.isLoading) {
     return;
@@ -53,7 +55,7 @@ export default function UserActions() {
       ) : (
         <>
           <Link
-            href={`/auth/login/`}
+            href={`/auth/login?next=${pathname}`}
             className="btn btn-sm btn-primary btn-outline"
           >
             Sign in
