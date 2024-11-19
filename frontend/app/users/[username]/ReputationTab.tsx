@@ -12,7 +12,7 @@ interface Props {
   user: User;
 }
 
-export default function LanguagesTab({ user }: Props) {
+export default function ReputationTab({ user }: Props) {
   const auth = useAuth();
 
   const [langs, setLangs] = useState<Lang[]>([]);
@@ -78,6 +78,27 @@ export default function LanguagesTab({ user }: Props) {
             <SubmitButton className="ms-auto" />
           </div>
         )}
+        <div>
+          <h3 className="text-base">Contribution</h3>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="flex flex-col">
+              <span className="font-semibold">{user.reputation}</span>
+              <span>Reputation</span>
+            </div>
+            <div className="flex flex-col">
+              <span className="font-semibold">{user.vote_count}</span>
+              <span>Votes</span>
+            </div>
+            <div className="flex flex-col">
+              <span className="font-semibold">{user.text_entries_count}</span>
+              <span>Posts</span>
+            </div>
+            <div className="flex flex-col">
+              <span className="font-semibold">{user.translations_count}</span>
+              <span>Translations</span>
+            </div>
+          </div>
+        </div>
       </form>
     </>
   );

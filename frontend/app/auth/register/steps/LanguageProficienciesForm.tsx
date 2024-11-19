@@ -26,8 +26,8 @@ export default function LanguageProficienciesForm({
 }: Props) {
   return (
     <div>
-      <div className="mb-3 flex justify-between items-center">
-        <h3 className="text-base">Language Proficiency</h3>
+      <div className="mb-2 flex justify-between items-center">
+        <h3 className="text-base m-0">Language Proficiency</h3>
         {!disabled && (
           <div className="dropdown dropdown-hover dropdown-end">
             <div tabIndex={0} role="button" className="btn btn-outline btn-sm">
@@ -58,43 +58,49 @@ export default function LanguageProficienciesForm({
         )}
       </div>
 
-      <div className="mb-3 flex w-full justify-between px-2 text-xs">
-        <span>1</span>
-        <span>2</span>
-        <span>3</span>
-        <span>4</span>
-        <span>5</span>
-      </div>
-
-      <div className="mb-3 flex flex-col items-center gap-4">
-        {selectedLanguages.map((langProf, index) => (
-          <div className="w-full" key={index}>
-            <div className="flex items-center gap-2 mb-2">
-              <Link
-                href={`/languages/${langProf.lang}/`}
-                onClick={(e) => e.stopPropagation()}
-              >
-                <span className="badge badge-primary [&:not(:hover)]:badge-outline">
-                  {langProf.lang}
-                </span>
-              </Link>
-              <div className="text-sm text-gray-600">
-                {displayLangProficiency(langProf.level)}
-              </div>
-            </div>
-            <input
-              type="range"
-              min={1}
-              max={5}
-              value={langProf.level}
-              step={1}
-              className="range range-primary range-sm w-full"
-              onChange={(e) => handleRangeChange(e, langProf.lang)}
-              disabled={disabled}
-            />
+      {!!selectedLanguages.length ? (
+        <>
+          <div className="mb-3 flex w-full justify-between px-2 text-xs">
+            <span>1</span>
+            <span>2</span>
+            <span>3</span>
+            <span>4</span>
+            <span>5</span>
           </div>
-        ))}
-      </div>
+
+          <div className="mb-3 flex flex-col items-center gap-4">
+            {selectedLanguages.map((langProf, index) => (
+              <div className="w-full" key={index}>
+                <div className="flex items-center gap-2 mb-2">
+                  <Link
+                    href={`/languages/${langProf.lang}/`}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <span className="badge badge-primary [&:not(:hover)]:badge-outline">
+                      {langProf.lang}
+                    </span>
+                  </Link>
+                  <div className="text-sm text-gray-600">
+                    {displayLangProficiency(langProf.level)}
+                  </div>
+                </div>
+                <input
+                  type="range"
+                  min={1}
+                  max={5}
+                  value={langProf.level}
+                  step={1}
+                  className="range range-primary range-sm w-full"
+                  onChange={(e) => handleRangeChange(e, langProf.lang)}
+                  disabled={disabled}
+                />
+              </div>
+            ))}
+          </div>
+        </>
+      ) : (
+        <div className="mb-2">No languages</div>
+      )}
     </div>
   );
 }

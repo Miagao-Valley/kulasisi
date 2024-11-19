@@ -1,7 +1,7 @@
 import React from 'react';
 import getUser from '@/lib/users/getUser';
 import Overview from './Overview';
-import LanguagesTab from './LanguagesTab';
+import ReputationTab from './ReputationTab';
 import PostsTab from './PostsTab';
 import TranslationsTab from './TranslationsTab';
 import Link from 'next/link';
@@ -18,7 +18,7 @@ interface Props {
 export default async function UserPage({ params, searchParams }: Props) {
   const user = await getUser(params.username);
 
-  const currentTab = searchParams?.tab || 'languages';
+  const currentTab = searchParams?.tab || 'reputation';
 
   return (
     <>
@@ -26,12 +26,12 @@ export default async function UserPage({ params, searchParams }: Props) {
 
       <div role="tablist" className="tabs tabs-bordered w-fit">
         <Link
-          href="?tab=languages"
+          href="?tab=reputation"
           role="tab"
-          className={`tab ${currentTab === 'languages' ? 'tab-active' : ''}`}
-          aria-label="Languages"
+          className={`tab ${currentTab === 'reputation' ? 'tab-active' : ''}`}
+          aria-label="Reputation"
         >
-          Languages
+          Reputation
         </Link>
         <Link
           href="?tab=posts"
@@ -50,9 +50,9 @@ export default async function UserPage({ params, searchParams }: Props) {
           Translations
         </Link>
       </div>
-      {currentTab === 'languages' ? (
+      {currentTab === 'reputation' ? (
         <div role="tabpanel" className="p-6">
-          <LanguagesTab user={user} />
+          <ReputationTab user={user} />
         </div>
       ) : currentTab === 'posts' ? (
         <div role="tabpanel" className="p-6">
