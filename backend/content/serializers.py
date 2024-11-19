@@ -110,7 +110,7 @@ class TranslationSerializer(serializers.ModelSerializer):
     def get_vote_count(self, obj):
         return obj.votes.filter(value=1).count() - obj.votes.filter(value=-1).count()
 
-    def get_reputation(self, obj):
+    def get_author_reputation(self, obj):
         return obj.author.get_reputation()
 
     def validate(self, attrs):
