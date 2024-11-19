@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import naturalTime from '@/utils/naturalTime';
 import { TextEntry, Translation } from '@/types';
+import Username from '../components/Username';
 
 interface Props {
   entry: TextEntry | Translation;
@@ -12,6 +13,10 @@ export default async function PostHeader({ entry, className = '' }: Props) {
   return (
     <>
       <div className={`${className} flex gap-1 items-center text-sm`}>
+        <Username username={entry.author} reputation={entry.author_reputation} />
+        •
+        <span className="text-sm">{naturalTime(new Date(entry.updated_at))}</span>
+        •
         <Link
           href={`/languages/${entry.lang}/`}
         >
@@ -19,15 +24,6 @@ export default async function PostHeader({ entry, className = '' }: Props) {
             {entry.lang}
           </span>
         </Link>
-        •
-        <Link
-          href={`/users/${entry.author}`}
-          className="text-sm font-medium hover:text-primary"
-        >
-          {entry.author}
-        </Link>
-        •
-        <span className="text-sm">{naturalTime(new Date(entry.updated_at))}</span>
       </div>
     </>
   );

@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { useAuth } from '../AuthProvider';
-import { FaUser } from 'react-icons/fa';
+import { FaUserCircle } from 'react-icons/fa';
 import { FaGear } from 'react-icons/fa6';
 import { MdLogout } from 'react-icons/md';
 
@@ -23,7 +23,7 @@ export default function UserActions() {
             role="button"
             className="btn btn-ghost btn-sm btn-circle text-lg"
           >
-            <FaUser />
+            <FaUserCircle className="text-xl"/>
           </div>
           <ul
             tabIndex={0}

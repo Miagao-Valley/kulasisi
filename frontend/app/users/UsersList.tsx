@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import getUsers from '@/lib/users/getUsers';
 import Pagination from '../components/Pagination';
+import Username from '../components/Username';
 
 interface Props {
   searchTerm: string,
@@ -33,11 +34,11 @@ export default async function UsersList({ searchTerm,
           users.results.map((user) => (
             <li key={user.id}>
               <Link
-                className="hover:text-primary flex flex-col"
+                className="btn btn-ghost w-full flex flex-col gap-1 items-start"
                 href={`/users/${user.username}`}
               >
-                <div className="font-semibold">@{user.username}</div>
-                <div className="text-xs">{user.email || 'No email'}</div>
+                <Username username={user.username} reputation={user.reputation} />
+                <div className="text-xs">{`${user.first_name} ${user.last_name}`}</div>
               </Link>
             </li>
           ))
