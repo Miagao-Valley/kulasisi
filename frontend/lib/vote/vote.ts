@@ -8,7 +8,7 @@ import getTranslation from '../translations/getTranslation';
 export default async function vote(
   id: number,
   type: 'text-entries' | 'translations',
-  value: -1 | 0 | 1
+  value: -1 | 0 | 1,
 ) {
   let res = null;
   try {
@@ -22,18 +22,18 @@ export default async function vote(
         },
         body: JSON.stringify({ value: value }),
       },
-      getToken()
+      getToken(),
     );
   } catch (error) {
     const fetchError = error as FetchError;
     return { error: fetchError.resBody };
   }
 
-  if (type === "translations") {
+  if (type === 'translations') {
     const translation = await getTranslation(id);
-    revalidatePath(`/posts/${translation.id}/`)
+    revalidatePath(`/posts/${translation.id}/`);
   } else {
-    revalidatePath(`/posts/${id}/`)
+    revalidatePath(`/posts/${id}/`);
   }
 
   return res;

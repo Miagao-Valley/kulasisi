@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React, { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -32,7 +32,9 @@ export default function FilterMenu({
   const [filters, setFilters] = useState(currentFilters);
 
   useEffect(() => {
-    const currentSearchParams = new URLSearchParams(Array.from(searchParams.entries()));
+    const currentSearchParams = new URLSearchParams(
+      Array.from(searchParams.entries()),
+    );
 
     for (const [key, value] of Object.entries(filters)) {
       if (value) {
@@ -42,13 +44,12 @@ export default function FilterMenu({
         }
         currentSearchParams.set(key, processedValue);
       } else {
-        currentSearchParams.delete(key)
+        currentSearchParams.delete(key);
       }
     }
 
     router.push(`?${currentSearchParams.toString()}`);
   }, [filters, searchParams, router]);
-
 
   return (
     <div className={`dropdown dropdown-hover dropdown-end ${className}`}>

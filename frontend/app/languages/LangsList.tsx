@@ -8,7 +8,12 @@ interface Props {
   className?: string;
 }
 
-export default async function LangsList({ searchTerm, sortOption, isDescending, className = '' }: Props) {
+export default async function LangsList({
+  searchTerm,
+  sortOption,
+  isDescending,
+  className = '',
+}: Props) {
   const langs = await getLangs({
     search: searchTerm,
     ordering: isDescending ? `-${sortOption}` : sortOption,

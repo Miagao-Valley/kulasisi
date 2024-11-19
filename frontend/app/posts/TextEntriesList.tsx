@@ -6,11 +6,11 @@ import Pagination from '../components/Pagination';
 import { Filter } from '../components/FilterMenu';
 
 interface Props {
-  searchTerm?: string,
-  sortOption?: string,
-  isDescending?: boolean,
-  filters?: Filter,
-  page?: number,
+  searchTerm?: string;
+  sortOption?: string;
+  isDescending?: boolean;
+  filters?: Filter;
+  page?: number;
   className?: string;
 }
 
@@ -36,18 +36,24 @@ export default async function TextEntriesList({
   return (
     <>
       <ul className={`flex flex-col gap-3 ${className}`}>
-        {textEntries && textEntries.results && textEntries.results.length > 0 ? (
+        {textEntries &&
+        textEntries.results &&
+        textEntries.results.length > 0 ? (
           textEntries.results.map(async (textEntry) => {
             const revisions = await getTextEntryRevisions(textEntry.id);
             return (
-            <li
-              className="px-4 py-3 border rounded-lg flex flex-col"
-              key={textEntry.id}
-            >
-              <TextEntryContent textEntry={textEntry} revisions={revisions.results} />
-              <PostFooter entry={textEntry} type="text-entries" />
-            </li>
-          )})
+              <li
+                className="px-4 py-3 border rounded-lg flex flex-col"
+                key={textEntry.id}
+              >
+                <TextEntryContent
+                  textEntry={textEntry}
+                  revisions={revisions.results}
+                />
+                <PostFooter entry={textEntry} type="text-entries" />
+              </li>
+            );
+          })
         ) : (
           <li className="w-full col-span-full p-3 text-center">
             <div>No posts found</div>

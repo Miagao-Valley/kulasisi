@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React, { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -10,10 +10,7 @@ interface Props {
   className?: string;
 }
 
-export default function SearchInput({
-  currentSearchTerm,
-  className,
-}: Props) {
+export default function SearchInput({ currentSearchTerm, className }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -21,14 +18,16 @@ export default function SearchInput({
   const [query] = useDebounce(searchTerm, 500);
 
   useEffect(() => {
-    const currentSearchParams = new URLSearchParams(Array.from(searchParams.entries()));
+    const currentSearchParams = new URLSearchParams(
+      Array.from(searchParams.entries()),
+    );
     if (query) {
-      currentSearchParams.set('q', query)
+      currentSearchParams.set('q', query);
     } else {
-      currentSearchParams.delete('q')
+      currentSearchParams.delete('q');
     }
     router.push(`?${currentSearchParams.toString()}`);
-  }, [query, searchParams, router])
+  }, [query, searchParams, router]);
 
   return (
     <label

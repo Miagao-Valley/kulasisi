@@ -9,17 +9,20 @@ import getLangs from '@/lib/langs/getLangs';
 
 interface Props {
   textEntry: TextEntry;
-  searchParams: { [key: string]: string | undefined }
+  searchParams: { [key: string]: string | undefined };
 }
 
-export default async function TranslationsSection({ searchParams, textEntry }: Props) {
+export default async function TranslationsSection({
+  searchParams,
+  textEntry,
+}: Props) {
   const searchTerm = searchParams.q || '';
   const sortOption = searchParams.sort || 'content';
-  const isDescending = searchParams.isDescending === "true";
-  const lang = searchParams.lang || ''
+  const isDescending = searchParams.isDescending === 'true';
+  const lang = searchParams.lang || '';
   const page = Number(searchParams.page || 1);
 
-  const filters = { lang: lang }
+  const filters = { lang: lang };
 
   const langs = await getLangs();
 
@@ -48,22 +51,23 @@ export default async function TranslationsSection({ searchParams, textEntry }: P
         className="mb-4"
       />
       <div className="mb-4 flex gap-3">
-        <SearchInput
-          currentSearchTerm={searchTerm}
-          className="me-auto"
-        />
+        <SearchInput currentSearchTerm={searchTerm} className="me-auto" />
         <SortDropdown
           currentSortOption={sortOption}
           currentIsDescending={isDescending}
           sortingOptions={sortingOptions}
         />
-        <FilterMenu
-          currentFilters={filters}
-          filterOptions={filterOptions}
-        />
+        <FilterMenu currentFilters={filters} filterOptions={filterOptions} />
       </div>
       <Suspense fallback={<TranslationsListSkeleton />}>
-        <TranslationsList textEntryId={textEntry.id} searchTerm={searchTerm} sortOption={sortOption} isDescending={isDescending} filters={filters} page={page} />
+        <TranslationsList
+          textEntryId={textEntry.id}
+          searchTerm={searchTerm}
+          sortOption={sortOption}
+          isDescending={isDescending}
+          filters={filters}
+          page={page}
+        />
       </Suspense>
     </>
   );

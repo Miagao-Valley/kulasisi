@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React, { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -29,14 +29,19 @@ export default function SortDropdown({
   const [isDescending, setIsDescending] = useState(currentIsDescending);
 
   useEffect(() => {
-    const currentSearchParams = new URLSearchParams(Array.from(searchParams.entries()));
+    const currentSearchParams = new URLSearchParams(
+      Array.from(searchParams.entries()),
+    );
     if (sortOption) {
-      currentSearchParams.set('sort', isDescending ? `-${sortOption}` : sortOption)
+      currentSearchParams.set(
+        'sort',
+        isDescending ? `-${sortOption}` : sortOption,
+      );
     } else {
-      currentSearchParams.delete('sort')
+      currentSearchParams.delete('sort');
     }
     router.push(`?${currentSearchParams.toString()}`);
-  }, [sortOption, isDescending, searchParams, router])
+  }, [sortOption, isDescending, searchParams, router]);
 
   return (
     <div className={`dropdown dropdown-hover dropdown-end ${className}`}>

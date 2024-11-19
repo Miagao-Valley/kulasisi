@@ -13,7 +13,7 @@ interface Props {
   numPages: number;
   currentPage: number;
   next: boolean;
-  prev: boolean
+  prev: boolean;
   className: string;
 }
 
@@ -30,14 +30,16 @@ export default function Pagination({
   const [page, setPage] = useState(currentPage);
 
   useEffect(() => {
-    const currentSearchParams = new URLSearchParams(Array.from(searchParams.entries()));
+    const currentSearchParams = new URLSearchParams(
+      Array.from(searchParams.entries()),
+    );
     if (page && page > 1) {
-      currentSearchParams.set('page', String(page))
+      currentSearchParams.set('page', String(page));
     } else {
-      currentSearchParams.delete('page')
+      currentSearchParams.delete('page');
     }
     router.push(`?${currentSearchParams.toString()}`);
-  }, [page, searchParams, router])
+  }, [page, searchParams, router]);
 
   const getPageNumbers = () => {
     const pageNumbers = [];

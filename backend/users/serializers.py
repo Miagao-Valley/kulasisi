@@ -57,7 +57,6 @@ class UserSerializer(serializers.ModelSerializer):
     def get_vote_count(self, obj):
         return obj.votes.count()
 
-
     def validate(self, data):
         language_proficiencies_data = data.pop("language_proficiencies", [])
 

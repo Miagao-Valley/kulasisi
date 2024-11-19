@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React, { useState } from 'react';
 import Link from 'next/link';
@@ -11,14 +11,17 @@ import TranslationRevisionsModal from '../revisions/TranslationRevisionsModal';
 import { FaClock, FaLink, FaPen, FaTrash } from 'react-icons/fa';
 import { MdMenu } from 'react-icons/md';
 
-
 interface Props {
   translation: Translation;
   revisions: TranslationRevision[];
   className?: string;
 }
 
-export function TranslationsContent({ translation, revisions, className = '' }: Props) {
+export function TranslationsContent({
+  translation,
+  revisions,
+  className = '',
+}: Props) {
   const auth = useAuth();
   const [isEditing, setIsEditing] = useState(false);
 
@@ -59,7 +62,7 @@ export function TranslationsContent({ translation, revisions, className = '' }: 
       ) : (
         <>
           <div className="flex gap-3 mb-2">
-            <PostHeader entry={translation} className='flex-1' />
+            <PostHeader entry={translation} className="flex-1" />
             <details
               className="dropdown dropdown-bottom dropdown-end"
               onClick={(e) => e.stopPropagation()}
@@ -100,7 +103,10 @@ export function TranslationsContent({ translation, revisions, className = '' }: 
           </div>
 
           <div className="flex gap-3">
-            <Link href={`/posts/${translation.text_entry}#translation${translation.id}`} className='flex-1 mb-2 hover:text-primary'>
+            <Link
+              href={`/posts/${translation.text_entry}#translation${translation.id}`}
+              className="flex-1 mb-2 hover:text-primary"
+            >
               <p className="whitespace-pre-line">{translation.content}</p>
             </Link>
           </div>

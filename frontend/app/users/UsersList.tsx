@@ -4,14 +4,15 @@ import Pagination from '../components/Pagination';
 import Username from '../components/Username';
 
 interface Props {
-  searchTerm: string,
-  sortOption: string,
-  isDescending: boolean,
-  page: number,
+  searchTerm: string;
+  sortOption: string;
+  isDescending: boolean;
+  page: number;
   className?: string;
 }
 
-export default async function UsersList({ searchTerm,
+export default async function UsersList({
+  searchTerm,
   sortOption,
   isDescending,
   page,
@@ -37,7 +38,10 @@ export default async function UsersList({ searchTerm,
                 className="btn btn-ghost w-full flex flex-col gap-1 items-start"
                 href={`/users/${user.username}`}
               >
-                <Username username={user.username} reputation={user.reputation} />
+                <Username
+                  username={user.username}
+                  reputation={user.reputation}
+                />
                 <div className="text-xs">{`${user.first_name} ${user.last_name}`}</div>
               </Link>
             </li>

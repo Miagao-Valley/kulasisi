@@ -10,13 +10,13 @@ interface Props {
   params: {
     id: string;
   };
-  searchParams: { [key: string]: string | undefined }
+  searchParams: { [key: string]: string | undefined };
 }
 
 export default async function PostPage({ params, searchParams }: Props) {
   const id = Number(params.id);
   const textEntry = await getTextEntry(id);
-  const revisions = await getTextEntryRevisions(id)
+  const revisions = await getTextEntryRevisions(id);
 
   const currentTab = searchParams?.tab || 'translations';
 
@@ -24,7 +24,7 @@ export default async function PostPage({ params, searchParams }: Props) {
     <>
       <div className="mb-3">
         <TextEntryContent textEntry={textEntry} revisions={revisions.results} />
-        <PostFooter entry={textEntry} type='text-entries' />
+        <PostFooter entry={textEntry} type="text-entries" />
       </div>
 
       <div role="tablist" className="tabs tabs-bordered w-fit">
@@ -39,7 +39,10 @@ export default async function PostPage({ params, searchParams }: Props) {
       </div>
       {currentTab === 'translations' ? (
         <div role="tabpanel" className="p-6">
-          <TranslationsSection searchParams={searchParams} textEntry={textEntry} />
+          <TranslationsSection
+            searchParams={searchParams}
+            textEntry={textEntry}
+          />
         </div>
       ) : null}
     </>

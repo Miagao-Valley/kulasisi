@@ -23,7 +23,7 @@ export default function UserActions() {
             role="button"
             className="btn btn-ghost btn-sm btn-circle text-lg"
           >
-            <FaUserCircle className="text-xl"/>
+            <FaUserCircle className="text-xl" />
           </div>
           <ul
             tabIndex={0}

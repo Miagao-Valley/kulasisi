@@ -17,7 +17,11 @@ interface Props {
   className?: string;
 }
 
-export default function TextEntryContent({ textEntry, revisions, className = '' }: Props) {
+export default function TextEntryContent({
+  textEntry,
+  revisions,
+  className = '',
+}: Props) {
   const auth = useAuth();
   const [isEditing, setIsEditing] = useState(false);
 
@@ -50,7 +54,7 @@ export default function TextEntryContent({ textEntry, revisions, className = '' 
       ) : (
         <>
           <div className="flex gap-3 mb-2">
-            <PostHeader entry={textEntry} className='flex-1' />
+            <PostHeader entry={textEntry} className="flex-1" />
             <details
               className="dropdown dropdown-bottom dropdown-end"
               onClick={(e) => e.stopPropagation()}
@@ -88,7 +92,10 @@ export default function TextEntryContent({ textEntry, revisions, className = '' 
           </div>
 
           <div className="flex gap-3">
-            <Link href={`/posts/${textEntry.id}/`} className='flex-1 mb-2 hover:text-primary'>
+            <Link
+              href={`/posts/${textEntry.id}/`}
+              className="flex-1 mb-2 hover:text-primary"
+            >
               <p className="whitespace-pre-line">{textEntry.content}</p>
             </Link>
           </div>

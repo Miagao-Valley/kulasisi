@@ -13,13 +13,16 @@ export default async function PostHeader({ entry, className = '' }: Props) {
   return (
     <>
       <div className={`${className} flex gap-1 items-center text-sm`}>
-        <Username username={entry.author} reputation={entry.author_reputation} />
+        <Username
+          username={entry.author}
+          reputation={entry.author_reputation}
+        />
         •
-        <span className="text-sm">{naturalTime(new Date(entry.updated_at))}</span>
+        <span className="text-sm">
+          {naturalTime(new Date(entry.updated_at))}
+        </span>
         •
-        <Link
-          href={`/languages/${entry.lang}/`}
-        >
+        <Link href={`/languages/${entry.lang}/`}>
           <span className="badge badge-primary [&:not(:hover)]:badge-outline">
             {entry.lang}
           </span>

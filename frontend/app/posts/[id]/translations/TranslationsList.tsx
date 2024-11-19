@@ -8,11 +8,11 @@ import { Filter } from '@/app/components/FilterMenu';
 
 interface Props {
   textEntryId?: number;
-  searchTerm?: string,
-  sortOption?: string,
-  isDescending?: boolean,
-  filters?: Filter,
-  page?: number,
+  searchTerm?: string;
+  sortOption?: string;
+  isDescending?: boolean;
+  filters?: Filter;
+  page?: number;
   className?: string;
 }
 
@@ -47,16 +47,20 @@ export default async function TranslationsList({
           translations.results.map(async (translation) => {
             const revisions = await getTranslationRevisions(translation.id);
             return (
-            <li
-              className="px-4 py-3 border rounded-lg flex flex-col"
-              key={translation.id}
-            >
-              <div id={`translation-${translation.id}`}>
-                <TranslationsContent translation={translation} revisions={revisions.results}/>
-                <PostFooter entry={translation} type="translations" />
-              </div>
-            </li>
-          )})
+              <li
+                className="px-4 py-3 border rounded-lg flex flex-col"
+                key={translation.id}
+              >
+                <div id={`translation-${translation.id}`}>
+                  <TranslationsContent
+                    translation={translation}
+                    revisions={revisions.results}
+                  />
+                  <PostFooter entry={translation} type="translations" />
+                </div>
+              </li>
+            );
+          })
         ) : (
           <li className="w-full col-span-full p-3 text-center">
             <div>No translations found</div>
