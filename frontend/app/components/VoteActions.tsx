@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
 import { useRouter } from 'next/navigation';
 import { useAuth } from './AuthProvider';
+import toast from 'react-hot-toast';
 import { TextEntry, Translation, Vote } from '@/types';
 import vote from '@/lib/vote/vote';
 import { BiDownvote, BiSolidDownvote, BiSolidUpvote, BiUpvote } from 'react-icons/bi';
@@ -26,7 +27,13 @@ export default function VoteActions({ entry, type, votes }: Props) {
 
   const handleSubmit = async (prevState: any, formData: FormData) => {
     if (!auth.isAuthenticated) {
+      toast.error("You need to sign in to vote.")
       router.push(`/auth/login/`)
+      return
+    }
+
+    if (auth.username === entry.author) {
+      toast.error("You cannot vote your posts.")
       return
     }
 

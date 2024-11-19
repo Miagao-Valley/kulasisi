@@ -124,6 +124,10 @@ class Vote(models.Model):
             raise ValidationError(
                 "A vote cannot be assigned to both a text entry and a translation."
             )
+        if (self.text_entry and self.user == self.text_entry.author) or (self.translation and self.user == self.translation.author):
+            raise ValidationError(
+                "A user cannot vote itself."
+            )
 
     def save(self, *args, **kwargs):
         self.clean()
