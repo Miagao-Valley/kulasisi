@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
-import updateTextEntry from '@/lib/textEntries/updateTextEntry';
 import toast from 'react-hot-toast';
+import updateTextEntry from '@/lib/textEntries/updateTextEntry';
 
 interface Props {
   id: number;
@@ -12,17 +12,25 @@ interface Props {
   className?: string;
 }
 
-interface UpdateButtonProps {
-  disabled?: boolean;
-}
-
 export default function UpdateTextEntryForm({
   id,
   initialContent = '',
   setIsEditing,
   className = '',
 }: Props) {
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+
   const [content, setContent] = useState('');
+
+  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const newValue = e.target.value;
+    setContent(newValue);
+    const textarea = textareaRef.current;
+    if (textarea) {
+      textarea.style.height = 'auto';
+      textarea.style.height = `${textarea.scrollHeight}px`;
+    }
+  };
 
   const handleSubmit = async (prevState: any, formData: FormData) => {
     const res = await updateTextEntry(id, formData);
@@ -51,15 +59,16 @@ export default function UpdateTextEntryForm({
         )}
         <div>
           <textarea
-            className="textarea w-full"
+            className="textarea w-full p-1 rounded-none overflow-hidden resize-none focus:outline-none focus:border-transparent"
             name="content"
             id="content-field"
-            cols={15}
-            rows={5}
+            ref={textareaRef}
+            rows={1}
             autoFocus={true}
             placeholder="Enter updated text"
             defaultValue={initialContent}
-            onChange={(e) => setContent(e.target.value)}
+            value={content}
+            onChange={handleContentChange}
           ></textarea>
           {formState?.error?.content && (
             <div role="alert" className="text-sm text-error">
@@ -82,6 +91,10 @@ export default function UpdateTextEntryForm({
       </form>
     </>
   );
+}
+
+interface UpdateButtonProps {
+  disabled?: boolean;
 }
 
 function UpdateButton({ disabled = false }: UpdateButtonProps) {

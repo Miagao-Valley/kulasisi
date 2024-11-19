@@ -45,11 +45,13 @@ export default async function TranslationsSection({
 
   return (
     <>
+      <hr />
       <AddTranslationForm
         textEntryId={textEntry.id}
         original_lang={textEntry.lang}
-        className="mb-4"
+        className="mx-1 my-2"
       />
+      <hr className="mb-4" />
       <div className="mb-4 flex gap-3">
         <SearchInput currentSearchTerm={searchTerm} className="me-auto" />
         <SortDropdown

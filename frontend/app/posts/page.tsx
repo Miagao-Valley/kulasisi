@@ -41,8 +41,9 @@ export default async function PostsPage({ searchParams }: Props) {
 
   return (
     <>
-      <h1>Posts</h1>
-      <AddTextEntryForm className="mb-4" />
+      <hr />
+      <AddTextEntryForm className="mx-1 my-2" />
+      <hr className="mb-4"/>
       <div className="mb-4 flex gap-3">
         <SearchInput currentSearchTerm={searchTerm} className="me-auto" />
         <SortDropdown

@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
-import updateTranslation from '@/lib/translations/updateTranslation';
 import toast from 'react-hot-toast';
+import updateTranslation from '@/lib/translations/updateTranslation';
 
 interface Props {
   textEntryId: number;
@@ -13,10 +13,6 @@ interface Props {
   className?: string;
 }
 
-interface UpdateButtonProps {
-  disabled?: boolean;
-}
-
 export default function UpdateTranslationForm({
   textEntryId,
   id,
@@ -24,7 +20,19 @@ export default function UpdateTranslationForm({
   setIsEditing,
   className = '',
 }: Props) {
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+
   const [content, setContent] = useState('');
+
+  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const newValue = e.target.value;
+    setContent(newValue);
+    const textarea = textareaRef.current;
+    if (textarea) {
+      textarea.style.height = 'auto';
+      textarea.style.height = `${textarea.scrollHeight}px`;
+    }
+  };
 
   const handleSubmit = async (prevState: any, formData: FormData) => {
     const res = await updateTranslation(textEntryId, id, formData);
@@ -53,15 +61,16 @@ export default function UpdateTranslationForm({
         )}
         <div>
           <textarea
-            className="textarea textarea-bordered w-full"
+            className="textarea w-full p-1 rounded-nwone overflow-hidden resize-none focus:outline-none focus:border-transparent"
             name="content"
             id="content-field"
-            cols={15}
-            rows={5}
+            ref={textareaRef}
+            rows={1}
             autoFocus={true}
             placeholder="Enter updated text"
             defaultValue={initialContent}
-            onChange={(e) => setContent(e.target.value)}
+            value={content}
+            onChange={handleContentChange}
           ></textarea>
           {formState?.error?.content && (
             <div role="alert" className="text-sm text-error">
@@ -84,6 +93,10 @@ export default function UpdateTranslationForm({
       </form>
     </>
   );
+}
+
+interface UpdateButtonProps {
+  disabled?: boolean;
 }
 
 function UpdateButton({ disabled = false }: UpdateButtonProps) {
