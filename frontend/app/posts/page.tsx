@@ -12,8 +12,7 @@ interface Props {
 
 export default async function PostsPage({ searchParams }: Props) {
   const searchTerm = searchParams.q || '';
-  const sortOption = searchParams.sort || 'content';
-  const isDescending = searchParams?.isDescending === 'true';
+  const sortOption = searchParams.sort || '-vote_count';
   const lang = searchParams.lang || '';
   const page = Number(searchParams.page || 1);
 
@@ -23,8 +22,10 @@ export default async function PostsPage({ searchParams }: Props) {
 
   const sortingOptions: SortOption[] = [
     { label: 'Content', value: 'content' },
-    { label: 'Date updated ', value: 'updated_at' },
-    { label: 'Date created', value: 'created_at' },
+    { label: 'Votes ', value: '-vote_count' },
+    { label: 'Translations', value: '-translation_count' },
+    { label: 'Date updated ', value: '-updated_at' },
+    { label: 'Date created', value: '-created_at' },
   ];
 
   const filterOptions: FilterOption[] = [
@@ -48,7 +49,6 @@ export default async function PostsPage({ searchParams }: Props) {
         <SearchInput currentSearchTerm={searchTerm} className="me-auto" />
         <SortDropdown
           currentSortOption={sortOption}
-          currentIsDescending={isDescending}
           sortingOptions={sortingOptions}
         />
         <FilterMenu currentFilters={filters} filterOptions={filterOptions} />
@@ -57,7 +57,6 @@ export default async function PostsPage({ searchParams }: Props) {
         <TextEntriesList
           searchTerm={searchTerm}
           sortOption={sortOption}
-          isDescending={isDescending}
           filters={filters}
           page={page}
         />

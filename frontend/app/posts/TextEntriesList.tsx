@@ -17,7 +17,6 @@ interface Props {
 export default async function TextEntriesList({
   searchTerm = '',
   sortOption = 'content',
-  isDescending = false,
   filters = {},
   page = 1,
   className = '',
@@ -26,7 +25,7 @@ export default async function TextEntriesList({
 
   const textEntries = await getTextEntries({
     search: searchTerm,
-    ordering: isDescending ? `-${sortOption}` : sortOption,
+    ordering: sortOption,
     lang__code: filters?.lang || '',
     author__username: filters?.author || '',
     limit: limit,

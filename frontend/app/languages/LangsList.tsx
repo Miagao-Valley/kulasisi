@@ -4,19 +4,17 @@ import getLangs from '@/lib/langs/getLangs';
 interface Props {
   searchTerm: string;
   sortOption: string;
-  isDescending: boolean;
   className?: string;
 }
 
 export default async function LangsList({
   searchTerm,
   sortOption,
-  isDescending,
   className = '',
 }: Props) {
   const langs = await getLangs({
     search: searchTerm,
-    ordering: isDescending ? `-${sortOption}` : sortOption,
+    ordering: sortOption,
   });
 
   return (

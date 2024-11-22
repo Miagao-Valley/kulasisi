@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import update_session_auth_hash
+from django.db.models import Count, Avg, Q
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.response import Response
 from rest_framework.exceptions import PermissionDenied, ValidationError
@@ -21,14 +22,34 @@ class ListUserView(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ["is_staff"]
     search_fields = ["first_name", "last_name", "username"]
     ordering_fields = [
         "username",
+        "reputation",
+        "num_languages",
+        "avg_proficiency",
+        "text_entry_count",
+        "translation_count",
+        "vote_count",
         "date_joined",
         "last_login",
     ]
     ordering = ["username"]
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        base_points = Count("text_entries") + Count("translations")
+        upvotes = Count("votes", filter=Q(votes__value=1)) * 10
+        downvotes = Count("votes", filter=Q(votes__value=-1)) * -2
+        queryset = queryset.annotate(
+            reputation=base_points + upvotes + downvotes,
+            num_languages=Count("language_proficiencies"),
+            avg_proficiency=Avg("language_proficiencies__level"),
+            text_entry_count=Count("text_entries"),
+            translation_count=Count("translations"),
+            vote_count=Count("votes")
+        )
+        return queryset
 
 
 class CreateUserView(generics.CreateAPIView):

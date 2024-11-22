@@ -6,7 +6,6 @@ import Username from '../components/Username';
 interface Props {
   searchTerm: string;
   sortOption: string;
-  isDescending: boolean;
   page: number;
   className?: string;
 }
@@ -14,14 +13,13 @@ interface Props {
 export default async function UsersList({
   searchTerm,
   sortOption,
-  isDescending,
   page,
   className = '',
 }: Props) {
   const limit = 10;
   const users = await getUsers({
     search: searchTerm,
-    ordering: isDescending ? `-${sortOption}` : sortOption,
+    ordering: sortOption,
     limit: limit,
     offset: limit * (page - 1),
   });

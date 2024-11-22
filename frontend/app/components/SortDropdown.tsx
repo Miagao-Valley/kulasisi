@@ -11,14 +11,12 @@ export interface SortOption {
 
 interface Props {
   currentSortOption: string;
-  currentIsDescending: boolean;
   sortingOptions: SortOption[];
   className?: string;
 }
 
 export default function SortDropdown({
   currentSortOption,
-  currentIsDescending,
   sortingOptions,
   className,
 }: Props) {
@@ -26,7 +24,6 @@ export default function SortDropdown({
   const searchParams = useSearchParams();
 
   const [sortOption, setSortOption] = useState(currentSortOption);
-  const [isDescending, setIsDescending] = useState(currentIsDescending);
 
   useEffect(() => {
     const currentSearchParams = new URLSearchParams(
@@ -35,22 +32,28 @@ export default function SortDropdown({
     if (sortOption) {
       currentSearchParams.set(
         'sort',
-        isDescending ? `-${sortOption}` : sortOption,
+        sortOption,
       );
     } else {
       currentSearchParams.delete('sort');
     }
     router.push(`?${currentSearchParams.toString()}`);
-  }, [sortOption, isDescending, searchParams, router]);
+  }, [sortOption, searchParams, router]);
+
+  const toggleSort = () => {
+    setSortOption((prev) =>
+      prev.startsWith('-') ? prev.slice(1) : `-${prev}` // Toggle the sort order
+    );
+  };
 
   return (
     <div className={`dropdown dropdown-hover dropdown-end ${className}`}>
       <div tabIndex={0} role="button" className="btn btn-outline btn-sm">
-        <span onClick={() => setIsDescending((prev) => !prev)}>
-          {isDescending ? <FaSortAmountDown /> : <FaSortAmountUp />}
+        <span onClick={toggleSort}>
+          {sortOption.startsWith('-') ? <FaSortAmountDown /> : <FaSortAmountUp />}
         </span>
         Sort:{' '}
-        {sortingOptions.find((option) => option.value === sortOption)?.label ||
+        {sortingOptions.find((option) => option.value.replace(/^-/g, "") === sortOption.replace(/^-/g, ""))?.label ||
           'None'}
       </div>
       <div className="dropdown-content w-fit p-4 rounded-box bg-base-100 shadow">

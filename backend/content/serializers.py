@@ -1,4 +1,3 @@
-from django.db.models import Count
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 
@@ -7,9 +6,30 @@ from users.models import User
 
 
 class LanguageSerializer(serializers.ModelSerializer):
+    user_count = serializers.SerializerMethodField()
+    text_entry_count = serializers.SerializerMethodField()
+    translation_count = serializers.SerializerMethodField()
+    users_by_proficiency = serializers.SerializerMethodField()
+
     class Meta:
         model = Language
-        fields = ["id", "code", "name"]
+        fields = ["id", "code", "name", "user_count", "users_by_proficiency", "translation_count", "text_entry_count"]
+
+    def get_user_count(self, obj):
+        return obj.proficiencies.count()
+
+    def get_text_entry_count(self, obj):
+        return obj.text_entries.count()
+
+    def get_translation_count(self, obj):
+        return obj.translations.count()
+
+    def get_users_by_proficiency(self, obj):
+        users_by_level = {}
+        for level in [1, 2, 3, 4, 5]:
+            users_by_level[level] = obj.proficiencies.filter(level=level).count()
+
+        return users_by_level
 
 
 class LanguageProficiencySerializer(serializers.ModelSerializer):

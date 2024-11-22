@@ -10,11 +10,13 @@ interface Props {
 export default async function LangsPage({ searchParams }: Props) {
   const searchTerm = searchParams.q || '';
   const sortOption = searchParams.sort || 'name';
-  const isDescending = searchParams.isDescending === 'true';
 
   const sortingOptions: SortOption[] = [
     { label: 'Name', value: 'name' },
-    { label: 'Code', value: 'code' },
+    { label: 'Speakers', value: '-user_count' },
+    { label: 'Proficiency', value: '-avg_proficiency' },
+    { label: 'Posts', value: '-text_entry_count' },
+    { label: 'Translations', value: '-translation_count' },
   ];
 
   return (
@@ -24,7 +26,6 @@ export default async function LangsPage({ searchParams }: Props) {
         <SearchInput currentSearchTerm={searchTerm} className="me-auto" />
         <SortDropdown
           currentSortOption={sortOption}
-          currentIsDescending={isDescending}
           sortingOptions={sortingOptions}
         />
       </div>
@@ -32,7 +33,6 @@ export default async function LangsPage({ searchParams }: Props) {
         <LangsList
           searchTerm={searchTerm}
           sortOption={sortOption}
-          isDescending={isDescending}
         />
       </Suspense>
     </>

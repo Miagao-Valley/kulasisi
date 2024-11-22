@@ -17,8 +17,7 @@ export default async function TranslationsSection({
   textEntry,
 }: Props) {
   const searchTerm = searchParams.q || '';
-  const sortOption = searchParams.sort || 'content';
-  const isDescending = searchParams.isDescending === 'true';
+  const sortOption = searchParams.sort || '-vote_count';
   const lang = searchParams.lang || '';
   const page = Number(searchParams.page || 1);
 
@@ -28,8 +27,9 @@ export default async function TranslationsSection({
 
   const sortingOptions: SortOption[] = [
     { label: 'Content', value: 'content' },
-    { label: 'Date updated ', value: 'updated_at' },
-    { label: 'Date created', value: 'created_at' },
+    { label: 'Votes ', value: '-vote_count' },
+    { label: 'Date updated ', value: '-updated_at' },
+    { label: 'Date created', value: '-created_at' },
   ];
 
   const filterOptions: FilterOption[] = [
@@ -56,7 +56,6 @@ export default async function TranslationsSection({
         <SearchInput currentSearchTerm={searchTerm} className="me-auto" />
         <SortDropdown
           currentSortOption={sortOption}
-          currentIsDescending={isDescending}
           sortingOptions={sortingOptions}
         />
         <FilterMenu currentFilters={filters} filterOptions={filterOptions} />
@@ -66,7 +65,6 @@ export default async function TranslationsSection({
           textEntryId={textEntry.id}
           searchTerm={searchTerm}
           sortOption={sortOption}
-          isDescending={isDescending}
           filters={filters}
           page={page}
         />
