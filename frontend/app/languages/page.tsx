@@ -9,11 +9,11 @@ interface Props {
 
 export default async function LangsPage({ searchParams }: Props) {
   const searchTerm = searchParams.q || '';
-  const sortOption = searchParams.sort || 'name';
+  const sortOption = searchParams.sort || '-user_count';
 
   const sortingOptions: SortOption[] = [
     { label: 'Name', value: 'name' },
-    { label: 'Speakers', value: '-user_count' },
+    { label: 'Members', value: '-user_count' },
     { label: 'Proficiency', value: '-avg_proficiency' },
     { label: 'Posts', value: '-text_entry_count' },
     { label: 'Translations', value: '-translation_count' },

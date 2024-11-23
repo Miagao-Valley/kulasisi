@@ -7,5 +7,7 @@ export default async function getLangs(
   const queryString = new URLSearchParams(queryParams).toString();
   const url = `/languages/${queryString ? `?${queryString}` : ''}`;
 
-  return await fetcher(url);
+  return await fetcher(url, {
+    cache: 'no-store',
+  });
 }

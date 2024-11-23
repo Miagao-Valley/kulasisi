@@ -19,19 +19,19 @@ export default async function LangsList({
 
   return (
     <ul
-      className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 ${className}`}
+      className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 ${className}`}
     >
       {langs && langs.results && langs.results.length > 0 ? (
         langs.results.map((lang) => (
           <li key={lang.code}>
             <Link
-              className="hover:text-primary flex gap-2 items-center"
+              className="btn btn-ghost btn-sm w-full flex gap-1 justify-start"
               href={`/languages/${lang.code}/`}
             >
-              <span className="badge badge-primary badge-outline">
+              <span className="badge badge-primary [&:not(:hover)]:badge-outline">
                 {lang.code}
               </span>
-              <span className="font-semibold">{lang.name}</span>
+              <span className="font-semibold hover:text-primary">{lang.name}</span>
             </Link>
           </li>
         ))
