@@ -27,7 +27,7 @@ export default async function UsersList({
   return (
     <>
       <ul
-        className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 ${className}`}
+        className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 ${className}`}
       >
         {users && users.results && users.results.length > 0 ? (
           users.results.map((user) => (
