@@ -1,3 +1,4 @@
+from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 
@@ -174,21 +175,27 @@ class VoteSerializer(serializers.ModelSerializer):
         }
 
     def create(self, validated_data):
-
         user = self.context["request"].user
         value = validated_data.get("value")
+        view_kwargs = self.context["view"].kwargs
 
-        if text_entry_pk := self.context.get("view").kwargs.get("text_entry_pk"):
-            text_entry = get_object_or_404(TextEntry, id=text_entry_pk)
-            vote, created = Vote.objects.get_or_create(
-                user=user, text_entry=text_entry, defaults={"value": value}
-            )
+        if "text_entry_pk" in view_kwargs:
+            target_model = TextEntry
+            object_id = view_kwargs["text_entry_pk"]
+        elif "translation_pk" in view_kwargs:
+            target_model = Translation
+            object_id = view_kwargs["translation_pk"]
+        else:
+            raise serializers.ValidationError("Invalid target for voting.")
 
-        elif translation_pk := self.context.get("view").kwargs.get("translation_pk"):
-            translation = get_object_or_404(Translation, id=translation_pk)
-            vote, created = Vote.objects.get_or_create(
-                user=user, translation=translation, defaults={"value": value}
-            )
+        target_object = get_object_or_404(target_model, id=object_id)
+
+        vote, created = Vote.objects.get_or_create(
+            user=user,
+            content_type=ContentType.objects.get_for_model(target_model),
+            object_id=target_object.id,
+            defaults={"value": value},
+        )
 
         if not created:
             vote.value = value

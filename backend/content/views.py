@@ -155,9 +155,16 @@ class ListCreateVoteView(generics.ListCreateAPIView):
     pagination_class = None
 
     def get_queryset(self):
-        if text_entry_pk := self.kwargs.get("text_entry_pk"):
-            text_entry = get_object_or_404(TextEntry, id=text_entry_pk)
-            return text_entry.votes.all()
-        elif translation_pk := self.kwargs.get("translation_pk"):
-            translation = get_object_or_404(Translation, id=translation_pk)
-            return translation.votes.all()
+        view_kwargs = self.kwargs
+
+        if "text_entry_pk" in view_kwargs:
+            target_model = TextEntry
+            object_id = view_kwargs["text_entry_pk"]
+        elif "translation_pk" in view_kwargs:
+            target_model = Translation
+            object_id = view_kwargs["translation_pk"]
+        else:
+            raise ValueError("Invalid target for votes.")
+
+        target_object = get_object_or_404(target_model, id=object_id)
+        return target_object.votes.all()

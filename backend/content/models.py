@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
+from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
 from simple_history.models import HistoricalRecords
 from users.models import User
@@ -43,17 +45,41 @@ class LanguageProficiency(models.Model):
         return dict(self.PROFICIENCY_CHOICES).get(self.level, "Unknown")
 
 
-class TextEntry(models.Model):
-    content = models.TextField()
-    lang = models.ForeignKey(
-        Language, on_delete=models.PROTECT, related_name="text_entries"
-    )
-    author = models.ForeignKey(
-        User, on_delete=models.PROTECT, related_name="text_entries"
-    )
+class Entry(models.Model):
+    lang = models.ForeignKey(Language, on_delete=models.PROTECT)
+    author = models.ForeignKey(User, on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    history = HistoricalRecords()
+    history = HistoricalRecords(inherit=True)
+
+    class Meta:
+        abstract = True
+
+
+class Vote(models.Model):
+    VOTE_CHOICES = [(1, "Upvote"), (-1, "Downvote"), (0, "Unvote")]
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="votes")
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey("content_type", "object_id")
+    value = models.SmallIntegerField(choices=VOTE_CHOICES)
+    voted_at = models.DateTimeField(auto_now=True)
+
+    def clean(self):
+        if self.value not in [-1, 0, 1]:
+            raise ValidationError("Vote value must be -1, 0, or 1.")
+
+    def __str__(self):
+        return f"Vote by {self.user.username} on {self.content_object}"
+
+
+class TextEntry(Entry):
+    lang = models.ForeignKey(Language, on_delete=models.PROTECT, related_name="text_entries")
+    author = models.ForeignKey(User, on_delete=models.PROTECT, related_name="text_entries")
+    votes = GenericRelation(Vote, related_query_name="text_entry")
+
+    content = models.TextField()
 
     class Meta:
         unique_together = ("content", "lang")
@@ -62,79 +88,18 @@ class TextEntry(models.Model):
         return f"{self.content} ({self.lang.code})"
 
 
-class Translation(models.Model):
+class Translation(Entry):
+    lang = models.ForeignKey(Language, on_delete=models.PROTECT, related_name="translations")
+    author = models.ForeignKey(User, on_delete=models.PROTECT, related_name="translations")
+    votes = GenericRelation(Vote, related_query_name="text_entries")
+
     text_entry = models.ForeignKey(
         TextEntry, on_delete=models.CASCADE, related_name="translations"
     )
     content = models.TextField()
-    lang = models.ForeignKey(
-        Language, on_delete=models.PROTECT, related_name="translations"
-    )
-    author = models.ForeignKey(
-        User, on_delete=models.PROTECT, related_name="translations"
-    )
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    history = HistoricalRecords()
 
     class Meta:
         unique_together = ("content", "lang", "text_entry")
 
     def __str__(self):
         return f"{self.content} ({self.lang.code})"
-
-
-class Vote(models.Model):
-    VOTE_CHOICES = [(1, "Upvote"), (-1, "Downvote"), (0, "Unvote")]
-
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="votes")
-    text_entry = models.ForeignKey(
-        TextEntry, on_delete=models.CASCADE, related_name="votes", null=True, blank=True
-    )
-    translation = models.ForeignKey(
-        Translation,
-        on_delete=models.CASCADE,
-        related_name="votes",
-        null=True,
-        blank=True,
-    )
-    value = models.SmallIntegerField(choices=VOTE_CHOICES)
-    voted_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(
-                fields=["user", "text_entry"],
-                name="unique_textentry_vote",
-                condition=models.Q(text_entry__isnull=False),
-            ),
-            models.UniqueConstraint(
-                fields=["user", "translation"],
-                name="unique_translation_vote",
-                condition=models.Q(translation__isnull=False),
-            ),
-        ]
-
-    def clean(self):
-        if not self.text_entry and not self.translation:
-            raise ValidationError(
-                "A vote must be assigned to either a text entry or a translation."
-            )
-        if self.text_entry and self.translation:
-            raise ValidationError(
-                "A vote cannot be assigned to both a text entry and a translation."
-            )
-        if (self.text_entry and self.user == self.text_entry.author) or (
-            self.translation and self.user == self.translation.author
-        ):
-            raise ValidationError("A user cannot vote itself.")
-
-    def save(self, *args, **kwargs):
-        self.clean()
-        super().save(*args, **kwargs)
-
-    def __str__(self):
-        if self.text_entry:
-            return f"Vote by {self.user.username} on Text Entry {self.text_entry.pk}"
-        elif self.translation:
-            return f"Vote by {self.user.username} on Translation {self.translation.pk}"
