@@ -5,9 +5,9 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     email = models.EmailField(unique=True, blank=False, null=False)
     phone_number = models.CharField(max_length=15, blank=True, null=True)
-    first_name = models.CharField(max_length=30, blank=False, null=False)
-    last_name = models.CharField(max_length=30, blank=False, null=False)
-    date_of_birth = models.DateField(blank=False, null=False)
+    first_name = models.CharField(max_length=30, blank=True, null=True)
+    last_name = models.CharField(max_length=30, blank=True, null=True)
+    date_of_birth = models.DateField(blank=True, null=True)
     location = models.CharField(max_length=255, blank=True, null=True)
     gender = models.CharField(
         max_length=10,
