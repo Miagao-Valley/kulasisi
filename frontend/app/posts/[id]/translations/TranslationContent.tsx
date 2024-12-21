@@ -81,7 +81,7 @@ export function TranslationsContent({
                     <FaClock /> Edits
                   </a>
                 </li>
-                {auth.username === translation.author && (
+                {auth.username === translation.contributor && (
                   <>
                     <li>
                       <a onClick={handleEdit}>

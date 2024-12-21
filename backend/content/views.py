@@ -56,7 +56,7 @@ class ListCreateTextEntryView(generics.ListCreateAPIView):
     serializer_class = TextEntrySerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ["lang__code", "author__username"]
+    filterset_fields = ["lang__code", "contributor__username"]
     search_fields = ["content"]
     ordering_fields = ["content", "vote_count", "translation_count", "updated_at", "created_at"]
     ordering = ["-updated_at"]
@@ -77,7 +77,7 @@ class ListCreateTextEntryView(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         if serializer.is_valid():
-            serializer.save(author=self.request.user)
+            serializer.save(contributor=self.request.user)
         else:
             print(serializer.errors)
 
@@ -103,7 +103,7 @@ class ListCreateTranslationsView(generics.ListCreateAPIView):
     serializer_class = TranslationSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ["text_entry", "lang__code", "author__username"]
+    filterset_fields = ["text_entry", "lang__code", "contributor__username"]
     search_fields = ["content"]
     ordering_fields = ["content", "vote_count", "updated_at", "created_at"]
     ordering = ["-updated_at"]
@@ -126,7 +126,7 @@ class ListCreateTranslationsView(generics.ListCreateAPIView):
             text_entry = get_object_or_404(
                 TextEntry, id=self.request.POST.get("text_entry")
             )
-            serializer.save(text_entry=text_entry, author=self.request.user)
+            serializer.save(text_entry=text_entry, contributor=self.request.user)
         else:
             print(serializer.errors)
 

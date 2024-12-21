@@ -13,10 +13,10 @@ export default async function PostHeader({ entry, className = '' }: Props) {
   return (
     <>
       <div className={`${className} flex gap-1 items-center text-sm`}>
-        <Link href={`/users/${entry.author}/`}>
+        <Link href={`/users/${entry.contributor}/`}>
           <Username
-            username={entry.author}
-            reputation={entry.author_reputation}
+            username={entry.contributor}
+            reputation={entry.contributor_reputation}
           />
         </Link>
         •

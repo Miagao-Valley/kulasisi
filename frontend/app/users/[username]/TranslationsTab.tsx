@@ -7,7 +7,7 @@ interface Props {
 }
 
 export default async function TranslationsTab({ user }: Props) {
-  const filters = { author: user.username };
+  const filters = { contributor: user.username };
   return (
     <>
       <TranslationsList filters={filters} />

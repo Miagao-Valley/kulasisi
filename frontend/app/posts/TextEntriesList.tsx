@@ -27,7 +27,7 @@ export default async function TextEntriesList({
     search: searchTerm,
     ordering: sortOption,
     lang__code: filters?.lang || '',
-    author__username: filters?.author || '',
+    contributor__username: filters?.contributor || '',
     limit: limit,
     offset: limit * (page - 1),
   });

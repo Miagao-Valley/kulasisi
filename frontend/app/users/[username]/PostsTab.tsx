@@ -7,7 +7,7 @@ interface Props {
 }
 
 export default async function PostsTab({ user }: Props) {
-  const filters = { author: user.username };
+  const filters = { contributor: user.username };
   return (
     <>
       <TextEntriesList filters={filters} />

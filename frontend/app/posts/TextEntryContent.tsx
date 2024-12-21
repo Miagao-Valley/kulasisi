@@ -73,7 +73,7 @@ export default function TextEntryContent({
                     <FaClock /> Edits
                   </a>
                 </li>
-                {auth.username === textEntry.author && (
+                {auth.username === textEntry.contributor && (
                   <>
                     <li>
                       <a onClick={handleEdit}>

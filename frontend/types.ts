@@ -55,8 +55,8 @@ export interface TextEntry {
   id: number;
   content: string;
   lang: string;
-  author: string;
-  author_reputation: number;
+  contributor: string;
+  contributor_reputation: number;
   created_at: Date;
   updated_at: Date;
   vote_count: number;
@@ -75,8 +75,8 @@ export interface Translation {
   text_entry: number;
   content: string;
   lang: string;
-  author: string;
-  author_reputation: number;
+  contributor: string;
+  contributor_reputation: number;
   created_at: Date;
   updated_at: Date;
   vote_count: number;

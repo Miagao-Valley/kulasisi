@@ -47,7 +47,7 @@ class LanguageProficiency(models.Model):
 
 class Entry(models.Model):
     lang = models.ForeignKey(Language, on_delete=models.PROTECT)
-    author = models.ForeignKey(User, on_delete=models.PROTECT)
+    contributor = models.ForeignKey(User, on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     history = HistoricalRecords(inherit=True)
@@ -76,7 +76,7 @@ class Vote(models.Model):
 
 class TextEntry(Entry):
     lang = models.ForeignKey(Language, on_delete=models.PROTECT, related_name="text_entries")
-    author = models.ForeignKey(User, on_delete=models.PROTECT, related_name="text_entries")
+    contributor = models.ForeignKey(User, on_delete=models.PROTECT, related_name="text_entries")
     votes = GenericRelation(Vote, related_query_name="text_entry")
 
     content = models.TextField()
@@ -90,7 +90,7 @@ class TextEntry(Entry):
 
 class Translation(Entry):
     lang = models.ForeignKey(Language, on_delete=models.PROTECT, related_name="translations")
-    author = models.ForeignKey(User, on_delete=models.PROTECT, related_name="translations")
+    contributor = models.ForeignKey(User, on_delete=models.PROTECT, related_name="translations")
     votes = GenericRelation(Vote, related_query_name="text_entries")
 
     text_entry = models.ForeignKey(
