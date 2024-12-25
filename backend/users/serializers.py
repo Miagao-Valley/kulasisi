@@ -4,8 +4,8 @@ from django.db import transaction
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from .models import User
-from content.models import LanguageProficiency
-from content.serializers import LanguageProficiencySerializer
+from languages.models import LanguageProficiency
+from languages.serializers import LanguageProficiencySerializer
 
 
 class UserSerializer(serializers.ModelSerializer):

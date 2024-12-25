@@ -1,6 +1,6 @@
 [
   {
-    "model": "content.language",
+    "model": "languages.language",
     "pk": 1,
     "fields": {
       "code": "eng",
@@ -8,7 +8,7 @@
     }
   },
   {
-    "model": "content.language",
+    "model": "languages.language",
     "pk": 2,
     "fields": {
       "code": "tgl",
@@ -16,7 +16,7 @@
     }
   },
   {
-    "model": "content.language",
+    "model": "languages.language",
     "pk": 3,
     "fields": {
       "code": "ceb",
@@ -24,7 +24,7 @@
     }
   },
   {
-    "model": "content.language",
+    "model": "languages.language",
     "pk": 4,
     "fields": {
       "code": "ilo",
@@ -32,7 +32,7 @@
     }
   },
   {
-    "model": "content.language",
+    "model": "languages.language",
     "pk": 5,
     "fields": {
       "code": "hil",
@@ -40,7 +40,7 @@
     }
   },
   {
-    "model": "content.language",
+    "model": "languages.language",
     "pk": 6,
     "fields": {
       "code": "war",
@@ -48,7 +48,7 @@
     }
   },
   {
-    "model": "content.language",
+    "model": "languages.language",
     "pk": 7,
     "fields": {
       "code": "bcl",
@@ -56,7 +56,7 @@
     }
   },
   {
-    "model": "content.language",
+    "model": "languages.language",
     "pk": 8,
     "fields": {
       "code": "pam",
@@ -64,7 +64,7 @@
     }
   },
   {
-    "model": "content.language",
+    "model": "languages.language",
     "pk": 9,
     "fields": {
       "code": "pag",
@@ -72,7 +72,7 @@
     }
   },
   {
-    "model": "content.language",
+    "model": "languages.language",
     "pk": 10,
     "fields": {
       "code": "mrw",
@@ -80,7 +80,7 @@
     }
   },
   {
-    "model": "content.language",
+    "model": "languages.language",
     "pk": 11,
     "fields": {
       "code": "krj",
@@ -88,7 +88,7 @@
     }
   },
   {
-    "model": "content.language",
+    "model": "languages.language",
     "pk": 12,
     "fields": {
       "code": "akl",
@@ -96,7 +96,7 @@
     }
   },
   {
-    "model": "content.language",
+    "model": "languages.language",
     "pk": 13,
     "fields": {
       "code": "cps",

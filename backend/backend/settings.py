@@ -49,8 +49,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "core",
     "users",
-    "content",
+    "languages",
+    "phrases",
+    "dictionary",
     "rest_framework",
     "corsheaders",
     "django_filters",
@@ -163,7 +166,7 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
-    "DEFAULT_PAGINATION_CLASS": "content.pagination.CustomPagination",
+    "DEFAULT_PAGINATION_CLASS": "core.pagination.CustomPagination",
     "PAGE_SIZE": 100,
 }
 
