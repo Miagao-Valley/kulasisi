@@ -1,13 +1,13 @@
 import React from 'react';
 import Link from 'next/link';
-import { PhraseEntry, Translation } from '@/types';
+import { PhraseEntry, DictEntry, Translation } from '@/types';
 import getVotes from '@/lib/vote/getVotes';
 import VoteActions from './VoteActions';
 import { BiMessageSquareDetail } from 'react-icons/bi';
 
 interface Props {
-  entry: PhraseEntry | Translation;
-  type: 'phrase-entries' | 'translations';
+  entry: PhraseEntry | DictEntry | Translation;
+  type: 'phrase-entries' | 'dict-entries' | 'translations';
   className?: string;
 }
 
@@ -28,6 +28,15 @@ export default async function EntryFooter({
         >
           <BiMessageSquareDetail />
           <span>{(entry as PhraseEntry)?.translation_count || 0}</span>
+        </Link>
+      )}
+      {type === 'dict-entries' && (
+        <Link
+          href={`/dictionary/${entry.id}?tab=definitions`}
+          className="btn btn-sm flex"
+        >
+          <BiMessageSquareDetail />
+          <span>0</span>
         </Link>
       )}
     </div>

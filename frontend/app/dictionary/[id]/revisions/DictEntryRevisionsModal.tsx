@@ -1,13 +1,13 @@
 import React from 'react';
-import { PhraseEntryRevision } from '@/types';
-import PhraseEntryRevisionsList from './PhraseEntryRevisionsList';
+import { DictEntryRevision } from '@/types';
+import DictEntryRevisionsList from './DictEntryRevisionsList';
 
 interface Props {
-  revisions: PhraseEntryRevision[];
+  revisions: DictEntryRevision[];
   id: number;
 }
 
-export default function PhraseEntryRevisionsModal({ revisions, id }: Props) {
+export default function DictEntryRevisionsModal({ revisions, id }: Props) {
   return (
     <>
       <div
@@ -22,7 +22,7 @@ export default function PhraseEntryRevisionsModal({ revisions, id }: Props) {
               ✕
             </a>
           </div>
-          <PhraseEntryRevisionsList revisions={revisions} />
+          <DictEntryRevisionsList revisions={revisions} />
         </div>
       </div>
     </>

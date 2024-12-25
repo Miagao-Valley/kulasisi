@@ -1,6 +1,6 @@
 import React from 'react';
 import { TranslationRevision } from '@/types';
-import PhraseEntryRevisionsList from '../../../components/EntryRevisionsList';
+import PhraseEntryRevisionsList from './PhraseEntryRevisionsList';
 
 interface Props {
   id: number;

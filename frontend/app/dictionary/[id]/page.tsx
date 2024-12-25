@@ -1,10 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
-import getPhraseEntry from '@/lib/phraseEntries/getPhraseEntry';
-import getPhraseEntryRevisions from '@/lib/phraseEntries/getPhraseEntryRevisions';
-import PhraseEntryContent from '../PhraseEntryContent';
+import getDictEntry from '@/lib/dictEntries/getDictEntry';
+import getDictEntryRevisions from '@/lib/dictEntries/getDictEntryRevisions';
+import DictEntryContent from '../DictEntryContent';
 import EntryFooter from '../../components/EntryFooter';
-import TranslationsSection from './translations/TranslationsSection';
 
 interface Props {
   params: {
@@ -15,16 +14,16 @@ interface Props {
 
 export default async function PostPage({ params, searchParams }: Props) {
   const id = Number(params.id);
-  const phraseEntry = await getPhraseEntry(id);
-  const revisions = await getPhraseEntryRevisions(id);
+  const dictEntry = await getDictEntry(id);
+  const revisions = await getDictEntryRevisions(id);
 
-  const currentTab = searchParams?.tab || 'translations';
+  const currentTab = searchParams?.tab || 'definitions';
 
   return (
     <>
       <div className="mb-3">
-        <PhraseEntryContent phraseEntry={phraseEntry} revisions={revisions.results} />
-        <EntryFooter entry={phraseEntry} type="phrase-entries" />
+        <DictEntryContent dictEntry={dictEntry} revisions={revisions.results} />
+        <EntryFooter entry={dictEntry} type="dict-entries" />
       </div>
 
       <div role="tablist" className="tabs tabs-bordered w-fit">
@@ -34,15 +33,12 @@ export default async function PostPage({ params, searchParams }: Props) {
           className={`tab ${currentTab === 'translations' ? 'tab-active' : ''}`}
           aria-label="Translations"
         >
-          Translations
+          Definitions
         </Link>
       </div>
-      {currentTab === 'translations' ? (
+      {currentTab === 'definitions' ? (
         <div role="tabpanel" className="p-6">
-          <TranslationsSection
-            searchParams={searchParams}
-            phraseEntry={phraseEntry}
-          />
+          Definitions
         </div>
       ) : null}
     </>

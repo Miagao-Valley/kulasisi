@@ -16,6 +16,9 @@ export default async function Navbar() {
             <Link href={`/phrases/`}>Phrases</Link>
           </li>
           <li>
+            <Link href={`/dictionary/`}>Dictionary</Link>
+          </li>
+          <li>
             <Link href={`/languages/`}>Languages</Link>
           </li>
           <li>

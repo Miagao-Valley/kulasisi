@@ -1,11 +1,11 @@
 import React from 'react';
 import Link from 'next/link';
 import naturalTime from '@/utils/naturalTime';
-import { PhraseEntry, Translation } from '@/types';
+import { PhraseEntry, DictEntry, Translation } from '@/types';
 import Username from './Username';
 
 interface Props {
-  entry: PhraseEntry | Translation;
+  entry: PhraseEntry | DictEntry | Translation;
   className?: string;
 }
 
