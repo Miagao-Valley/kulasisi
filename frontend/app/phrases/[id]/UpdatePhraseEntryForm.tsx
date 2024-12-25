@@ -59,7 +59,7 @@ export default function UpdatePhraseEntryForm({
         )}
         <div>
           <textarea
-            className="textarea w-full p-1 rounded-none overflow-hidden resize-none focus:outline-none focus:border-transparent"
+            className="textarea text-base w-full p-0 rounded-none overflow-hidden resize-none focus:outline-none focus:border-transparent"
             name="content"
             id="content-field"
             ref={textareaRef}

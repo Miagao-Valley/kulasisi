@@ -59,7 +59,7 @@ export default function UpdateDictEntryForm({
         )}
         <div>
           <textarea
-            className="textarea w-full p-1 rounded-none overflow-hidden resize-none focus:outline-none focus:border-transparent"
+            className="textarea text-base w-full p-0 rounded-none overflow-hidden resize-none focus:outline-none focus:border-transparent"
             name="definition"
             id="definition-field"
             ref={textareaRef}
