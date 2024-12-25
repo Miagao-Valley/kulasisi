@@ -3,10 +3,10 @@ import { Translation, PaginationDetails } from '@/types';
 
 export default async function getTranslations(
   queryParams: Record<string, any> = {},
-  textEntryId?: number,
+  phraseEntryId?: number,
 ): Promise<PaginationDetails & { results: Translation[] }> {
   const queryString = new URLSearchParams(queryParams).toString();
-  const url = `/translations/?text_entry=${textEntryId || ''}&${queryString}`;
+  const url = `/translations/?phrase_entry=${phraseEntryId || ''}&${queryString}`;
 
   return await fetcher(url, {
     cache: 'no-store',

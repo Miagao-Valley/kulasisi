@@ -4,14 +4,11 @@ import { revalidatePath } from 'next/cache';
 import fetcher, { FetchError } from '@/utils/fetcher';
 import getToken from '../tokens/getToken';
 
-export default async function addTranslation(
-  phraseEntryId: number,
-  data: FormData,
-) {
+export default async function addPhraseEntry(data: FormData) {
   let res = null;
   try {
     res = await fetcher(
-      `/translations/`,
+      `/phrase-entries/`,
       {
         method: 'POST',
         body: data,
@@ -23,6 +20,6 @@ export default async function addTranslation(
     return { error: fetchError.resBody };
   }
 
-  revalidatePath(`/phrases/${phraseEntryId}/`);
+  revalidatePath(`/phrases`);
   return res;
 }

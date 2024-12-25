@@ -17,7 +17,7 @@ export default async function UsersPage({ searchParams }: Props) {
     { label: 'Reputation', value: '-reputation' },
     { label: 'Known languages', value: '-num_languages' },
     { label: 'Proficiency', value: '-avg_proficiency' },
-    { label: 'Posts', value: '-text_entry_count' },
+    { label: 'Phrases', value: '-phrase_entry_count' },
     { label: 'Translations', value: '-translation_count' },
     { label: 'Votes', value: '-vote_count' },
     { label: 'Last seen', value: '-last_login' },

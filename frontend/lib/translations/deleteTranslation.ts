@@ -6,7 +6,7 @@ import fetcher from '@/utils/fetcher';
 import getToken from '../tokens/getToken';
 
 export default async function deleteTranslation(
-  textEntryId: number,
+  phraseEntryId: number,
   id: number,
 ) {
   await fetcher(
@@ -17,6 +17,6 @@ export default async function deleteTranslation(
     getToken(),
   );
 
-  revalidatePath(`/posts/${textEntryId}`);
-  redirect(`/posts/${textEntryId}`);
+  revalidatePath(`/phrases/${phraseEntryId}`);
+  redirect(`/phrases/${phraseEntryId}`);
 }

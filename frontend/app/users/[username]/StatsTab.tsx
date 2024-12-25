@@ -80,7 +80,7 @@ export default function StatsTab({ user }: Props) {
         )}
       </form>
       <div>
-        <h3 className="text-base">Contribution</h3>
+        <h3 className="phrase-base">Contribution</h3>
         <div className="grid grid-cols-2 gap-4">
           <div className="flex flex-col">
             <span className="font-semibold">{user.reputation}</span>
@@ -91,8 +91,8 @@ export default function StatsTab({ user }: Props) {
             <span>Votes</span>
           </div>
           <div className="flex flex-col">
-            <span className="font-semibold">{user.text_entry_count}</span>
-            <span>Posts</span>
+            <span className="font-semibold">{user.phrase_entry_count}</span>
+            <span>Phrases</span>
           </div>
           <div className="flex flex-col">
             <span className="font-semibold">{user.translation_count}</span>

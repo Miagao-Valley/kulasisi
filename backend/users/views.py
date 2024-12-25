@@ -28,7 +28,7 @@ class ListUserView(generics.ListAPIView):
         "reputation",
         "num_languages",
         "avg_proficiency",
-        "text_entry_count",
+        "phrase_entry_count",
         "translation_count",
         "vote_count",
         "date_joined",
@@ -38,14 +38,14 @@ class ListUserView(generics.ListAPIView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        base_points = Count("text_entries") + Count("translations")
+        base_points = Count("phrase_entries") + Count("translations")
         upvotes = Count("votes", filter=Q(votes__value=1)) * 10
         downvotes = Count("votes", filter=Q(votes__value=-1)) * -2
         queryset = queryset.annotate(
             reputation=base_points + upvotes + downvotes,
             num_languages=Count("language_proficiencies"),
             avg_proficiency=Avg("language_proficiencies__level"),
-            text_entry_count=Count("text_entries"),
+            phrase_entry_count=Count("phrase_entries"),
             translation_count=Count("translations"),
             vote_count=Count("votes")
         )

@@ -2,7 +2,7 @@ import React from 'react';
 import getUser from '@/lib/users/getUser';
 import Overview from './Overview';
 import StatsTab from './StatsTab';
-import PostsTab from './PostsTab';
+import PhrasesTab from './PhrasesTab';
 import TranslationsTab from './TranslationsTab';
 import Link from 'next/link';
 
@@ -34,12 +34,12 @@ export default async function UserPage({ params, searchParams }: Props) {
           Stats
         </Link>
         <Link
-          href="?tab=posts"
+          href="?tab=phrases"
           role="tab"
-          className={`tab ${currentTab === 'posts' ? 'tab-active' : ''}`}
-          aria-label="Posts"
+          className={`tab ${currentTab === 'phrases' ? 'tab-active' : ''}`}
+          aria-label="Phrases"
         >
-          Posts
+          Phrases
         </Link>
         <Link
           href="?tab=translations"
@@ -54,9 +54,9 @@ export default async function UserPage({ params, searchParams }: Props) {
         <div role="tabpanel" className="p-6">
           <StatsTab user={user} />
         </div>
-      ) : currentTab === 'posts' ? (
+      ) : currentTab === 'phrases' ? (
         <div role="tabpanel" className="p-6">
-          <PostsTab user={user} />
+          <PhrasesTab user={user} />
         </div>
       ) : currentTab === 'translations' ? (
         <div role="tabpanel" className="p-6">

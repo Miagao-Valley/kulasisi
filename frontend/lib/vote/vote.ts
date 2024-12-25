@@ -7,7 +7,7 @@ import getTranslation from '../translations/getTranslation';
 
 export default async function vote(
   id: number,
-  type: 'text-entries' | 'translations',
+  type: 'phrase-entries' | 'translations',
   value: -1 | 0 | 1,
 ) {
   let res = null;
@@ -31,9 +31,9 @@ export default async function vote(
 
   if (type === 'translations') {
     const translation = await getTranslation(id);
-    revalidatePath(`/posts/${translation.id}/`);
+    revalidatePath(`/phrases/${translation.id}/`);
   } else {
-    revalidatePath(`/posts/${id}/`);
+    revalidatePath(`/phrases/${id}/`);
   }
 
   return res;

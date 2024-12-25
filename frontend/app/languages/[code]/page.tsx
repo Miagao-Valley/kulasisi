@@ -3,7 +3,7 @@ import Link from 'next/link';
 import getLang from '@/lib/langs/getLang';
 import Overview from './Overview';
 import StatsTab from './StatsTab';
-import PostsTab from './PostsTab';
+import PhrasesTab from './PhrasesTab';
 import TranslationsTab from './TranslationsTab';
 
 interface Props {
@@ -34,12 +34,12 @@ export default async function LanguagePage({ params, searchParams }: Props) {
           Stats
         </Link>
         <Link
-          href="?tab=posts"
+          href="?tab=phrases"
           role="tab"
-          className={`tab ${currentTab === 'posts' ? 'tab-active' : ''}`}
-          aria-label="Posts"
+          className={`tab ${currentTab === 'phrases' ? 'tab-active' : ''}`}
+          aria-label="Phrases"
         >
-          Posts
+          Phrases
         </Link>
         <Link
           href="?tab=translations"
@@ -54,9 +54,9 @@ export default async function LanguagePage({ params, searchParams }: Props) {
         <div role="tabpanel" className="p-6">
           <StatsTab lang={lang} />
         </div>
-      ) : currentTab === 'posts' ? (
+      ) : currentTab === 'phrases' ? (
         <div role="tabpanel" className="p-6">
-          <PostsTab lang={lang} />
+          <PhrasesTab lang={lang} />
         </div>
       ) : currentTab === 'translations' ? (
         <div role="tabpanel" className="p-6">

@@ -1,18 +1,13 @@
 'use server';
 
-import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import fetcher, { FetchError } from '@/utils/fetcher';
 import getToken from '../tokens/getToken';
 
-export default async function updateTranslation(
-  phraseEntryId: number,
-  id: number,
-  data: FormData,
-) {
+export default async function updatePhraseEntry(id: number, data: FormData) {
   try {
     const promise = fetcher(
-      `/translations/${id}/`,
+      `/phrase-entries/${id}/`,
       {
         method: 'PUT',
         body: data,
@@ -25,6 +20,6 @@ export default async function updateTranslation(
     return { error: fetchError.resBody };
   }
 
-  revalidatePath(`/phrases/${phraseEntryId}`);
-  redirect(`/phrases/${phraseEntryId}`);
+  revalidatePath(`phrases/${id}`);
+  return null;
 }

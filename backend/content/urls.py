@@ -8,21 +8,21 @@ urlpatterns = [
     path(
         "languages/<str:code>/", views.RetrieveLanguageView.as_view(), name="language"
     ),
-    path("text-entries/", views.ListCreateTextEntryView.as_view(), name="text_entries"),
+    path("phrase-entries/", views.ListCreatePhraseEntryView.as_view(), name="phrase_entries"),
     path(
-        "text-entries/<int:text_entry_pk>/",
-        views.RetrieveUpdateDestroyTextEntryView.as_view(),
-        name="text_entry",
+        "phrase-entries/<int:phrase_entry_pk>/",
+        views.RetrieveUpdateDestroyPhraseEntryView.as_view(),
+        name="phrase_entry",
     ),
     path(
-        "text-entries/<int:text_entry_pk>/history/",
-        views.ListTextEntryHistoryView.as_view(),
-        name="text_entry_history",
+        "phrase-entries/<int:phrase_entry_pk>/history/",
+        views.ListPhraseEntryHistoryView.as_view(),
+        name="phrase_entry_history",
     ),
     path(
-        "text-entries/<int:text_entry_pk>/votes/",
+        "phrase-entries/<int:phrase_entry_pk>/votes/",
         views.ListCreateVoteView.as_view(),
-        name="text_entry_votes",
+        name="phrase_entry_votes",
     ),
     path(
         "translations/",

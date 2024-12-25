@@ -13,7 +13,7 @@ export default async function Navbar() {
       <div className="navbar-center">
         <ul className="menu menu-horizontal px-1">
           <li>
-            <Link href={`/posts/`}>Posts</Link>
+            <Link href={`/phrases/`}>Phrases</Link>
           </li>
           <li>
             <Link href={`/languages/`}>Languages</Link>

@@ -7,11 +7,11 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 
-from .models import Language, TextEntry, Translation, Vote
+from .models import Language, PhraseEntry, Translation, Vote
 from .serializers import (
     LanguageSerializer,
-    TextEntrySerializer,
-    TextEntryHistorySerializer,
+    PhraseEntrySerializer,
+    PhraseEntryHistorySerializer,
     TranslationSerializer,
     TranslationHistorySerializer,
     VoteSerializer,
@@ -23,7 +23,7 @@ class ListLanguageView(generics.ListAPIView):
     serializer_class = LanguageSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     search_fields = ["code", "name"]
-    ordering_fields = ["name", "user_count", "avg_proficiency", "text_entry_count", "translation_count"]
+    ordering_fields = ["name", "user_count", "avg_proficiency", "phrase_entry_count", "translation_count"]
     ordering = ["code"]
 
     def get_queryset(self):
@@ -39,7 +39,7 @@ class ListLanguageView(generics.ListAPIView):
                 default=Value(0),
                 output_field=IntegerField()
             )) , Value(0), output_field=FloatField()),
-            text_entry_count=Count("text_entries"),
+            phrase_entry_count=Count("phrase_entries"),
             translation_count=Count("translations"),
         )
         return queryset
@@ -51,9 +51,9 @@ class RetrieveLanguageView(generics.RetrieveAPIView):
     lookup_field = "code"
 
 
-class ListCreateTextEntryView(generics.ListCreateAPIView):
-    queryset = TextEntry.objects.all()
-    serializer_class = TextEntrySerializer
+class ListCreatePhraseEntryView(generics.ListCreateAPIView):
+    queryset = PhraseEntry.objects.all()
+    serializer_class = PhraseEntrySerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     filterset_fields = ["lang__code", "contributor__username"]
@@ -82,20 +82,20 @@ class ListCreateTextEntryView(generics.ListCreateAPIView):
             print(serializer.errors)
 
 
-class RetrieveUpdateDestroyTextEntryView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = TextEntry.objects.all()
-    serializer_class = TextEntrySerializer
+class RetrieveUpdateDestroyPhraseEntryView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = PhraseEntry.objects.all()
+    serializer_class = PhraseEntrySerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
-    lookup_url_kwarg = "text_entry_pk"
+    lookup_url_kwarg = "phrase_entry_pk"
 
 
-class ListTextEntryHistoryView(generics.ListAPIView):
-    serializer_class = TextEntryHistorySerializer
+class ListPhraseEntryHistoryView(generics.ListAPIView):
+    serializer_class = PhraseEntryHistorySerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get_queryset(self):
-        text_entry = get_object_or_404(TextEntry, id=self.kwargs.get("text_entry_pk"))
-        return text_entry.history.all()
+        phrase_entry = get_object_or_404(PhraseEntry, id=self.kwargs.get("phrase_entry_pk"))
+        return phrase_entry.history.all()
 
 
 class ListCreateTranslationsView(generics.ListCreateAPIView):
@@ -103,7 +103,7 @@ class ListCreateTranslationsView(generics.ListCreateAPIView):
     serializer_class = TranslationSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ["text_entry", "lang__code", "contributor__username"]
+    filterset_fields = ["phrase_entry", "lang__code", "contributor__username"]
     search_fields = ["content"]
     ordering_fields = ["content", "vote_count", "updated_at", "created_at"]
     ordering = ["-updated_at"]
@@ -123,10 +123,10 @@ class ListCreateTranslationsView(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         if serializer.is_valid():
-            text_entry = get_object_or_404(
-                TextEntry, id=self.request.POST.get("text_entry")
+            phrase_entry = get_object_or_404(
+                PhraseEntry, id=self.request.POST.get("phrase_entry")
             )
-            serializer.save(text_entry=text_entry, contributor=self.request.user)
+            serializer.save(phrase_entry=phrase_entry, contributor=self.request.user)
         else:
             print(serializer.errors)
 
@@ -157,9 +157,9 @@ class ListCreateVoteView(generics.ListCreateAPIView):
     def get_queryset(self):
         view_kwargs = self.kwargs
 
-        if "text_entry_pk" in view_kwargs:
-            target_model = TextEntry
-            object_id = view_kwargs["text_entry_pk"]
+        if "phrase_entry_pk" in view_kwargs:
+            target_model = PhraseEntry
+            object_id = view_kwargs["phrase_entry_pk"]
         elif "translation_pk" in view_kwargs:
             target_model = Translation
             object_id = view_kwargs["translation_pk"]

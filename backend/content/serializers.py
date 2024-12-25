@@ -2,25 +2,25 @@ from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 
-from .models import Language, LanguageProficiency, TextEntry, Translation, Vote
+from .models import Language, LanguageProficiency, PhraseEntry, Translation, Vote
 from users.models import User
 
 
 class LanguageSerializer(serializers.ModelSerializer):
     user_count = serializers.SerializerMethodField()
-    text_entry_count = serializers.SerializerMethodField()
+    phrase_entry_count = serializers.SerializerMethodField()
     translation_count = serializers.SerializerMethodField()
     users_by_proficiency = serializers.SerializerMethodField()
 
     class Meta:
         model = Language
-        fields = ["id", "code", "name", "user_count", "users_by_proficiency", "translation_count", "text_entry_count"]
+        fields = ["id", "code", "name", "user_count", "users_by_proficiency", "translation_count", "phrase_entry_count"]
 
     def get_user_count(self, obj):
         return obj.proficiencies.count()
 
-    def get_text_entry_count(self, obj):
-        return obj.text_entries.count()
+    def get_phrase_entry_count(self, obj):
+        return obj.phrase_entries.count()
 
     def get_translation_count(self, obj):
         return obj.translations.count()
@@ -43,7 +43,7 @@ class LanguageProficiencySerializer(serializers.ModelSerializer):
         fields = ["lang", "level"]
 
 
-class TextEntrySerializer(serializers.ModelSerializer):
+class PhraseEntrySerializer(serializers.ModelSerializer):
     lang = serializers.SlugRelatedField(
         queryset=Language.objects.all(), slug_field="code", required=False
     )
@@ -55,7 +55,7 @@ class TextEntrySerializer(serializers.ModelSerializer):
     translation_count = serializers.SerializerMethodField()
 
     class Meta:
-        model = TextEntry
+        model = PhraseEntry
         fields = [
             "id",
             "content",
@@ -87,19 +87,19 @@ class TextEntrySerializer(serializers.ModelSerializer):
         return super().update(instance, validated_data)
 
 
-class TextEntryHistorySerializer(serializers.ModelSerializer):
+class PhraseEntryHistorySerializer(serializers.ModelSerializer):
     history_user = serializers.SlugRelatedField(
         queryset=User.objects.all(), slug_field="username", required=False
     )
 
     class Meta:
-        model = TextEntry.history.model
+        model = PhraseEntry.history.model
         fields = ["history_id", "content", "history_user", "history_date"]
 
 
 class TranslationSerializer(serializers.ModelSerializer):
-    text_entry = serializers.PrimaryKeyRelatedField(
-        queryset=TextEntry.objects.all(), required=False
+    phrase_entry = serializers.PrimaryKeyRelatedField(
+        queryset=PhraseEntry.objects.all(), required=False
     )
     lang = serializers.SlugRelatedField(
         queryset=Language.objects.all(), slug_field="code", required=False
@@ -114,7 +114,7 @@ class TranslationSerializer(serializers.ModelSerializer):
         model = Translation
         fields = [
             "id",
-            "text_entry",
+            "phrase_entry",
             "content",
             "lang",
             "contributor",
@@ -135,19 +135,19 @@ class TranslationSerializer(serializers.ModelSerializer):
         return obj.contributor.get_reputation()
 
     def validate(self, attrs):
-        text_entry = attrs.get("text_entry")
+        phrase_entry = attrs.get("phrase_entry")
         lang = attrs.get("lang")
 
-        if text_entry and lang and lang == text_entry.lang:
+        if phrase_entry and lang and lang == phrase_entry.lang:
             raise serializers.ValidationError(
-                "The translation language must be different from the original text entry language."
+                "The translation language must be different from the original phrase entry language."
             )
 
         return attrs
 
     def update(self, instance, validated_data):
         validated_data.pop("lang", None)
-        validated_data.pop("text_entry", None)
+        validated_data.pop("phrase_entry", None)
         return super().update(instance, validated_data)
 
 
@@ -179,9 +179,9 @@ class VoteSerializer(serializers.ModelSerializer):
         value = validated_data.get("value")
         view_kwargs = self.context["view"].kwargs
 
-        if "text_entry_pk" in view_kwargs:
-            target_model = TextEntry
-            object_id = view_kwargs["text_entry_pk"]
+        if "phrase_entry_pk" in view_kwargs:
+            target_model = PhraseEntry
+            object_id = view_kwargs["phrase_entry_pk"]
         elif "translation_pk" in view_kwargs:
             target_model = Translation
             object_id = view_kwargs["translation_pk"]
