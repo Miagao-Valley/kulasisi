@@ -24,6 +24,22 @@ urlpatterns = [
         views.ListCreateVoteView.as_view(),
         name="phrase_entry_votes",
     ),
+    path("dict-entries/", views.ListCreateDictEntryView.as_view(), name="dict_entries"),
+    path(
+        "dict-entries/<int:dict_entry_pk>/",
+        views.RetrieveUpdateDestroyDictEntryView.as_view(),
+        name="dict_entry",
+    ),
+    path(
+        "dict-entries/<int:dict_entry_pk>/history/",
+        views.ListDictEntryHistoryView.as_view(),
+        name="dict_entry_history",
+    ),
+    path(
+        "dict-entries/<int:dict_entry_pk>/votes/",
+        views.ListCreateVoteView.as_view(),
+        name="dict_entry_votes",
+    ),
     path(
         "translations/",
         views.ListCreateTranslationsView.as_view(),

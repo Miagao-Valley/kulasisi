@@ -7,11 +7,13 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 
-from .models import Language, PhraseEntry, Translation, Vote
+from .models import Language, PhraseEntry, DictEntry, Translation, Vote
 from .serializers import (
     LanguageSerializer,
     PhraseEntrySerializer,
     PhraseEntryHistorySerializer,
+    DictEntrySerializer,
+    DictEntryHistorySerializer,
     TranslationSerializer,
     TranslationHistorySerializer,
     VoteSerializer,
@@ -98,6 +100,52 @@ class ListPhraseEntryHistoryView(generics.ListAPIView):
         return phrase_entry.history.all()
 
 
+class ListCreateDictEntryView(generics.ListCreateAPIView):
+    queryset = DictEntry.objects.all()
+    serializer_class = DictEntrySerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filterset_fields = ["lang__code", "contributor__username"]
+    search_fields = ["word"]
+    ordering_fields = ["word", "vote_count", "updated_at", "created_at"]
+    ordering = ["-updated_at"]
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.annotate(
+            vote_count=Coalesce(Sum(Case(
+                When(votes__value=1, then=Value(1)),
+                When(votes__value=-1, then=Value(-1)),
+                When(votes__value=0, then=Value(0)),
+                default=Value(0),
+                output_field=IntegerField()
+            )), Value(0)),
+        )
+        return queryset
+
+    def perform_create(self, serializer):
+        if serializer.is_valid():
+            serializer.save(contributor=self.request.user)
+        else:
+            print(serializer.errors)
+
+
+class RetrieveUpdateDestroyDictEntryView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = DictEntry.objects.all()
+    serializer_class = DictEntrySerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    lookup_url_kwarg = "dict_entry_pk"
+
+
+class ListDictEntryHistoryView(generics.ListAPIView):
+    serializer_class = DictEntryHistorySerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+    def get_queryset(self):
+        dict_entry = get_object_or_404(DictEntry, id=self.kwargs.get("dict_entry_pk"))
+        return dict_entry.history.all()
+
+
 class ListCreateTranslationsView(generics.ListCreateAPIView):
     queryset = Translation.objects.all()
     serializer_class = TranslationSerializer
@@ -160,6 +208,9 @@ class ListCreateVoteView(generics.ListCreateAPIView):
         if "phrase_entry_pk" in view_kwargs:
             target_model = PhraseEntry
             object_id = view_kwargs["phrase_entry_pk"]
+        elif "dict_entry_pk" in view_kwargs:
+            target_model = DictEntry
+            object_id = view_kwargs["dict_entry_pk"]
         elif "translation_pk" in view_kwargs:
             target_model = Translation
             object_id = view_kwargs["translation_pk"]
