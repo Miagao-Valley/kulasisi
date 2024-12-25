@@ -88,6 +88,21 @@ class PhraseEntry(Entry):
         return f"{self.content} ({self.lang.code})"
 
 
+class DictEntry(Entry):
+    lang = models.ForeignKey(Language, on_delete=models.PROTECT, related_name="dict_entries")
+    contributor = models.ForeignKey(User, on_delete=models.PROTECT, related_name="dict_entries")
+    votes = GenericRelation(Vote, related_query_name="dict_entry")
+
+    word = models.CharField(max_length=64)
+    definition = models.TextField(max_length=512)
+
+    class Meta:
+        unique_together = ("word", "lang")
+
+    def __str__(self):
+        return f"{self.word} ({self.lang.code})"
+
+
 class Translation(Entry):
     lang = models.ForeignKey(Language, on_delete=models.PROTECT, related_name="translations")
     contributor = models.ForeignKey(User, on_delete=models.PROTECT, related_name="translations")
