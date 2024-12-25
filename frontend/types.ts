@@ -70,6 +70,25 @@ export interface PhraseEntryRevision {
   history_date: string;
 }
 
+export interface DictEntry {
+  id: number;
+  word: string;
+  definition: string;
+  lang: string;
+  contributor: string;
+  contributor_reputation: number;
+  created_at: Date;
+  updated_at: Date;
+  vote_count: number;
+}
+
+export interface DictEntryRevision {
+  history_id: number;
+  definition: string;
+  history_user: string;
+  history_date: string;
+}
+
 export interface Translation {
   id: number;
   phrase_entry: number;
