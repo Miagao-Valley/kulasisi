@@ -69,7 +69,7 @@ export default function AddTranslationForm({
 
   return (
     <form className={`flex flex-col ${className}`} action={formAction}>
-      <input type="hidden" name="phrase_entry" value={phraseId} />
+      <input type="hidden" name="phrase" value={phraseId} />
       {formState?.error?.detail && (
         <div role="alert" className="text-sm text-error">
           {formState.error.detail}

@@ -91,7 +91,7 @@ export default function StatsTab({ user }: Props) {
             <span>Votes</span>
           </div>
           <div className="flex flex-col">
-            <span className="font-semibold">{user.phrase_entry_count}</span>
+            <span className="font-semibold">{user.phrase_count}</span>
             <span>Phrases</span>
           </div>
           <div className="flex flex-col">

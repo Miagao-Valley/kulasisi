@@ -60,7 +60,7 @@ class PhraseHistorySerializer(serializers.ModelSerializer):
 
 
 class TranslationSerializer(serializers.ModelSerializer):
-    phrase_entry = serializers.PrimaryKeyRelatedField(
+    phrase = serializers.PrimaryKeyRelatedField(
         queryset=Phrase.objects.all(), required=False
     )
     lang = serializers.SlugRelatedField(
@@ -76,7 +76,7 @@ class TranslationSerializer(serializers.ModelSerializer):
         model = Translation
         fields = [
             "id",
-            "phrase_entry",
+            "phrase",
             "content",
             "lang",
             "contributor",
@@ -97,19 +97,19 @@ class TranslationSerializer(serializers.ModelSerializer):
         return obj.contributor.get_reputation()
 
     def validate(self, attrs):
-        phrase_entry = attrs.get("phrase_entry")
+        phrase = attrs.get("phrase")
         lang = attrs.get("lang")
 
-        if phrase_entry and lang and lang == phrase_entry.lang:
+        if phrase and lang and lang == phrase.lang:
             raise serializers.ValidationError(
-                "The translation language must be different from the original phrase entry language."
+                "The target language must be different from the source language."
             )
 
         return attrs
 
     def update(self, instance, validated_data):
         validated_data.pop("lang", None)
-        validated_data.pop("phrase_entry", None)
+        validated_data.pop("phrase", None)
         return super().update(instance, validated_data)
 
 

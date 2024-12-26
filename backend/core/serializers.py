@@ -26,15 +26,15 @@ class VoteSerializer(serializers.ModelSerializer):
         value = validated_data.get("value")
         view_kwargs = self.context["view"].kwargs
 
-        if "phrase_entry_pk" in view_kwargs:
+        if "phrase_pk" in view_kwargs:
             target_model = Phrase
-            object_id = view_kwargs["phrase_entry_pk"]
+            object_id = view_kwargs["phrase_pk"]
         elif "translation_pk" in view_kwargs:
             target_model = Translation
             object_id = view_kwargs["translation_pk"]
-        elif "dict_entry_pk" in view_kwargs:
+        elif "word_pk" in view_kwargs:
             target_model = Word
-            object_id = view_kwargs["dict_entry_pk"]
+            object_id = view_kwargs["word_pk"]
         elif "definition_pk" in view_kwargs:
             target_model = Definition
             object_id = view_kwargs["definition_pk"]

@@ -30,7 +30,7 @@ export function TranslationsContent({
   };
 
   const copyLinkToClipboard = () => {
-    const link = `${window.location.origin}/phrases/${translation.phrase_entry}/#translation-${translation.id}`;
+    const link = `${window.location.origin}/phrases/${translation.phrase}/#translation-${translation.id}`;
     navigator.clipboard.writeText(link);
   };
 
@@ -101,7 +101,7 @@ export function TranslationsContent({
       {isEditing ? (
         <div className="mb-2" onClick={(e) => e.stopPropagation()}>
           <UpdateTranslationForm
-            phraseId={translation.phrase_entry}
+            phraseId={translation.phrase}
             id={translation.id}
             initialContent={translation.content}
             setIsEditing={setIsEditing}
@@ -111,7 +111,7 @@ export function TranslationsContent({
         <>
           <div className="flex gap-3">
             <Link
-              href={`/phrases/${translation.phrase_entry}#translation${translation.id}`}
+              href={`/phrases/${translation.phrase}#translation${translation.id}`}
               className="flex-1 mb-2 hover:text-primary"
             >
               <p className="whitespace-pre-line">{translation.content}</p>
@@ -122,7 +122,7 @@ export function TranslationsContent({
       <div onClick={(e) => e.stopPropagation()}>
         <TranslationRevisionsModal id={translation.id} revisions={revisions} />
         <DeleteTranslationModal
-          phraseId={translation.phrase_entry}
+          phraseId={translation.phrase}
           id={translation.id}
         />
       </div>

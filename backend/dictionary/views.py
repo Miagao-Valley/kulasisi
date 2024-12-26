@@ -55,7 +55,7 @@ class RetrieveUpdateDestroyWordView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Word.objects.all()
     serializer_class = WordSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
-    lookup_url_kwarg = "dict_entry_pk"
+    lookup_url_kwarg = "word_pk"
 
 
 class ListWordHistoryView(generics.ListAPIView):
@@ -63,8 +63,8 @@ class ListWordHistoryView(generics.ListAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get_queryset(self):
-        dict_entry = get_object_or_404(Word, id=self.kwargs.get("dict_entry_pk"))
-        return dict_entry.history.all()
+        word = get_object_or_404(Word, id=self.kwargs.get("word_pk"))
+        return word.history.all()
 
 
 class ListCreateDefinitionView(generics.ListCreateAPIView):
@@ -72,7 +72,7 @@ class ListCreateDefinitionView(generics.ListCreateAPIView):
     serializer_class = DefinitionSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ["dict_entry", "contributor__username"]
+    filterset_fields = ["word", "contributor__username"]
     search_fields = ["description"]
     ordering_fields = ["description", "vote_count", "updated_at", "created_at"]
     ordering = ["-updated_at"]
@@ -97,10 +97,10 @@ class ListCreateDefinitionView(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         if serializer.is_valid():
-            dict_entry = get_object_or_404(
-                Word, id=self.request.POST.get("dict_entry")
+            word = get_object_or_404(
+                Word, id=self.request.POST.get("word")
             )
-            serializer.save(dict_entry=dict_entry, contributor=self.request.user)
+            serializer.save(word=word, contributor=self.request.user)
         else:
             print(serializer.errors)
 
@@ -117,5 +117,5 @@ class ListDefinitionHistoryView(generics.ListAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get_queryset(self):
-        dict_entry = get_object_or_404(Definition, id=self.kwargs.get("definition_pk"))
-        return dict_entry.history.all()
+        word = get_object_or_404(Definition, id=self.kwargs.get("definition_pk"))
+        return word.history.all()

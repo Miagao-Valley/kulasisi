@@ -27,7 +27,7 @@ export interface User {
   bio?: string;
   website?: string;
   reputation: number;
-  phrase_entry_count: number;
+  phrase_count: number;
   translation_count: number;
   vote_count: number;
   language_proficiencies?: { lang: string; level: LangProficiencyLevel }[];
@@ -48,7 +48,7 @@ export interface Lang {
     5: number;
   };
   translation_count: number;
-  phrase_entry_count: number;
+  phrase_count: number;
 }
 
 export interface Phrase {
@@ -72,7 +72,7 @@ export interface PhraseRevision {
 
 export interface Translation {
   id: number;
-  phrase_entry: number;
+  phrase: number;
   content: string;
   lang: string;
   contributor: string;
@@ -109,7 +109,7 @@ export interface WordRevision {
 
 export interface Definition {
   id: number;
-  dict_entry: number;
+  word: number;
   description: string;
   lang: string;
   contributor: string;

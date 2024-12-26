@@ -12,12 +12,12 @@ User = get_user_model()
 class Word(models.Model):
     word = models.CharField(max_length=64)
     lang = models.ForeignKey(
-        Language, on_delete=models.PROTECT, related_name="dict_entries"
+        Language, on_delete=models.PROTECT, related_name="words"
     )
     contributor = models.ForeignKey(
-        User, on_delete=models.PROTECT, related_name="dict_entries"
+        User, on_delete=models.PROTECT, related_name="words"
     )
-    votes = GenericRelation(Vote, related_query_name="dict_entry")
+    votes = GenericRelation(Vote, related_query_name="word")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     history = HistoricalRecords()
@@ -30,7 +30,7 @@ class Word(models.Model):
 
 
 class Definition(models.Model):
-    dict_entry = models.ForeignKey(
+    word = models.ForeignKey(
         Word, on_delete=models.CASCADE, related_name="definitions"
     )
     lang = models.ForeignKey(
@@ -46,7 +46,7 @@ class Definition(models.Model):
     history = HistoricalRecords()
 
     class Meta:
-        unique_together = ("dict_entry", "lang", "description")
+        unique_together = ("word", "lang", "description")
 
     def __str__(self):
-        return f"{self.description} ({self.dict_entry.word})"
+        return f"{self.description} ({self.word.word})"

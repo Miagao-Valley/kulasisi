@@ -6,7 +6,7 @@ export default async function getTranslations(
   phraseId?: number,
 ): Promise<PaginationDetails & { results: Translation[] }> {
   const queryString = new URLSearchParams(queryParams).toString();
-  const url = `/translations/?phrase_entry=${phraseId || ''}&${queryString}`;
+  const url = `/translations/?phrase=${phraseId || ''}&${queryString}`;
 
   return await fetcher(url, {
     cache: 'no-store',

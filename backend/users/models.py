@@ -24,7 +24,7 @@ class User(AbstractUser):
     website = models.URLField(blank=True, null=True)
 
     def get_reputation(self):
-        base_points = self.phrase_entries.count() + self.translations.count()
+        base_points = self.phrases.count() + self.translations.count()
 
         upvote_points = self.votes.filter(value=1).count() * 10
         downvote_points = self.votes.filter(value=-1).count() * -2

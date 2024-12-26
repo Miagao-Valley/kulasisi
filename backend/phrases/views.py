@@ -62,7 +62,7 @@ class RetrieveUpdateDestroyPhraseView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Phrase.objects.all()
     serializer_class = PhraseSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
-    lookup_url_kwarg = "phrase_entry_pk"
+    lookup_url_kwarg = "phrase_pk"
 
 
 class ListPhraseHistoryView(generics.ListAPIView):
@@ -70,10 +70,10 @@ class ListPhraseHistoryView(generics.ListAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get_queryset(self):
-        phrase_entry = get_object_or_404(
-            Phrase, id=self.kwargs.get("phrase_entry_pk")
+        phrase = get_object_or_404(
+            Phrase, id=self.kwargs.get("phrase_pk")
         )
-        return phrase_entry.history.all()
+        return phrase.history.all()
 
 
 class ListCreateTranslationsView(generics.ListCreateAPIView):
@@ -81,7 +81,7 @@ class ListCreateTranslationsView(generics.ListCreateAPIView):
     serializer_class = TranslationSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ["phrase_entry", "lang__code", "contributor__username"]
+    filterset_fields = ["phrase", "lang__code", "contributor__username"]
     search_fields = ["content"]
     ordering_fields = ["content", "vote_count", "updated_at", "created_at"]
     ordering = ["-updated_at"]
@@ -106,10 +106,10 @@ class ListCreateTranslationsView(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         if serializer.is_valid():
-            phrase_entry = get_object_or_404(
-                Phrase, id=self.request.POST.get("phrase_entry")
+            phrase = get_object_or_404(
+                Phrase, id=self.request.POST.get("phrase")
             )
-            serializer.save(phrase_entry=phrase_entry, contributor=self.request.user)
+            serializer.save(phrase=phrase, contributor=self.request.user)
         else:
             print(serializer.errors)
 

@@ -30,7 +30,7 @@ export function DefinitionsContent({
   };
 
   const copyLinkToClipboard = () => {
-    const link = `${window.location.origin}/dictionary/${definition.dict_entry}/#definition-${definition.id}`;
+    const link = `${window.location.origin}/dictionary/${definition.word}/#definition-${definition.id}`;
     navigator.clipboard.writeText(link);
   };
 
@@ -101,7 +101,7 @@ export function DefinitionsContent({
       {isEditing ? (
         <div className="mb-2" onClick={(e) => e.stopPropagation()}>
           <UpdateDefinitionForm
-            wordId={definition.dict_entry}
+            wordId={definition.word}
             id={definition.id}
             initialDescription={definition.description}
             setIsEditing={setIsEditing}
@@ -111,7 +111,7 @@ export function DefinitionsContent({
         <>
           <div className="flex gap-3">
             <Link
-              href={`/dictionary/${definition.dict_entry}#definition${definition.id}`}
+              href={`/dictionary/${definition.word}#definition${definition.id}`}
               className="flex-1 mb-2 hover:text-primary"
             >
               <p className="whitespace-pre-line">{definition.description}</p>
@@ -122,7 +122,7 @@ export function DefinitionsContent({
       <div onClick={(e) => e.stopPropagation()}>
         <DefinitionRevisionsModal id={definition.id} revisions={revisions} />
         <DeleteDefinitionModal
-          wordId={definition.dict_entry}
+          wordId={definition.word}
           id={definition.id}
         />
       </div>

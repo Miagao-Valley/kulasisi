@@ -55,7 +55,7 @@ class WordHistorySerializer(serializers.ModelSerializer):
 
 
 class DefinitionSerializer(serializers.ModelSerializer):
-    dict_entry = serializers.PrimaryKeyRelatedField(
+    word = serializers.PrimaryKeyRelatedField(
         queryset=Word.objects.all(), required=False
     )
     lang = serializers.SlugRelatedField(
@@ -71,7 +71,7 @@ class DefinitionSerializer(serializers.ModelSerializer):
         model = Definition
         fields = [
             "id",
-            "dict_entry",
+            "word",
             "lang",
             "description",
             "contributor",
@@ -93,7 +93,7 @@ class DefinitionSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         validated_data.pop("lang", None)
-        validated_data.pop("dict_entry", None)
+        validated_data.pop("word", None)
         return super().update(instance, validated_data)
 
 

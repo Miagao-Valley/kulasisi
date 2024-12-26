@@ -33,7 +33,7 @@ export default function StatsTab({ lang }: Props) {
         <h3 className="text-base">Contribution</h3>
         <div className="grid grid-cols-2 gap-4">
           <div className="flex flex-col">
-            <span className="font-semibold">{lang.phrase_entry_count}</span>
+            <span className="font-semibold">{lang.phrase_count}</span>
             <span>Phrases</span>
           </div>
           <div className="flex flex-col">

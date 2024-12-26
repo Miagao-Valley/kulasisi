@@ -107,7 +107,7 @@ class Migration(migrations.Migration):
             name="contributor",
             field=models.ForeignKey(
                 on_delete=django.db.models.deletion.PROTECT,
-                related_name="dict_entries",
+                related_name="words",
                 to=settings.AUTH_USER_MODEL,
             ),
         ),
@@ -116,13 +116,13 @@ class Migration(migrations.Migration):
             name="lang",
             field=models.ForeignKey(
                 on_delete=django.db.models.deletion.PROTECT,
-                related_name="dict_entries",
+                related_name="words",
                 to="languages.language",
             ),
         ),
         migrations.AddField(
             model_name="historicaldefinition",
-            name="dict_entry",
+            name="word",
             field=models.ForeignKey(
                 blank=True,
                 db_constraint=False,
@@ -134,7 +134,7 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name="definition",
-            name="dict_entry",
+            name="word",
             field=models.ForeignKey(
                 on_delete=django.db.models.deletion.CASCADE,
                 related_name="definitions",
@@ -147,6 +147,6 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterUniqueTogether(
             name="definition",
-            unique_together={("dict_entry", "lang", "description")},
+            unique_together={("word", "lang", "description")},
         ),
     ]

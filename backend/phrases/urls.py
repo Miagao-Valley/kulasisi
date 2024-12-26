@@ -5,20 +5,20 @@ from core.views import ListCreateVoteView
 
 
 urlpatterns = [
-    path("", views.ListCreatePhraseView.as_view(), name="phrase_entries"),
+    path("", views.ListCreatePhraseView.as_view(), name="phrases"),
     path(
-        "<int:phrase_entry_pk>/",
+        "<int:phrase_pk>/",
         views.RetrieveUpdateDestroyPhraseView.as_view(),
-        name="phrase_entry",
+        name="phrase",
     ),
     path(
-        "<int:phrase_entry_pk>/history/",
+        "<int:phrase_pk>/history/",
         views.ListPhraseHistoryView.as_view(),
-        name="phrase_entry_history",
+        name="phrase_history",
     ),
     path(
-        "<int:phrase_entry_pk>/votes/",
+        "<int:phrase_pk>/votes/",
         ListCreateVoteView.as_view(),
-        name="phrase_entry_votes",
+        name="phrase_votes",
     ),
 ]

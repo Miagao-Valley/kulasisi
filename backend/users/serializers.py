@@ -11,9 +11,9 @@ from languages.serializers import LanguageProficiencySerializer
 class UserSerializer(serializers.ModelSerializer):
     language_proficiencies = LanguageProficiencySerializer(many=True)
     reputation = serializers.SerializerMethodField()
-    phrase_entry_count = serializers.SerializerMethodField()
+    phrase_count = serializers.SerializerMethodField()
     translation_count = serializers.SerializerMethodField()
-    dict_entry_count = serializers.SerializerMethodField()
+    word_count = serializers.SerializerMethodField()
     definition_count = serializers.SerializerMethodField()
     vote_count = serializers.SerializerMethodField()
 
@@ -33,9 +33,9 @@ class UserSerializer(serializers.ModelSerializer):
             "bio",
             "website",
             "reputation",
-            "phrase_entry_count",
+            "phrase_count",
             "translation_count",
-            "dict_entry_count",
+            "word_count",
             "definition_count",
             "vote_count",
             "language_proficiencies",
@@ -52,14 +52,14 @@ class UserSerializer(serializers.ModelSerializer):
     def get_reputation(self, obj):
         return obj.get_reputation()
 
-    def get_phrase_entry_count(self, obj):
-        return obj.phrase_entries.count()
+    def get_phrase_count(self, obj):
+        return obj.phrases.count()
 
     def get_translation_count(self, obj):
         return obj.translations.count()
 
-    def get_dict_entry_count(self, obj):
-        return obj.dict_entries.count()
+    def get_word_count(self, obj):
+        return obj.words.count()
 
     def get_definition_count(self, obj):
         return obj.definitions.count()

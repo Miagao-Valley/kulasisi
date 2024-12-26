@@ -5,9 +5,9 @@ from .models import Language, LanguageProficiency
 
 class LanguageSerializer(serializers.ModelSerializer):
     user_count = serializers.SerializerMethodField()
-    phrase_entry_count = serializers.SerializerMethodField()
+    phrase_count = serializers.SerializerMethodField()
     translation_count = serializers.SerializerMethodField()
-    dict_entry_count = serializers.SerializerMethodField()
+    word_count = serializers.SerializerMethodField()
     definition_count = serializers.SerializerMethodField()
     users_by_proficiency = serializers.SerializerMethodField()
 
@@ -18,9 +18,9 @@ class LanguageSerializer(serializers.ModelSerializer):
             "code",
             "name",
             "user_count",
-            "phrase_entry_count",
+            "phrase_count",
             "translation_count",
-            "dict_entry_count",
+            "word_count",
             "definition_count",
             "users_by_proficiency",
         ]
@@ -28,14 +28,14 @@ class LanguageSerializer(serializers.ModelSerializer):
     def get_user_count(self, obj):
         return obj.proficiencies.count()
 
-    def get_phrase_entry_count(self, obj):
-        return obj.phrase_entries.count()
+    def get_phrase_count(self, obj):
+        return obj.phrases.count()
 
     def get_translation_count(self, obj):
         return obj.translations.count()
 
-    def get_dict_entry_count(self, obj):
-        return obj.dict_entries.count()
+    def get_word_count(self, obj):
+        return obj.words.count()
 
     def get_definition_count(self, obj):
         return obj.definitions.count()

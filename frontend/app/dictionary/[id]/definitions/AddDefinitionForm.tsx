@@ -71,7 +71,7 @@ export default function AddDefinitionForm({
 
   return (
     <form className={`flex flex-col ${className}`} action={formAction}>
-      <input type="hidden" name="dict_entry" value={wordId} />
+      <input type="hidden" name="word" value={wordId} />
       {formState?.error?.detail && (
         <div role="alert" className="text-sm text-error">
           {formState.error.detail}
