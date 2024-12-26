@@ -3,21 +3,9 @@ from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
-from simple_history.models import HistoricalRecords
 from users.models import User
-from languages.models import Language
 
 User = get_user_model()
-
-class Entry(models.Model):
-    lang = models.ForeignKey(Language, on_delete=models.PROTECT)
-    contributor = models.ForeignKey(User, on_delete=models.PROTECT)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    history = HistoricalRecords(inherit=True)
-
-    class Meta:
-        abstract = True
 
 
 class Vote(models.Model):
