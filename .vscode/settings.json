@@ -1,5 +1,5 @@
 {
-  "files.autoSave": "onFocusChange",
+  "files.autoSave": "off",
   "files.trimTrailingWhitespace": true,
   "files.trimFinalNewlines": true,
   "editor.tabSize": 4,
