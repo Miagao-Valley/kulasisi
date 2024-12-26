@@ -13,7 +13,7 @@ interface Props {
   searchParams: { [key: string]: string | undefined };
 }
 
-export default async function PostPage({ params, searchParams }: Props) {
+export default async function PhrasePage({ params, searchParams }: Props) {
   const id = Number(params.id);
   const phraseEntry = await getPhraseEntry(id);
   const revisions = await getPhraseEntryRevisions(id);

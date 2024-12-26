@@ -1,13 +1,13 @@
 import React from 'react';
 import Link from 'next/link';
-import { PhraseEntry, DictEntry, Translation } from '@/types';
+import { PhraseEntry, Translation, DictEntry, Definition } from '@/types';
 import getVotes from '@/lib/vote/getVotes';
 import VoteActions from './VoteActions';
 import { BiMessageSquareDetail } from 'react-icons/bi';
 
 interface Props {
-  entry: PhraseEntry | DictEntry | Translation;
-  type: 'phrase-entries' | 'dict-entries' | 'translations';
+  entry: PhraseEntry | Translation | DictEntry | Definition;
+  type: 'phrase-entries' | 'translations' | 'dict-entries' | 'definitions';
   className?: string;
 }
 

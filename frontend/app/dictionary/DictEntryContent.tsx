@@ -85,7 +85,7 @@ export default function DictEntryContent({
         <div className="mb-2" onClick={(e) => e.stopPropagation()}>
           <UpdateDictEntryForm
             id={dictEntry.id}
-            initialDefinition={dictEntry.definition}
+            initialWord={dictEntry.word}
             setIsEditing={setIsEditing}
           />
         </div>
@@ -97,7 +97,6 @@ export default function DictEntryContent({
               className="flex-1 mb-2 hover:text-primary"
             >
               <p className="text-xl font-bold mb-1">{dictEntry.word}</p>
-              <p className="whitespace-pre-line mb-2">{dictEntry.definition}</p>
             </Link>
           </div>
         </>

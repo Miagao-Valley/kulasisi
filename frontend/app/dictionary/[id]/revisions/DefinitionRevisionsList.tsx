@@ -2,22 +2,22 @@ import React from 'react';
 import Link from 'next/link';
 import { diffWords } from 'diff';
 import naturalTime from '@/utils/naturalTime';
-import { DictEntryRevision } from '@/types';
+import { DefinitionRevision } from '@/types';
 
 interface Props {
-  revisions: DictEntryRevision[];
+  revisions: DefinitionRevision[];
 }
 
-export default function DictEntryRevisionsList({ revisions }: Props) {
+export default function DefinitionRevisionsList({ revisions }: Props) {
   return (
     <div className="flex flex-col gap-3">
       {revisions && revisions.length > 0 ? (
         revisions.map((revision, index) => {
-          const word = revision.word;
-          const previousWord =
-            index < revisions.length - 1 ? revisions[index + 1].word : '';
+          const description = revision.description;
+          const previousDescription =
+            index < revisions.length - 1 ? revisions[index + 1].description : '';
 
-          const diff = diffWords(previousWord, word);
+          const diff = diffWords(previousDescription, description);
           const isChecked = index === 0;
 
           return (

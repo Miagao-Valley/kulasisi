@@ -5,7 +5,7 @@ import { useFormState, useFormStatus } from 'react-dom';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from './AuthProvider';
 import toast from 'react-hot-toast';
-import { PhraseEntry, DictEntry, Translation, Vote } from '@/types';
+import { PhraseEntry, Translation, DictEntry, Definition, Vote } from '@/types';
 import vote from '@/lib/vote/vote';
 import {
   BiDownvote,
@@ -15,8 +15,8 @@ import {
 } from 'react-icons/bi';
 
 interface Props {
-  entry: PhraseEntry | DictEntry | Translation;
-  type: 'phrase-entries' | 'dict-entries' | 'translations';
+  entry: PhraseEntry | Translation | DictEntry | Definition;
+  type: 'phrase-entries'  | 'translations' | 'dict-entries' | 'definitions';
   votes: Vote[];
 }
 

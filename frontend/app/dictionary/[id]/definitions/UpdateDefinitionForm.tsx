@@ -1,35 +1,44 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
 import toast from 'react-hot-toast';
-import updateDictEntry from '@/lib/dictEntries/updateDictEntry';
+import updateDefinition from '@/lib/definitions/updateDefinition';
 
 interface Props {
+  dictEntryId: number;
   id: number;
-  initialWord?: string;
+  initialContent?: string;
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
   className?: string;
 }
 
-export default function UpdateDictEntryForm({
+export default function UpdateDefinitionForm({
+  dictEntryId,
   id,
-  initialWord = '',
+  initialContent = '',
   setIsEditing,
   className = '',
 }: Props) {
-  const [word, setWord] = useState('');
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
-  const handleWordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const [content, setContent] = useState('');
+
+  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newValue = e.target.value;
-    setWord(newValue);
+    setContent(newValue);
+    const textarea = textareaRef.current;
+    if (textarea) {
+      textarea.style.height = 'auto';
+      textarea.style.height = `${textarea.scrollHeight}px`;
+    }
   };
 
   const handleSubmit = async (prevState: any, formData: FormData) => {
-    const res = await updateDictEntry(id, formData);
+    const res = await updateDefinition(dictEntryId, id, formData);
     if (!res?.error) {
-      setWord('');
-      toast.success('Entry updated');
+      setContent('');
+      toast.success('Definition updated');
       setIsEditing(false);
     }
     return res;
@@ -51,20 +60,21 @@ export default function UpdateDictEntryForm({
           </div>
         )}
         <div>
-          <input
-            className="input text-base w-full p-0 rounded-none overflow-hidden resize-none focus:outline-none focus:border-transparent"
-            name="word"
-            id="word-field"
-            type="text"
+          <textarea
+            className="textarea w-full p-1 rounded-nwone overflow-hidden resize-none focus:outline-none focus:border-transparent"
+            name="content"
+            id="content-field"
+            ref={textareaRef}
+            rows={1}
             autoFocus={true}
-            placeholder="Enter updated word"
-            defaultValue={initialWord}
-            value={word}
-            onChange={handleWordChange}
-          ></input>
-          {formState?.error?.word && (
+            placeholder="Enter updated text"
+            defaultValue={initialContent}
+            value={content}
+            onChange={handleContentChange}
+          ></textarea>
+          {formState?.error?.content && (
             <div role="alert" className="text-sm text-error">
-              {formState.error.word[0]}
+              {formState.error.content[0]}
             </div>
           )}
         </div>
@@ -77,7 +87,7 @@ export default function UpdateDictEntryForm({
             Cancel
           </button>
           <UpdateButton
-            disabled={!word.trim() || word == initialWord}
+            disabled={!content.trim() || content == initialContent}
           />
         </div>
       </form>

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
 import { usePathname, useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
@@ -18,11 +18,8 @@ export default function AddDictEntryForm({ className = '' }: Props) {
   const router = useRouter();
   const pathname = usePathname();
 
-  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
-
   const [selectedLang, setSelectedLang] = useState('');
   const [word, setWord] = useState('');
-  const [definition, setDefinition] = useState('');
   const [langs, setLangs] = useState<Lang[]>([]);
 
   useEffect(() => {
@@ -39,22 +36,7 @@ export default function AddDictEntryForm({ className = '' }: Props) {
     if (savedWord) {
       setWord(savedWord);
     }
-    const savedDefinition = localStorage.getItem('dictEntryDefinitionDraft');
-    if (savedDefinition) {
-      setDefinition(savedDefinition);
-    }
   }, []);
-
-  const handleDefinitionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const newValue = e.target.value;
-    setDefinition(newValue);
-    localStorage.setItem('dictEntryDefinitionDraft', newValue);
-    const textarea = textareaRef.current;
-    if (textarea) {
-      textarea.style.height = 'auto';
-      textarea.style.height = `${textarea.scrollHeight}px`;
-    }
-  };
 
   const handleWordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
@@ -71,7 +53,6 @@ export default function AddDictEntryForm({ className = '' }: Props) {
     const res = await addDictEntry(formData);
     if (!res?.error) {
       setSelectedLang('');
-      setDefinition('');
       localStorage.removeItem('dictEntryDefinitionDraft');
       localStorage.removeItem('dictEntryWordDraft');
       router.push(`/dictionary/${res.id}/`);
@@ -110,23 +91,6 @@ export default function AddDictEntryForm({ className = '' }: Props) {
           </div>
         )}
       </div>
-      <div>
-        <textarea
-          className="textarea w-full text-xl rounded-none p-1 overflow-hidden resize-none focus:outline-none focus:border-transparent"
-          name="definition"
-          id="definition-field"
-          ref={textareaRef}
-          rows={1}
-          placeholder={`Definition of ${word || 'the word'}...`}
-          value={definition}
-          onChange={handleDefinitionChange}
-        ></textarea>
-        {formState?.error?.definition && (
-          <div role="alert" className="text-sm text-error">
-            {formState.error.definition[0]}
-          </div>
-        )}
-      </div>
       <div className="flex gap-2 items-center">
         <div>
           <select
@@ -153,7 +117,7 @@ export default function AddDictEntryForm({ className = '' }: Props) {
         </div>
         <SubmitButton
           className="ms-auto"
-          disabled={!definition.trim() || !selectedLang}
+          disabled={!word.trim() || !selectedLang}
         />
       </div>
     </form>

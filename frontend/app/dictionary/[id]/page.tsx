@@ -4,6 +4,7 @@ import getDictEntry from '@/lib/dictEntries/getDictEntry';
 import getDictEntryRevisions from '@/lib/dictEntries/getDictEntryRevisions';
 import DictEntryContent from '../DictEntryContent';
 import EntryFooter from '../../components/EntryFooter';
+import DefinitionsSection from './definitions/DefinitionsSection';
 
 interface Props {
   params: {
@@ -28,17 +29,17 @@ export default async function PostPage({ params, searchParams }: Props) {
 
       <div role="tablist" className="tabs tabs-bordered w-fit">
         <Link
-          href="?tab=translations"
+          href="?tab=definitions"
           role="tab"
-          className={`tab ${currentTab === 'translations' ? 'tab-active' : ''}`}
-          aria-label="Translations"
+          className={`tab ${currentTab === 'definitions' ? 'tab-active' : ''}`}
+          aria-label="Definitions"
         >
           Definitions
         </Link>
       </div>
       {currentTab === 'definitions' ? (
         <div role="tabpanel" className="p-6">
-          Definitions
+          <DefinitionsSection dictEntry={dictEntry} searchParams={searchParams} />
         </div>
       ) : null}
     </>
