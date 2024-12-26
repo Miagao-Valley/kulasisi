@@ -7,7 +7,7 @@ import getTranslation from '../translations/getTranslation';
 
 export default async function vote(
   id: number,
-  type: 'phrase-entries' | 'dict-entries' | 'translations',
+  type: 'phrase-entries' | 'translations' | 'dict-entries' | 'definitions',
   value: -1 | 0 | 1,
 ) {
   let res = null;

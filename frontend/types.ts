@@ -70,25 +70,6 @@ export interface PhraseEntryRevision {
   history_date: string;
 }
 
-export interface DictEntry {
-  id: number;
-  word: string;
-  definition: string;
-  lang: string;
-  contributor: string;
-  contributor_reputation: number;
-  created_at: Date;
-  updated_at: Date;
-  vote_count: number;
-}
-
-export interface DictEntryRevision {
-  history_id: number;
-  definition: string;
-  history_user: string;
-  history_date: string;
-}
-
 export interface Translation {
   id: number;
   phrase_entry: number;
@@ -108,6 +89,42 @@ export interface TranslationRevision {
   history_date: string;
 }
 
+export interface DictEntry {
+  id: number;
+  word: string;
+  lang: string;
+  contributor: string;
+  contributor_reputation: number;
+  created_at: Date;
+  updated_at: Date;
+  vote_count: number;
+}
+
+export interface DictEntryRevision {
+  history_id: number;
+  word: string;
+  history_user: string;
+  history_date: string;
+}
+
+export interface Definition {
+  id: number;
+  dict_entry: number;
+  description: string;
+  lang: string;
+  contributor: string;
+  contributor_reputation: number;
+  created_at: Date;
+  updated_at: Date;
+  vote_count: number;
+}
+
+export interface DefinitionRevision {
+  history_id: number;
+  description: string;
+  history_user: string;
+  history_date: string;
+}
 export interface Vote {
   user: string;
   value: -1 | 0 | 1;
