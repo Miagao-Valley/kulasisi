@@ -10,7 +10,7 @@ export default async function deleteTranslation(
   id: number,
 ) {
   await fetcher(
-    `/translations/${id}/`,
+    `/phrases/translations/${id}/`,
     {
       method: 'DELETE',
     },

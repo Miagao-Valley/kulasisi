@@ -11,7 +11,7 @@ export default async function addDefinition(
   let res = null;
   try {
     res = await fetcher(
-      `/definitions/`,
+      `/dictionary/definitions/`,
       {
         method: 'POST',
         body: data,

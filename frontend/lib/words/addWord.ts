@@ -8,7 +8,7 @@ export default async function addWord(data: FormData) {
   let res = null;
   try {
     res = await fetcher(
-      `/words/`,
+      `/dictionary/`,
       {
         method: 'POST',
         body: data,

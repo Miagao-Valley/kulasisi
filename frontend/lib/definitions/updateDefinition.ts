@@ -13,7 +13,7 @@ export default async function updateDefinition(
   console.log(data);
   try {
     const promise = fetcher(
-      `/definitions/${id}/`,
+      `/dictionary/definitions/${id}/`,
       {
         method: 'PUT',
         body: data,

@@ -7,7 +7,7 @@ import getToken from '../tokens/getToken';
 export default async function updateWord(id: number, data: FormData) {
   try {
     const promise = fetcher(
-      `/words/${id}/`,
+      `/dictionary/${id}/`,
       {
         method: 'PUT',
         body: data,

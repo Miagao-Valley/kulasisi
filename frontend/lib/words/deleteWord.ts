@@ -7,7 +7,7 @@ import getToken from '../tokens/getToken';
 
 export default async function deleteWord(id: number) {
   await fetcher(
-    `/words/${id}/`,
+    `/dictionary/${id}/`,
     {
       method: 'DELETE',
     },

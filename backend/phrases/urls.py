@@ -21,4 +21,24 @@ urlpatterns = [
         ListCreateVoteView.as_view(),
         name="phrase_votes",
     ),
+    path(
+        "translations/",
+        views.ListCreateTranslationsView.as_view(),
+        name="translations",
+    ),
+    path(
+        "translations/<int:translation_pk>/",
+        views.RetrieveUpdateDestroyTranslationsView.as_view(),
+        name="translation",
+    ),
+    path(
+        "translations/<int:translation_pk>/history/",
+        views.ListTranslationHistoryView.as_view(),
+        name="translation_history",
+    ),
+    path(
+        "translations/<int:translation_pk>/votes/",
+        ListCreateVoteView.as_view(),
+        name="translations_votes",
+    ),
 ]

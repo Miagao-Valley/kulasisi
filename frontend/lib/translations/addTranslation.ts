@@ -11,7 +11,7 @@ export default async function addTranslation(
   let res = null;
   try {
     res = await fetcher(
-      `/translations/`,
+      `/phrases/translations/`,
       {
         method: 'POST',
         body: data,

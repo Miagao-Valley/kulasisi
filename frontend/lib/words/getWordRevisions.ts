@@ -4,7 +4,7 @@ import { WordRevision, PaginationDetails } from '@/types';
 export default async function getWordRevisions(
   id: number,
 ): Promise<PaginationDetails & { results: WordRevision[] }> {
-  return await fetcher(`/words/${id}/history/`, {
+  return await fetcher(`/dictionary/${id}/history/`, {
     cache: 'no-store',
   });
 }

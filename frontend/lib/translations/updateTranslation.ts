@@ -12,7 +12,7 @@ export default async function updateTranslation(
 ) {
   try {
     const promise = fetcher(
-      `/translations/${id}/`,
+      `/phrases/translations/${id}/`,
       {
         method: 'PUT',
         body: data,

@@ -6,7 +6,7 @@ export default async function getDefinitions(
   wordId?: number,
 ): Promise<PaginationDetails & { results: Definition[] }> {
   const queryString = new URLSearchParams(queryParams).toString();
-  const url = `/definitions/?word=${wordId || ''}&${queryString}`;
+  const url = `/dictionary/definitions/?word=${wordId || ''}&${queryString}`;
 
   return await fetcher(url, {
     cache: 'no-store',

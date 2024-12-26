@@ -29,7 +29,5 @@ urlpatterns = [
     path("users/", include("users.urls")),
     path("languages/", include("languages.urls")),
     path("phrases/", include("phrases.urls")),
-    path("translations/", include("phrases.urls_translations")),
-    path("words/", include("dictionary.urls")),
-    path("definitions/", include("dictionary.urls_definitions")),
+    path("dictionary/", include("dictionary.urls")),
 ]
