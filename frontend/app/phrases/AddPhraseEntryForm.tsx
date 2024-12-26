@@ -89,7 +89,7 @@ export default function AddPhraseEntryForm({ className = '' }: Props) {
           id="content-field"
           ref={textareaRef}
           rows={1}
-          placeholder="Say something..."
+          placeholder="Enter a phrase"
           value={content}
           onChange={handleContentChange}
         ></textarea>

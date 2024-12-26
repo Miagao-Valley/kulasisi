@@ -87,7 +87,7 @@ export default function AddTranslationForm({
           id="content-field"
           ref={textareaRef}
           rows={1}
-          placeholder="Add your translation..."
+          placeholder="Enter your translation"
           value={content}
           onChange={handleContentChange}
         ></textarea>

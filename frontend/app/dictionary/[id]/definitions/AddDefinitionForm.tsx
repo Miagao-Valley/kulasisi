@@ -33,7 +33,7 @@ export default function AddDefinitionForm({
   useEffect(() => {
     const fetchLangs = async () => {
       const { results } = await getLangs();
-      setLangs(results.filter((result) => result.code !== original_lang));
+      setLangs(results);
     };
 
     fetchLangs();
@@ -89,7 +89,7 @@ export default function AddDefinitionForm({
           id="description-field"
           ref={textareaRef}
           rows={1}
-          placeholder="Add your translation..."
+          placeholder="Enter your definition"
           value={description}
           onChange={handleDescriptionChange}
         ></textarea>

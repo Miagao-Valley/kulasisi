@@ -41,7 +41,6 @@ class DictEntrySerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         validated_data.pop("lang", None)
-        validated_data.pop("word", None)
         return super().update(instance, validated_data)
 
 
@@ -56,6 +55,9 @@ class DictEntryHistorySerializer(serializers.ModelSerializer):
 
 
 class DefinitionSerializer(serializers.ModelSerializer):
+    dict_entry = serializers.PrimaryKeyRelatedField(
+        queryset=DictEntry.objects.all(), required=False
+    )
     lang = serializers.SlugRelatedField(
         queryset=Language.objects.all(), slug_field="code", required=False
     )
@@ -69,6 +71,7 @@ class DefinitionSerializer(serializers.ModelSerializer):
         model = Definition
         fields = [
             "id",
+            "dict_entry",
             "lang",
             "description",
             "contributor",
@@ -89,6 +92,8 @@ class DefinitionSerializer(serializers.ModelSerializer):
         return obj.contributor.get_reputation()
 
     def update(self, instance, validated_data):
+        validated_data.pop("lang", None)
+        validated_data.pop("dict_entry", None)
         return super().update(instance, validated_data)
 
 

@@ -8,7 +8,7 @@ import updateDefinition from '@/lib/definitions/updateDefinition';
 interface Props {
   dictEntryId: number;
   id: number;
-  initialContent?: string;
+  initialDescription?: string;
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
   className?: string;
 }
@@ -16,17 +16,17 @@ interface Props {
 export default function UpdateDefinitionForm({
   dictEntryId,
   id,
-  initialContent = '',
+  initialDescription = '',
   setIsEditing,
   className = '',
 }: Props) {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
-  const [content, setContent] = useState('');
+  const [description, setDescription] = useState('');
 
-  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newValue = e.target.value;
-    setContent(newValue);
+    setDescription(newValue);
     const textarea = textareaRef.current;
     if (textarea) {
       textarea.style.height = 'auto';
@@ -37,7 +37,7 @@ export default function UpdateDefinitionForm({
   const handleSubmit = async (prevState: any, formData: FormData) => {
     const res = await updateDefinition(dictEntryId, id, formData);
     if (!res?.error) {
-      setContent('');
+      setDescription('');
       toast.success('Definition updated');
       setIsEditing(false);
     }
@@ -62,19 +62,19 @@ export default function UpdateDefinitionForm({
         <div>
           <textarea
             className="textarea text-base w-full p-0 rounded-none overflow-hidden resize-none focus:outline-none focus:border-transparent"
-            name="content"
-            id="content-field"
+            name="description"
+            id="description-field"
             ref={textareaRef}
             rows={1}
             autoFocus={true}
             placeholder="Enter updated definition"
-            defaultValue={initialContent}
-            value={content}
-            onChange={handleContentChange}
+            defaultValue={initialDescription}
+            value={description}
+            onChange={handleDescriptionChange}
           ></textarea>
-          {formState?.error?.content && (
+          {formState?.error?.description && (
             <div role="alert" className="text-sm text-error">
-              {formState.error.content[0]}
+              {formState.error.description[0]}
             </div>
           )}
         </div>
@@ -87,7 +87,7 @@ export default function UpdateDefinitionForm({
             Cancel
           </button>
           <UpdateButton
-            disabled={!content.trim() || content == initialContent}
+            disabled={!description.trim() || description == initialDescription}
           />
         </div>
       </form>

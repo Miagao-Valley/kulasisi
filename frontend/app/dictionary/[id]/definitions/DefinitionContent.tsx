@@ -52,14 +52,14 @@ export function DefinitionsContent({
     <div className={`${className}`}>
       <div className="flex gap-3 mb-2">
         <EntryHeader entry={definition} className="flex-1" />
-        <details
+        <div
           className="dropdown dropdown-bottom dropdown-end"
           onClick={(e) => e.stopPropagation()}
         >
-          <summary className="btn btn-ghost btn-sm btn-circle">
+          <div tabIndex={0} role="button" className="btn btn-ghost btn-sm btn-circle">
             <MdMenu />
-          </summary>
-          <ul className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+          </div>
+          <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
             <li>
               <a onClick={copyLinkToClipboard}>
                 <FaLink /> Copy link
@@ -88,7 +88,7 @@ export function DefinitionsContent({
               </>
             )}
           </ul>
-        </details>
+        </div>
       </div>
 
       {isEditing ? (
@@ -96,7 +96,7 @@ export function DefinitionsContent({
           <UpdateDefinitionForm
             dictEntryId={definition.dict_entry}
             id={definition.id}
-            initialContent={definition.description}
+            initialDescription={definition.description}
             setIsEditing={setIsEditing}
           />
         </div>

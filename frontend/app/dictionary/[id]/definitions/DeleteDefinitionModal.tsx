@@ -14,13 +14,13 @@ interface Props {
 export default function DeleteDefinitionModal({ dictEntryId, id }: Props) {
   return (
     <dialog
-      id={`delete-translation-modal-${id}`}
+      id={`delete-definition-modal-${id}`}
       className="modal modal-bottom sm:modal-middle"
     >
       <div className="modal-box">
         <h3>Are you sure?</h3>
         <p className="py-4">
-          Do you really want to delete this translation? This process cannot be
+          Do you really want to delete this definition? This process cannot be
           undone.
         </p>
         <div className="modal-action">
