@@ -30,6 +30,8 @@ class ListUserView(generics.ListAPIView):
         "avg_proficiency",
         "phrase_entry_count",
         "translation_count",
+        "dict_entry_count",
+        "definition_count",
         "vote_count",
         "date_joined",
         "last_login",
@@ -47,6 +49,8 @@ class ListUserView(generics.ListAPIView):
             avg_proficiency=Avg("language_proficiencies__level"),
             phrase_entry_count=Count("phrase_entries"),
             translation_count=Count("translations"),
+            dict_entry_count=Count("dict_entries"),
+            definition_count=Count("definitions"),
             vote_count=Count("votes"),
         )
         return queryset

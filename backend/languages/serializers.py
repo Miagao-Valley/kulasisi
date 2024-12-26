@@ -7,6 +7,8 @@ class LanguageSerializer(serializers.ModelSerializer):
     user_count = serializers.SerializerMethodField()
     phrase_entry_count = serializers.SerializerMethodField()
     translation_count = serializers.SerializerMethodField()
+    dict_entry_count = serializers.SerializerMethodField()
+    definition_count = serializers.SerializerMethodField()
     users_by_proficiency = serializers.SerializerMethodField()
 
     class Meta:
@@ -16,9 +18,11 @@ class LanguageSerializer(serializers.ModelSerializer):
             "code",
             "name",
             "user_count",
-            "users_by_proficiency",
-            "translation_count",
             "phrase_entry_count",
+            "translation_count",
+            "dict_entry_count",
+            "definition_count",
+            "users_by_proficiency",
         ]
 
     def get_user_count(self, obj):
@@ -29,6 +33,12 @@ class LanguageSerializer(serializers.ModelSerializer):
 
     def get_translation_count(self, obj):
         return obj.translations.count()
+
+    def get_dict_entry_count(self, obj):
+        return obj.dict_entries.count()
+
+    def get_definition_count(self, obj):
+        return obj.definitions.count()
 
     def get_users_by_proficiency(self, obj):
         users_by_level = {}

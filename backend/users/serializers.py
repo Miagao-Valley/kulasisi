@@ -13,6 +13,8 @@ class UserSerializer(serializers.ModelSerializer):
     reputation = serializers.SerializerMethodField()
     phrase_entry_count = serializers.SerializerMethodField()
     translation_count = serializers.SerializerMethodField()
+    dict_entry_count = serializers.SerializerMethodField()
+    definition_count = serializers.SerializerMethodField()
     vote_count = serializers.SerializerMethodField()
 
     class Meta:
@@ -33,6 +35,8 @@ class UserSerializer(serializers.ModelSerializer):
             "reputation",
             "phrase_entry_count",
             "translation_count",
+            "dict_entry_count",
+            "definition_count",
             "vote_count",
             "language_proficiencies",
             "last_login",
@@ -53,6 +57,12 @@ class UserSerializer(serializers.ModelSerializer):
 
     def get_translation_count(self, obj):
         return obj.translations.count()
+
+    def get_dict_entry_count(self, obj):
+        return obj.dict_entries.count()
+
+    def get_definition_count(self, obj):
+        return obj.definitions.count()
 
     def get_vote_count(self, obj):
         return obj.votes.count()

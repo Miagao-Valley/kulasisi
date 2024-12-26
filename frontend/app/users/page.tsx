@@ -19,6 +19,8 @@ export default async function UsersPage({ searchParams }: Props) {
     { label: 'Proficiency', value: '-avg_proficiency' },
     { label: 'Phrases', value: '-phrase_entry_count' },
     { label: 'Translations', value: '-translation_count' },
+    { label: 'Words', value: '-phrase_entry_count' },
+    { label: 'Definitions', value: '-definition_count' },
     { label: 'Votes', value: '-vote_count' },
     { label: 'Last seen', value: '-last_login' },
     { label: 'Date joined', value: '-date_joined' },

@@ -20,6 +20,8 @@ class ListLanguageView(generics.ListAPIView):
         "avg_proficiency",
         "phrase_entry_count",
         "translation_count",
+        "dict_entry_count",
+        "definition_count",
     ]
     ordering = ["code"]
 
@@ -44,6 +46,8 @@ class ListLanguageView(generics.ListAPIView):
             ),
             phrase_entry_count=Count("phrase_entries"),
             translation_count=Count("translations"),
+            dict_entry_count=Count("dict_entries"),
+            definition_count=Count("definitions"),
         )
         return queryset
 

@@ -17,6 +17,8 @@ export default async function LangsPage({ searchParams }: Props) {
     { label: 'Proficiency', value: '-avg_proficiency' },
     { label: 'Phrases', value: '-phrase_entry_count' },
     { label: 'Translations', value: '-translation_count' },
+    { label: 'Words', value: '-dict_entry_count' },
+    { label: 'Definitions', value: '-definition_count' },
   ];
 
   return (
