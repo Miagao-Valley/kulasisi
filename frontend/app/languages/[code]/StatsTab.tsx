@@ -40,6 +40,14 @@ export default function StatsTab({ lang }: Props) {
             <span className="font-semibold">{lang.translation_count}</span>
             <span>Translations</span>
           </div>
+          <div className="flex flex-col">
+            <span className="font-semibold">{lang.word_count}</span>
+            <span>Words</span>
+          </div>
+          <div className="flex flex-col">
+            <span className="font-semibold">{lang.definition_count}</span>
+            <span>Definitions</span>
+          </div>
         </div>
       </div>
     </>

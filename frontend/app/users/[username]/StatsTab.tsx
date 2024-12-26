@@ -99,6 +99,14 @@ export default function StatsTab({ user }: Props) {
             <span className="font-semibold">{user.translation_count}</span>
             <span>Translations</span>
           </div>
+          <div className="flex flex-col">
+            <span className="font-semibold">{user.word_count}</span>
+            <span>Words</span>
+          </div>
+          <div className="flex flex-col">
+            <span className="font-semibold">{user.definition_count}</span>
+            <span>Definitions</span>
+          </div>
         </div>
       </div>
     </>

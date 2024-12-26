@@ -29,6 +29,8 @@ export interface User {
   reputation: number;
   phrase_count: number;
   translation_count: number;
+  word_count: number;
+  definition_count: number;
   vote_count: number;
   language_proficiencies?: { lang: string; level: LangProficiencyLevel }[];
   last_login: Date;

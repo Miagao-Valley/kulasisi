@@ -12,6 +12,8 @@ export interface Lang {
     4: number;
     5: number;
   };
-  translation_count: number;
   phrase_count: number;
+  translation_count: number;
+  word_count: number;
+  definition_count: number;
 }
