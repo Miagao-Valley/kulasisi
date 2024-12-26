@@ -10,7 +10,7 @@ export default async function updateDefinition(
   id: number,
   data: FormData,
 ) {
-  console.log(data)
+  console.log(data);
   try {
     const promise = fetcher(
       `/definitions/${id}/`,

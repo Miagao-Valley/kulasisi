@@ -80,7 +80,7 @@ export default async function LanguagePage({ params, searchParams }: Props) {
         <div role="tabpanel" className="p-6">
           <TranslationsList filters={{ lang: lang.code }} />
         </div>
-        ) : currentTab === 'words' ? (
+      ) : currentTab === 'words' ? (
         <div role="tabpanel" className="p-6">
           <DictEntriesList filters={{ lang: lang.code }} />
         </div>

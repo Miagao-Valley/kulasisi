@@ -24,7 +24,9 @@ export default function UpdateDefinitionForm({
 
   const [description, setDescription] = useState('');
 
-  const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleDescriptionChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>,
+  ) => {
     const newValue = e.target.value;
     setDescription(newValue);
     const textarea = textareaRef.current;

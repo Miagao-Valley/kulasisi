@@ -80,7 +80,7 @@ export default async function UserPage({ params, searchParams }: Props) {
         <div role="tabpanel" className="p-6">
           <TranslationsList filters={{ user: user.username }} />
         </div>
-        ) : currentTab === 'words' ? (
+      ) : currentTab === 'words' ? (
         <div role="tabpanel" className="p-6">
           <DictEntriesList filters={{ user: user.username }} />
         </div>

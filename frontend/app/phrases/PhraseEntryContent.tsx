@@ -50,10 +50,17 @@ export default function PhraseEntryContent({
           className="dropdown dropdown-bottom dropdown-end"
           onClick={(e) => e.stopPropagation()}
         >
-          <div tabIndex={0} role="button" className="btn btn-ghost btn-sm btn-circle">
+          <div
+            tabIndex={0}
+            role="button"
+            className="btn btn-ghost btn-sm btn-circle"
+          >
             <MdMenu />
           </div>
-          <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+          <ul
+            tabIndex={0}
+            className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+          >
             <li>
               <a onClick={copyLinkToClipboard}>
                 <FaLink /> Copy link
