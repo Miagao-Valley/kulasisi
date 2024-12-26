@@ -10,13 +10,13 @@ import addTranslation from '@/lib/translations/addTranslation';
 import getLangs from '@/lib/langs/getLangs';
 
 interface Props {
-  phraseEntryId: number;
+  phraseId: number;
   original_lang: string;
   className?: string;
 }
 
 export default function AddTranslationForm({
-  phraseEntryId,
+  phraseId,
   original_lang,
   className = '',
 }: Props) {
@@ -55,7 +55,7 @@ export default function AddTranslationForm({
       router.push(`/auth/login?next=${pathname}`);
       return;
     }
-    const res = await addTranslation(phraseEntryId, formData);
+    const res = await addTranslation(phraseId, formData);
     console.log(res);
     if (!res?.error) {
       setSelectedLang('');
@@ -69,7 +69,7 @@ export default function AddTranslationForm({
 
   return (
     <form className={`flex flex-col ${className}`} action={formAction}>
-      <input type="hidden" name="phrase_entry" value={phraseEntryId} />
+      <input type="hidden" name="phrase_entry" value={phraseId} />
       {formState?.error?.detail && (
         <div role="alert" className="text-sm text-error">
           {formState.error.detail}

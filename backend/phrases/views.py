@@ -7,18 +7,18 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 
-from .models import PhraseEntry, Translation
+from .models import Phrase, Translation
 from .serializers import (
-    PhraseEntrySerializer,
-    PhraseEntryHistorySerializer,
+    PhraseSerializer,
+    PhraseHistorySerializer,
     TranslationSerializer,
     TranslationHistorySerializer,
 )
 
 
-class ListCreatePhraseEntryView(generics.ListCreateAPIView):
-    queryset = PhraseEntry.objects.all()
-    serializer_class = PhraseEntrySerializer
+class ListCreatePhraseView(generics.ListCreateAPIView):
+    queryset = Phrase.objects.all()
+    serializer_class = PhraseSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     filterset_fields = ["lang__code", "contributor__username"]
@@ -58,20 +58,20 @@ class ListCreatePhraseEntryView(generics.ListCreateAPIView):
             print(serializer.errors)
 
 
-class RetrieveUpdateDestroyPhraseEntryView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = PhraseEntry.objects.all()
-    serializer_class = PhraseEntrySerializer
+class RetrieveUpdateDestroyPhraseView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Phrase.objects.all()
+    serializer_class = PhraseSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     lookup_url_kwarg = "phrase_entry_pk"
 
 
-class ListPhraseEntryHistoryView(generics.ListAPIView):
-    serializer_class = PhraseEntryHistorySerializer
+class ListPhraseHistoryView(generics.ListAPIView):
+    serializer_class = PhraseHistorySerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get_queryset(self):
         phrase_entry = get_object_or_404(
-            PhraseEntry, id=self.kwargs.get("phrase_entry_pk")
+            Phrase, id=self.kwargs.get("phrase_entry_pk")
         )
         return phrase_entry.history.all()
 
@@ -107,7 +107,7 @@ class ListCreateTranslationsView(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         if serializer.is_valid():
             phrase_entry = get_object_or_404(
-                PhraseEntry, id=self.request.POST.get("phrase_entry")
+                Phrase, id=self.request.POST.get("phrase_entry")
             )
             serializer.save(phrase_entry=phrase_entry, contributor=self.request.user)
         else:

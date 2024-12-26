@@ -28,7 +28,7 @@ urlpatterns = [
     path("api-auth/", include("rest_framework.urls")),
     path("users/", include("users.urls")),
     path("languages/", include("languages.urls")),
-    path("phrase-entries/", include("phrases.urls")),
+    path("phrases/", include("phrases.urls")),
     path("translations/", include("phrases.urls_translations")),
     path("dict-entries/", include("dictionary.urls")),
     path("definitions/", include("dictionary.urls_definitions")),

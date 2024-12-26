@@ -3,22 +3,22 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/app/components/AuthProvider';
-import { PhraseEntry, PhraseEntryRevision } from '@/types';
+import { Phrase, PhraseRevision } from '@/types';
 import EntryHeader from '../components/EntryHeader';
-import UpdatePhraseEntryForm from './[id]/UpdatePhraseEntryForm';
-import DeletePhraseEntryModal from './[id]/DeletePhraseEntryModal';
-import PhraseEntryRevisionsModal from './[id]/revisions/PhraseEntryRevisionsModal';
+import UpdatePhraseForm from './[id]/UpdatePhraseForm';
+import DeletePhraseModal from './[id]/DeletePhraseModal';
+import PhraseRevisionsModal from './[id]/revisions/PhraseRevisionsModal';
 import { FaClock, FaLink, FaPen, FaTrash } from 'react-icons/fa';
 import { MdMenu } from 'react-icons/md';
 
 interface Props {
-  phraseEntry: PhraseEntry;
-  revisions: PhraseEntryRevision[];
+  phrase: Phrase;
+  revisions: PhraseRevision[];
   className?: string;
 }
 
-export default function PhraseEntryContent({
-  phraseEntry,
+export default function PhraseContent({
+  phrase,
   revisions,
   className = '',
 }: Props) {
@@ -31,13 +31,13 @@ export default function PhraseEntryContent({
   };
 
   const copyLinkToClipboard = () => {
-    const link = `${window.location.origin}/phrases/${phraseEntry.id}/`;
+    const link = `${window.location.origin}/phrases/${phrase.id}/`;
     navigator.clipboard.writeText(link);
   };
 
   const showDeleteModal = () => {
     const modal = document.getElementById(
-      'delete-phrase-entry-modal',
+      'delete-phrase-modal',
     ) as HTMLDialogElement;
     modal?.showModal();
   };
@@ -45,7 +45,7 @@ export default function PhraseEntryContent({
   return (
     <div className={`${className}`}>
       <div className="flex gap-3 mb-2">
-        <EntryHeader entry={phraseEntry} className="flex-1" />
+        <EntryHeader entry={phrase} className="flex-1" />
         <div
           className="dropdown dropdown-bottom dropdown-end"
           onClick={(e) => e.stopPropagation()}
@@ -67,11 +67,11 @@ export default function PhraseEntryContent({
               </a>
             </li>
             <li>
-              <a href={`#revisions-${phraseEntry.id}`}>
+              <a href={`#revisions-${phrase.id}`}>
                 <FaClock /> Edits
               </a>
             </li>
-            {auth.username === phraseEntry.contributor && (
+            {auth.username === phrase.contributor && (
               <>
                 <li>
                   <a onClick={handleEdit}>
@@ -90,9 +90,9 @@ export default function PhraseEntryContent({
       </div>
       {isEditing ? (
         <div className="mb-2" onClick={(e) => e.stopPropagation()}>
-          <UpdatePhraseEntryForm
-            id={phraseEntry.id}
-            initialContent={phraseEntry.content}
+          <UpdatePhraseForm
+            id={phrase.id}
+            initialContent={phrase.content}
             setIsEditing={setIsEditing}
           />
         </div>
@@ -100,17 +100,17 @@ export default function PhraseEntryContent({
         <>
           <div className="flex gap-3">
             <Link
-              href={`/phrases/${phraseEntry.id}/`}
+              href={`/phrases/${phrase.id}/`}
               className="flex-1 mb-2 hover:text-primary"
             >
-              <p className="whitespace-pre-line">{phraseEntry.content}</p>
+              <p className="whitespace-pre-line">{phrase.content}</p>
             </Link>
           </div>
         </>
       )}
       <div onClick={(e) => e.stopPropagation()}>
-        <DeletePhraseEntryModal id={phraseEntry.id} />
-        <PhraseEntryRevisionsModal revisions={revisions} id={phraseEntry.id} />
+        <DeletePhraseModal id={phrase.id} />
+        <PhraseRevisionsModal revisions={revisions} id={phrase.id} />
       </div>
     </div>
   );

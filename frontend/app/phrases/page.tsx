@@ -1,8 +1,8 @@
 import React, { Suspense } from 'react';
-import AddPhraseEntryForm from './AddPhraseEntryForm';
-import PhraseEntriesList, {
-  PhraseEntriesListSkeleton,
-} from './PhraseEntriesList';
+import AddPhraseForm from './AddPhraseForm';
+import PhrasesList, {
+  PhrasesListSkeleton,
+} from './PhrasesList';
 import SearchInput from '../components/SearchInput';
 import SortDropdown, { SortOption } from '../components/SortDropdown';
 import FilterMenu, { FilterOption } from '../components/FilterMenu';
@@ -45,7 +45,7 @@ export default async function PhrasesPage({ searchParams }: Props) {
   return (
     <>
       <hr />
-      <AddPhraseEntryForm className="mx-1 my-2" />
+      <AddPhraseForm className="mx-1 my-2" />
       <hr className="mb-4" />
       <div className="mb-4 flex gap-3">
         <SearchInput currentSearchTerm={searchTerm} className="me-auto" />
@@ -55,8 +55,8 @@ export default async function PhrasesPage({ searchParams }: Props) {
         />
         <FilterMenu currentFilters={filters} filterOptions={filterOptions} />
       </div>
-      <Suspense fallback={<PhraseEntriesListSkeleton />}>
-        <PhraseEntriesList
+      <Suspense fallback={<PhrasesListSkeleton />}>
+        <PhrasesList
           searchTerm={searchTerm}
           sortOption={sortOption}
           filters={filters}

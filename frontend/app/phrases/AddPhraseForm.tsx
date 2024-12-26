@@ -6,14 +6,14 @@ import { usePathname, useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { useAuth } from '../components/AuthProvider';
 import { Lang } from '../../types';
-import addPhraseEntry from '@/lib/phraseEntries/addPhraseEntry';
+import addPhrase from '@/lib/phrases/addPhrase';
 import getLangs from '@/lib/langs/getLangs';
 
 interface Props {
   className?: string;
 }
 
-export default function AddPhraseEntryForm({ className = '' }: Props) {
+export default function AddPhraseForm({ className = '' }: Props) {
   const auth = useAuth();
   const router = useRouter();
   const pathname = usePathname();
@@ -34,7 +34,7 @@ export default function AddPhraseEntryForm({ className = '' }: Props) {
   }, []);
 
   useEffect(() => {
-    const savedContent = localStorage.getItem('phraseEntryContentDraft');
+    const savedContent = localStorage.getItem('phraseContentDraft');
     if (savedContent) {
       setContent(savedContent);
     }
@@ -43,7 +43,7 @@ export default function AddPhraseEntryForm({ className = '' }: Props) {
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newValue = e.target.value;
     setContent(newValue);
-    localStorage.setItem('phraseEntryContentDraft', newValue);
+    localStorage.setItem('phraseContentDraft', newValue);
     const textarea = textareaRef.current;
     if (textarea) {
       textarea.style.height = 'auto';
@@ -57,11 +57,11 @@ export default function AddPhraseEntryForm({ className = '' }: Props) {
       router.push(`/auth/login?next=${pathname}`);
       return;
     }
-    const res = await addPhraseEntry(formData);
+    const res = await addPhrase(formData);
     if (!res?.error) {
       setSelectedLang('');
       setContent('');
-      localStorage.removeItem('phraseEntryContentDraft');
+      localStorage.removeItem('phraseContentDraft');
       router.push(`/phrases/${res.id}/`);
       toast.success('Posted');
     }

@@ -1,11 +1,11 @@
 from rest_framework import serializers
 
-from .models import PhraseEntry, Translation
+from .models import Phrase, Translation
 from users.models import User
 from languages.models import Language
 
 
-class PhraseEntrySerializer(serializers.ModelSerializer):
+class PhraseSerializer(serializers.ModelSerializer):
     lang = serializers.SlugRelatedField(
         queryset=Language.objects.all(), slug_field="code", required=False
     )
@@ -17,7 +17,7 @@ class PhraseEntrySerializer(serializers.ModelSerializer):
     translation_count = serializers.SerializerMethodField()
 
     class Meta:
-        model = PhraseEntry
+        model = Phrase
         fields = [
             "id",
             "content",
@@ -49,19 +49,19 @@ class PhraseEntrySerializer(serializers.ModelSerializer):
         return super().update(instance, validated_data)
 
 
-class PhraseEntryHistorySerializer(serializers.ModelSerializer):
+class PhraseHistorySerializer(serializers.ModelSerializer):
     history_user = serializers.SlugRelatedField(
         queryset=User.objects.all(), slug_field="username", required=False
     )
 
     class Meta:
-        model = PhraseEntry.history.model
+        model = Phrase.history.model
         fields = ["history_id", "content", "history_user", "history_date"]
 
 
 class TranslationSerializer(serializers.ModelSerializer):
     phrase_entry = serializers.PrimaryKeyRelatedField(
-        queryset=PhraseEntry.objects.all(), required=False
+        queryset=Phrase.objects.all(), required=False
     )
     lang = serializers.SlugRelatedField(
         queryset=Language.objects.all(), slug_field="code", required=False

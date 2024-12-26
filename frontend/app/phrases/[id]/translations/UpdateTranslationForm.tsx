@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 import updateTranslation from '@/lib/translations/updateTranslation';
 
 interface Props {
-  phraseEntryId: number;
+  phraseId: number;
   id: number;
   initialContent?: string;
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
@@ -14,7 +14,7 @@ interface Props {
 }
 
 export default function UpdateTranslationForm({
-  phraseEntryId,
+  phraseId,
   id,
   initialContent = '',
   setIsEditing,
@@ -35,7 +35,7 @@ export default function UpdateTranslationForm({
   };
 
   const handleSubmit = async (prevState: any, formData: FormData) => {
-    const res = await updateTranslation(phraseEntryId, id, formData);
+    const res = await updateTranslation(phraseId, id, formData);
     if (!res?.error) {
       setContent('');
       toast.success('Translation updated');

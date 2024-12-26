@@ -4,7 +4,7 @@ from rest_framework import serializers
 
 from .models import Vote
 from users.models import User
-from phrases.models import PhraseEntry, Translation
+from phrases.models import Phrase, Translation
 from dictionary.models import DictEntry, Definition
 
 
@@ -27,7 +27,7 @@ class VoteSerializer(serializers.ModelSerializer):
         view_kwargs = self.context["view"].kwargs
 
         if "phrase_entry_pk" in view_kwargs:
-            target_model = PhraseEntry
+            target_model = Phrase
             object_id = view_kwargs["phrase_entry_pk"]
         elif "translation_pk" in view_kwargs:
             target_model = Translation

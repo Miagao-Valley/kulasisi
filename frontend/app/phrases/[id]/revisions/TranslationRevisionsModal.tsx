@@ -1,6 +1,6 @@
 import React from 'react';
 import { TranslationRevision } from '@/types';
-import PhraseEntryRevisionsList from './PhraseEntryRevisionsList';
+import PhraseRevisionsList from './PhraseRevisionsList';
 
 interface Props {
   id: number;
@@ -21,7 +21,7 @@ export default function TranslationRevisionsModal({ id, revisions }: Props) {
               ✕
             </button>
           </form>
-          <PhraseEntryRevisionsList revisions={revisions} />
+          <PhraseRevisionsList revisions={revisions} />
         </div>
       </dialog>
     </>

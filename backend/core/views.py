@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
-from phrases.models import PhraseEntry, Translation
+from phrases.models import Phrase, Translation
 from dictionary.models import DictEntry, Definition
 from .serializers import VoteSerializer
 
@@ -16,7 +16,7 @@ class ListCreateVoteView(generics.ListCreateAPIView):
         view_kwargs = self.kwargs
 
         if "phrase_entry_pk" in view_kwargs:
-            target_model = PhraseEntry
+            target_model = Phrase
             object_id = view_kwargs["phrase_entry_pk"]
         elif "translation_pk" in view_kwargs:
             target_model = Translation

@@ -101,7 +101,7 @@ export function TranslationsContent({
       {isEditing ? (
         <div className="mb-2" onClick={(e) => e.stopPropagation()}>
           <UpdateTranslationForm
-            phraseEntryId={translation.phrase_entry}
+            phraseId={translation.phrase_entry}
             id={translation.id}
             initialContent={translation.content}
             setIsEditing={setIsEditing}
@@ -122,7 +122,7 @@ export function TranslationsContent({
       <div onClick={(e) => e.stopPropagation()}>
         <TranslationRevisionsModal id={translation.id} revisions={revisions} />
         <DeleteTranslationModal
-          phraseEntryId={translation.phrase_entry}
+          phraseId={translation.phrase_entry}
           id={translation.id}
         />
       </div>

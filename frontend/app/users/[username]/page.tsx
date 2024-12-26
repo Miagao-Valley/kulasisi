@@ -3,7 +3,7 @@ import Link from 'next/link';
 import getUser from '@/lib/users/getUser';
 import Overview from './Overview';
 import StatsTab from './StatsTab';
-import PhraseEntriesList from '@/app/phrases/PhraseEntriesList';
+import PhrasesList from '@/app/phrases/PhrasesList';
 import TranslationsList from '@/app/phrases/[id]/translations/TranslationsList';
 import DictEntriesList from '@/app/dictionary/DictEntriesList';
 import DefinitionsList from '@/app/dictionary/[id]/definitions/DefinitionsList';
@@ -74,7 +74,7 @@ export default async function UserPage({ params, searchParams }: Props) {
         </div>
       ) : currentTab === 'phrases' ? (
         <div role="tabpanel" className="p-6">
-          <PhraseEntriesList filters={{ user: user.username }} />
+          <PhrasesList filters={{ user: user.username }} />
         </div>
       ) : currentTab === 'translations' ? (
         <div role="tabpanel" className="p-6">

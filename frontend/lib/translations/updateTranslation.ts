@@ -6,7 +6,7 @@ import fetcher, { FetchError } from '@/utils/fetcher';
 import getToken from '../tokens/getToken';
 
 export default async function updateTranslation(
-  phraseEntryId: number,
+  phraseId: number,
   id: number,
   data: FormData,
 ) {
@@ -25,6 +25,6 @@ export default async function updateTranslation(
     return { error: fetchError.resBody };
   }
 
-  revalidatePath(`/phrases/${phraseEntryId}`);
-  redirect(`/phrases/${phraseEntryId}`);
+  revalidatePath(`/phrases/${phraseId}`);
+  redirect(`/phrases/${phraseId}`);
 }

@@ -7,11 +7,11 @@ import deleteTranslation from '@/lib/translations/deleteTranslation';
 import { FaTrash } from 'react-icons/fa';
 
 interface Props {
-  phraseEntryId: number;
+  phraseId: number;
   id: number;
 }
 
-export default function DeleteTranslationModal({ phraseEntryId, id }: Props) {
+export default function DeleteTranslationModal({ phraseId, id }: Props) {
   return (
     <dialog
       id={`delete-translation-modal-${id}`}
@@ -29,7 +29,7 @@ export default function DeleteTranslationModal({ phraseEntryId, id }: Props) {
           </form>
           <form
             action={async () => {
-              await deleteTranslation(phraseEntryId, id);
+              await deleteTranslation(phraseId, id);
               toast.error(() => <span>Translation deleted</span>, {
                 icon: <FaTrash />,
               });

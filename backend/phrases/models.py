@@ -9,7 +9,7 @@ from languages.models import Language
 User = get_user_model()
 
 
-class PhraseEntry(models.Model):
+class Phrase(models.Model):
     content = models.TextField()
     lang = models.ForeignKey(
         Language, on_delete=models.PROTECT, related_name="phrase_entries"
@@ -31,7 +31,7 @@ class PhraseEntry(models.Model):
 
 class Translation(models.Model):
     phrase_entry = models.ForeignKey(
-        PhraseEntry, on_delete=models.CASCADE, related_name="translations"
+        Phrase, on_delete=models.CASCADE, related_name="translations"
     )
     content = models.TextField()
     lang = models.ForeignKey(

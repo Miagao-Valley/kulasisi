@@ -5,7 +5,7 @@ import fetcher, { FetchError } from '@/utils/fetcher';
 import getToken from '../tokens/getToken';
 
 export default async function addTranslation(
-  phraseEntryId: number,
+  phraseId: number,
   data: FormData,
 ) {
   let res = null;
@@ -23,6 +23,6 @@ export default async function addTranslation(
     return { error: fetchError.resBody };
   }
 
-  revalidatePath(`/phrases/${phraseEntryId}/`);
+  revalidatePath(`/phrases/${phraseId}/`);
   return res;
 }

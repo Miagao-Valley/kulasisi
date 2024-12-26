@@ -5,9 +5,9 @@ import fetcher from '@/utils/fetcher';
 import { redirect } from 'next/navigation';
 import getToken from '../tokens/getToken';
 
-export default async function deletePhraseEntry(id: number) {
+export default async function deletePhrase(id: number) {
   await fetcher(
-    `/phrase-entries/${id}/`,
+    `/phrases/${id}/`,
     {
       method: 'DELETE',
     },

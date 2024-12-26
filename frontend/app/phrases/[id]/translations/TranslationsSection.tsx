@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { PhraseEntry } from '@/types';
+import { Phrase } from '@/types';
 import AddTranslationForm from './AddTranslationForm';
 import TranslationsList, { TranslationsListSkeleton } from './TranslationsList';
 import SearchInput from '@/app/components/SearchInput';
@@ -8,13 +8,13 @@ import FilterMenu, { FilterOption } from '@/app/components/FilterMenu';
 import getLangs from '@/lib/langs/getLangs';
 
 interface Props {
-  phraseEntry: PhraseEntry;
+  phrase: Phrase;
   searchParams: { [key: string]: string | undefined };
 }
 
 export default async function TranslationsSection({
   searchParams,
-  phraseEntry,
+  phrase,
 }: Props) {
   const searchTerm = searchParams.q || '';
   const sortOption = searchParams.sort || '-vote_count';
@@ -38,7 +38,7 @@ export default async function TranslationsSection({
       value: 'lang',
       type: 'select',
       options: langs.results
-        .filter(({ code }) => code !== phraseEntry.lang)
+        .filter(({ code }) => code !== phrase.lang)
         .map(({ code, name }) => ({ label: name, value: code })),
     },
   ];
@@ -47,8 +47,8 @@ export default async function TranslationsSection({
     <>
       <hr />
       <AddTranslationForm
-        phraseEntryId={phraseEntry.id}
-        original_lang={phraseEntry.lang}
+        phraseId={phrase.id}
+        original_lang={phrase.lang}
         className="mx-1 my-2"
       />
       <hr className="mb-4" />
@@ -62,7 +62,7 @@ export default async function TranslationsSection({
       </div>
       <Suspense fallback={<TranslationsListSkeleton />}>
         <TranslationsList
-          phraseEntryId={phraseEntry.id}
+          phraseId={phrase.id}
           searchTerm={searchTerm}
           sortOption={sortOption}
           filters={filters}

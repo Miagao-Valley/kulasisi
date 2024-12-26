@@ -1,6 +1,6 @@
-import getPhraseEntries from '@/lib/phraseEntries/getPhraseEntries';
-import getPhraseEntryRevisions from '@/lib/phraseEntries/getPhraseEntryRevisions';
-import PhraseEntryContent from './PhraseEntryContent';
+import getPhrases from '@/lib/phrases/getPhrases';
+import getPhraseRevisions from '@/lib/phrases/getPhraseRevisions';
+import PhraseContent from './PhraseContent';
 import EntryFooter from '../components/EntryFooter';
 import Pagination from '../components/Pagination';
 import { Filter } from '../components/FilterMenu';
@@ -14,7 +14,7 @@ interface Props {
   className?: string;
 }
 
-export default async function PhraseEntriesList({
+export default async function PhrasesList({
   searchTerm = '',
   sortOption = 'content',
   filters = {},
@@ -23,7 +23,7 @@ export default async function PhraseEntriesList({
 }: Props) {
   const limit = 15;
 
-  const phraseEntries = await getPhraseEntries({
+  const phrases = await getPhrases({
     search: searchTerm,
     ordering: sortOption,
     lang__code: filters?.lang || '',
@@ -35,21 +35,21 @@ export default async function PhraseEntriesList({
   return (
     <>
       <ul className={`flex flex-col gap-3 ${className}`}>
-        {phraseEntries &&
-        phraseEntries.results &&
-        phraseEntries.results.length > 0 ? (
-          phraseEntries.results.map(async (phraseEntry) => {
-            const revisions = await getPhraseEntryRevisions(phraseEntry.id);
+        {phrases &&
+        phrases.results &&
+        phrases.results.length > 0 ? (
+          phrases.results.map(async (phrase) => {
+            const revisions = await getPhraseRevisions(phrase.id);
             return (
               <li
                 className="px-4 py-3 border rounded-lg flex flex-col"
-                key={phraseEntry.id}
+                key={phrase.id}
               >
-                <PhraseEntryContent
-                  phraseEntry={phraseEntry}
+                <PhraseContent
+                  phrase={phrase}
                   revisions={revisions.results}
                 />
-                <EntryFooter entry={phraseEntry} type="phrase-entries" />
+                <EntryFooter entry={phrase} type="phrases" />
               </li>
             );
           })
@@ -61,10 +61,10 @@ export default async function PhraseEntriesList({
       </ul>
       <Pagination
         className="my-5 flex justify-center"
-        numPages={phraseEntries?.num_pages || 1}
+        numPages={phrases?.num_pages || 1}
         currentPage={page}
-        next={!!phraseEntries?.next}
-        prev={!!phraseEntries?.previous}
+        next={!!phrases?.next}
+        prev={!!phrases?.previous}
       />
     </>
   );
@@ -74,7 +74,7 @@ interface SkeletonProps {
   className?: string;
 }
 
-export function PhraseEntriesListSkeleton({ className = '' }: SkeletonProps) {
+export function PhrasesListSkeleton({ className = '' }: SkeletonProps) {
   return (
     <ul className={`flex flex-col gap-3 ${className}`}>
       {Array.from({ length: 10 }, (_, i) => (

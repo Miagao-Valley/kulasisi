@@ -51,7 +51,7 @@ export interface Lang {
   phrase_entry_count: number;
 }
 
-export interface PhraseEntry {
+export interface Phrase {
   id: number;
   content: string;
   lang: string;
@@ -63,7 +63,7 @@ export interface PhraseEntry {
   translation_count: number;
 }
 
-export interface PhraseEntryRevision {
+export interface PhraseRevision {
   history_id: number;
   content: string;
   history_user: string;

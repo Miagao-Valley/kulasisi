@@ -3,7 +3,7 @@ import Link from 'next/link';
 import getLang from '@/lib/langs/getLang';
 import Overview from './Overview';
 import StatsTab from './StatsTab';
-import PhraseEntriesList from '@/app/phrases/PhraseEntriesList';
+import PhrasesList from '@/app/phrases/PhrawsesList';
 import TranslationsList from '@/app/phrases/[id]/translations/TranslationsList';
 import DictEntriesList from '@/app/dictionary/DictEntriesList';
 import DefinitionsList from '@/app/dictionary/[id]/definitions/DefinitionsList';
@@ -74,7 +74,7 @@ export default async function LanguagePage({ params, searchParams }: Props) {
         </div>
       ) : currentTab === 'phrases' ? (
         <div role="tabpanel" className="p-6">
-          <PhraseEntriesList filters={{ lang: lang.code }} />
+          <PhrasesList filters={{ lang: lang.code }} />
         </div>
       ) : currentTab === 'translations' ? (
         <div role="tabpanel" className="p-6">

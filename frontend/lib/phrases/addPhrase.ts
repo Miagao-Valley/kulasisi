@@ -4,11 +4,11 @@ import { revalidatePath } from 'next/cache';
 import fetcher, { FetchError } from '@/utils/fetcher';
 import getToken from '../tokens/getToken';
 
-export default async function addPhraseEntry(data: FormData) {
+export default async function addPhrase(data: FormData) {
   let res = null;
   try {
     res = await fetcher(
-      `/phrase-entries/`,
+      `/phrases/`,
       {
         method: 'POST',
         body: data,

@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name="HistoricalPhraseEntry",
+            name="HistoricalPhrase",
             fields=[
                 (
                     "id",
@@ -79,7 +79,7 @@ class Migration(migrations.Migration):
             bases=(simple_history.models.HistoricalChanges, models.Model),
         ),
         migrations.CreateModel(
-            name="PhraseEntry",
+            name="Phrase",
             fields=[
                 (
                     "id",
@@ -175,7 +175,7 @@ class Migration(migrations.Migration):
                         null=True,
                         on_delete=django.db.models.deletion.DO_NOTHING,
                         related_name="+",
-                        to="phrases.phraseentry",
+                        to="phrases.phrase",
                     ),
                 ),
             ],
@@ -223,7 +223,7 @@ class Migration(migrations.Migration):
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
                         related_name="translations",
-                        to="phrases.phraseentry",
+                        to="phrases.phrase",
                     ),
                 ),
             ],

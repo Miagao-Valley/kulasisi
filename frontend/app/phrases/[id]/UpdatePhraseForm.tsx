@@ -3,7 +3,7 @@
 import React, { useRef, useState } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
 import toast from 'react-hot-toast';
-import updatePhraseEntry from '@/lib/phraseEntries/updatePhraseEntry';
+import updatePhrase from '@/lib/phrases/updatePhrase';
 
 interface Props {
   id: number;
@@ -12,7 +12,7 @@ interface Props {
   className?: string;
 }
 
-export default function UpdatePhraseEntryForm({
+export default function UpdatePhraseForm({
   id,
   initialContent = '',
   setIsEditing,
@@ -33,7 +33,7 @@ export default function UpdatePhraseEntryForm({
   };
 
   const handleSubmit = async (prevState: any, formData: FormData) => {
-    const res = await updatePhraseEntry(id, formData);
+    const res = await updatePhrase(id, formData);
     if (!res?.error) {
       setContent('');
       toast.success('Entry updated');
