@@ -65,7 +65,7 @@ export default function UpdatePhraseEntryForm({
             ref={textareaRef}
             rows={1}
             autoFocus={true}
-            placeholder="Enter updated text"
+            placeholder="Enter updated phrase"
             defaultValue={initialContent}
             value={content}
             onChange={handleContentChange}

@@ -61,13 +61,13 @@ export default function UpdateTranslationForm({
         )}
         <div>
           <textarea
-            className="textarea w-full p-1 rounded-nwone overflow-hidden resize-none focus:outline-none focus:border-transparent"
+            className="textarea text-base w-full p-0 rounded-none overflow-hidden resize-none focus:outline-none focus:border-transparent"
             name="content"
             id="content-field"
             ref={textareaRef}
             rows={1}
             autoFocus={true}
-            placeholder="Enter updated text"
+            placeholder="Enter updated translation"
             defaultValue={initialContent}
             value={content}
             onChange={handleContentChange}

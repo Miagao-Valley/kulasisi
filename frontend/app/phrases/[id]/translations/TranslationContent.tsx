@@ -50,6 +50,47 @@ export function TranslationsContent({
 
   return (
     <div className={`${className}`}>
+      <div className="flex gap-3 mb-2">
+        <EntryHeader entry={translation} className="flex-1" />
+        <details
+          className="dropdown dropdown-bottom dropdown-end"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <summary className="btn btn-ghost btn-sm btn-circle">
+            <MdMenu />
+          </summary>
+          <ul className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+            <li>
+              <a onClick={copyLinkToClipboard}>
+                <FaLink /> Copy link
+              </a>
+            </li>
+            <li>
+              <a onClick={() => showRevisionsModal(translation.id)}>
+                <FaClock /> Edits
+              </a>
+            </li>
+            {auth.username === translation.contributor && (
+              <>
+                <li>
+                  <a onClick={handleEdit}>
+                    <FaPen /> Edit
+                  </a>
+                </li>
+                <li>
+                  <a
+                    className="text-error"
+                    onClick={() => showDeleteModal(translation.id)}
+                  >
+                    <FaTrash /> Delete
+                  </a>
+                </li>
+              </>
+            )}
+          </ul>
+        </details>
+      </div>
+
       {isEditing ? (
         <div className="mb-2" onClick={(e) => e.stopPropagation()}>
           <UpdateTranslationForm
@@ -61,47 +102,6 @@ export function TranslationsContent({
         </div>
       ) : (
         <>
-          <div className="flex gap-3 mb-2">
-            <EntryHeader entry={translation} className="flex-1" />
-            <details
-              className="dropdown dropdown-bottom dropdown-end"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <summary className="btn btn-ghost btn-sm btn-circle">
-                <MdMenu />
-              </summary>
-              <ul className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
-                <li>
-                  <a onClick={copyLinkToClipboard}>
-                    <FaLink /> Copy link
-                  </a>
-                </li>
-                <li>
-                  <a onClick={() => showRevisionsModal(translation.id)}>
-                    <FaClock /> Edits
-                  </a>
-                </li>
-                {auth.username === translation.contributor && (
-                  <>
-                    <li>
-                      <a onClick={handleEdit}>
-                        <FaPen /> Edit
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        className="text-error"
-                        onClick={() => showDeleteModal(translation.id)}
-                      >
-                        <FaTrash /> Delete
-                      </a>
-                    </li>
-                  </>
-                )}
-              </ul>
-            </details>
-          </div>
-
           <div className="flex gap-3">
             <Link
               href={`/phrases/${translation.phrase_entry}#translation${translation.id}`}

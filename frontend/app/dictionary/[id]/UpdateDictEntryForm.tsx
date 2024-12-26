@@ -18,7 +18,7 @@ export default function UpdateDictEntryForm({
   setIsEditing,
   className = '',
 }: Props) {
-  const [word, setWord] = useState('');
+  const [word, setWord] = useState(initialWord);
 
   const handleWordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
@@ -52,7 +52,7 @@ export default function UpdateDictEntryForm({
         )}
         <div>
           <input
-            className="input text-base w-full p-0 rounded-none overflow-hidden resize-none focus:outline-none focus:border-transparent"
+            className="input text-xl font-bold w-full p-0 rounded-none overflow-hidden resize-none focus:outline-none focus:border-transparent"
             name="word"
             id="word-field"
             type="text"

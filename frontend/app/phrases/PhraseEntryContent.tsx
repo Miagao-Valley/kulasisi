@@ -26,6 +26,7 @@ export default function PhraseEntryContent({
   const [isEditing, setIsEditing] = useState(false);
 
   const handleEdit = () => {
+    (document.activeElement as HTMLElement)?.blur();
     setIsEditing(true);
   };
 
