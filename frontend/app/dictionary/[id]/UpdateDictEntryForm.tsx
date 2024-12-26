@@ -76,9 +76,7 @@ export default function UpdateDictEntryForm({
           >
             Cancel
           </button>
-          <UpdateButton
-            disabled={!word.trim() || word == initialWord}
-          />
+          <UpdateButton disabled={!word.trim() || word == initialWord} />
         </div>
       </form>
     </>

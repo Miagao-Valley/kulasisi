@@ -23,7 +23,10 @@ export default async function PhrasePage({ params, searchParams }: Props) {
   return (
     <>
       <div className="mb-3">
-        <PhraseEntryContent phraseEntry={phraseEntry} revisions={revisions.results} />
+        <PhraseEntryContent
+          phraseEntry={phraseEntry}
+          revisions={revisions.results}
+        />
         <EntryFooter entry={phraseEntry} type="phrase-entries" />
       </div>
 

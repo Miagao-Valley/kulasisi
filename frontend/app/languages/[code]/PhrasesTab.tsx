@@ -1,5 +1,5 @@
-import React from 'react'
-import { Lang } from '@/types'
+import React from 'react';
+import { Lang } from '@/types';
 import TextEntriesList from '@/app/phrases/PhraseEntriesList';
 
 interface Props {

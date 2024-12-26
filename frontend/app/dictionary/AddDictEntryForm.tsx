@@ -46,9 +46,9 @@ export default function AddDictEntryForm({ className = '' }: Props) {
 
   const handleSubmit = async (prevState: any, formData: FormData) => {
     if (!auth.isAuthenticated) {
-      toast.error('You need to sign in to post.')
-      router.push(`/auth/login?next=${pathname}`)
-      return
+      toast.error('You need to sign in to post.');
+      router.push(`/auth/login?next=${pathname}`);
+      return;
     }
     const res = await addDictEntry(formData);
     if (!res?.error) {

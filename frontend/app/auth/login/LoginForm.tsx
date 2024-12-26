@@ -18,15 +18,15 @@ export default function LoginForm() {
   const searchParams = useSearchParams();
   const auth = useAuth();
 
-  const next = searchParams.get('next')
+  const next = searchParams.get('next');
 
   const handleSubmit = async (prevState: any, formData: FormData) => {
     const res = await login(formData);
     if (!res?.error) {
       auth.updateAuth();
-      console.log(next)
+      console.log(next);
       if (next) {
-        router.push(next)
+        router.push(next);
       }
     }
     return res;

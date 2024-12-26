@@ -41,14 +41,14 @@ export interface Lang {
   name: string;
   user_count: string;
   users_by_proficiency: {
-    1: number,
-    2: number,
-    3: number,
-    4: number,
-    5: number,
-  },
-  translation_count: number,
-  phrase_entry_count: number,
+    1: number;
+    2: number;
+    3: number;
+    4: number;
+    5: number;
+  };
+  translation_count: number;
+  phrase_entry_count: number;
 }
 
 export interface PhraseEntry {

@@ -15,7 +15,9 @@ export default function DefinitionRevisionsList({ revisions }: Props) {
         revisions.map((revision, index) => {
           const description = revision.description;
           const previousDescription =
-            index < revisions.length - 1 ? revisions[index + 1].description : '';
+            index < revisions.length - 1
+              ? revisions[index + 1].description
+              : '';
 
           const diff = diffWords(previousDescription, description);
           const isChecked = index === 0;

@@ -16,7 +16,7 @@ import {
 
 interface Props {
   entry: PhraseEntry | Translation | DictEntry | Definition;
-  type: 'phrase-entries'  | 'translations' | 'dict-entries' | 'definitions';
+  type: 'phrase-entries' | 'translations' | 'dict-entries' | 'definitions';
   votes: Vote[];
 }
 

@@ -43,7 +43,7 @@ export default async function DictionaryPage({ searchParams }: Props) {
     <>
       <hr />
       <AddDictEntryForm className="mx-1 my-2" />
-      <hr className="mb-4"/>
+      <hr className="mb-4" />
       <div className="mb-4 flex gap-3">
         <SearchInput currentSearchTerm={searchTerm} className="me-auto" />
         <SortDropdown

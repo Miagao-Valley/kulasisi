@@ -11,8 +11,12 @@ User = get_user_model()
 
 class PhraseEntry(models.Model):
     content = models.TextField()
-    lang = models.ForeignKey(Language, on_delete=models.PROTECT, related_name="phrase_entries")
-    contributor = models.ForeignKey(User, on_delete=models.PROTECT, related_name="phrase_entries")
+    lang = models.ForeignKey(
+        Language, on_delete=models.PROTECT, related_name="phrase_entries"
+    )
+    contributor = models.ForeignKey(
+        User, on_delete=models.PROTECT, related_name="phrase_entries"
+    )
     votes = GenericRelation(Vote, related_query_name="phrase_entry")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -26,10 +30,16 @@ class PhraseEntry(models.Model):
 
 
 class Translation(models.Model):
-    phrase_entry = models.ForeignKey(PhraseEntry, on_delete=models.CASCADE, related_name="translations")
+    phrase_entry = models.ForeignKey(
+        PhraseEntry, on_delete=models.CASCADE, related_name="translations"
+    )
     content = models.TextField()
-    lang = models.ForeignKey(Language, on_delete=models.PROTECT, related_name="translations")
-    contributor = models.ForeignKey(User, on_delete=models.PROTECT, related_name="translations")
+    lang = models.ForeignKey(
+        Language, on_delete=models.PROTECT, related_name="translations"
+    )
+    contributor = models.ForeignKey(
+        User, on_delete=models.PROTECT, related_name="translations"
+    )
     votes = GenericRelation(Vote, related_query_name="translations")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

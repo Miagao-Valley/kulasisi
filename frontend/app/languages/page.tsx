@@ -30,10 +30,7 @@ export default async function LangsPage({ searchParams }: Props) {
         />
       </div>
       <Suspense fallback={<LangsListSkeleton />}>
-        <LangsList
-          searchTerm={searchTerm}
-          sortOption={sortOption}
-        />
+        <LangsList searchTerm={searchTerm} sortOption={sortOption} />
       </Suspense>
     </>
   );

@@ -5,7 +5,5 @@ from . import views
 
 urlpatterns = [
     path("", views.ListLanguageView.as_view(), name="languages"),
-    path(
-        "<str:code>/", views.RetrieveLanguageView.as_view(), name="language"
-    ),
+    path("<str:code>/", views.RetrieveLanguageView.as_view(), name="language"),
 ]

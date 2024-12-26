@@ -51,9 +51,9 @@ export default function AddTranslationForm({
 
   const handleSubmit = async (prevState: any, formData: FormData) => {
     if (!auth.isAuthenticated) {
-      toast.error('You need to sign in to post.')
-      router.push(`/auth/login?next=${pathname}`)
-      return
+      toast.error('You need to sign in to post.');
+      router.push(`/auth/login?next=${pathname}`);
+      return;
     }
     const res = await addTranslation(phraseEntryId, formData);
     console.log(res);
@@ -99,28 +99,28 @@ export default function AddTranslationForm({
       </div>
       <div className="flex gap-2 items-center">
         <div>
-        <select
-          className="select select-bordered select-sm w-full"
-          name="lang"
-          id="lang-select"
-          value={selectedLang}
-          onChange={(e) => setSelectedLang(e.target.value)}
-        >
-          <option value="" disabled>
-            Language
-          </option>
-          {langs.map((lang) => (
-            <option key={lang.id} value={lang.code}>
-              {lang.name}
+          <select
+            className="select select-bordered select-sm w-full"
+            name="lang"
+            id="lang-select"
+            value={selectedLang}
+            onChange={(e) => setSelectedLang(e.target.value)}
+          >
+            <option value="" disabled>
+              Language
             </option>
-          ))}
-        </select>
-        {formState?.error?.lang && (
-          <div role="alert" className="text-sm text-error">
-            {formState.error.lang[0]}
-          </div>
-        )}
-      </div>
+            {langs.map((lang) => (
+              <option key={lang.id} value={lang.code}>
+                {lang.name}
+              </option>
+            ))}
+          </select>
+          {formState?.error?.lang && (
+            <div role="alert" className="text-sm text-error">
+              {formState.error.lang[0]}
+            </div>
+          )}
+        </div>
         <SubmitButton
           className="ms-auto"
           disabled={!content.trim() || !selectedLang}

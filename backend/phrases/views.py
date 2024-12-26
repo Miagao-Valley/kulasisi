@@ -23,20 +23,31 @@ class ListCreatePhraseEntryView(generics.ListCreateAPIView):
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     filterset_fields = ["lang__code", "contributor__username"]
     search_fields = ["content"]
-    ordering_fields = ["content", "vote_count", "translation_count", "updated_at", "created_at"]
+    ordering_fields = [
+        "content",
+        "vote_count",
+        "translation_count",
+        "updated_at",
+        "created_at",
+    ]
     ordering = ["-updated_at"]
 
     def get_queryset(self):
         queryset = super().get_queryset()
         queryset = queryset.annotate(
-            vote_count=Coalesce(Sum(Case(
-                When(votes__value=1, then=Value(1)),
-                When(votes__value=-1, then=Value(-1)),
-                When(votes__value=0, then=Value(0)),
-                default=Value(0),
-                output_field=IntegerField()
-            )), Value(0)),
-            translation_count=Count("translations")
+            vote_count=Coalesce(
+                Sum(
+                    Case(
+                        When(votes__value=1, then=Value(1)),
+                        When(votes__value=-1, then=Value(-1)),
+                        When(votes__value=0, then=Value(0)),
+                        default=Value(0),
+                        output_field=IntegerField(),
+                    )
+                ),
+                Value(0),
+            ),
+            translation_count=Count("translations"),
         )
         return queryset
 
@@ -59,7 +70,9 @@ class ListPhraseEntryHistoryView(generics.ListAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get_queryset(self):
-        phrase_entry = get_object_or_404(PhraseEntry, id=self.kwargs.get("phrase_entry_pk"))
+        phrase_entry = get_object_or_404(
+            PhraseEntry, id=self.kwargs.get("phrase_entry_pk")
+        )
         return phrase_entry.history.all()
 
 
@@ -76,13 +89,18 @@ class ListCreateTranslationsView(generics.ListCreateAPIView):
     def get_queryset(self):
         queryset = super().get_queryset()
         queryset = queryset.annotate(
-            vote_count=Coalesce(Sum(Case(
-                When(votes__value=1, then=Value(1)),
-                When(votes__value=-1, then=Value(-1)),
-                When(votes__value=0, then=Value(0)),
-                default=Value(0),
-                output_field=IntegerField()
-            )), Value(0)),
+            vote_count=Coalesce(
+                Sum(
+                    Case(
+                        When(votes__value=1, then=Value(1)),
+                        When(votes__value=-1, then=Value(-1)),
+                        When(votes__value=0, then=Value(0)),
+                        default=Value(0),
+                        output_field=IntegerField(),
+                    )
+                ),
+                Value(0),
+            ),
         )
         return queryset
 

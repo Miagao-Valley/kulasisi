@@ -30,10 +30,7 @@ export default function SortDropdown({
       Array.from(searchParams.entries()),
     );
     if (sortOption) {
-      currentSearchParams.set(
-        'sort',
-        sortOption,
-      );
+      currentSearchParams.set('sort', sortOption);
     } else {
       currentSearchParams.delete('sort');
     }
@@ -41,8 +38,8 @@ export default function SortDropdown({
   }, [sortOption, searchParams, router]);
 
   const toggleSort = () => {
-    setSortOption((prev) =>
-      prev.startsWith('-') ? prev.slice(1) : `-${prev}` // Toggle the sort order
+    setSortOption(
+      (prev) => (prev.startsWith('-') ? prev.slice(1) : `-${prev}`), // Toggle the sort order
     );
   };
 
@@ -50,11 +47,17 @@ export default function SortDropdown({
     <div className={`dropdown dropdown-hover dropdown-end ${className}`}>
       <div tabIndex={0} role="button" className="btn btn-outline btn-sm">
         <span onClick={toggleSort}>
-          {sortOption.startsWith('-') ? <FaSortAmountDown /> : <FaSortAmountUp />}
+          {sortOption.startsWith('-') ? (
+            <FaSortAmountDown />
+          ) : (
+            <FaSortAmountUp />
+          )}
         </span>
         Sort:{' '}
-        {sortingOptions.find((option) => option.value.replace(/^-/g, "") === sortOption.replace(/^-/g, ""))?.label ||
-          'None'}
+        {sortingOptions.find(
+          (option) =>
+            option.value.replace(/^-/g, '') === sortOption.replace(/^-/g, ''),
+        )?.label || 'None'}
       </div>
       <div className="dropdown-content w-fit p-4 rounded-box bg-base-100 shadow">
         {sortingOptions.map(({ label, value }) => (

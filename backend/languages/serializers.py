@@ -11,7 +11,15 @@ class LanguageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Language
-        fields = ["id", "code", "name", "user_count", "users_by_proficiency", "translation_count", "phrase_entry_count"]
+        fields = [
+            "id",
+            "code",
+            "name",
+            "user_count",
+            "users_by_proficiency",
+            "translation_count",
+            "phrase_entry_count",
+        ]
 
     def get_user_count(self, obj):
         return obj.proficiencies.count()

@@ -31,7 +31,9 @@ export default async function LangsList({
               <span className="badge badge-primary [&:not(:hover)]:badge-outline">
                 {lang.code}
               </span>
-              <span className="font-semibold hover:text-primary">{lang.name}</span>
+              <span className="font-semibold hover:text-primary">
+                {lang.name}
+              </span>
             </Link>
           </li>
         ))

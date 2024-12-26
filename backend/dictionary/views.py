@@ -8,7 +8,12 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 
 from .models import DictEntry, Definition
-from .serializers import DictEntrySerializer, DictEntryHistorySerializer, DefinitionSerializer, DefinitionHistorySerializer
+from .serializers import (
+    DictEntrySerializer,
+    DictEntryHistorySerializer,
+    DefinitionSerializer,
+    DefinitionHistorySerializer,
+)
 
 
 class ListCreateDictEntryView(generics.ListCreateAPIView):
@@ -24,13 +29,18 @@ class ListCreateDictEntryView(generics.ListCreateAPIView):
     def get_queryset(self):
         queryset = super().get_queryset()
         queryset = queryset.annotate(
-            vote_count=Coalesce(Sum(Case(
-                When(votes__value=1, then=Value(1)),
-                When(votes__value=-1, then=Value(-1)),
-                When(votes__value=0, then=Value(0)),
-                default=Value(0),
-                output_field=IntegerField()
-            )), Value(0)),
+            vote_count=Coalesce(
+                Sum(
+                    Case(
+                        When(votes__value=1, then=Value(1)),
+                        When(votes__value=-1, then=Value(-1)),
+                        When(votes__value=0, then=Value(0)),
+                        default=Value(0),
+                        output_field=IntegerField(),
+                    )
+                ),
+                Value(0),
+            ),
         )
         return queryset
 
@@ -57,7 +67,6 @@ class ListDictEntryHistoryView(generics.ListAPIView):
         return dict_entry.history.all()
 
 
-
 class ListCreateDefinitionView(generics.ListCreateAPIView):
     queryset = Definition.objects.all()
     serializer_class = DefinitionSerializer
@@ -71,13 +80,18 @@ class ListCreateDefinitionView(generics.ListCreateAPIView):
     def get_queryset(self):
         queryset = super().get_queryset()
         queryset = queryset.annotate(
-            vote_count=Coalesce(Sum(Case(
-                When(votes__value=1, then=Value(1)),
-                When(votes__value=-1, then=Value(-1)),
-                When(votes__value=0, then=Value(0)),
-                default=Value(0),
-                output_field=IntegerField()
-            )), Value(0)),
+            vote_count=Coalesce(
+                Sum(
+                    Case(
+                        When(votes__value=1, then=Value(1)),
+                        When(votes__value=-1, then=Value(-1)),
+                        When(votes__value=0, then=Value(0)),
+                        default=Value(0),
+                        output_field=IntegerField(),
+                    )
+                ),
+                Value(0),
+            ),
         )
         return queryset
 

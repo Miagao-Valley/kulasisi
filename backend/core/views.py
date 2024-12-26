@@ -6,6 +6,7 @@ from phrases.models import PhraseEntry, Translation
 from dictionary.models import DictEntry, Definition
 from .serializers import VoteSerializer
 
+
 class ListCreateVoteView(generics.ListCreateAPIView):
     serializer_class = VoteSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]

@@ -28,7 +28,9 @@ class LanguageProficiency(models.Model):
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="language_proficiencies"
     )
-    lang = models.ForeignKey(Language, on_delete=models.CASCADE, related_name="proficiencies")
+    lang = models.ForeignKey(
+        Language, on_delete=models.CASCADE, related_name="proficiencies"
+    )
     level = models.PositiveSmallIntegerField(choices=PROFICIENCY_CHOICES)
 
     class Meta:

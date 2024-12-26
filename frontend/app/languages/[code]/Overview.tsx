@@ -23,7 +23,7 @@ export default function Overview({ lang, className = '' }: Props) {
               </div>
             </Link>
           </div>
-          <h1 className='text-3xl mb-0'>{lang.name}</h1>
+          <h1 className="text-3xl mb-0">{lang.name}</h1>
         </div>
       </div>
     </div>

@@ -17,7 +17,8 @@ export default function DeletePhraseEntryModal({ id }: Props) {
       <div className="modal-box">
         <h3>Are you sure?</h3>
         <p className="py-4">
-          Do you really want to delete this entry? This process cannot be undone.
+          Do you really want to delete this entry? This process cannot be
+          undone.
         </p>
         <div className="modal-action">
           <form method="dialog">
