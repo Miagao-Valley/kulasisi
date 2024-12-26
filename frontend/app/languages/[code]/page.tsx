@@ -3,8 +3,10 @@ import Link from 'next/link';
 import getLang from '@/lib/langs/getLang';
 import Overview from './Overview';
 import StatsTab from './StatsTab';
-import PhrasesTab from './PhrasesTab';
-import TranslationsTab from './TranslationsTab';
+import PhraseEntriesList from '@/app/phrases/PhraseEntriesList';
+import TranslationsList from '@/app/phrases/[id]/translations/TranslationsList';
+import DictEntriesList from '@/app/dictionary/DictEntriesList';
+import DefinitionsList from '@/app/dictionary/[id]/definitions/DefinitionsList';
 
 interface Props {
   params: {
@@ -45,9 +47,25 @@ export default async function LanguagePage({ params, searchParams }: Props) {
           href="?tab=translations"
           role="tab"
           className={`tab ${currentTab === 'translations' ? 'tab-active' : ''}`}
-          aria-label="translations"
+          aria-label="Translations"
         >
           Translations
+        </Link>
+        <Link
+          href="?tab=words"
+          role="tab"
+          className={`tab ${currentTab === 'words' ? 'tab-active' : ''}`}
+          aria-label="Words"
+        >
+          Words
+        </Link>
+        <Link
+          href="?tab=definitions"
+          role="tab"
+          className={`tab ${currentTab === 'definitions' ? 'tab-active' : ''}`}
+          aria-label="Definitions"
+        >
+          Definitions
         </Link>
       </div>
       {currentTab === 'stats' ? (
@@ -56,11 +74,19 @@ export default async function LanguagePage({ params, searchParams }: Props) {
         </div>
       ) : currentTab === 'phrases' ? (
         <div role="tabpanel" className="p-6">
-          <PhrasesTab lang={lang} />
+          <PhraseEntriesList filters={{ lang: lang.code }} />
         </div>
       ) : currentTab === 'translations' ? (
         <div role="tabpanel" className="p-6">
-          <TranslationsTab lang={lang} />
+          <TranslationsList filters={{ lang: lang.code }} />
+        </div>
+        ) : currentTab === 'words' ? (
+        <div role="tabpanel" className="p-6">
+          <DictEntriesList filters={{ lang: lang.code }} />
+        </div>
+      ) : currentTab === 'definitions' ? (
+        <div role="tabpanel" className="p-6">
+          <DefinitionsList filters={{ lang: lang.code }} />
         </div>
       ) : null}
     </>
