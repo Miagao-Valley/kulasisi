@@ -5,7 +5,7 @@ from rest_framework import serializers
 from .models import Vote
 from users.models import User
 from phrases.models import PhraseEntry, Translation
-from dictionary.models import DictEntry
+from dictionary.models import DictEntry, Definition
 
 
 class VoteSerializer(serializers.ModelSerializer):
@@ -35,6 +35,9 @@ class VoteSerializer(serializers.ModelSerializer):
         elif "dict_entry_pk" in view_kwargs:
             target_model = DictEntry
             object_id = view_kwargs["dict_entry_pk"]
+        elif "definition_pk" in view_kwargs:
+            target_model = Definition
+            object_id = view_kwargs["definition_pk"]
         else:
             raise serializers.ValidationError("Invalid target for voting.")
 

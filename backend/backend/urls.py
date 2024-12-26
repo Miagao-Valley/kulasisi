@@ -31,4 +31,5 @@ urlpatterns = [
     path("phrase-entries/", include("phrases.urls")),
     path("translations/", include("phrases.urls_translations")),
     path("dict-entries/", include("dictionary.urls")),
+    path("definitions/", include("dictionary.urls_definitions")),
 ]
