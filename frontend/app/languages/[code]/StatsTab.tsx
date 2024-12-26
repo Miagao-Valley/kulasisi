@@ -1,5 +1,5 @@
 import React from 'react';
-import { Lang, LangProficiencyLevel } from '@/types';
+import { Lang, LangProficiencyLevel } from '@/types/languages';
 import displayLangProficiency from '@/utils/displayLangProficiency';
 
 interface Props {

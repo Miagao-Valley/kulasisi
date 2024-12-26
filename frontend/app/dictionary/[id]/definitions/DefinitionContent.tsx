@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/app/components/AuthProvider';
-import { Definition, DefinitionRevision } from '@/types';
+import { Definition, DefinitionRevision } from '@/types/dictionary';
 import EntryHeader from '../../../components/EntryHeader';
 import UpdateDefinitionForm from './UpdateDefinitionForm';
 import DeleteDefinitionModal from './DeleteDefinitionModal';

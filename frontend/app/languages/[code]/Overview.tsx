@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Lang } from '@/types';
+import { Lang } from '@/types/languages';
 
 interface Props {
   lang: Lang;

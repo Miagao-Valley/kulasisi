@@ -1,11 +1,12 @@
-import { Vote } from '@/types';
+import { Entry, Vote } from '@/types/core';
 import fetcher from '@/utils/fetcher';
+import entryToUrl from '../../utils/entryToUrl';
 
 export default async function getVotes(
-  id: number,
-  type: 'phrases' | 'translations' | 'words' | 'definitions',
+  entry: Entry,
 ): Promise<Vote[]> {
-  return await fetcher(`/${type}/${id}/votes/`, {
+  const url = `${entryToUrl(entry)}votes/`;
+  return await fetcher(url, {
     cache: 'no-store',
   });
 }

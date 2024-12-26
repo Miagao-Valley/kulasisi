@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/app/components/AuthProvider';
-import { Phrase, PhraseRevision } from '@/types';
+import { Phrase, PhraseRevision } from '@/types/phrases';
 import EntryHeader from '../components/EntryHeader';
 import UpdatePhraseForm from './[id]/UpdatePhraseForm';
 import DeletePhraseModal from './[id]/DeletePhraseModal';

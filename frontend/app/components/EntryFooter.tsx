@@ -1,13 +1,14 @@
 import React from 'react';
 import Link from 'next/link';
-import { Phrase, Translation, Word, Definition } from '@/types';
+import { Phrase, Translation } from '@/types/phrases';
+import { Word, Definition } from '@/types/dictionary';
 import getVotes from '@/lib/vote/getVotes';
 import VoteActions from './VoteActions';
 import { BiMessageSquareDetail } from 'react-icons/bi';
 
 interface Props {
   entry: Phrase | Translation | Word | Definition;
-  type: 'phrases' | 'translations' | 'words' | 'definitions';
+  type: string;
   className?: string;
 }
 
@@ -16,11 +17,11 @@ export default async function EntryFooter({
   type,
   className = '',
 }: Props) {
-  const votes = await getVotes(entry.id, type);
+  const votes = await getVotes(entry);
 
   return (
     <div className={`${className} flex gap-2 items-center text-sm`}>
-      <VoteActions entry={entry} type={type} votes={votes} />
+      <VoteActions entry={entry} votes={votes} />
       {type === 'phrases' && (
         <Link
           href={`/phrases/${entry.id}?tab=translations`}

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { User } from '@/types';
+import { User } from '@/types/users';
 import {
   FaBirthdayCake,
   FaCalendar,
@@ -19,9 +19,6 @@ interface Props {
 
 export default function Overview({ user, className = '' }: Props) {
   const auth = useAuth();
-
-  const dateJoined = new Date(user.date_joined);
-  const dateOfBirth = new Date(user.date_of_birth || '');
 
   return (
     <div className={`${className}`}>
@@ -56,19 +53,19 @@ export default function Overview({ user, className = '' }: Props) {
             <FaMapPin /> {user.location}
           </span>
         )}
-        {dateOfBirth && (
+        {user.date_of_birth && (
           <span className="flex items-center gap-1">
             <FaBirthdayCake /> Born{' '}
-            {dateOfBirth.toLocaleDateString('en-US', {
+            {user.date_of_birth.toLocaleDateString('en-US', {
               year: 'numeric',
               month: 'long',
             })}
           </span>
         )}
-        {dateJoined && (
+        {user.date_joined && (
           <span className="flex items-center gap-1">
             <FaCalendar /> Joined{' '}
-            {dateJoined.toLocaleDateString('en-US', {
+            {user.date_joined.toLocaleDateString('en-US', {
               year: 'numeric',
               month: 'long',
             })}

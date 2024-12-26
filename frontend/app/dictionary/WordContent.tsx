@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/app/components/AuthProvider';
-import { Word, WordRevision } from '@/types';
+import { Word, WordRevision } from '@/types/dictionary';
 import EntryHeader from '../components/EntryHeader';
 import UpdateWordForm from './[id]/UpdateWordForm';
 import DeleteWordModal from './[id]/DeleteWordModal';

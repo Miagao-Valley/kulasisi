@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
-import { User } from '@/types';
+import { User } from '@/types/users';
 import updateUser from '@/lib/users/updateUser';
 import AuthInputField from '../auth/AuthInputField';
 import { FaLink, FaMapPin } from 'react-icons/fa';
@@ -10,12 +10,10 @@ interface Props {
 }
 
 export default function ProfileTab({ user }: Props) {
-  const dateOfBirth = new Date(user?.date_of_birth || '');
-
   const [formData, setFormData] = useState({
     first_name: user.first_name,
     last_name: user.last_name,
-    date_of_birth: dateOfBirth.toLocaleDateString('en-CA'),
+    date_of_birth: user?.date_of_birth?.toLocaleDateString('en-CA') || '',
     location: user.location,
     gender: user.gender,
     bio: user.bio,

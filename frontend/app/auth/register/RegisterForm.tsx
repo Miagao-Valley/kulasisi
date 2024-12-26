@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useFormState } from 'react-dom';
 import Link from 'next/link';
 import { useAuth } from '@/app/components/AuthProvider';
-import { Lang, LangProficiencyLevel } from '@/types';
+import { Lang, LangProficiencyLevel } from '@/types/languages';
 import register from '@/lib/auth/register';
 import getLangs from '@/lib/langs/getLangs';
 import GetStarted from './steps/GetStarted';

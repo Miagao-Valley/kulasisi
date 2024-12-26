@@ -5,7 +5,7 @@ import { useFormState, useFormStatus } from 'react-dom';
 import { usePathname, useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { useAuth } from '../../../components/AuthProvider';
-import { Lang } from '@/types';
+import { Lang } from '@/types/languages';
 import addDefinition from '@/lib/definitions/addDefinition';
 import getLangs from '@/lib/langs/getLangs';
 

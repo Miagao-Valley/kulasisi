@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { Phrase } from '@/types';
+import { Phrase } from '@/types/phrases';
 import AddTranslationForm from './AddTranslationForm';
 import TranslationsList, { TranslationsListSkeleton } from './TranslationsList';
 import SearchInput from '@/app/components/SearchInput';

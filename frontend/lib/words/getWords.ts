@@ -1,5 +1,6 @@
 import fetcher from '@/utils/fetcher';
-import { Word, PaginationDetails } from '@/types';
+import { PaginationDetails } from '@/types/core';
+import { Word } from '@/types/dictionary';
 
 export default async function getWords(
   queryParams: Record<string, any> = {},
@@ -7,7 +8,14 @@ export default async function getWords(
   const queryString = new URLSearchParams(queryParams).toString();
   const url = `/dictionary/${queryString ? `?${queryString}` : ''}`;
 
-  return await fetcher(url, {
+  const res = await fetcher(url, {
     cache: 'no-store',
   });
+  for (const entry of res.results) {
+    if ('created_at' in entry && 'updated_at' in entry) {
+      entry.created_at = new Date(entry.created_at);
+      entry.updated_at = new Date(entry.updated_at);
+    }
+  }
+  return res;
 }

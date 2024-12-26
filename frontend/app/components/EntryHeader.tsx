@@ -1,7 +1,8 @@
 import React from 'react';
 import Link from 'next/link';
 import naturalTime from '@/utils/naturalTime';
-import { Phrase, Translation, Word, Definition } from '@/types';
+import { Phrase, Translation } from '@/types/phrases';
+import { Word, Definition } from '@/types/dictionary';
 import Username from './Username';
 
 interface Props {
@@ -21,7 +22,7 @@ export default async function EntryHeader({ entry, className = '' }: Props) {
         </Link>
         •
         <span className="text-sm">
-          {naturalTime(new Date(entry.updated_at))}
+          {naturalTime(entry.updated_at)}
         </span>
         •
         <Link href={`/languages/${entry.lang}/`}>

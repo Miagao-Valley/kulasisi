@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { Word } from '@/types';
+import { Word } from '@/types/dictionary';
 import AddDefinitionForm from './AddDefinitionForm';
 import DefinitionsList, { DefinitionsListSkeleton } from './DefinitionsList';
 import SearchInput from '@/app/components/SearchInput';

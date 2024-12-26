@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useAuth } from '../components/AuthProvider';
-import { User } from '@/types';
+import { User } from '@/types/users';
 import getUser from '@/lib/users/getUser';
 import Loading from '../loading';
 import AccountTab from './AccountTab';

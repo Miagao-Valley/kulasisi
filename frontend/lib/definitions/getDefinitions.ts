@@ -1,5 +1,6 @@
 import fetcher from '@/utils/fetcher';
-import { Definition, PaginationDetails } from '@/types';
+import { PaginationDetails } from '@/types/core';
+import { Definition } from '@/types/dictionary';
 
 export default async function getDefinitions(
   queryParams: Record<string, any> = {},
@@ -8,7 +9,14 @@ export default async function getDefinitions(
   const queryString = new URLSearchParams(queryParams).toString();
   const url = `/dictionary/definitions/?word=${wordId || ''}&${queryString}`;
 
-  return await fetcher(url, {
+  const res = await fetcher(url, {
     cache: 'no-store',
   });
+  for (const entry of res.results) {
+    if ('created_at' in entry && 'updated_at' in entry) {
+      entry.created_at = new Date(entry.created_at);
+      entry.updated_at = new Date(entry.updated_at);
+    }
+  }
+  return res;
 }

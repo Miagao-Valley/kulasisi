@@ -1,5 +1,6 @@
 import fetcher from '@/utils/fetcher';
-import { Lang, PaginationDetails } from '@/types';
+import { PaginationDetails } from '@/types/core';
+import { Lang } from '@/types/languages';
 
 export default async function getLangs(
   queryParams: Record<string, any> = {},

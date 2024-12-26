@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { diffWords } from 'diff';
 import naturalTime from '@/utils/naturalTime';
-import { PhraseRevision } from '@/types';
+import { PhraseRevision } from '@/types/phrases';
 
 interface Props {
   revisions: PhraseRevision[];
@@ -31,7 +31,7 @@ export default function PhraseRevisionsList({ revisions }: Props) {
                   #{revisions.length - index}
                 </span>
                 <span className="text-sm">
-                  {naturalTime(new Date(revision.history_date))}
+                  {naturalTime(revision.history_date)}
                 </span>
               </div>
               <div className="collapse-content">

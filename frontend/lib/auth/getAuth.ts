@@ -1,4 +1,4 @@
-import { Payload } from '@/types';
+import { Payload } from '@/types/users';
 import getPayload from '../tokens/getPayload';
 
 export default async function getAuth() {

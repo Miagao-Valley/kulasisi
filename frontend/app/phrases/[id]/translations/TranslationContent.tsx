@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/app/components/AuthProvider';
-import { Translation, TranslationRevision } from '@/types';
+import { Translation, TranslationRevision } from '@/types/phrases';
 import EntryHeader from '../../../components/EntryHeader';
 import UpdateTranslationForm from './UpdateTranslationForm';
 import DeleteTranslationModal from './DeleteTranslationModal';

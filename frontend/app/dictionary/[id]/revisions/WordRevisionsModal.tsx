@@ -1,5 +1,5 @@
 import React from 'react';
-import { WordRevision } from '@/types';
+import { WordRevision } from '@/types/dictionary';
 import WordRevisionsList from './WordRevisionsList';
 
 interface Props {

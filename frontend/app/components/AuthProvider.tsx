@@ -8,7 +8,7 @@ import {
   useCallback,
   ReactNode,
 } from 'react';
-import { AuthType } from '@/types';
+import { AuthType } from '@/types/users';
 import fetchAuth from '@/lib/auth/fetchAuth';
 
 export interface AuthContextType extends AuthType {

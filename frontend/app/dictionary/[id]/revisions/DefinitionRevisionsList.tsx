@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { diffWords } from 'diff';
 import naturalTime from '@/utils/naturalTime';
-import { DefinitionRevision } from '@/types';
+import { DefinitionRevision } from '@/types/dictionary';
 
 interface Props {
   revisions: DefinitionRevision[];
@@ -33,7 +33,7 @@ export default function DefinitionRevisionsList({ revisions }: Props) {
                   #{revisions.length - index}
                 </span>
                 <span className="text-sm">
-                  {naturalTime(new Date(revision.history_date))}
+                  {naturalTime(revision.history_date)}
                 </span>
               </div>
               <div className="collapse-content">

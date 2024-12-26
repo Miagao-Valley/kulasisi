@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefinitionRevision } from '@/types';
+import { DefinitionRevision } from '@/types/dictionary';
 import DefinitionRevisionsList from './DefinitionRevisionsList';
 
 interface Props {

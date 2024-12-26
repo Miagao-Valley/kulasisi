@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { LangProficiencyLevel } from '@/types';
+import { LangProficiencyLevel } from '@/types/languages';
 import displayLangProficiency from '@/utils/displayLangProficiency';
 
 interface Props {

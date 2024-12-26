@@ -5,7 +5,7 @@ import { useFormState, useFormStatus } from 'react-dom';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from './AuthProvider';
 import toast from 'react-hot-toast';
-import { Phrase, Translation, Word, Definition, Vote } from '@/types';
+import { Entry, Vote } from '@/types/core';
 import vote from '@/lib/vote/vote';
 import {
   BiDownvote,
@@ -15,12 +15,11 @@ import {
 } from 'react-icons/bi';
 
 interface Props {
-  entry: Phrase | Translation | Word | Definition;
-  type: 'phrases' | 'translations' | 'words' | 'definitions';
+  entry: Entry;
   votes: Vote[];
 }
 
-export default function VoteActions({ entry, type, votes }: Props) {
+export default function VoteActions({ entry, votes }: Props) {
   const auth = useAuth();
   const router = useRouter();
   const pathname = usePathname();
@@ -44,7 +43,7 @@ export default function VoteActions({ entry, type, votes }: Props) {
     }
 
     const value = Number(formData.get('value')) as -1 | 0 | 1;
-    const res = await vote(entry.id, type, value);
+    const res = await vote(entry, value);
     return res;
   };
 

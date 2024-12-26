@@ -1,5 +1,5 @@
 import React from 'react';
-import { LangProficiencyLevel } from '@/types';
+import { LangProficiencyLevel } from '@/types/languages';
 import LanguageProficienciesForm from './LanguageProficienciesForm';
 
 interface Props {

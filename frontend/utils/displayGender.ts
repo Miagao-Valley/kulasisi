@@ -1,4 +1,4 @@
-import { Gender } from '@/types';
+import { Gender } from '@/types/users';
 
 const displayGender = (gender: Gender): string => {
   const genderLookup: Record<Gender, string> = {

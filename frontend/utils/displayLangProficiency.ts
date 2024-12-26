@@ -1,4 +1,4 @@
-import { LangProficiencyLevel } from '@/types';
+import { LangProficiencyLevel } from '@/types/languages';
 
 const displayLangProficiency = (level: LangProficiencyLevel): string => {
   const proficiencyLookup: Record<LangProficiencyLevel, string> = {

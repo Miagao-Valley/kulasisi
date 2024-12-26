@@ -3,7 +3,7 @@
 import 'server-only';
 
 import { SignJWT } from 'jose';
-import { Payload } from '@/types';
+import { Payload } from '@/types/users';
 import { secretKey } from '@/constants';
 
 const key = new TextEncoder().encode(secretKey);

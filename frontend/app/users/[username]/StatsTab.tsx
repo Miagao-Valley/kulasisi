@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Lang, LangProficiencyLevel, User } from '@/types';
+import { Lang, LangProficiencyLevel } from '@/types/languages';
+import { User } from '@/types/users';
 import LanguageProficienciesForm from '@/app/auth/register/steps/LanguageProficienciesForm';
 import getLangs from '@/lib/langs/getLangs';
 import { useAuth } from '@/app/components/AuthProvider';

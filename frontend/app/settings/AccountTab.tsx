@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { User } from '@/types';
+import { User } from '@/types/users';
 import { ChangeEmailModal } from './ChangeEmailModal';
 import { ChangePhoneNumberModal } from './ChangePhoneNumberModal';
 import { ChangePasswordModal } from './ChangePasswordModal';
