@@ -4,10 +4,7 @@ import { revalidatePath } from 'next/cache';
 import fetcher, { FetchError } from '@/utils/fetcher';
 import getToken from '../tokens/getToken';
 
-export default async function addDefinition(
-  wordId: number,
-  data: FormData,
-) {
+export default async function addDefinition(wordId: number, data: FormData) {
   let res = null;
   try {
     res = await fetcher(

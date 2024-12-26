@@ -11,9 +11,7 @@ User = get_user_model()
 
 class Phrase(models.Model):
     content = models.TextField()
-    lang = models.ForeignKey(
-        Language, on_delete=models.PROTECT, related_name="phrases"
-    )
+    lang = models.ForeignKey(Language, on_delete=models.PROTECT, related_name="phrases")
     contributor = models.ForeignKey(
         User, on_delete=models.PROTECT, related_name="phrases"
     )

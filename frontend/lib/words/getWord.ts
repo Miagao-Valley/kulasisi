@@ -9,5 +9,5 @@ export default async function getWord(id: number): Promise<Word> {
     res.created_at = new Date(res.created_at);
     res.updated_at = new Date(res.updated_at);
   }
-  return res
+  return res;
 }

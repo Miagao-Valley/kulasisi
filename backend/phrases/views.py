@@ -70,9 +70,7 @@ class ListPhraseHistoryView(generics.ListAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get_queryset(self):
-        phrase = get_object_or_404(
-            Phrase, id=self.kwargs.get("phrase_pk")
-        )
+        phrase = get_object_or_404(Phrase, id=self.kwargs.get("phrase_pk"))
         return phrase.history.all()
 
 
@@ -106,9 +104,7 @@ class ListCreateTranslationsView(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         if serializer.is_valid():
-            phrase = get_object_or_404(
-                Phrase, id=self.request.POST.get("phrase")
-            )
+            phrase = get_object_or_404(Phrase, id=self.request.POST.get("phrase"))
             serializer.save(phrase=phrase, contributor=self.request.user)
         else:
             print(serializer.errors)

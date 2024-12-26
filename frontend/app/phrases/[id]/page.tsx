@@ -23,10 +23,7 @@ export default async function PhrasePage({ params, searchParams }: Props) {
   return (
     <>
       <div className="mb-3">
-        <PhraseContent
-          phrase={phrase}
-          revisions={revisions.results}
-        />
+        <PhraseContent phrase={phrase} revisions={revisions.results} />
         <EntryFooter entry={phrase} type="phrases" />
       </div>
 
@@ -42,10 +39,7 @@ export default async function PhrasePage({ params, searchParams }: Props) {
       </div>
       {currentTab === 'translations' ? (
         <div role="tabpanel" className="p-6">
-          <TranslationsSection
-            searchParams={searchParams}
-            phrase={phrase}
-          />
+          <TranslationsSection searchParams={searchParams} phrase={phrase} />
         </div>
       ) : null}
     </>

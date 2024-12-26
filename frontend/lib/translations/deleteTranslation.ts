@@ -5,10 +5,7 @@ import { revalidatePath } from 'next/cache';
 import fetcher from '@/utils/fetcher';
 import getToken from '../tokens/getToken';
 
-export default async function deleteTranslation(
-  phraseId: number,
-  id: number,
-) {
+export default async function deleteTranslation(phraseId: number, id: number) {
   await fetcher(
     `/phrases/translations/${id}/`,
     {

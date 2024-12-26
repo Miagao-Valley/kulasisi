@@ -20,11 +20,7 @@ export default async function EntryHeader({ entry, className = '' }: Props) {
             reputation={entry.contributor_reputation}
           />
         </Link>
-        •
-        <span className="text-sm">
-          {naturalTime(entry.updated_at)}
-        </span>
-        •
+        •<span className="text-sm">{naturalTime(entry.updated_at)}</span>•
         <Link href={`/languages/${entry.lang}/`}>
           <span className="badge badge-primary [&:not(:hover)]:badge-outline">
             {entry.lang}

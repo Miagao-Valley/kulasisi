@@ -10,5 +10,5 @@ export default async function getUser(username: string): Promise<User> {
     res.last_login = new Date(res.last_login);
     res.date_of_birth = new Date(res.date_of_birth);
   }
-  return res
+  return res;
 }

@@ -35,9 +35,7 @@ export default async function WordsList({
   return (
     <>
       <ul className={`flex flex-col gap-3 ${className}`}>
-        {words &&
-        words.results &&
-        words.results.length > 0 ? (
+        {words && words.results && words.results.length > 0 ? (
           words.results.map(async (word) => {
             const revisions = await getWordRevisions(word.id);
             return (
@@ -45,10 +43,7 @@ export default async function WordsList({
                 className="px-4 py-3 border rounded-lg flex flex-col"
                 key={word.id}
               >
-                <WordContent
-                  word={word}
-                  revisions={revisions.results}
-                />
+                <WordContent word={word} revisions={revisions.results} />
                 <EntryFooter entry={word} type="words" />
               </li>
             );

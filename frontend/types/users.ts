@@ -13,7 +13,6 @@ export interface AuthType {
 
 export type Gender = 'M' | 'F' | 'O' | 'N';
 
-
 export interface User {
   id: number;
   username: string;

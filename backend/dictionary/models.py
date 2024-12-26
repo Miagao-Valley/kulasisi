@@ -11,9 +11,7 @@ User = get_user_model()
 
 class Word(models.Model):
     word = models.CharField(max_length=64)
-    lang = models.ForeignKey(
-        Language, on_delete=models.PROTECT, related_name="words"
-    )
+    lang = models.ForeignKey(Language, on_delete=models.PROTECT, related_name="words")
     contributor = models.ForeignKey(
         User, on_delete=models.PROTECT, related_name="words"
     )
@@ -30,9 +28,7 @@ class Word(models.Model):
 
 
 class Definition(models.Model):
-    word = models.ForeignKey(
-        Word, on_delete=models.CASCADE, related_name="definitions"
-    )
+    word = models.ForeignKey(Word, on_delete=models.CASCADE, related_name="definitions")
     lang = models.ForeignKey(
         Language, on_delete=models.PROTECT, related_name="definitions"
     )

@@ -121,10 +121,7 @@ export function DefinitionsContent({
       )}
       <div onClick={(e) => e.stopPropagation()}>
         <DefinitionRevisionsModal id={definition.id} revisions={revisions} />
-        <DeleteDefinitionModal
-          wordId={definition.word}
-          id={definition.id}
-        />
+        <DeleteDefinitionModal wordId={definition.word} id={definition.id} />
       </div>
     </div>
   );

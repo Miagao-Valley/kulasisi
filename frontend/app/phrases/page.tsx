@@ -1,8 +1,6 @@
 import React, { Suspense } from 'react';
 import AddPhraseForm from './AddPhraseForm';
-import PhrasesList, {
-  PhrasesListSkeleton,
-} from './PhrasesList';
+import PhrasesList, { PhrasesListSkeleton } from './PhrasesList';
 import SearchInput from '../components/SearchInput';
 import SortDropdown, { SortOption } from '../components/SortDropdown';
 import FilterMenu, { FilterOption } from '../components/FilterMenu';

@@ -1,5 +1,5 @@
-import { Phrase, Translation } from "./phrases";
-import { Word, Definition } from "./dictionary";
+import { Phrase, Translation } from './phrases';
+import { Word, Definition } from './dictionary';
 
 export type Entry = Phrase | Translation | Word | Definition;
 

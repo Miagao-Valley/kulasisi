@@ -39,10 +39,7 @@ export default async function PostPage({ params, searchParams }: Props) {
       </div>
       {currentTab === 'definitions' ? (
         <div role="tabpanel" className="p-6">
-          <DefinitionsSection
-            word={word}
-            searchParams={searchParams}
-          />
+          <DefinitionsSection word={word} searchParams={searchParams} />
         </div>
       ) : null}
     </>

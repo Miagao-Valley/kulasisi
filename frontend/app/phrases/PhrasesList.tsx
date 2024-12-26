@@ -35,9 +35,7 @@ export default async function PhrasesList({
   return (
     <>
       <ul className={`flex flex-col gap-3 ${className}`}>
-        {phrases &&
-        phrases.results &&
-        phrases.results.length > 0 ? (
+        {phrases && phrases.results && phrases.results.length > 0 ? (
           phrases.results.map(async (phrase) => {
             const revisions = await getPhraseRevisions(phrase.id);
             return (
@@ -45,10 +43,7 @@ export default async function PhrasesList({
                 className="px-4 py-3 border rounded-lg flex flex-col"
                 key={phrase.id}
               >
-                <PhraseContent
-                  phrase={phrase}
-                  revisions={revisions.results}
-                />
+                <PhraseContent phrase={phrase} revisions={revisions.results} />
                 <EntryFooter entry={phrase} type="phrases" />
               </li>
             );

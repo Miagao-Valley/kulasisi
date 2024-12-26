@@ -6,10 +6,7 @@ import getToken from '../tokens/getToken';
 import { revalidatePath } from 'next/cache';
 import entryToUrl from '../../utils/entryToUrl';
 
-export default async function vote(
-  entry: Entry,
-  value: -1 | 0 | 1,
-) {
+export default async function vote(entry: Entry, value: -1 | 0 | 1) {
   const url = entryToUrl(entry);
   const frontendUrl = entryToUrl(entry, false);
   let res = null;

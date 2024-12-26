@@ -12,7 +12,11 @@ export default async function getUsers(
     cache: 'no-store',
   });
   for (const user of res.results) {
-    if ('date_joined' in user && 'last_login' in user && 'date_of_birth' in user) {
+    if (
+      'date_joined' in user &&
+      'last_login' in user &&
+      'date_of_birth' in user
+    ) {
       user.date_joined = new Date(user.date_joined);
       user.last_login = new Date(user.last_login);
       user.date_of_birth = new Date(user.date_of_birth);
