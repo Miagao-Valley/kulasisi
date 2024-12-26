@@ -89,7 +89,7 @@ export interface TranslationRevision {
   history_date: string;
 }
 
-export interface DictEntry {
+export interface Word {
   id: number;
   word: string;
   lang: string;
@@ -100,7 +100,7 @@ export interface DictEntry {
   vote_count: number;
 }
 
-export interface DictEntryRevision {
+export interface WordRevision {
   history_id: number;
   word: string;
   history_user: string;

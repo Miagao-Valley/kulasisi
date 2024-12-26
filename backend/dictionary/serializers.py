@@ -1,11 +1,11 @@
 from rest_framework import serializers
 
-from .models import DictEntry, Definition
+from .models import Word, Definition
 from users.models import User
 from languages.models import Language
 
 
-class DictEntrySerializer(serializers.ModelSerializer):
+class WordSerializer(serializers.ModelSerializer):
     word = serializers.CharField(max_length=64, required=False)
     lang = serializers.SlugRelatedField(
         queryset=Language.objects.all(), slug_field="code", required=False
@@ -17,7 +17,7 @@ class DictEntrySerializer(serializers.ModelSerializer):
     vote_count = serializers.SerializerMethodField()
 
     class Meta:
-        model = DictEntry
+        model = Word
         fields = [
             "id",
             "word",
@@ -44,19 +44,19 @@ class DictEntrySerializer(serializers.ModelSerializer):
         return super().update(instance, validated_data)
 
 
-class DictEntryHistorySerializer(serializers.ModelSerializer):
+class WordHistorySerializer(serializers.ModelSerializer):
     history_user = serializers.SlugRelatedField(
         queryset=User.objects.all(), slug_field="username", required=False
     )
 
     class Meta:
-        model = DictEntry.history.model
+        model = Word.history.model
         fields = ["history_id", "word", "history_user", "history_date"]
 
 
 class DefinitionSerializer(serializers.ModelSerializer):
     dict_entry = serializers.PrimaryKeyRelatedField(
-        queryset=DictEntry.objects.all(), required=False
+        queryset=Word.objects.all(), required=False
     )
     lang = serializers.SlugRelatedField(
         queryset=Language.objects.all(), slug_field="code", required=False

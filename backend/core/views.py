@@ -3,7 +3,7 @@ from rest_framework import generics
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from phrases.models import Phrase, Translation
-from dictionary.models import DictEntry, Definition
+from dictionary.models import Word, Definition
 from .serializers import VoteSerializer
 
 
@@ -22,7 +22,7 @@ class ListCreateVoteView(generics.ListCreateAPIView):
             target_model = Translation
             object_id = view_kwargs["translation_pk"]
         elif "dict_entry_pk" in view_kwargs:
-            target_model = DictEntry
+            target_model = Word
             object_id = view_kwargs["dict_entry_pk"]
         elif "definition_pk" in view_kwargs:
             target_model = Definition

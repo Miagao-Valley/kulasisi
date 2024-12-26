@@ -1,13 +1,13 @@
 import React from 'react';
-import { DictEntryRevision } from '@/types';
-import DictEntryRevisionsList from './DictEntryRevisionsList';
+import { WordRevision } from '@/types';
+import WordRevisionsList from './WordRevisionsList';
 
 interface Props {
-  revisions: DictEntryRevision[];
+  revisions: WordRevision[];
   id: number;
 }
 
-export default function DictEntryRevisionsModal({ revisions, id }: Props) {
+export default function WordRevisionsModal({ revisions, id }: Props) {
   return (
     <>
       <div
@@ -22,7 +22,7 @@ export default function DictEntryRevisionsModal({ revisions, id }: Props) {
               ✕
             </a>
           </div>
-          <DictEntryRevisionsList revisions={revisions} />
+          <WordRevisionsList revisions={revisions} />
         </div>
       </div>
     </>

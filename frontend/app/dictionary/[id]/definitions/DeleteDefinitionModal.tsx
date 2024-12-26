@@ -7,11 +7,11 @@ import deleteDefinition from '@/lib/definitions/deleteDefinition';
 import { FaTrash } from 'react-icons/fa';
 
 interface Props {
-  dictEntryId: number;
+  wordId: number;
   id: number;
 }
 
-export default function DeleteDefinitionModal({ dictEntryId, id }: Props) {
+export default function DeleteDefinitionModal({ wordId, id }: Props) {
   return (
     <dialog
       id={`delete-definition-modal-${id}`}
@@ -29,7 +29,7 @@ export default function DeleteDefinitionModal({ dictEntryId, id }: Props) {
           </form>
           <form
             action={async () => {
-              await deleteDefinition(dictEntryId, id);
+              await deleteDefinition(wordId, id);
               toast.error(() => <span>Definition deleted</span>, {
                 icon: <FaTrash />,
               });

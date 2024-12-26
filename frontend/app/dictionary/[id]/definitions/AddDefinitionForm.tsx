@@ -10,13 +10,13 @@ import addDefinition from '@/lib/definitions/addDefinition';
 import getLangs from '@/lib/langs/getLangs';
 
 interface Props {
-  dictEntryId: number;
+  wordId: number;
   original_lang: string;
   className?: string;
 }
 
 export default function AddDefinitionForm({
-  dictEntryId,
+  wordId,
   original_lang,
   className = '',
 }: Props) {
@@ -57,7 +57,7 @@ export default function AddDefinitionForm({
       router.push(`/auth/login?next=${pathname}`);
       return;
     }
-    const res = await addDefinition(dictEntryId, formData);
+    const res = await addDefinition(wordId, formData);
     console.log(res);
     if (!res?.error) {
       setSelectedLang('');
@@ -71,7 +71,7 @@ export default function AddDefinitionForm({
 
   return (
     <form className={`flex flex-col ${className}`} action={formAction}>
-      <input type="hidden" name="dict_entry" value={dictEntryId} />
+      <input type="hidden" name="dict_entry" value={wordId} />
       {formState?.error?.detail && (
         <div role="alert" className="text-sm text-error">
           {formState.error.detail}

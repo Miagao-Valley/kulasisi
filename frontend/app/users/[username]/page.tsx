@@ -5,7 +5,7 @@ import Overview from './Overview';
 import StatsTab from './StatsTab';
 import PhrasesList from '@/app/phrases/PhrasesList';
 import TranslationsList from '@/app/phrases/[id]/translations/TranslationsList';
-import DictEntriesList from '@/app/dictionary/DictEntriesList';
+import WordsList from '@/app/dictionary/WordsList';
 import DefinitionsList from '@/app/dictionary/[id]/definitions/DefinitionsList';
 
 interface Props {
@@ -82,7 +82,7 @@ export default async function UserPage({ params, searchParams }: Props) {
         </div>
       ) : currentTab === 'words' ? (
         <div role="tabpanel" className="p-6">
-          <DictEntriesList filters={{ user: user.username }} />
+          <WordsList filters={{ user: user.username }} />
         </div>
       ) : currentTab === 'definitions' ? (
         <div role="tabpanel" className="p-6">

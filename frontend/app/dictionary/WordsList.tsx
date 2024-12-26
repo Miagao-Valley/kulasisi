@@ -1,6 +1,6 @@
-import getDictEntries from '@/lib/dictEntries/getDictEntries';
-import getDictEntryRevisions from '@/lib/dictEntries/getDictEntryRevisions';
-import DictEntryContent from './DictEntryContent';
+import getWords from '@/lib/words/getWords';
+import getWordRevisions from '@/lib/words/getWordRevisions';
+import WordContent from './WordContent';
 import EntryFooter from '../components/EntryFooter';
 import Pagination from '../components/Pagination';
 import { Filter } from '../components/FilterMenu';
@@ -14,7 +14,7 @@ interface Props {
   className?: string;
 }
 
-export default async function DictEntriesList({
+export default async function WordsList({
   searchTerm = '',
   sortOption = 'content',
   filters = {},
@@ -23,7 +23,7 @@ export default async function DictEntriesList({
 }: Props) {
   const limit = 15;
 
-  const dictEntries = await getDictEntries({
+  const words = await getWords({
     search: searchTerm,
     ordering: sortOption,
     lang__code: filters?.lang || '',
@@ -35,21 +35,21 @@ export default async function DictEntriesList({
   return (
     <>
       <ul className={`flex flex-col gap-3 ${className}`}>
-        {dictEntries &&
-        dictEntries.results &&
-        dictEntries.results.length > 0 ? (
-          dictEntries.results.map(async (dictEntry) => {
-            const revisions = await getDictEntryRevisions(dictEntry.id);
+        {words &&
+        words.results &&
+        words.results.length > 0 ? (
+          words.results.map(async (word) => {
+            const revisions = await getWordRevisions(word.id);
             return (
               <li
                 className="px-4 py-3 border rounded-lg flex flex-col"
-                key={dictEntry.id}
+                key={word.id}
               >
-                <DictEntryContent
-                  dictEntry={dictEntry}
+                <WordContent
+                  word={word}
                   revisions={revisions.results}
                 />
-                <EntryFooter entry={dictEntry} type="dict-entries" />
+                <EntryFooter entry={word} type="words" />
               </li>
             );
           })
@@ -61,10 +61,10 @@ export default async function DictEntriesList({
       </ul>
       <Pagination
         className="my-5 flex justify-center"
-        numPages={dictEntries?.num_pages || 1}
+        numPages={words?.num_pages || 1}
         currentPage={page}
-        next={!!dictEntries?.next}
-        prev={!!dictEntries?.previous}
+        next={!!words?.next}
+        prev={!!words?.previous}
       />
     </>
   );
@@ -74,7 +74,7 @@ interface SkeletonProps {
   className?: string;
 }
 
-export function DictEntriesListSkeleton({ className = '' }: SkeletonProps) {
+export function WordsListSkeleton({ className = '' }: SkeletonProps) {
   return (
     <ul className={`flex flex-col gap-3 ${className}`}>
       {Array.from({ length: 10 }, (_, i) => (

@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
-import AddDictEntryForm from './AddDictEntryForm';
-import DictEntriesList, { DictEntriesListSkeleton } from './DictEntriesList';
+import AddWordForm from './AddWordForm';
+import WordsList, { WordsListSkeleton } from './WordsList';
 import SearchInput from '../components/SearchInput';
 import SortDropdown, { SortOption } from '../components/SortDropdown';
 import FilterMenu, { FilterOption } from '../components/FilterMenu';
@@ -42,7 +42,7 @@ export default async function DictionaryPage({ searchParams }: Props) {
   return (
     <>
       <hr />
-      <AddDictEntryForm className="mx-1 my-2" />
+      <AddWordForm className="mx-1 my-2" />
       <hr className="mb-4" />
       <div className="mb-4 flex gap-3">
         <SearchInput currentSearchTerm={searchTerm} className="me-auto" />
@@ -52,8 +52,8 @@ export default async function DictionaryPage({ searchParams }: Props) {
         />
         <FilterMenu currentFilters={filters} filterOptions={filterOptions} />
       </div>
-      <Suspense fallback={<DictEntriesListSkeleton />}>
-        <DictEntriesList
+      <Suspense fallback={<WordsListSkeleton />}>
+        <WordsList
           searchTerm={searchTerm}
           sortOption={sortOption}
           filters={filters}

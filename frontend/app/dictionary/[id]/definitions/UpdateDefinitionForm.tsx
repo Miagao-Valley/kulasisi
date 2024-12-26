@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 import updateDefinition from '@/lib/definitions/updateDefinition';
 
 interface Props {
-  dictEntryId: number;
+  wordId: number;
   id: number;
   initialDescription?: string;
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
@@ -14,7 +14,7 @@ interface Props {
 }
 
 export default function UpdateDefinitionForm({
-  dictEntryId,
+  wordId,
   id,
   initialDescription = '',
   setIsEditing,
@@ -37,7 +37,7 @@ export default function UpdateDefinitionForm({
   };
 
   const handleSubmit = async (prevState: any, formData: FormData) => {
-    const res = await updateDefinition(dictEntryId, id, formData);
+    const res = await updateDefinition(wordId, id, formData);
     if (!res?.error) {
       setDescription('');
       toast.success('Definition updated');

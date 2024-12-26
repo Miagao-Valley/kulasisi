@@ -30,6 +30,6 @@ urlpatterns = [
     path("languages/", include("languages.urls")),
     path("phrases/", include("phrases.urls")),
     path("translations/", include("phrases.urls_translations")),
-    path("dict-entries/", include("dictionary.urls")),
+    path("words/", include("dictionary.urls")),
     path("definitions/", include("dictionary.urls_definitions")),
 ]

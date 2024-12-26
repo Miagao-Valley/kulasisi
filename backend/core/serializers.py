@@ -5,7 +5,7 @@ from rest_framework import serializers
 from .models import Vote
 from users.models import User
 from phrases.models import Phrase, Translation
-from dictionary.models import DictEntry, Definition
+from dictionary.models import Word, Definition
 
 
 class VoteSerializer(serializers.ModelSerializer):
@@ -33,7 +33,7 @@ class VoteSerializer(serializers.ModelSerializer):
             target_model = Translation
             object_id = view_kwargs["translation_pk"]
         elif "dict_entry_pk" in view_kwargs:
-            target_model = DictEntry
+            target_model = Word
             object_id = view_kwargs["dict_entry_pk"]
         elif "definition_pk" in view_kwargs:
             target_model = Definition

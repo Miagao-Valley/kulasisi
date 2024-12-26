@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
 import toast from 'react-hot-toast';
-import updateDictEntry from '@/lib/dictEntries/updateDictEntry';
+import updateWord from '@/lib/words/updateWord';
 
 interface Props {
   id: number;
@@ -12,7 +12,7 @@ interface Props {
   className?: string;
 }
 
-export default function UpdateDictEntryForm({
+export default function UpdateWordForm({
   id,
   initialWord = '',
   setIsEditing,
@@ -26,7 +26,7 @@ export default function UpdateDictEntryForm({
   };
 
   const handleSubmit = async (prevState: any, formData: FormData) => {
-    const res = await updateDictEntry(id, formData);
+    const res = await updateWord(id, formData);
     if (!res?.error) {
       setWord('');
       toast.success('Entry updated');

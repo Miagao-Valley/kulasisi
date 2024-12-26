@@ -6,7 +6,7 @@ import fetcher from '@/utils/fetcher';
 import getToken from '../tokens/getToken';
 
 export default async function deleteTranslation(
-  dictEntryId: number,
+  wordId: number,
   id: number,
 ) {
   await fetcher(
@@ -17,6 +17,6 @@ export default async function deleteTranslation(
     getToken(),
   );
 
-  revalidatePath(`/dictionary/${dictEntryId}`);
-  redirect(`/dictionary/${dictEntryId}`);
+  revalidatePath(`/dictionary/${wordId}`);
+  redirect(`/dictionary/${wordId}`);
 }

@@ -6,14 +6,14 @@ import { usePathname, useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { useAuth } from '../components/AuthProvider';
 import { Lang } from '../../types';
-import addDictEntry from '@/lib/dictEntries/addDictEntry';
+import addWord from '@/lib/words/addWord';
 import getLangs from '@/lib/langs/getLangs';
 
 interface Props {
   className?: string;
 }
 
-export default function AddDictEntryForm({ className = '' }: Props) {
+export default function AddWordForm({ className = '' }: Props) {
   const auth = useAuth();
   const router = useRouter();
   const pathname = usePathname();
@@ -32,7 +32,7 @@ export default function AddDictEntryForm({ className = '' }: Props) {
   }, []);
 
   useEffect(() => {
-    const savedWord = localStorage.getItem('dictEntryWordDraft');
+    const savedWord = localStorage.getItem('wordWordDraft');
     if (savedWord) {
       setWord(savedWord);
     }
@@ -41,7 +41,7 @@ export default function AddDictEntryForm({ className = '' }: Props) {
   const handleWordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
     setWord(newValue);
-    localStorage.setItem('dictEntryWordDraft', newValue);
+    localStorage.setItem('wordWordDraft', newValue);
   };
 
   const handleSubmit = async (prevState: any, formData: FormData) => {
@@ -50,11 +50,11 @@ export default function AddDictEntryForm({ className = '' }: Props) {
       router.push(`/auth/login?next=${pathname}`);
       return;
     }
-    const res = await addDictEntry(formData);
+    const res = await addWord(formData);
     if (!res?.error) {
       setSelectedLang('');
-      localStorage.removeItem('dictEntryDefinitionDraft');
-      localStorage.removeItem('dictEntryWordDraft');
+      localStorage.removeItem('wordDefinitionDraft');
+      localStorage.removeItem('wordWordDraft');
       router.push(`/dictionary/${res.id}/`);
       toast.success('Posted');
     }

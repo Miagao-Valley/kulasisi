@@ -1,6 +1,6 @@
 import React from 'react';
 import toast from 'react-hot-toast';
-import deleteDictEntry from '@/lib/dictEntries/deleteDictEntry';
+import deleteWord from '@/lib/words/deleteWord';
 import { FaTrash } from 'react-icons/fa';
 import { useFormStatus } from 'react-dom';
 
@@ -8,10 +8,10 @@ interface Props {
   id: number;
 }
 
-export default function DeleteDictEntryModal({ id }: Props) {
+export default function DeleteWordModal({ id }: Props) {
   return (
     <dialog
-      id="delete-dict-entry-modal"
+      id="delete-word-modal"
       className="modal modal-bottom sm:modal-middle"
     >
       <div className="modal-box">
@@ -26,7 +26,7 @@ export default function DeleteDictEntryModal({ id }: Props) {
           </form>
           <form
             action={async () => {
-              await deleteDictEntry(id);
+              await deleteWord(id);
               toast.error(() => <span>Entry deleted</span>, {
                 icon: <FaTrash />,
               });

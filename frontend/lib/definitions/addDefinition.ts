@@ -5,7 +5,7 @@ import fetcher, { FetchError } from '@/utils/fetcher';
 import getToken from '../tokens/getToken';
 
 export default async function addDefinition(
-  dictEntryId: number,
+  wordId: number,
   data: FormData,
 ) {
   let res = null;
@@ -23,6 +23,6 @@ export default async function addDefinition(
     return { error: fetchError.resBody };
   }
 
-  revalidatePath(`/dictionary/${dictEntryId}/`);
+  revalidatePath(`/dictionary/${wordId}/`);
   return res;
 }

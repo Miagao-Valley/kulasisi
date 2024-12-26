@@ -7,7 +7,7 @@ import Pagination from '@/app/components/Pagination';
 import { Filter } from '@/app/components/FilterMenu';
 
 interface Props {
-  dictEntryId?: number;
+  wordId?: number;
   searchTerm?: string;
   sortOption?: string;
   isDescending?: boolean;
@@ -17,7 +17,7 @@ interface Props {
 }
 
 export default async function DefinitionsList({
-  dictEntryId,
+  wordId,
   searchTerm = '',
   sortOption = 'content',
   filters = {},
@@ -34,7 +34,7 @@ export default async function DefinitionsList({
       limit: limit,
       offset: limit * (page - 1),
     },
-    dictEntryId,
+    wordId,
   );
 
   return (

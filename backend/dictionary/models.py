@@ -9,7 +9,7 @@ from languages.models import Language
 User = get_user_model()
 
 
-class DictEntry(models.Model):
+class Word(models.Model):
     word = models.CharField(max_length=64)
     lang = models.ForeignKey(
         Language, on_delete=models.PROTECT, related_name="dict_entries"
@@ -31,7 +31,7 @@ class DictEntry(models.Model):
 
 class Definition(models.Model):
     dict_entry = models.ForeignKey(
-        DictEntry, on_delete=models.CASCADE, related_name="definitions"
+        Word, on_delete=models.CASCADE, related_name="definitions"
     )
     lang = models.ForeignKey(
         Language, on_delete=models.PROTECT, related_name="definitions"

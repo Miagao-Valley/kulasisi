@@ -2,13 +2,13 @@ import React from 'react';
 import Link from 'next/link';
 import { diffWords } from 'diff';
 import naturalTime from '@/utils/naturalTime';
-import { DictEntryRevision } from '@/types';
+import { WordRevision } from '@/types';
 
 interface Props {
-  revisions: DictEntryRevision[];
+  revisions: WordRevision[];
 }
 
-export default function DictEntryRevisionsList({ revisions }: Props) {
+export default function WordRevisionsList({ revisions }: Props) {
   return (
     <div className="flex flex-col gap-3">
       {revisions && revisions.length > 0 ? (

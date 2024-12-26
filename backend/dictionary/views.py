@@ -7,18 +7,18 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 
-from .models import DictEntry, Definition
+from .models import Word, Definition
 from .serializers import (
-    DictEntrySerializer,
-    DictEntryHistorySerializer,
+    WordSerializer,
+    WordHistorySerializer,
     DefinitionSerializer,
     DefinitionHistorySerializer,
 )
 
 
-class ListCreateDictEntryView(generics.ListCreateAPIView):
-    queryset = DictEntry.objects.all()
-    serializer_class = DictEntrySerializer
+class ListCreateWordView(generics.ListCreateAPIView):
+    queryset = Word.objects.all()
+    serializer_class = WordSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     filterset_fields = ["lang__code", "contributor__username"]
@@ -51,19 +51,19 @@ class ListCreateDictEntryView(generics.ListCreateAPIView):
             print(serializer.errors)
 
 
-class RetrieveUpdateDestroyDictEntryView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = DictEntry.objects.all()
-    serializer_class = DictEntrySerializer
+class RetrieveUpdateDestroyWordView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Word.objects.all()
+    serializer_class = WordSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     lookup_url_kwarg = "dict_entry_pk"
 
 
-class ListDictEntryHistoryView(generics.ListAPIView):
-    serializer_class = DictEntryHistorySerializer
+class ListWordHistoryView(generics.ListAPIView):
+    serializer_class = WordHistorySerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get_queryset(self):
-        dict_entry = get_object_or_404(DictEntry, id=self.kwargs.get("dict_entry_pk"))
+        dict_entry = get_object_or_404(Word, id=self.kwargs.get("dict_entry_pk"))
         return dict_entry.history.all()
 
 
@@ -98,7 +98,7 @@ class ListCreateDefinitionView(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         if serializer.is_valid():
             dict_entry = get_object_or_404(
-                DictEntry, id=self.request.POST.get("dict_entry")
+                Word, id=self.request.POST.get("dict_entry")
             )
             serializer.save(dict_entry=dict_entry, contributor=self.request.user)
         else:

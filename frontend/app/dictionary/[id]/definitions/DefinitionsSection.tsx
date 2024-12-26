@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { DictEntry } from '@/types';
+import { Word } from '@/types';
 import AddDefinitionForm from './AddDefinitionForm';
 import DefinitionsList, { DefinitionsListSkeleton } from './DefinitionsList';
 import SearchInput from '@/app/components/SearchInput';
@@ -8,13 +8,13 @@ import FilterMenu, { FilterOption } from '@/app/components/FilterMenu';
 import getLangs from '@/lib/langs/getLangs';
 
 interface Props {
-  dictEntry: DictEntry;
+  word: Word;
   searchParams: { [key: string]: string | undefined };
 }
 
 export default async function DefinitionsSection({
   searchParams,
-  dictEntry,
+  word,
 }: Props) {
   const searchTerm = searchParams.q || '';
   const sortOption = searchParams.sort || '-vote_count';
@@ -38,7 +38,7 @@ export default async function DefinitionsSection({
       value: 'lang',
       type: 'select',
       options: langs.results
-        .filter(({ code }) => code !== dictEntry.lang)
+        .filter(({ code }) => code !== word.lang)
         .map(({ code, name }) => ({ label: name, value: code })),
     },
   ];
@@ -47,8 +47,8 @@ export default async function DefinitionsSection({
     <>
       <hr />
       <AddDefinitionForm
-        dictEntryId={dictEntry.id}
-        original_lang={dictEntry.lang}
+        wordId={word.id}
+        original_lang={word.lang}
         className="mx-1 my-2"
       />
       <hr className="mb-4" />
@@ -62,7 +62,7 @@ export default async function DefinitionsSection({
       </div>
       <Suspense fallback={<DefinitionsListSkeleton />}>
         <DefinitionsList
-          dictEntryId={dictEntry.id}
+          wordId={word.id}
           searchTerm={searchTerm}
           sortOption={sortOption}
           filters={filters}

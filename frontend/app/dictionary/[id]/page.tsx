@@ -1,8 +1,8 @@
 import React from 'react';
 import Link from 'next/link';
-import getDictEntry from '@/lib/dictEntries/getDictEntry';
-import getDictEntryRevisions from '@/lib/dictEntries/getDictEntryRevisions';
-import DictEntryContent from '../DictEntryContent';
+import getWord from '@/lib/words/getWord';
+import getWordRevisions from '@/lib/words/getWordRevisions';
+import WordContent from '../WordContent';
 import EntryFooter from '../../components/EntryFooter';
 import DefinitionsSection from './definitions/DefinitionsSection';
 
@@ -15,16 +15,16 @@ interface Props {
 
 export default async function PostPage({ params, searchParams }: Props) {
   const id = Number(params.id);
-  const dictEntry = await getDictEntry(id);
-  const revisions = await getDictEntryRevisions(id);
+  const word = await getWord(id);
+  const revisions = await getWordRevisions(id);
 
   const currentTab = searchParams?.tab || 'definitions';
 
   return (
     <>
       <div className="mb-3">
-        <DictEntryContent dictEntry={dictEntry} revisions={revisions.results} />
-        <EntryFooter entry={dictEntry} type="dict-entries" />
+        <WordContent word={word} revisions={revisions.results} />
+        <EntryFooter entry={word} type="words" />
       </div>
 
       <div role="tablist" className="tabs tabs-bordered w-fit">
@@ -40,7 +40,7 @@ export default async function PostPage({ params, searchParams }: Props) {
       {currentTab === 'definitions' ? (
         <div role="tabpanel" className="p-6">
           <DefinitionsSection
-            dictEntry={dictEntry}
+            word={word}
             searchParams={searchParams}
           />
         </div>

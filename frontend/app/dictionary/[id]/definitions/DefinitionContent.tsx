@@ -101,7 +101,7 @@ export function DefinitionsContent({
       {isEditing ? (
         <div className="mb-2" onClick={(e) => e.stopPropagation()}>
           <UpdateDefinitionForm
-            dictEntryId={definition.dict_entry}
+            wordId={definition.dict_entry}
             id={definition.id}
             initialDescription={definition.description}
             setIsEditing={setIsEditing}
@@ -122,7 +122,7 @@ export function DefinitionsContent({
       <div onClick={(e) => e.stopPropagation()}>
         <DefinitionRevisionsModal id={definition.id} revisions={revisions} />
         <DeleteDefinitionModal
-          dictEntryId={definition.dict_entry}
+          wordId={definition.dict_entry}
           id={definition.id}
         />
       </div>

@@ -3,22 +3,22 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/app/components/AuthProvider';
-import { DictEntry, DictEntryRevision } from '@/types';
+import { Word, WordRevision } from '@/types';
 import EntryHeader from '../components/EntryHeader';
-import UpdateDictEntryForm from './[id]/UpdateDictEntryForm';
-import DeleteDictEntryModal from './[id]/DeleteDictEntryModal';
-import DictEntryRevisionsModal from './[id]/revisions/DictEntryRevisionsModal';
+import UpdateWordForm from './[id]/UpdateWordForm';
+import DeleteWordModal from './[id]/DeleteWordModal';
+import WordRevisionsModal from './[id]/revisions/WordRevisionsModal';
 import { FaClock, FaLink, FaPen, FaTrash } from 'react-icons/fa';
 import { MdMenu } from 'react-icons/md';
 
 interface Props {
-  dictEntry: DictEntry;
-  revisions: DictEntryRevision[];
+  word: Word;
+  revisions: WordRevision[];
   className?: string;
 }
 
-export default function DictEntryContent({
-  dictEntry,
+export default function WordContent({
+  word,
   revisions,
   className = '',
 }: Props) {
@@ -30,13 +30,13 @@ export default function DictEntryContent({
   };
 
   const copyLinkToClipboard = () => {
-    const link = `${window.location.origin}/dictionary/${dictEntry.id}/`;
+    const link = `${window.location.origin}/dictionary/${word.id}/`;
     navigator.clipboard.writeText(link);
   };
 
   const showDeleteModal = () => {
     const modal = document.getElementById(
-      'delete-dict-entry-modal',
+      'delete-word-modal',
     ) as HTMLDialogElement;
     modal?.showModal();
   };
@@ -44,7 +44,7 @@ export default function DictEntryContent({
   return (
     <div className={`${className}`}>
       <div className="flex gap-3 mb-2">
-        <EntryHeader entry={dictEntry} className="flex-1" />
+        <EntryHeader entry={word} className="flex-1" />
         <div
           className="dropdown dropdown-bottom dropdown-end"
           onClick={(e) => e.stopPropagation()}
@@ -66,11 +66,11 @@ export default function DictEntryContent({
               </a>
             </li>
             <li>
-              <a href={`#revisions-${dictEntry.id}`}>
+              <a href={`#revisions-${word.id}`}>
                 <FaClock /> Edits
               </a>
             </li>
-            {auth.username === dictEntry.contributor && (
+            {auth.username === word.contributor && (
               <>
                 <li>
                   <a onClick={handleEdit}>
@@ -90,9 +90,9 @@ export default function DictEntryContent({
 
       {isEditing ? (
         <div className="mb-2" onClick={(e) => e.stopPropagation()}>
-          <UpdateDictEntryForm
-            id={dictEntry.id}
-            initialWord={dictEntry.word}
+          <UpdateWordForm
+            id={word.id}
+            initialWord={word.word}
             setIsEditing={setIsEditing}
           />
         </div>
@@ -100,17 +100,17 @@ export default function DictEntryContent({
         <>
           <div className="flex gap-3">
             <Link
-              href={`/dictionary/${dictEntry.id}/`}
+              href={`/dictionary/${word.id}/`}
               className="flex-1 mb-2 hover:text-primary"
             >
-              <p className="text-xl font-bold mb-1">{dictEntry.word}</p>
+              <p className="text-xl font-bold mb-1">{word.word}</p>
             </Link>
           </div>
         </>
       )}
       <div onClick={(e) => e.stopPropagation()}>
-        <DeleteDictEntryModal id={dictEntry.id} />
-        <DictEntryRevisionsModal revisions={revisions} id={dictEntry.id} />
+        <DeleteWordModal id={word.id} />
+        <WordRevisionsModal revisions={revisions} id={word.id} />
       </div>
     </div>
   );

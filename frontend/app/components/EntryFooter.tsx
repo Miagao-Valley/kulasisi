@@ -1,13 +1,13 @@
 import React from 'react';
 import Link from 'next/link';
-import { Phrase, Translation, DictEntry, Definition } from '@/types';
+import { Phrase, Translation, Word, Definition } from '@/types';
 import getVotes from '@/lib/vote/getVotes';
 import VoteActions from './VoteActions';
 import { BiMessageSquareDetail } from 'react-icons/bi';
 
 interface Props {
-  entry: Phrase | Translation | DictEntry | Definition;
-  type: 'phrases' | 'translations' | 'dict-entries' | 'definitions';
+  entry: Phrase | Translation | Word | Definition;
+  type: 'phrases' | 'translations' | 'words' | 'definitions';
   className?: string;
 }
 
@@ -30,7 +30,7 @@ export default async function EntryFooter({
           <span>{(entry as Phrase)?.translation_count || 0}</span>
         </Link>
       )}
-      {type === 'dict-entries' && (
+      {type === 'words' && (
         <Link
           href={`/dictionary/${entry.id}?tab=definitions`}
           className="btn btn-sm flex"
