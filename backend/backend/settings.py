@@ -166,6 +166,12 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
+    "DATE_INPUT_FORMATS": [
+        "%Y-%m-%dT%H:%M:%S.%fZ",
+        "%Y-%m-%dT%H:%M:%S%z",
+        "%Y-%m-%dT%H:%M:%S",
+        "%Y-%m-%d",
+    ],
     "DEFAULT_PAGINATION_CLASS": "core.pagination.CustomPagination",
     "PAGE_SIZE": 100,
 }
