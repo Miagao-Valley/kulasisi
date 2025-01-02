@@ -1,10 +1,10 @@
 import React, { Suspense } from 'react';
+import getLangs from '@/lib/langs/getLangs';
 import AddPhraseForm from './AddPhraseForm';
 import PhrasesList, { PhrasesListSkeleton } from './PhrasesList';
-import SearchInput from '../components/SearchInput';
-import SortDropdown, { SortOption } from '../components/SortDropdown';
-import FilterMenu, { FilterOption } from '../components/FilterMenu';
-import getLangs from '@/lib/langs/getLangs';
+import SearchInput from '@/components/SearchInput';
+import SortDropdown, { SortOption } from '@/components/SortDropdown';
+import FilterMenu, { FilterOption } from '@/components/FilterMenu';
 
 interface Props {
   searchParams: { [key: string]: string | undefined };
@@ -16,9 +16,9 @@ export default async function PhrasesPage({ searchParams }: Props) {
   const lang = searchParams.lang || '';
   const page = Number(searchParams.page || 1);
 
-  const filters = { lang: lang };
-
   const langs = await getLangs();
+
+  const filters = { lang: lang };
 
   const sortingOptions: SortOption[] = [
     { label: 'Content', value: 'content' },
@@ -31,7 +31,7 @@ export default async function PhrasesPage({ searchParams }: Props) {
   const filterOptions: FilterOption[] = [
     {
       label: 'Language',
-      value: 'lang',
+      name: 'lang',
       type: 'select',
       options: langs.results.map(({ code, name }) => ({
         label: name,
@@ -42,24 +42,14 @@ export default async function PhrasesPage({ searchParams }: Props) {
 
   return (
     <>
-      <hr />
-      <AddPhraseForm className="mx-1 my-2" />
-      <hr className="mb-4" />
-      <div className="mb-4 flex gap-3">
+      <AddPhraseForm className="py-2 mb-4 border-t border-b" />
+      <div className="mb-4 flex gap-2">
         <SearchInput currentSearchTerm={searchTerm} className="me-auto" />
-        <SortDropdown
-          currentSortOption={sortOption}
-          sortingOptions={sortingOptions}
-        />
+        <SortDropdown currentSortOption={sortOption} sortingOptions={sortingOptions} />
         <FilterMenu currentFilters={filters} filterOptions={filterOptions} />
       </div>
       <Suspense fallback={<PhrasesListSkeleton />}>
-        <PhrasesList
-          searchTerm={searchTerm}
-          sortOption={sortOption}
-          filters={filters}
-          page={page}
-        />
+        <PhrasesList searchTerm={searchTerm} sortOption={sortOption} filters={filters} page={page} />
       </Suspense>
     </>
   );

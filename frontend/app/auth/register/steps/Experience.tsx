@@ -1,34 +1,34 @@
 import React from 'react';
-import { LangProficiencyLevel } from '@/types/languages';
-import LanguageProficienciesForm from './LanguageProficienciesForm';
+import { UseFormReturn } from 'react-hook-form';
+import { RegisterInputs } from '../RegisterForm';
+import { cn } from '@/lib/utils';
+import { FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import LanguageProficienciesForm from '@/components/LangProficienciesForm';
 
 interface Props {
-  langs: any[];
-  selectedLanguages: { lang: string; level: LangProficiencyLevel }[];
-  handleLanguageSelection: (
-    e: React.ChangeEvent<HTMLInputElement>,
-    lang: string,
-  ) => void;
-  handleRangeChange: (
-    e: React.ChangeEvent<HTMLInputElement>,
-    lang: string,
-  ) => void;
+  form: UseFormReturn<RegisterInputs, any, undefined>;
+  className?: string;
 }
 
-export default function Experience({
-  langs,
-  selectedLanguages,
-  handleLanguageSelection,
-  handleRangeChange,
-}: Props) {
+export default function Experience({ form, className }: Props) {
   return (
-    <>
-      <LanguageProficienciesForm
-        langs={langs}
-        selectedLanguages={selectedLanguages}
-        handleLanguageSelection={handleLanguageSelection}
-        handleRangeChange={handleRangeChange}
+    <div className={cn(className, "flex flex-col gap-3")}>
+      <FormField
+        control={form.control}
+        name="language_proficiencies"
+        defaultValue={[{lang: 'tgl', level: 2}]}
+        render={({ field }) => (
+          <FormItem>
+            <FormControl>
+              <LanguageProficienciesForm
+                selectedLangProficiencies={field.value}
+                setSelectedLangProficiencies={(value) => form.setValue('language_proficiencies', value)}
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
       />
-    </>
+    </div>
   );
 }

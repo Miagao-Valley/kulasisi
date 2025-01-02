@@ -1,10 +1,12 @@
+import React from 'react';
 import getWords from '@/lib/words/getWords';
 import getWordRevisions from '@/lib/words/getWordRevisions';
-import WordContent from './WordContent';
-import EntryFooter from '../components/EntryFooter';
-import Pagination from '../components/Pagination';
-import { Filter } from '../components/FilterMenu';
-
+import getVotes from '@/lib/vote/getVotes'
+import { cn } from '@/lib/utils';
+import WordCard from './WordCard';
+import ListPagination from '@/components/ListPagination';
+import { Filter } from '@/components/FilterMenu';
+import { Skeleton } from '@/components/ui/skeleton';
 interface Props {
   searchTerm?: string;
   sortOption?: string;
@@ -34,27 +36,24 @@ export default async function WordsList({
 
   return (
     <>
-      <ul className={`flex flex-col gap-3 ${className}`}>
+      <ul className={cn(className, 'flex flex-col gap-3')}>
         {words && words.results && words.results.length > 0 ? (
           words.results.map(async (word) => {
+            const votes = await getVotes(word);
             const revisions = await getWordRevisions(word.id);
             return (
-              <li
-                className="px-4 py-3 border rounded-lg flex flex-col"
-                key={word.id}
-              >
-                <WordContent word={word} revisions={revisions.results} />
-                <EntryFooter entry={word} type="words" />
+              <li key={word.id}>
+                <WordCard word={word} votes={votes} revisions={revisions.results} />
               </li>
             );
           })
         ) : (
           <li className="w-full col-span-full p-3 text-center">
-            <div>No entries found</div>
+            No words found
           </li>
         )}
       </ul>
-      <Pagination
+      <ListPagination
         className="my-5 flex justify-center"
         numPages={words?.num_pages || 1}
         currentPage={page}
@@ -71,9 +70,9 @@ interface SkeletonProps {
 
 export function WordsListSkeleton({ className = '' }: SkeletonProps) {
   return (
-    <ul className={`flex flex-col gap-3 ${className}`}>
+    <ul className={cn(className, 'flex flex-col gap-3')}>
       {Array.from({ length: 10 }, (_, i) => (
-        <li className="skeleton rounded-lg w-full h-24" key={i}></li>
+        <Skeleton className="h-36 rounded-xl" key={i}></Skeleton>
       ))}
     </ul>
   );

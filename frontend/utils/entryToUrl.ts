@@ -8,17 +8,21 @@ export default function entryToUrl(
 ): string {
   if (isPhrase(entry)) {
     return backend ? `/phrases/${entry.id}/` : `/phrases/${entry.id}/`;
-  } else if (isTranslation(entry)) {
+  }
+  else if (isTranslation(entry)) {
     return backend
       ? `/phrases/translations/${entry.id}/`
       : `/phrases/${entry.phrase}/`;
-  } else if (isWord(entry)) {
+  }
+  else if (isWord(entry)) {
     return backend ? `/dictionary/${entry.id}/` : `/dictionary/${entry.id}/`;
-  } else if (isDefinition(entry)) {
+  }
+  else if (isDefinition(entry)) {
     return backend
       ? `/dictionary/definitions/${entry.id}/`
       : `/dictionary/${entry.word}/`;
-  } else {
+  }
+  else {
     return '/';
   }
 }

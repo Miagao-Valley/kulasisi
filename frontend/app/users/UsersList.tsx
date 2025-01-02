@@ -1,7 +1,10 @@
+import React from 'react';
 import Link from 'next/link';
 import getUsers from '@/lib/users/getUsers';
-import Pagination from '../components/Pagination';
-import Username from '../components/Username';
+import { cn } from '@/lib/utils';
+import ListPagination from '@/components/ListPagination';
+import UserHoverCard from '@/components/UserHoverCard';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface Props {
   searchTerm: string;
@@ -26,31 +29,22 @@ export default async function UsersList({
 
   return (
     <>
-      <ul
-        className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 ${className}`}
-      >
+      <ul className={cn(className, 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4')}>
         {users && users.results && users.results.length > 0 ? (
           users.results.map((user) => (
             <li key={user.id}>
-              <Link
-                className="btn btn-ghost w-full flex flex-col gap-1 items-start"
-                href={`/users/${user.username}/`}
-              >
-                <Username
-                  username={user.username}
-                  reputation={user.reputation}
-                />
-                <div className="text-xs">{`${user.first_name} ${user.last_name}`}</div>
+              <Link href={`/users/${user.username}/`}>
+                <UserHoverCard username={user.username} showAvatar />
               </Link>
             </li>
           ))
         ) : (
           <li className="w-full col-span-full p-3 text-center">
-            <div>No users found</div>
+            No users found
           </li>
         )}
       </ul>
-      <Pagination
+      <ListPagination
         className="my-5 flex justify-center"
         numPages={users?.num_pages || 1}
         currentPage={page}
@@ -67,11 +61,9 @@ interface SkeletonProps {
 
 export function UsersListSkeleton({ className = '' }: SkeletonProps) {
   return (
-    <ul
-      className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 ${className}`}
-    >
+    <ul className={cn(className, 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5')} >
       {Array.from({ length: 40 }, (_, i) => (
-        <li key={i} className="skeleton w-full h-10"></li>
+        <Skeleton key={i} className="h-12 rounded-xl"></Skeleton>
       ))}
     </ul>
   );

@@ -1,5 +1,6 @@
 'use client';
 
+import { Button } from '@/components/ui/button';
 import { useEffect } from 'react';
 
 export default function Error({
@@ -14,13 +15,9 @@ export default function Error({
   }, [error]);
 
   return (
-    <div className="flex flex-col gap-3 justify-center justify-items-center text-center">
+    <div className="flex flex-col gap-3 justify-center items-center text-center">
       <h2>Oops! Something went wrong...</h2>
-      <div>
-        <button className="btn" onClick={() => reset()}>
-          Try again
-        </button>
-      </div>
+      <Button onClick={() => reset()}>Try again</Button>
     </div>
   );
 }

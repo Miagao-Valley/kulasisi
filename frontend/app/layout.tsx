@@ -1,9 +1,9 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import './globals.css';
-import CustomToaster from './components/CustomToaster';
-import { AuthProvider } from './components/AuthProvider';
-import Navbar from './components/Navbar/Navbar';
+import { AuthProvider } from '../components/AuthProvider';
+import Navbar from '../components/Navbar/Navbar';
+import { Toaster } from '@/components/ui/sonner';
 
 export const metadata: Metadata = {
   title: 'Kulasisi',
@@ -19,7 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <AuthProvider>
-          <CustomToaster />
+          <Toaster />
           <Navbar />
           <main className="custom-container">{children}</main>
         </AuthProvider>

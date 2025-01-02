@@ -1,5 +1,8 @@
-import Link from 'next/link';
+import React from 'react';
 import getLangs from '@/lib/langs/getLangs';
+import { cn } from '@/lib/utils';
+import LangHoverCard from '@/components/LangHoverCard';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface Props {
   searchTerm: string;
@@ -19,27 +22,17 @@ export default async function LangsList({
 
   return (
     <ul
-      className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 ${className}`}
+      className={cn(className, 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4')}
     >
       {langs && langs.results && langs.results.length > 0 ? (
         langs.results.map((lang) => (
           <li key={lang.code}>
-            <Link
-              className="btn btn-ghost btn-sm w-full flex gap-1 justify-start"
-              href={`/languages/${lang.code}/`}
-            >
-              <span className="badge badge-primary [&:not(:hover)]:badge-outline">
-                {lang.code}
-              </span>
-              <span className="font-semibold hover:text-primary">
-                {lang.name}
-              </span>
-            </Link>
+            <LangHoverCard code={lang.code} showName />
           </li>
         ))
       ) : (
         <li className="w-full col-span-full text-center p-3">
-          <div>No languages found</div>
+          No languages found
         </li>
       )}
     </ul>
@@ -52,11 +45,9 @@ interface SkeletonProps {
 
 export function LangsListSkeleton({ className = '' }: SkeletonProps) {
   return (
-    <ul
-      className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 ${className}`}
-    >
+    <ul className={cn(className, 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5')}>
       {Array.from({ length: 40 }, (_, i) => (
-        <li key={i} className="skeleton w-full h-8"></li>
+        <Skeleton key={i} className="h-8 rounded-xl"></Skeleton>
       ))}
     </ul>
   );

@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import UsersList, { UsersListSkeleton } from './UsersList';
-import SearchInput from '../components/SearchInput';
-import SortDropdown, { SortOption } from '../components/SortDropdown';
+import SearchInput from '@/components/SearchInput';
+import SortDropdown, { SortOption } from '@/components/SortDropdown';
 
 interface Props {
   searchParams: { [key: string]: string | undefined };
@@ -31,17 +31,10 @@ export default async function UsersPage({ searchParams }: Props) {
       <h1>Users</h1>
       <div className="mb-4 flex gap-3">
         <SearchInput currentSearchTerm={searchTerm} className="me-auto" />
-        <SortDropdown
-          currentSortOption={sortOption}
-          sortingOptions={sortingOptions}
-        />
+        <SortDropdown currentSortOption={sortOption} sortingOptions={sortingOptions} />
       </div>
       <Suspense fallback={<UsersListSkeleton />}>
-        <UsersList
-          searchTerm={searchTerm}
-          sortOption={sortOption}
-          page={page}
-        />
+        <UsersList searchTerm={searchTerm} sortOption={sortOption} page={page} />
       </Suspense>
     </>
   );

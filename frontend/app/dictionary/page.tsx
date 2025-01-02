@@ -1,10 +1,10 @@
 import React, { Suspense } from 'react';
+import getLangs from '@/lib/langs/getLangs';
 import AddWordForm from './AddWordForm';
 import WordsList, { WordsListSkeleton } from './WordsList';
-import SearchInput from '../components/SearchInput';
-import SortDropdown, { SortOption } from '../components/SortDropdown';
-import FilterMenu, { FilterOption } from '../components/FilterMenu';
-import getLangs from '@/lib/langs/getLangs';
+import SearchInput from '@/components/SearchInput';
+import SortDropdown, { SortOption } from '@/components/SortDropdown';
+import FilterMenu, { FilterOption } from '@/components/FilterMenu';
 
 interface Props {
   searchParams: { [key: string]: string | undefined };
@@ -30,7 +30,7 @@ export default async function DictionaryPage({ searchParams }: Props) {
   const filterOptions: FilterOption[] = [
     {
       label: 'Language',
-      value: 'lang',
+      name: 'lang',
       type: 'select',
       options: langs.results.map(({ code, name }) => ({
         label: name,
@@ -41,24 +41,14 @@ export default async function DictionaryPage({ searchParams }: Props) {
 
   return (
     <>
-      <hr />
-      <AddWordForm className="mx-1 my-2" />
-      <hr className="mb-4" />
-      <div className="mb-4 flex gap-3">
+      <AddWordForm className="py-2 mb-4 border-t border-b" />
+      <div className="mb-4 flex gap-2">
         <SearchInput currentSearchTerm={searchTerm} className="me-auto" />
-        <SortDropdown
-          currentSortOption={sortOption}
-          sortingOptions={sortingOptions}
-        />
+        <SortDropdown currentSortOption={sortOption} sortingOptions={sortingOptions} />
         <FilterMenu currentFilters={filters} filterOptions={filterOptions} />
       </div>
       <Suspense fallback={<WordsListSkeleton />}>
-        <WordsList
-          searchTerm={searchTerm}
-          sortOption={sortOption}
-          filters={filters}
-          page={page}
-        />
+        <WordsList searchTerm={searchTerm} sortOption={sortOption} filters={filters} page={page} />
       </Suspense>
     </>
   );

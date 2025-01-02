@@ -1,13 +1,22 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
-import { useFormState, useFormStatus } from 'react-dom';
+import React from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import toast from 'react-hot-toast';
-import { useAuth } from '../components/AuthProvider';
-import { Lang } from '../../types/languages';
+import { useAuth } from '@/components/AuthProvider';
 import addPhrase from '@/lib/phrases/addPhrase';
-import getLangs from '@/lib/langs/getLangs';
+import { cn } from '@/lib/utils';
+import { toast } from 'sonner';
+import { useForm, SubmitHandler } from "react-hook-form"
+import setFormErrors from '@/utils/setFormErrors';
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import { AutosizeTextarea } from '@/components/ui/autoresize-textarea';
+import { LoadingButton } from '@/components/ui/loading-button';
+import LangSelect from '@/components/LangSelect';
+
+export interface PhraseInputs {
+  content: string;
+  lang: string;
+}
 
 interface Props {
   className?: string;
@@ -18,135 +27,77 @@ export default function AddPhraseForm({ className = '' }: Props) {
   const router = useRouter();
   const pathname = usePathname();
 
-  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
-
-  const [selectedLang, setSelectedLang] = useState('');
-  const [content, setContent] = useState('');
-  const [langs, setLangs] = useState<Lang[]>([]);
-
-  useEffect(() => {
-    const fetchLangs = async () => {
-      const { results } = await getLangs();
-      setLangs(results);
-    };
-
-    fetchLangs();
-  }, []);
-
-  useEffect(() => {
-    const savedContent = localStorage.getItem('phraseContentDraft');
-    if (savedContent) {
-      setContent(savedContent);
-    }
-  }, []);
-
-  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const newValue = e.target.value;
-    setContent(newValue);
-    localStorage.setItem('phraseContentDraft', newValue);
-    const textarea = textareaRef.current;
-    if (textarea) {
-      textarea.style.height = 'auto';
-      textarea.style.height = `${textarea.scrollHeight}px`;
-    }
-  };
-
-  const handleSubmit = async (prevState: any, formData: FormData) => {
+  const form = useForm<PhraseInputs>()
+  const onSubmit: SubmitHandler<PhraseInputs> = async (data: PhraseInputs) => {
     if (!auth.isAuthenticated) {
       toast.error('You need to sign in to post.');
       router.push(`/auth/login?next=${pathname}`);
       return;
     }
-    const res = await addPhrase(formData);
-    if (!res?.error) {
-      setSelectedLang('');
-      setContent('');
-      localStorage.removeItem('phraseContentDraft');
+
+    const res = await addPhrase(data);
+    if (res?.error) {
+      setFormErrors(res.error, form.setError)
+    } else {
       router.push(`/phrases/${res.id}/`);
       toast.success('Posted');
     }
     return res;
   };
 
-  const [formState, formAction] = useFormState(handleSubmit, null);
-
   return (
-    <form className={`flex flex-col ${className}`} action={formAction}>
-      {formState?.error?.detail && (
-        <div role="alert" className="text-sm text-error">
-          {formState.error.detail}
-        </div>
-      )}
-      {formState?.error?.non_field_errors && (
-        <div role="alert" className="text-sm text-error">
-          {formState.error.non_field_errors[0]}
-        </div>
-      )}
-      <div>
-        <textarea
-          className="textarea w-full text-xl rounded-none p-1 overflow-hidden resize-none focus:outline-none focus:border-transparent"
+    <Form {...form}>
+      <form className={cn(className, 'flex flex-col gap-3')} onSubmit={form.handleSubmit(onSubmit)}>
+        <FormMessage>
+            {form.formState.errors.root?.serverError.message}
+        </FormMessage>
+
+        <FormField
+          control={form.control}
           name="content"
-          id="content-field"
-          ref={textareaRef}
-          rows={1}
-          placeholder="Enter a phrase"
-          value={content}
-          onChange={handleContentChange}
-        ></textarea>
-        {formState?.error?.content && (
-          <div role="alert" className="text-sm text-error">
-            {formState.error.content[0]}
-          </div>
-        )}
-      </div>
-      <div className="flex gap-2 items-center">
-        <div>
-          <select
-            className="select select-bordered select-sm w-full"
-            name="lang"
-            id="lang-select"
-            value={selectedLang}
-            onChange={(e) => setSelectedLang(e.target.value)}
-          >
-            <option value="" disabled>
-              Language
-            </option>
-            {langs.map((lang) => (
-              <option key={lang.id} value={lang.code}>
-                {lang.name}
-              </option>
-            ))}
-          </select>
-          {formState?.error?.lang && (
-            <div role="alert" className="text-sm text-error">
-              {formState.error.lang[0]}
-            </div>
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <AutosizeTextarea
+                  className="p-1 text-xl resize-none borderless-input"
+                  placeholder="Enter a phrase"
+                  minHeight={24}
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
           )}
-        </div>
-        <SubmitButton
-          className="ms-auto"
-          disabled={!content.trim() || !selectedLang}
         />
-      </div>
-    </form>
-  );
-}
 
-interface SubmitButtonProps {
-  disabled?: boolean;
-  className?: string;
-}
+        <div className="flex gap-2 items-center">
+          <FormField
+            control={form.control}
+            name="lang"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <LangSelect
+                    selectedLang={field.value}
+                    setSelectedLang={(value) => form.setValue("lang", value)}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-function SubmitButton({ disabled = false, className = '' }: SubmitButtonProps) {
-  const { pending } = useFormStatus();
 
-  return (
-    <button
-      className={`btn btn-primary ${className}`}
-      type="submit"
-      disabled={disabled || pending}
-    >
-      {pending ? 'Posting...' : 'Post'}
-    </button>
+          <LoadingButton
+            className="ms-auto"
+            type="submit"
+            loading={form.formState.isSubmitting}
+            disabled={!(form.watch("content")?.trim() && form.watch("lang"))}
+          >
+            Post
+          </LoadingButton>
+        </div>
+      </form>
+    </Form>
   );
 }

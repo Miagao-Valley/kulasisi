@@ -1,9 +1,12 @@
+import React from 'react';
 import getPhrases from '@/lib/phrases/getPhrases';
 import getPhraseRevisions from '@/lib/phrases/getPhraseRevisions';
-import PhraseContent from './PhraseContent';
-import EntryFooter from '../components/EntryFooter';
-import Pagination from '../components/Pagination';
-import { Filter } from '../components/FilterMenu';
+import getVotes from '@/lib/vote/getVotes'
+import { cn } from '@/lib/utils';
+import PhraseCard from './PhraseCard';
+import ListPagination from '@/components/ListPagination';
+import { Filter } from '@/components/FilterMenu';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface Props {
   searchTerm?: string;
@@ -32,29 +35,27 @@ export default async function PhrasesList({
     offset: limit * (page - 1),
   });
 
+
   return (
     <>
-      <ul className={`flex flex-col gap-3 ${className}`}>
+      <ul className={cn(className, 'flex flex-col gap-3')}>
         {phrases && phrases.results && phrases.results.length > 0 ? (
           phrases.results.map(async (phrase) => {
+            const votes = await getVotes(phrase);
             const revisions = await getPhraseRevisions(phrase.id);
             return (
-              <li
-                className="px-4 py-3 border rounded-lg flex flex-col"
-                key={phrase.id}
-              >
-                <PhraseContent phrase={phrase} revisions={revisions.results} />
-                <EntryFooter entry={phrase} type="phrases" />
+              <li key={phrase.id}>
+                <PhraseCard phrase={phrase} votes={votes} revisions={revisions.results} />
               </li>
             );
           })
         ) : (
           <li className="w-full col-span-full p-3 text-center">
-            <div>No entries found</div>
+            No phrases found
           </li>
         )}
       </ul>
-      <Pagination
+      <ListPagination
         className="my-5 flex justify-center"
         numPages={phrases?.num_pages || 1}
         currentPage={page}
@@ -71,9 +72,9 @@ interface SkeletonProps {
 
 export function PhrasesListSkeleton({ className = '' }: SkeletonProps) {
   return (
-    <ul className={`flex flex-col gap-3 ${className}`}>
+    <ul className={cn(className, 'flex flex-col gap-3')}>
       {Array.from({ length: 10 }, (_, i) => (
-        <li className="skeleton rounded-lg w-full h-24" key={i}></li>
+        <Skeleton key={i} className="h-36 rounded-xl" />
       ))}
     </ul>
   );

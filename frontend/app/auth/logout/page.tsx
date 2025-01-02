@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '@/app/components/AuthProvider';
+import { useAuth } from '@/components/AuthProvider';
 import { BASE_URL } from '@/constants';
 import Loading from '@/app/loading';
 

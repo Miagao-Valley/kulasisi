@@ -1,12 +1,12 @@
-import React from 'react';
-import Link from 'next/link';
+import React, { Suspense } from 'react';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import getUser from '@/lib/users/getUser';
 import Overview from './Overview';
 import StatsTab from './StatsTab';
-import PhrasesList from '@/app/phrases/PhrasesList';
-import TranslationsList from '@/app/phrases/[id]/translations/TranslationsList';
-import WordsList from '@/app/dictionary/WordsList';
-import DefinitionsList from '@/app/dictionary/[id]/definitions/DefinitionsList';
+import PhrasesList, { PhrasesListSkeleton } from '@/app/phrases/PhrasesList';
+import TranslationsList, { TranslationsListSkeleton } from '@/app/phrases/translations/TranslationsList';
+import WordsList, { WordsListSkeleton } from '@/app/dictionary/WordsList';
+import DefinitionsList, { DefinitionsListSkeleton } from '@/app/dictionary/definitions/DefinitionsList';
 
 interface Props {
   params: {
@@ -26,69 +26,43 @@ export default async function UserPage({ params, searchParams }: Props) {
     <>
       <Overview user={user} className="mb-5" />
 
-      <div role="tablist" className="tabs tabs-bordered w-fit">
-        <Link
-          href="?tab=stats"
-          role="tab"
-          className={`tab ${currentTab === 'stats' ? 'tab-active' : ''}`}
-          aria-label="Stats"
-        >
-          Stats
-        </Link>
-        <Link
-          href="?tab=phrases"
-          role="tab"
-          className={`tab ${currentTab === 'phrases' ? 'tab-active' : ''}`}
-          aria-label="Phrases"
-        >
-          Phrases
-        </Link>
-        <Link
-          href="?tab=translations"
-          role="tab"
-          className={`tab ${currentTab === 'translations' ? 'tab-active' : ''}`}
-          aria-label="Translations"
-        >
-          Translations
-        </Link>
-        <Link
-          href="?tab=words"
-          role="tab"
-          className={`tab ${currentTab === 'words' ? 'tab-active' : ''}`}
-          aria-label="Words"
-        >
-          Words
-        </Link>
-        <Link
-          href="?tab=definitions"
-          role="tab"
-          className={`tab ${currentTab === 'definitions' ? 'tab-active' : ''}`}
-          aria-label="Definitions"
-        >
-          Definitions
-        </Link>
-      </div>
-      {currentTab === 'stats' ? (
-        <div role="tabpanel" className="p-6">
+      <Tabs defaultValue={currentTab}>
+        <TabsList>
+          <TabsTrigger value="stats">Stats</TabsTrigger>
+          <TabsTrigger value="phrases">Phrases</TabsTrigger>
+          <TabsTrigger value="translations">Translations</TabsTrigger>
+          <TabsTrigger value="words">Words</TabsTrigger>
+          <TabsTrigger value="definitions">Definitions</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="stats">
           <StatsTab user={user} />
-        </div>
-      ) : currentTab === 'phrases' ? (
-        <div role="tabpanel" className="p-6">
-          <PhrasesList filters={{ user: user.username }} />
-        </div>
-      ) : currentTab === 'translations' ? (
-        <div role="tabpanel" className="p-6">
-          <TranslationsList filters={{ user: user.username }} />
-        </div>
-      ) : currentTab === 'words' ? (
-        <div role="tabpanel" className="p-6">
-          <WordsList filters={{ user: user.username }} />
-        </div>
-      ) : currentTab === 'definitions' ? (
-        <div role="tabpanel" className="p-6">
-          <DefinitionsList filters={{ user: user.username }} />
-        </div>
-      ) : null}
+        </TabsContent>
+
+        <TabsContent value="phrases">
+          <Suspense fallback={<PhrasesListSkeleton />}>
+            <PhrasesList filters={{ contributor: user.username }} />
+          </Suspense>
+        </TabsContent>
+
+        <TabsContent value="translations">
+          <Suspense fallback={<TranslationsListSkeleton />}>
+            <TranslationsList filters={{ contributor: user.username }} />
+          </Suspense>
+        </TabsContent>
+
+        <TabsContent value="words">
+          <Suspense fallback={<WordsListSkeleton />}>
+            <WordsList filters={{ contributor: user.username }} />
+          </Suspense>
+        </TabsContent>
+
+        <TabsContent value="definitions">
+          <Suspense fallback={<DefinitionsListSkeleton />}>
+            <DefinitionsList filters={{ contributor: user.username }} />
+          </Suspense>
+        </TabsContent>
+      </Tabs>
     </>
   );
 }

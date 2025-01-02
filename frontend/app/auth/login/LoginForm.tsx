@@ -1,16 +1,20 @@
 'use client';
 
 import React from 'react';
-import { useFormState, useFormStatus } from 'react-dom';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { FaLock, FaUser } from 'react-icons/fa';
-import { useAuth } from '@/app/components/AuthProvider';
+import { useAuth } from '@/components/AuthProvider';
 import login from '@/lib/auth/login';
-import AuthInputField from '../AuthInputField';
+import { useForm, SubmitHandler } from "react-hook-form"
+import setFormErrors from '@/utils/setFormErrors';
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import { FloatingLabelInput } from '@/components/ui/floating-label-input';
+import { PasswordInput } from '@/components/ui/password-input';
+import { LoadingButton } from '@/components/ui/loading-button';
 
-interface SubmitButtonProps {
-  disabled?: boolean;
+export interface LoginInputs {
+  username: string;
+  password: string;
 }
 
 export default function LoginForm() {
@@ -20,11 +24,14 @@ export default function LoginForm() {
 
   const next = searchParams.get('next');
 
-  const handleSubmit = async (prevState: any, formData: FormData) => {
-    const res = await login(formData);
-    if (!res?.error) {
+  const form = useForm<LoginInputs>()
+  const onSubmit: SubmitHandler<LoginInputs> = async (data: LoginInputs) => {
+    const res = await login(data);
+    if (res?.error) {
+      setFormErrors(res.error, form.setError)
+    }
+    else {
       auth.updateAuth();
-      console.log(next);
       if (next) {
         router.push(next);
       }
@@ -32,56 +39,51 @@ export default function LoginForm() {
     return res;
   };
 
-  const [formState, formAction] = useFormState(handleSubmit, null);
-
   return (
-    <form className="flex flex-col gap-3" action={formAction}>
-      {formState?.error?.detail && (
-        <div role="alert" className="text-sm text-error">
-          {formState.error.detail}
-        </div>
-      )}
-      {formState?.error?.non_field_errors && (
-        <div role="alert" className="text-sm text-error">
-          {formState.error.non_field_errors[0]}
-        </div>
-      )}
-      <AuthInputField
-        name="username"
-        type="text"
-        placeholder="Username"
-        icon={<FaUser />}
-        error={formState?.error?.username}
-        autoFocus={true}
-      />
-      <AuthInputField
-        name="password"
-        type="password"
-        placeholder="Password"
-        icon={<FaLock />}
-        error={formState?.error?.password}
-      />
-      <SubmitButton />
-      <p className="flex gap-1">
-        Don't have an account?
-        <Link className="link text-primary link-hover" href={`register`}>
-          Sign up
-        </Link>
-      </p>
-    </form>
-  );
-}
+    <Form {...form}>
+      <form className="flex flex-col gap-3" onSubmit={form.handleSubmit(onSubmit)}>
+        <FormMessage>
+            {form.formState.errors.root?.serverError.message}
+        </FormMessage>
 
-function SubmitButton({ disabled = false }: SubmitButtonProps) {
-  const { pending } = useFormStatus();
+        <FormField
+          control={form.control}
+          name="username"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <FloatingLabelInput label="Username" autoFocus {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-  return (
-    <button
-      className="btn btn-primary"
-      type="submit"
-      disabled={disabled || pending}
-    >
-      {pending ? 'Signing in...' : 'Sign in'}
-    </button>
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <PasswordInput label="Password" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <LoadingButton
+          className="w-full"
+          type="submit"
+          loading={form.formState.isSubmitting}
+        >
+          Sign in
+        </LoadingButton>
+
+        <p className="text-center">
+          Don't have an account? <Link href={`/auth/register/`}>Sign up</Link>
+        </p>
+      </form>
+    </Form>
   );
 }

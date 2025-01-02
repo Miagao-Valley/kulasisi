@@ -1,74 +1,55 @@
+'use client'
+
 import React from 'react';
-import { useFormStatus } from 'react-dom';
+import Link from 'next/link';
+import { UseFormReturn } from 'react-hook-form';
+import { RegisterInputs } from './RegisterForm';
+import { Button } from '@/components/ui/button';
+import { LoadingButton } from '@/components/ui/loading-button';
+import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 
 interface Props {
+  numSteps: number;
   step: number;
-  steps: string[];
   setStep: React.Dispatch<React.SetStateAction<number>>;
-  formData: any;
+  reachedEnd: boolean;
+  form: UseFormReturn<RegisterInputs, any, undefined>;
 }
 
-export default function NavButtons({ step, steps, setStep, formData }: Props) {
-  const handleNext = () => {
-    setStep(step + 1);
-  };
-
-  const handleBack = () => {
-    setStep(step - 1);
-  };
-
+export default function NavButtons({ step, numSteps, setStep, reachedEnd, form }: Props) {
   return (
-    <div className="flex justify-between mt-4">
-      <button
+    <div className="flex justify-between items-center gap-4 mt-4">
+      <Button
+        variant="ghost"
         type="button"
-        className="btn"
-        onClick={handleBack}
+        onClick={() => setStep(step - 1)}
         disabled={step === 0}
       >
-        Back
-      </button>
-      {step === steps.length - 1 ? (
-        <SubmitButton />
-      ) : (
-        <button
-          type="button"
-          className="btn btn-primary"
-          onClick={handleNext}
-          disabled={
-            step === 0
-              ? !(formData.username && formData.password)
-              : step === 1
-                ? !formData.email
-                : step === 2
-                  ? !(
-                      formData.first_name &&
-                      formData.last_name &&
-                      formData.date_of_birth
-                    )
-                  : false
-          }
-        >
-          Next
-        </button>
-      )}
+        <ChevronLeftIcon />
+      </Button>
+
+      {reachedEnd &&
+      <LoadingButton
+        className="w-full"
+        type="submit"
+        loading={form.formState.isSubmitting}>
+        Sign up
+      </LoadingButton>
+      }
+      {!reachedEnd && step === 0 &&
+        <p className="text-center">
+          Already have an account? <Link href={`/auth/login/`}>Sign in</Link>
+        </p>
+      }
+
+      <Button
+        variant="outline"
+        type="button"
+        onClick={() => setStep(step + 1)}
+        disabled={step === numSteps - 1}
+      >
+        <ChevronRightIcon />
+      </Button>
     </div>
-  );
-}
-
-interface SubmitButtonProps {
-  disabled?: boolean;
-}
-
-function SubmitButton({ disabled = false }: SubmitButtonProps) {
-  const { pending } = useFormStatus();
-
-  return (
-    <button
-      className="btn btn-primary"
-      type="submit"
-      disabled={disabled || pending}
-    >
-      {pending ? 'Signing up...' : 'Sign up'}
-    </button>
   );
 }

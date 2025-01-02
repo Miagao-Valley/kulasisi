@@ -1,43 +1,47 @@
 import React from 'react';
-import AuthInputField from '../../AuthInputField';
-import { FaLock, FaUser } from 'react-icons/fa';
+import { UseFormReturn } from 'react-hook-form';
+import { RegisterInputs } from '../RegisterForm';
+import { cn } from '@/lib/utils';
+import { FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import { FloatingLabelInput } from '@/components/ui/floating-label-input';
+import { PasswordInput } from '@/components/ui/password-input';
 
 interface Props {
-  formData: any;
-  formState: any;
-  handleInputChange: (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >,
-    field: string,
-  ) => void;
+  form: UseFormReturn<RegisterInputs, any, undefined>;
+  className?: string;
 }
 
-export default function GetStarted({
-  formData,
-  formState,
-  handleInputChange,
-}: Props) {
+export default function GetStarted({ form, className }: Props) {
   return (
-    <>
-      <AuthInputField
+    <div className={cn(className, "flex flex-col gap-3")}>
+      <FormField
+        control={form.control}
         name="username"
-        type="text"
-        placeholder="Username"
-        value={formData.username}
-        onChange={(e) => handleInputChange(e, 'username')}
-        icon={<FaUser />}
-        error={formState?.error?.username}
+        render={({ field }) => (
+          <FormItem>
+            <FormControl>
+              <FloatingLabelInput
+                label="Usernname"
+                autoFocus
+                {...field}
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
       />
-      <AuthInputField
+      <FormField
+        control={form.control}
         name="password"
-        type="password"
-        placeholder="Password"
-        value={formData.password}
-        onChange={(e) => handleInputChange(e, 'password')}
-        icon={<FaLock />}
-        error={formState?.error?.password}
+        render={({ field }) => (
+          <FormItem>
+            <FormControl>
+              <PasswordInput label="Password" {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
       />
-    </>
+    </div>
   );
 }

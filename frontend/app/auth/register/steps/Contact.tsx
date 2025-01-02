@@ -1,43 +1,42 @@
 import React from 'react';
-import AuthInputField from '../../AuthInputField';
-import { MdEmail, MdPhone } from 'react-icons/md';
+import { UseFormReturn } from 'react-hook-form';
+import { RegisterInputs } from '../RegisterForm';
+import { cn } from '@/lib/utils';
+import { FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import { FloatingLabelInput } from '@/components/ui/floating-label-input';
 
 interface Props {
-  formData: any;
-  formState: any;
-  handleInputChange: (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >,
-    field: string,
-  ) => void;
+  form: UseFormReturn<RegisterInputs, any, undefined>;
+  className?: string;
 }
 
-export default function Contact({
-  formData,
-  formState,
-  handleInputChange,
-}: Props) {
+export default function Contact({ form, className }: Props) {
   return (
-    <>
-      <AuthInputField
+    <div className={cn(className, "flex flex-col gap-3")}>
+      <FormField
+        control={form.control}
         name="email"
-        type="text"
-        placeholder="Email"
-        value={formData.email}
-        onChange={(e) => handleInputChange(e, 'email')}
-        icon={<MdEmail />}
-        error={formState?.error?.email}
+        render={({ field }) => (
+          <FormItem>
+            <FormControl>
+              <FloatingLabelInput label="Email" autoFocus {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
       />
-      <AuthInputField
+      <FormField
+        control={form.control}
         name="phone_number"
-        type="tel"
-        placeholder="Phone number"
-        value={formData.phone_number}
-        onChange={(e) => handleInputChange(e, 'phone_number')}
-        icon={<MdPhone />}
-        error={formState?.error?.phone_number}
+        render={({ field }) => (
+          <FormItem>
+            <FormControl>
+              <FloatingLabelInput label="Phone Number" {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
       />
-    </>
+    </div>
   );
 }
