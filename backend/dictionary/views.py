@@ -97,7 +97,7 @@ class ListCreateDefinitionView(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         if serializer.is_valid():
-            word = get_object_or_404(Word, id=self.request.POST.get("word"))
+            word = get_object_or_404(Word, id=self.request.data.get("word"))
             serializer.save(word=word, contributor=self.request.user)
         else:
             print(serializer.errors)

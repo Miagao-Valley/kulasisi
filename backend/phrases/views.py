@@ -104,7 +104,7 @@ class ListCreateTranslationsView(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         if serializer.is_valid():
-            phrase = get_object_or_404(Phrase, id=self.request.POST.get("phrase"))
+            phrase = get_object_or_404(Phrase, id=self.request.data.get("phrase"))
             serializer.save(phrase=phrase, contributor=self.request.user)
         else:
             print(serializer.errors)
