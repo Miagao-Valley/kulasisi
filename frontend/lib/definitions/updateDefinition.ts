@@ -8,15 +8,18 @@ import getToken from '../tokens/getToken';
 export default async function updateDefinition(
   wordId: number,
   id: number,
-  data: FormData,
+  data: object,
 ) {
-  console.log(data);
   try {
     const promise = fetcher(
       `/dictionary/definitions/${id}/`,
       {
         method: 'PUT',
-        body: data,
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
       },
       getToken(),
     );

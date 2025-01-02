@@ -4,13 +4,17 @@ import fetcher, { FetchError } from '@/utils/fetcher';
 import getToken from '../tokens/getToken';
 import { redirect } from 'next/navigation';
 
-export default async function changePassword(username: string, data: FormData) {
+export default async function changePassword(username: string, data: object) {
   try {
     const promise = fetcher(
       `/users/${username}/change-password/`,
       {
         method: 'POST',
-        body: data,
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
       },
       getToken(),
     );

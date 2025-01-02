@@ -4,14 +4,18 @@ import { revalidatePath } from 'next/cache';
 import fetcher, { FetchError } from '@/utils/fetcher';
 import getToken from '../tokens/getToken';
 
-export default async function addDefinition(wordId: number, data: FormData) {
+export default async function addDefinition(wordId: number, data: object) {
   let res = null;
   try {
     res = await fetcher(
       `/dictionary/definitions/`,
       {
         method: 'POST',
-        body: data,
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
       },
       getToken(),
     );

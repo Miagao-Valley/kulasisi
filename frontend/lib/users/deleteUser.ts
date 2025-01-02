@@ -5,13 +5,17 @@ import { redirect } from 'next/navigation';
 import fetcher, { FetchError } from '@/utils/fetcher';
 import getToken from '../tokens/getToken';
 
-export default async function deleteUser(username: string, data: FormData) {
+export default async function deleteUser(username: string, data: object) {
   try {
     const promise = fetcher(
       `/users/${username}/delete/`,
       {
         method: 'DELETE',
-        body: data,
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
       },
       getToken(),
     );

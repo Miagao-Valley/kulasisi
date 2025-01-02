@@ -4,13 +4,17 @@ import { revalidatePath } from 'next/cache';
 import fetcher, { FetchError } from '@/utils/fetcher';
 import getToken from '../tokens/getToken';
 
-export default async function updatePhrase(id: number, data: FormData) {
+export default async function updatePhrase(id: number, data: object) {
   try {
     const promise = fetcher(
       `/phrases/${id}/`,
       {
         method: 'PUT',
-        body: data,
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
       },
       getToken(),
     );
