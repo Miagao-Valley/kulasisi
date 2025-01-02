@@ -6,8 +6,20 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import changePhoneNumber from '@/lib/users/changePhoneNumber';
 import setFormErrors from '@/utils/setFormErrors';
 import { Button } from '@/components/ui/button';
-import { DialogContent, DialogTitle, DialogDescription, DialogHeader, DialogClose } from '@/components/ui/dialog';
-import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import {
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+  DialogHeader,
+  DialogClose,
+} from '@/components/ui/dialog';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from '@/components/ui/form';
 import { FloatingLabelInput } from '@/components/ui/floating-label-input';
 import { PasswordInput } from '@/components/ui/password-input';
 import { LoadingButton } from '@/components/ui/loading-button';
@@ -24,18 +36,19 @@ interface Props {
 export function ChangePhoneNumberModal({ username }: Props) {
   const router = useRouter();
 
-  const form = useForm<ChangePhoneNumberInputs>()
+  const form = useForm<ChangePhoneNumberInputs>();
 
-    const onSubmit: SubmitHandler<ChangePhoneNumberInputs> = async (data: ChangePhoneNumberInputs) => {
-      const res = await changePhoneNumber(username, data);
-      if (res?.error) {
-        setFormErrors(res.error, form.setError)
-      }
-      else {
-        router.refresh();
-      }
-      return res;
-    };
+  const onSubmit: SubmitHandler<ChangePhoneNumberInputs> = async (
+    data: ChangePhoneNumberInputs,
+  ) => {
+    const res = await changePhoneNumber(username, data);
+    if (res?.error) {
+      setFormErrors(res.error, form.setError);
+    } else {
+      router.refresh();
+    }
+    return res;
+  };
 
   return (
     <DialogContent>
@@ -46,7 +59,10 @@ export function ChangePhoneNumberModal({ username }: Props) {
         </DialogDescription>
       </DialogHeader>
       <Form {...form}>
-        <form className="flex flex-col gap-3" onSubmit={form.handleSubmit(onSubmit)}>
+        <form
+          className="flex flex-col gap-3"
+          onSubmit={form.handleSubmit(onSubmit)}
+        >
           <FormMessage>
             {form.formState.errors.root?.serverError.message}
           </FormMessage>
@@ -57,7 +73,11 @@ export function ChangePhoneNumberModal({ username }: Props) {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <FloatingLabelInput label="New Phone Number" autoFocus {...field} />
+                  <FloatingLabelInput
+                    label="New Phone Number"
+                    autoFocus
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

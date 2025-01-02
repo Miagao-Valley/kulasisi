@@ -1,10 +1,14 @@
-'use client'
+'use client';
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Lang } from '@/types/languages';
 import getLang from '@/lib/langs/getLang';
-import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from '@/components/ui/hover-card';
 import { Badge } from '@/components/ui/badge';
 import shortenNum from '@/utils/shortenNum';
 
@@ -23,18 +27,19 @@ export default function LangHoverCard({ code, showName = false }: Props) {
     };
 
     fetchLang();
-  }, [code])
+  }, [code]);
 
   return (
     <HoverCard>
-      {lang &&
+      {lang && (
         <>
           <HoverCardTrigger asChild>
-            <Link href={`/languages/${code}/`} className="flex gap-2 items-center">
+            <Link
+              href={`/languages/${code}/`}
+              className="flex gap-2 items-center"
+            >
               <Badge variant="outline">{code}</Badge>
-              {showName &&
-                <span className="font-semibold">{lang.name}</span>
-              }
+              {showName && <span className="font-semibold">{lang.name}</span>}
             </Link>
           </HoverCardTrigger>
 
@@ -45,7 +50,7 @@ export default function LangHoverCard({ code, showName = false }: Props) {
             </div>
           </HoverCardContent>
         </>
-      }
+      )}
     </HoverCard>
   );
 }

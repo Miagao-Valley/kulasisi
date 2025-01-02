@@ -6,9 +6,15 @@ import { useAuth } from '@/components/AuthProvider';
 import addDefinition from '@/lib/definitions/addDefinition';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
-import { useForm, SubmitHandler } from "react-hook-form"
+import { useForm, SubmitHandler } from 'react-hook-form';
 import setFormErrors from '@/utils/setFormErrors';
-import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from '@/components/ui/form';
 import { AutosizeTextarea } from '@/components/ui/autoresize-textarea';
 import { LoadingButton } from '@/components/ui/loading-button';
 import LangSelect from '@/components/LangSelect';
@@ -37,10 +43,12 @@ export default function AddDefinitionForm({
   const form = useForm<TranslationInputs>({
     defaultValues: {
       word: wordId,
-    }
-  })
+    },
+  });
 
-  const onSubmit: SubmitHandler<TranslationInputs> = async (data: TranslationInputs) => {
+  const onSubmit: SubmitHandler<TranslationInputs> = async (
+    data: TranslationInputs,
+  ) => {
     if (!auth.isAuthenticated) {
       toast.error('You need to sign in to post.');
       router.push(`/auth/login?next=${pathname}`);
@@ -49,7 +57,7 @@ export default function AddDefinitionForm({
 
     const res = await addDefinition(wordId, data);
     if (res?.error) {
-      setFormErrors(res.error, form.setError)
+      setFormErrors(res.error, form.setError);
     } else {
       toast.success('Definition added');
     }
@@ -58,9 +66,12 @@ export default function AddDefinitionForm({
 
   return (
     <Form {...form}>
-      <form className={cn(className, 'flex flex-col gap-3')} onSubmit={form.handleSubmit(onSubmit)}>
+      <form
+        className={cn(className, 'flex flex-col gap-3')}
+        onSubmit={form.handleSubmit(onSubmit)}
+      >
         <FormMessage>
-            {form.formState.errors.root?.serverError.message}
+          {form.formState.errors.root?.serverError.message}
         </FormMessage>
 
         <FormField
@@ -90,7 +101,7 @@ export default function AddDefinitionForm({
                 <FormControl>
                   <LangSelect
                     selectedLang={field.value}
-                    setSelectedLang={(value) => form.setValue("lang", value)}
+                    setSelectedLang={(value) => form.setValue('lang', value)}
                     exclude={[originalLang]}
                   />
                 </FormControl>
@@ -103,7 +114,9 @@ export default function AddDefinitionForm({
             className="ms-auto"
             type="submit"
             loading={form.formState.isSubmitting}
-            disabled={!(form.watch("description")?.trim() && form.watch("lang"))}
+            disabled={
+              !(form.watch('description')?.trim() && form.watch('lang'))
+            }
           >
             Add
           </LoadingButton>

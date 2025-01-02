@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React, { Suspense } from 'react';
 import naturalTime from '@/utils/naturalTime';
@@ -24,10 +24,7 @@ export default function EntryHeader({ entry, className = '' }: Props) {
       <Suspense fallback={<Skeleton className="h-12 w-8 rounded-full" />}>
         <UserHoverCard username={entry.contributor} />
       </Suspense>
-      •
-      <span className="text-sm">
-        {naturalTime(entry.updated_at)}
-      </span>
+      •<span className="text-sm">{naturalTime(entry.updated_at)}</span>
     </div>
   );
 }

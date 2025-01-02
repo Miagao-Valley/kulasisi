@@ -3,9 +3,13 @@ import getLang from '@/lib/langs/getLang';
 import Overview from './Overview';
 import StatsTab from './StatsTab';
 import PhrasesList, { PhrasesListSkeleton } from '@/app/phrases/PhrasesList';
-import TranslationsList, { TranslationsListSkeleton } from '@/app/phrases/translations/TranslationsList';
+import TranslationsList, {
+  TranslationsListSkeleton,
+} from '@/app/phrases/translations/TranslationsList';
 import WordsList, { WordsListSkeleton } from '@/app/dictionary/WordsList';
-import DefinitionsList, { DefinitionsListSkeleton } from '@/app/dictionary/definitions/DefinitionsList';
+import DefinitionsList, {
+  DefinitionsListSkeleton,
+} from '@/app/dictionary/definitions/DefinitionsList';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 interface Props {

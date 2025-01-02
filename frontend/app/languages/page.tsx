@@ -26,7 +26,10 @@ export default async function LangsPage({ searchParams }: Props) {
       <h1>Languages</h1>
       <div className="mb-4 flex gap-3">
         <SearchInput currentSearchTerm={searchTerm} className="me-auto" />
-        <SortDropdown currentSortOption={sortOption} sortingOptions={sortingOptions} />
+        <SortDropdown
+          currentSortOption={sortOption}
+          sortingOptions={sortingOptions}
+        />
       </div>
       <Suspense fallback={<LangsListSkeleton />}>
         <LangsList searchTerm={searchTerm} sortOption={sortOption} />

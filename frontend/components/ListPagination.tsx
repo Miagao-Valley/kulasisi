@@ -3,9 +3,19 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import { Pagination, PaginationContent, PaginationItem, PaginationLink } from '@/components/ui/pagination';
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+} from '@/components/ui/pagination';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
+import {
+  ChevronLeft,
+  ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
+} from 'lucide-react';
 
 interface Props {
   numPages: number;
@@ -76,7 +86,12 @@ export default function ListPagination({
             </Button>
           </PaginationItem>
           <PaginationItem>
-            <Button variant="ghost" size="icon" disabled={!prev} onClick={() => setPage(page - 1)}>
+            <Button
+              variant="ghost"
+              size="icon"
+              disabled={!prev}
+              onClick={() => setPage(page - 1)}
+            >
               <ChevronLeft />
             </Button>
           </PaginationItem>
@@ -88,12 +103,21 @@ export default function ListPagination({
             </PaginationItem>
           ))}
           <PaginationItem>
-            <Button variant="ghost" size="icon" disabled={!next} onClick={() => setPage(page + 1)}>
+            <Button
+              variant="ghost"
+              size="icon"
+              disabled={!next}
+              onClick={() => setPage(page + 1)}
+            >
               <ChevronRight />
             </Button>
           </PaginationItem>
           <PaginationItem>
-            <Button variant="ghost" size="icon" onClick={() => setPage(numPages)}>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setPage(numPages)}
+            >
               <ChevronsRight />
             </Button>
           </PaginationItem>

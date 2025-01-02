@@ -6,8 +6,20 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import changeEmail from '@/lib/users/changeEmail';
 import setFormErrors from '@/utils/setFormErrors';
 import { Button } from '@/components/ui/button';
-import { DialogContent, DialogTitle, DialogDescription, DialogHeader, DialogClose } from '@/components/ui/dialog';
-import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import {
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+  DialogHeader,
+  DialogClose,
+} from '@/components/ui/dialog';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from '@/components/ui/form';
 import { FloatingLabelInput } from '@/components/ui/floating-label-input';
 import { PasswordInput } from '@/components/ui/password-input';
 import { LoadingButton } from '@/components/ui/loading-button';
@@ -24,14 +36,15 @@ interface Props {
 export function ChangeEmailModal({ username }: Props) {
   const router = useRouter();
 
-  const form = useForm<ChangeEmailInputs>()
+  const form = useForm<ChangeEmailInputs>();
 
-  const onSubmit: SubmitHandler<ChangeEmailInputs> = async (data: ChangeEmailInputs) => {
+  const onSubmit: SubmitHandler<ChangeEmailInputs> = async (
+    data: ChangeEmailInputs,
+  ) => {
     const res = await changeEmail(username, data);
     if (res?.error) {
-      setFormErrors(res.error, form.setError)
-    }
-    else {
+      setFormErrors(res.error, form.setError);
+    } else {
       router.refresh();
     }
     return res;
@@ -46,7 +59,10 @@ export function ChangeEmailModal({ username }: Props) {
         </DialogDescription>
       </DialogHeader>
       <Form {...form}>
-        <form className="flex flex-col gap-3" onSubmit={form.handleSubmit(onSubmit)}>
+        <form
+          className="flex flex-col gap-3"
+          onSubmit={form.handleSubmit(onSubmit)}
+        >
           <FormMessage>
             {form.formState.errors.root?.serverError.message}
           </FormMessage>

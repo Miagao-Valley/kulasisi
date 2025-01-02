@@ -1,14 +1,22 @@
-'use client'
+'use client';
 
-import React, { forwardRef, useState } from 'react'
-import { cn } from '@/lib/utils'
-import { Button } from '@/components/ui/button'
-import { FloatingLabelInput, FloatingInput, type FloatingLabelInputProps } from '@/components/ui/floating-label-input'
-import { EyeIcon, EyeOffIcon } from 'lucide-react'
+import React, { forwardRef, useState } from 'react';
+import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import {
+  FloatingLabelInput,
+  FloatingInput,
+  type FloatingLabelInputProps,
+} from '@/components/ui/floating-label-input';
+import { EyeIcon, EyeOffIcon } from 'lucide-react';
 
-const PasswordInput = forwardRef<React.ElementRef<typeof FloatingInput>, FloatingLabelInputProps>(({ className, ...props }, ref) => {
-  const [showPassword, setShowPassword] = useState(false)
-  const disabled = props.value === '' || props.value === undefined || props.disabled
+const PasswordInput = forwardRef<
+  React.ElementRef<typeof FloatingInput>,
+  FloatingLabelInputProps
+>(({ className, ...props }, ref) => {
+  const [showPassword, setShowPassword] = useState(false);
+  const disabled =
+    props.value === '' || props.value === undefined || props.disabled;
 
   return (
     <div className="relative">
@@ -31,7 +39,9 @@ const PasswordInput = forwardRef<React.ElementRef<typeof FloatingInput>, Floatin
         ) : (
           <EyeOffIcon className="h-4 w-4" aria-hidden="true" />
         )}
-        <span className="sr-only">{showPassword ? 'Hide password' : 'Show password'}</span>
+        <span className="sr-only">
+          {showPassword ? 'Hide password' : 'Show password'}
+        </span>
       </Button>
 
       {/* hides browsers password toggles */}
@@ -44,8 +54,8 @@ const PasswordInput = forwardRef<React.ElementRef<typeof FloatingInput>, Floatin
           }
         `}</style>
     </div>
-  )
-})
-PasswordInput.displayName = 'PasswordInput'
+  );
+});
+PasswordInput.displayName = 'PasswordInput';
 
-export { PasswordInput }
+export { PasswordInput };

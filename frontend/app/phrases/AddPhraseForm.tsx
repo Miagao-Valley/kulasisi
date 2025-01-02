@@ -6,9 +6,15 @@ import { useAuth } from '@/components/AuthProvider';
 import addPhrase from '@/lib/phrases/addPhrase';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
-import { useForm, SubmitHandler } from "react-hook-form"
+import { useForm, SubmitHandler } from 'react-hook-form';
 import setFormErrors from '@/utils/setFormErrors';
-import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from '@/components/ui/form';
 import { AutosizeTextarea } from '@/components/ui/autoresize-textarea';
 import { LoadingButton } from '@/components/ui/loading-button';
 import LangSelect from '@/components/LangSelect';
@@ -27,7 +33,7 @@ export default function AddPhraseForm({ className = '' }: Props) {
   const router = useRouter();
   const pathname = usePathname();
 
-  const form = useForm<PhraseInputs>()
+  const form = useForm<PhraseInputs>();
   const onSubmit: SubmitHandler<PhraseInputs> = async (data: PhraseInputs) => {
     if (!auth.isAuthenticated) {
       toast.error('You need to sign in to post.');
@@ -37,7 +43,7 @@ export default function AddPhraseForm({ className = '' }: Props) {
 
     const res = await addPhrase(data);
     if (res?.error) {
-      setFormErrors(res.error, form.setError)
+      setFormErrors(res.error, form.setError);
     } else {
       router.push(`/phrases/${res.id}/`);
       toast.success('Posted');
@@ -47,9 +53,12 @@ export default function AddPhraseForm({ className = '' }: Props) {
 
   return (
     <Form {...form}>
-      <form className={cn(className, 'flex flex-col gap-3')} onSubmit={form.handleSubmit(onSubmit)}>
+      <form
+        className={cn(className, 'flex flex-col gap-3')}
+        onSubmit={form.handleSubmit(onSubmit)}
+      >
         <FormMessage>
-            {form.formState.errors.root?.serverError.message}
+          {form.formState.errors.root?.serverError.message}
         </FormMessage>
 
         <FormField
@@ -79,7 +88,7 @@ export default function AddPhraseForm({ className = '' }: Props) {
                 <FormControl>
                   <LangSelect
                     selectedLang={field.value}
-                    setSelectedLang={(value) => form.setValue("lang", value)}
+                    setSelectedLang={(value) => form.setValue('lang', value)}
                   />
                 </FormControl>
                 <FormMessage />
@@ -87,12 +96,11 @@ export default function AddPhraseForm({ className = '' }: Props) {
             )}
           />
 
-
           <LoadingButton
             className="ms-auto"
             type="submit"
             loading={form.formState.isSubmitting}
-            disabled={!(form.watch("content")?.trim() && form.watch("lang"))}
+            disabled={!(form.watch('content')?.trim() && form.watch('lang'))}
           >
             Post
           </LoadingButton>

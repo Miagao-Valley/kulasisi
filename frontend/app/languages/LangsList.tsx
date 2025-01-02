@@ -22,7 +22,10 @@ export default async function LangsList({
 
   return (
     <ul
-      className={cn(className, 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4')}
+      className={cn(
+        className,
+        'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4',
+      )}
     >
       {langs && langs.results && langs.results.length > 0 ? (
         langs.results.map((lang) => (
@@ -45,7 +48,12 @@ interface SkeletonProps {
 
 export function LangsListSkeleton({ className = '' }: SkeletonProps) {
   return (
-    <ul className={cn(className, 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5')}>
+    <ul
+      className={cn(
+        className,
+        'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5',
+      )}
+    >
       {Array.from({ length: 40 }, (_, i) => (
         <Skeleton key={i} className="h-8 rounded-xl"></Skeleton>
       ))}

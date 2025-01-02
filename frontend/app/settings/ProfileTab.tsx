@@ -3,10 +3,22 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { User } from '@/types/users';
 import updateUser from '@/lib/users/updateUser';
 import setFormErrors from '@/utils/setFormErrors';
-import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from '@/components/ui/form';
 import { FloatingLabelInput } from '@/components/ui/floating-label-input';
 import { DateTimePicker } from '@/components/ui/datetime-picker';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { LoadingButton } from '@/components/ui/loading-button';
 import { Textarea } from '@/components/ui/textarea';
 
@@ -15,13 +27,13 @@ export interface ProfileInputs {
   password: string;
   email: string;
   phone_number: number;
-  first_name: string,
-  last_name: string,
-  date_of_birth: Date,
-  location: string,
-  gender: string,
-  bio: string,
-  website: string,
+  first_name: string;
+  last_name: string;
+  date_of_birth: Date;
+  location: string;
+  gender: string;
+  bio: string;
+  website: string;
 }
 
 interface Props {
@@ -29,11 +41,13 @@ interface Props {
 }
 
 export default function ProfileTab({ user }: Props) {
-  const form = useForm<ProfileInputs>()
-  const onSubmit: SubmitHandler<ProfileInputs> = async (data: ProfileInputs) => {
+  const form = useForm<ProfileInputs>();
+  const onSubmit: SubmitHandler<ProfileInputs> = async (
+    data: ProfileInputs,
+  ) => {
     const res = await updateUser(user.username, data);
     if (res?.error) {
-      setFormErrors(res.error, form.setError)
+      setFormErrors(res.error, form.setError);
     }
     return res;
   };
@@ -41,7 +55,10 @@ export default function ProfileTab({ user }: Props) {
   return (
     <div className="flex flex-col gap-4">
       <Form {...form}>
-        <form className="flex flex-col gap-3" onSubmit={form.handleSubmit(onSubmit)}>
+        <form
+          className="flex flex-col gap-3"
+          onSubmit={form.handleSubmit(onSubmit)}
+        >
           <h2>General</h2>
 
           <FormMessage>
@@ -58,7 +75,11 @@ export default function ProfileTab({ user }: Props) {
                 render={({ field }) => (
                   <FormItem className="w-full">
                     <FormControl>
-                      <FloatingLabelInput label="First Name" autoFocus {...field} />
+                      <FloatingLabelInput
+                        label="First Name"
+                        autoFocus
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -128,7 +149,10 @@ export default function ProfileTab({ user }: Props) {
               defaultValue={user.gender}
               render={({ field }) => (
                 <FormItem>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select gender" />

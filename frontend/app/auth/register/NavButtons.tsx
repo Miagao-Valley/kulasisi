@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React from 'react';
 import Link from 'next/link';
@@ -16,7 +16,13 @@ interface Props {
   form: UseFormReturn<RegisterInputs, any, undefined>;
 }
 
-export default function NavButtons({ step, numSteps, setStep, reachedEnd, form }: Props) {
+export default function NavButtons({
+  step,
+  numSteps,
+  setStep,
+  reachedEnd,
+  form,
+}: Props) {
   return (
     <div className="flex justify-between items-center gap-4 mt-4">
       <Button
@@ -28,19 +34,20 @@ export default function NavButtons({ step, numSteps, setStep, reachedEnd, form }
         <ChevronLeftIcon />
       </Button>
 
-      {reachedEnd &&
-      <LoadingButton
-        className="w-full"
-        type="submit"
-        loading={form.formState.isSubmitting}>
-        Sign up
-      </LoadingButton>
-      }
-      {!reachedEnd && step === 0 &&
+      {reachedEnd && (
+        <LoadingButton
+          className="w-full"
+          type="submit"
+          loading={form.formState.isSubmitting}
+        >
+          Sign up
+        </LoadingButton>
+      )}
+      {!reachedEnd && step === 0 && (
         <p className="text-center">
           Already have an account? <Link href={`/auth/login/`}>Sign in</Link>
         </p>
-      }
+      )}
 
       <Button
         variant="outline"

@@ -7,7 +7,12 @@ import { Entry, Vote } from '@/types/core';
 import vote from '@/lib/vote/vote';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
-import { BiDownvote, BiSolidDownvote, BiSolidUpvote, BiUpvote } from 'react-icons/bi';
+import {
+  BiDownvote,
+  BiSolidDownvote,
+  BiSolidUpvote,
+  BiUpvote,
+} from 'react-icons/bi';
 
 interface Props {
   entry: Entry;

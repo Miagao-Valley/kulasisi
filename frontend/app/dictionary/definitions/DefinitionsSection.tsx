@@ -52,11 +52,20 @@ export default async function DefinitionsSection({
       />
       <div className="mb-4 flex gap-2">
         <SearchInput currentSearchTerm={searchTerm} className="me-auto" />
-        <SortDropdown currentSortOption={sortOption} sortingOptions={sortingOptions} />
+        <SortDropdown
+          currentSortOption={sortOption}
+          sortingOptions={sortingOptions}
+        />
         <FilterMenu currentFilters={filters} filterOptions={filterOptions} />
       </div>
       <Suspense fallback={<DefinitionsListSkeleton />}>
-        <DefinitionsList wordId={word.id} searchTerm={searchTerm} sortOption={sortOption} filters={filters} page={page} />
+        <DefinitionsList
+          wordId={word.id}
+          searchTerm={searchTerm}
+          sortOption={sortOption}
+          filters={filters}
+          page={page}
+        />
       </Suspense>
     </>
   );

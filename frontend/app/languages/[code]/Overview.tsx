@@ -4,7 +4,12 @@ import React from 'react';
 import Link from 'next/link';
 import { Lang } from '@/types/languages';
 import { cn } from '@/lib/utils';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 import { Badge } from '@/components/ui/badge';
 
 interface Props {
@@ -19,7 +24,9 @@ export default function Overview({ lang, className = '' }: Props) {
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger disabled>
-              <Badge variant="outline" className="hover:cursor-pointer">{lang.code}</Badge>
+              <Badge variant="outline" className="hover:cursor-pointer">
+                {lang.code}
+              </Badge>
             </TooltipTrigger>
             <TooltipContent>
               <p>ISO 639-3</p>

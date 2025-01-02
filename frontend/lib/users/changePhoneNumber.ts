@@ -4,7 +4,10 @@ import fetcher, { FetchError } from '@/utils/fetcher';
 import getToken from '../tokens/getToken';
 import { redirect } from 'next/navigation';
 
-export default async function changePhoneNumber(username: string, data: object) {
+export default async function changePhoneNumber(
+  username: string,
+  data: object,
+) {
   try {
     const promise = fetcher(
       `/users/${username}/change-phone-number/`,

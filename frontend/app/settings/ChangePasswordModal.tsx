@@ -7,8 +7,20 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import changePassword from '@/lib/users/changePassword';
 import setFormErrors from '@/utils/setFormErrors';
 import { Button } from '@/components/ui/button';
-import { DialogContent, DialogTitle, DialogDescription, DialogHeader, DialogClose } from '@/components/ui/dialog';
-import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import {
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+  DialogHeader,
+  DialogClose,
+} from '@/components/ui/dialog';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from '@/components/ui/form';
 import { PasswordInput } from '@/components/ui/password-input';
 import { LoadingButton } from '@/components/ui/loading-button';
 
@@ -25,14 +37,15 @@ export function ChangePasswordModal({ username }: Props) {
   const auth = useAuth();
   const router = useRouter();
 
-  const form = useForm<ChangePasswordInputs>()
+  const form = useForm<ChangePasswordInputs>();
 
-  const onSubmit: SubmitHandler<ChangePasswordInputs> = async (data: ChangePasswordInputs) => {
+  const onSubmit: SubmitHandler<ChangePasswordInputs> = async (
+    data: ChangePasswordInputs,
+  ) => {
     const res = await changePassword(username, data);
     if (res?.error) {
-      setFormErrors(res.error, form.setError)
-    }
-    else {
+      setFormErrors(res.error, form.setError);
+    } else {
       auth.updateAuth();
       router.refresh();
     }
@@ -48,7 +61,10 @@ export function ChangePasswordModal({ username }: Props) {
         </DialogDescription>
       </DialogHeader>
       <Form {...form}>
-        <form className="flex flex-col gap-3" onSubmit={form.handleSubmit(onSubmit)}>
+        <form
+          className="flex flex-col gap-3"
+          onSubmit={form.handleSubmit(onSubmit)}
+        >
           <FormMessage>
             {form.formState.errors.root?.serverError.message}
           </FormMessage>
@@ -59,7 +75,11 @@ export function ChangePasswordModal({ username }: Props) {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <PasswordInput label="Current Password" autoFocus {...field} />
+                  <PasswordInput
+                    label="Current Password"
+                    autoFocus
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

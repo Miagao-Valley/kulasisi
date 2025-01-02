@@ -6,7 +6,12 @@ import * as React from 'react';
 import { forwardRef, useEffect } from 'react';
 
 import { Badge } from '@/components/ui/badge';
-import { Command, CommandGroup, CommandItem, CommandList } from '@/components/ui/command';
+import {
+  Command,
+  CommandGroup,
+  CommandItem,
+  CommandList,
+} from '@/components/ui/command';
 import { cn } from '@/lib/utils';
 
 export interface Option {
@@ -125,14 +130,18 @@ function removePickedOption(groupOption: GroupOption, picked: Option[]) {
   const cloneOption = JSON.parse(JSON.stringify(groupOption)) as GroupOption;
 
   for (const [key, value] of Object.entries(cloneOption)) {
-    cloneOption[key] = value.filter((val) => !picked.find((p) => p.value === val.value));
+    cloneOption[key] = value.filter(
+      (val) => !picked.find((p) => p.value === val.value),
+    );
   }
   return cloneOption;
 }
 
 function isOptionsExist(groupOption: GroupOption, targetOption: Option[]) {
   for (const [, value] of Object.entries(groupOption)) {
-    if (value.some((option) => targetOption.find((p) => p.value === option.value))) {
+    if (
+      value.some((option) => targetOption.find((p) => p.value === option.value))
+    ) {
       return true;
     }
   }
@@ -166,7 +175,10 @@ const CommandEmpty = forwardRef<
 
 CommandEmpty.displayName = 'CommandEmpty';
 
-const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorProps>(
+const MultipleSelector = React.forwardRef<
+  MultipleSelectorRef,
+  MultipleSelectorProps
+>(
   (
     {
       value,
@@ -214,7 +226,7 @@ const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorP
         selectedValue: [...selected],
         input: inputRef.current as HTMLInputElement,
         focus: () => inputRef?.current?.focus(),
-        reset: () => setSelected([])
+        reset: () => setSelected([]),
       }),
       [selected],
     );
@@ -432,9 +444,14 @@ const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorP
           handleKeyDown(e);
           commandProps?.onKeyDown?.(e);
         }}
-        className={cn('h-auto overflow-visible bg-transparent', commandProps?.className)}
+        className={cn(
+          'h-auto overflow-visible bg-transparent',
+          commandProps?.className,
+        )}
         shouldFilter={
-          commandProps?.shouldFilter !== undefined ? commandProps.shouldFilter : !onSearch
+          commandProps?.shouldFilter !== undefined
+            ? commandProps.shouldFilter
+            : !onSearch
         } // When onSearch is provided, we don't want to filter the options. You can still override it.
         filter={commandFilter()}
       >
@@ -505,11 +522,14 @@ const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorP
               }}
               onFocus={(event) => {
                 setOpen(true);
-                if (triggerSearchOnFocus)
-                  onSearch?.(debouncedSearchTerm);
+                if (triggerSearchOnFocus) onSearch?.(debouncedSearchTerm);
                 inputProps?.onFocus?.(event);
               }}
-              placeholder={hidePlaceholderWhenSelected && selected.length !== 0 ? '' : placeholder}
+              placeholder={
+                hidePlaceholderWhenSelected && selected.length !== 0
+                  ? ''
+                  : placeholder
+              }
               className={cn(
                 'flex-1 bg-transparent outline-none placeholder:text-muted-foreground',
                 {
@@ -532,7 +552,7 @@ const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorP
                   disabled ||
                   selected.length < 1 ||
                   selected.filter((s) => s.fixed).length === selected.length) &&
-                'hidden',
+                  'hidden',
               )}
             >
               <X />
@@ -559,9 +579,15 @@ const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorP
                 <>
                   {EmptyItem()}
                   {CreatableItem()}
-                  {!selectFirstItem && <CommandItem value="-" className="hidden" />}
+                  {!selectFirstItem && (
+                    <CommandItem value="-" className="hidden" />
+                  )}
                   {Object.entries(selectables).map(([key, dropdowns]) => (
-                    <CommandGroup key={key} heading={key} className="h-full overflow-auto">
+                    <CommandGroup
+                      key={key}
+                      heading={key}
+                      className="h-full overflow-auto"
+                    >
                       <>
                         {dropdowns.map((option) => {
                           return (
@@ -585,7 +611,8 @@ const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorP
                               }}
                               className={cn(
                                 'cursor-pointer',
-                                option.disable && 'cursor-default text-muted-foreground',
+                                option.disable &&
+                                  'cursor-default text-muted-foreground',
                               )}
                             >
                               {option.label}

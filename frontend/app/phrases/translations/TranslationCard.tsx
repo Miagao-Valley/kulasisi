@@ -9,7 +9,12 @@ import EntryHeader from '@/components/EntryHeader';
 import EntryFooter from '@/components/EntryFooter';
 import TranslationDropdownMenu from './TranslationDropdownMenu';
 import UpdateTranslationForm from './UpdateTranslationForm';
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from '@/components/ui/card';
 
 interface Props {
   translation: Translation;
@@ -30,7 +35,11 @@ export default function TranslationCard({
     <Card className={cn(className, '')}>
       <CardHeader className="flex flex-row">
         <EntryHeader className="me-auto" entry={translation} />
-        <TranslationDropdownMenu translation={translation} revisions={revisions} setIsEditing={setIsEditing} />
+        <TranslationDropdownMenu
+          translation={translation}
+          revisions={revisions}
+          setIsEditing={setIsEditing}
+        />
       </CardHeader>
       <CardContent>
         {isEditing ? (
@@ -41,7 +50,9 @@ export default function TranslationCard({
             setIsEditing={setIsEditing}
           />
         ) : (
-          <Link href={`/phrases/${translation.phrase}?tab=translations#${translation.id}`}>
+          <Link
+            href={`/phrases/${translation.phrase}?tab=translations#${translation.id}`}
+          >
             <p className="mb-2 whitespace-pre-line">{translation.content}</p>
           </Link>
         )}

@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React, { useState } from 'react';
 import deletePhrase from '@/lib/phrases/deletePhrase';
@@ -47,7 +47,11 @@ export default function DeletePhraseModal({ id }: Props) {
             }
           }}
         >
-          <LoadingButton variant="destructive" type="submit" loading={isLoading}>
+          <LoadingButton
+            variant="destructive"
+            type="submit"
+            loading={isLoading}
+          >
             Delete
           </LoadingButton>
         </form>

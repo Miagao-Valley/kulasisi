@@ -3,8 +3,16 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import { Button } from "@/components/ui/button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { ArrowDownWideNarrow, ArrowUpNarrowWide } from 'lucide-react';
 
 export interface SortOption {
@@ -59,9 +67,11 @@ export default function SortDropdown({
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="outline">
-            Sort: {sortingOptions.find(
+            Sort:{' '}
+            {sortingOptions.find(
               (option) =>
-                option.value.replace(/^-/g, '') === sortOption.replace(/^-/g, ''),
+                option.value.replace(/^-/g, '') ===
+                sortOption.replace(/^-/g, ''),
             )?.label || 'None'}
           </Button>
         </DropdownMenuTrigger>
@@ -69,7 +79,10 @@ export default function SortDropdown({
         <DropdownMenuContent className="w-56">
           <DropdownMenuLabel>Sort</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuRadioGroup value={sortOption} onValueChange={setSortOption}>
+          <DropdownMenuRadioGroup
+            value={sortOption}
+            onValueChange={setSortOption}
+          >
             {sortingOptions.map(({ label, value }) => (
               <DropdownMenuRadioItem key={value} value={value}>
                 {label}

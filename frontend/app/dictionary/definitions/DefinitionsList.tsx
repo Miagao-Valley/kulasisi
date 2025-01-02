@@ -43,14 +43,20 @@ export default async function DefinitionsList({
   return (
     <>
       <ul className={cn(className, 'flex flex-col gap-3')}>
-        {definitions && definitions.results && definitions.results.length > 0 ? (
+        {definitions &&
+        definitions.results &&
+        definitions.results.length > 0 ? (
           definitions.results.map(async (definition) => {
             const votes = await getVotes(definition);
             const revisions = await getDefinitionRevisions(definition.id);
             return (
               <li key={definition.id}>
                 <div id={`definition-${definition.id}`}>
-                  <DefinitionCard definition={definition} votes={votes} revisions={revisions.results} />
+                  <DefinitionCard
+                    definition={definition}
+                    votes={votes}
+                    revisions={revisions.results}
+                  />
                 </div>
               </li>
             );

@@ -1,7 +1,7 @@
 import React from 'react';
 import getPhrases from '@/lib/phrases/getPhrases';
 import getPhraseRevisions from '@/lib/phrases/getPhraseRevisions';
-import getVotes from '@/lib/vote/getVotes'
+import getVotes from '@/lib/vote/getVotes';
 import { cn } from '@/lib/utils';
 import PhraseCard from './PhraseCard';
 import ListPagination from '@/components/ListPagination';
@@ -35,7 +35,6 @@ export default async function PhrasesList({
     offset: limit * (page - 1),
   });
 
-
   return (
     <>
       <ul className={cn(className, 'flex flex-col gap-3')}>
@@ -45,7 +44,11 @@ export default async function PhrasesList({
             const revisions = await getPhraseRevisions(phrase.id);
             return (
               <li key={phrase.id}>
-                <PhraseCard phrase={phrase} votes={votes} revisions={revisions.results} />
+                <PhraseCard
+                  phrase={phrase}
+                  votes={votes}
+                  revisions={revisions.results}
+                />
               </li>
             );
           })

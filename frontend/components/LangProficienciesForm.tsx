@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React, { useEffect, useState } from 'react';
 import { Lang, LangProficiencyLevel } from '@/types/languages';
@@ -10,10 +10,12 @@ import LangHoverCard from './LangHoverCard';
 
 interface Props {
   selectedLangProficiencies: { lang: string; level: LangProficiencyLevel }[];
-  setSelectedLangProficiencies: (values: {
+  setSelectedLangProficiencies: (
+    values: {
       lang: string;
       level: LangProficiencyLevel;
-  }[]) => void;
+    }[],
+  ) => void;
   disabled?: boolean;
 }
 
@@ -23,7 +25,7 @@ export default function LangProficienciesForm({
   disabled = false,
 }: Props) {
   const [langs, setLangs] = useState<Lang[]>([]);
-  const [options, setOptions] = useState<Option[]>([])
+  const [options, setOptions] = useState<Option[]>([]);
 
   useEffect(() => {
     const fetchLangs = async () => {
@@ -35,22 +37,29 @@ export default function LangProficienciesForm({
   }, []);
 
   useEffect(() => {
-    setOptions(langs.map(lang => ({
-      label: lang.name,
-      value: lang.code,
-    })));
+    setOptions(
+      langs.map((lang) => ({
+        label: lang.name,
+        value: lang.code,
+      })),
+    );
   }, [langs]);
 
   const handleLanguageSelection = (selectedOptions: Option[]) => {
-    const selectedValues = selectedOptions.map(option => option.value);
+    const selectedValues = selectedOptions.map((option) => option.value);
 
-    const updatedLanguages = selectedLangProficiencies.filter(item =>
-      selectedValues.includes(item.lang)
+    const updatedLanguages = selectedLangProficiencies.filter((item) =>
+      selectedValues.includes(item.lang),
     );
 
-    selectedOptions.forEach(option => {
-      if (!selectedLangProficiencies.some(item => item.lang === option.value)) {
-        updatedLanguages.push({ lang: option.value, level: 1 as LangProficiencyLevel });
+    selectedOptions.forEach((option) => {
+      if (
+        !selectedLangProficiencies.some((item) => item.lang === option.value)
+      ) {
+        updatedLanguages.push({
+          lang: option.value,
+          level: 1 as LangProficiencyLevel,
+        });
       }
     });
 
@@ -58,7 +67,10 @@ export default function LangProficienciesForm({
   };
 
   const handleRangeChange = (level: LangProficiencyLevel, lang: string) => {
-    setSelectedLangProficiencies(selectedLangProficiencies.map((item) => (item.lang === lang ? { ...item, level } : item)),
+    setSelectedLangProficiencies(
+      selectedLangProficiencies.map((item) =>
+        item.lang === lang ? { ...item, level } : item,
+      ),
     );
   };
 
@@ -68,26 +80,28 @@ export default function LangProficienciesForm({
         <h3 className="text-base me-auto">Language Proficiency</h3>
         {!disabled && (
           <div className="w-96 px-4">
-            {options &&
+            {options && (
               <MultipleSelector
-                value={selectedLangProficiencies.map(item => ({
+                value={selectedLangProficiencies.map((item) => ({
                   value: item.lang,
-                  label: langs.find(lang => lang.code === item.lang)?.name || item.lang,
+                  label:
+                    langs.find((lang) => lang.code === item.lang)?.name ||
+                    item.lang,
                 }))}
                 onSearch={async (q) => {
-                  q = q.toLowerCase()
-                  return options.filter((option) => option.value.toLowerCase().includes(q) || option.label.toLowerCase().includes(q));
+                  q = q.toLowerCase();
+                  return options.filter(
+                    (option) =>
+                      option.value.toLowerCase().includes(q) ||
+                      option.label.toLowerCase().includes(q),
+                  );
                 }}
                 triggerSearchOnFocus
                 onChange={(options) => handleLanguageSelection(options)}
                 placeholder="Select languages..."
-                emptyIndicator={
-                  <p className="text-center">
-                    No results found
-                  </p>
-                }
+                emptyIndicator={<p className="text-center">No results found</p>}
               />
-            }
+            )}
           </div>
         )}
       </div>
@@ -117,7 +131,12 @@ export default function LangProficienciesForm({
                   max={5}
                   value={[langProf.level]}
                   step={1}
-                  onValueChange={(value) => handleRangeChange(value[0] as LangProficiencyLevel, langProf.lang)}
+                  onValueChange={(value) =>
+                    handleRangeChange(
+                      value[0] as LangProficiencyLevel,
+                      langProf.lang,
+                    )
+                  }
                   disabled={disabled}
                 />
               </div>

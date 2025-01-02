@@ -8,7 +8,12 @@ import { cn } from '@/lib/utils';
 import UpdateWordForm from './UpdateWordForm';
 import EntryHeader from '@/components/EntryHeader';
 import EntryFooter from '@/components/EntryFooter';
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from '@/components/ui/card';
 import WordDropdownMenu from './WordDropdownMenu';
 
 interface Props {
@@ -30,15 +35,23 @@ export default function WordCard({
     <Card className={cn(className, '')}>
       <CardHeader className="flex flex-row">
         <EntryHeader className="me-auto" entry={word} />
-        <WordDropdownMenu word={word} revisions={revisions} setIsEditing={setIsEditing} />
+        <WordDropdownMenu
+          word={word}
+          revisions={revisions}
+          setIsEditing={setIsEditing}
+        />
       </CardHeader>
       <CardContent>
         {isEditing ? (
-          <UpdateWordForm id={word.id} initialWord={word.word} setIsEditing={setIsEditing} />
+          <UpdateWordForm
+            id={word.id}
+            initialWord={word.word}
+            setIsEditing={setIsEditing}
+          />
         ) : (
-            <Link href={`/dictionary/${word.id}/`}>
-              <p className="mb-2 text-xl font-bold">{word.word}</p>
-            </Link>
+          <Link href={`/dictionary/${word.id}/`}>
+            <p className="mb-2 text-xl font-bold">{word.word}</p>
+          </Link>
         )}
       </CardContent>
       <CardFooter>

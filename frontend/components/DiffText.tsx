@@ -8,7 +8,11 @@ interface Props {
   className?: string;
 }
 
-export default function DiffText({ prevContent, content, className = '' }: Props) {
+export default function DiffText({
+  prevContent,
+  content,
+  className = '',
+}: Props) {
   const diff = diffWords(prevContent, content);
 
   return (
@@ -28,5 +32,5 @@ export default function DiffText({ prevContent, content, className = '' }: Props
         </span>
       ))}
     </p>
-  )
+  );
 }

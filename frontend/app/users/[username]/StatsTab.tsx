@@ -5,14 +5,20 @@ import { useAuth } from '@/components/AuthProvider';
 import { LangProficiencyLevel } from '@/types/languages';
 import { User } from '@/types/users';
 import updateUser from '@/lib/users/updateUser';
-import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from '@/components/ui/form';
 import LangProficienciesForm from '@/components/LangProficienciesForm';
 import { LoadingButton } from '@/components/ui/loading-button';
 import setFormErrors from '@/utils/setFormErrors';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 interface LangProficienciesInputs {
-  language_proficiencies: { lang: string, level: LangProficiencyLevel }[]
+  language_proficiencies: { lang: string; level: LangProficiencyLevel }[];
 }
 interface Props {
   user: User;
@@ -21,11 +27,13 @@ interface Props {
 export default function StatsTab({ user }: Props) {
   const auth = useAuth();
 
-  const form = useForm<LangProficienciesInputs>()
-  const onSubmit: SubmitHandler<LangProficienciesInputs> = async (data: LangProficienciesInputs) => {
+  const form = useForm<LangProficienciesInputs>();
+  const onSubmit: SubmitHandler<LangProficienciesInputs> = async (
+    data: LangProficienciesInputs,
+  ) => {
     const res = await updateUser(user.username, data);
     if (res?.error) {
-      setFormErrors(res.error, form.setError)
+      setFormErrors(res.error, form.setError);
     }
     return res;
   };
@@ -33,7 +41,10 @@ export default function StatsTab({ user }: Props) {
   return (
     <>
       <Form {...form}>
-        <form className="flex flex-col gap-3" onSubmit={form.handleSubmit(onSubmit)}>
+        <form
+          className="flex flex-col gap-3"
+          onSubmit={form.handleSubmit(onSubmit)}
+        >
           <FormMessage>
             {form.formState.errors.root?.serverError.message}
           </FormMessage>
@@ -46,8 +57,12 @@ export default function StatsTab({ user }: Props) {
                 <FormControl>
                   <LangProficienciesForm
                     selectedLangProficiencies={field.value}
-                    setSelectedLangProficiencies={(value) => form.setValue('language_proficiencies', value)}
-                    disabled={!auth.isAuthenticated || auth.username !== user.username}
+                    setSelectedLangProficiencies={(value) =>
+                      form.setValue('language_proficiencies', value)
+                    }
+                    disabled={
+                      !auth.isAuthenticated || auth.username !== user.username
+                    }
                   />
                 </FormControl>
                 <FormMessage />

@@ -29,7 +29,12 @@ export default async function UsersList({
 
   return (
     <>
-      <ul className={cn(className, 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4')}>
+      <ul
+        className={cn(
+          className,
+          'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4',
+        )}
+      >
         {users && users.results && users.results.length > 0 ? (
           users.results.map((user) => (
             <li key={user.id}>
@@ -61,7 +66,12 @@ interface SkeletonProps {
 
 export function UsersListSkeleton({ className = '' }: SkeletonProps) {
   return (
-    <ul className={cn(className, 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5')} >
+    <ul
+      className={cn(
+        className,
+        'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5',
+      )}
+    >
       {Array.from({ length: 40 }, (_, i) => (
         <Skeleton key={i} className="h-12 rounded-xl"></Skeleton>
       ))}

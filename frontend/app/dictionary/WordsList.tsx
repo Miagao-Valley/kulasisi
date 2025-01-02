@@ -1,7 +1,7 @@
 import React from 'react';
 import getWords from '@/lib/words/getWords';
 import getWordRevisions from '@/lib/words/getWordRevisions';
-import getVotes from '@/lib/vote/getVotes'
+import getVotes from '@/lib/vote/getVotes';
 import { cn } from '@/lib/utils';
 import WordCard from './WordCard';
 import ListPagination from '@/components/ListPagination';
@@ -43,7 +43,11 @@ export default async function WordsList({
             const revisions = await getWordRevisions(word.id);
             return (
               <li key={word.id}>
-                <WordCard word={word} votes={votes} revisions={revisions.results} />
+                <WordCard
+                  word={word}
+                  votes={votes}
+                  revisions={revisions.results}
+                />
               </li>
             );
           })

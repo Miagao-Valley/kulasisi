@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React, { useState } from 'react';
 import deleteDefinition from '@/lib/definitions/deleteDefinition';
@@ -48,7 +48,11 @@ export default function DeleteDefinitionModal({ wordId, id }: Props) {
             }
           }}
         >
-          <LoadingButton variant="destructive" type="submit" loading={isLoading}>
+          <LoadingButton
+            variant="destructive"
+            type="submit"
+            loading={isLoading}
+          >
             Delete
           </LoadingButton>
         </form>

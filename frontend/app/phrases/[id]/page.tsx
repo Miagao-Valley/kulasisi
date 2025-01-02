@@ -16,14 +16,19 @@ interface Props {
 export default async function PhrasePage({ params, searchParams }: Props) {
   const id = Number(params.id);
   const phrase = await getPhrase(id);
-  const votes = await getVotes(phrase)
+  const votes = await getVotes(phrase);
   const revisions = await getPhraseRevisions(id);
 
   const currentTab = searchParams?.tab || 'translations';
 
   return (
     <>
-      <PhraseCard className="mb-3" phrase={phrase} votes={votes} revisions={revisions.results} />
+      <PhraseCard
+        className="mb-3"
+        phrase={phrase}
+        votes={votes}
+        revisions={revisions.results}
+      />
 
       <Tabs defaultValue={currentTab}>
         <TabsList>

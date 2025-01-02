@@ -14,7 +14,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from '@/components/ui/dropdown-menu';
 
 export default function UserActions() {
   const auth = useAuth();
@@ -31,7 +31,9 @@ export default function UserActions() {
           <DropdownMenuTrigger asChild>
             <Avatar className="hover:cursor-pointer">
               <AvatarImage src="" alt={auth.username} />
-              <AvatarFallback>{auth.username.slice(0, 1).toUpperCase()}</AvatarFallback>
+              <AvatarFallback>
+                {auth.username.slice(0, 1).toUpperCase()}
+              </AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>
 
@@ -40,29 +42,30 @@ export default function UserActions() {
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem>
-                <Link href={`/users/${auth.username}/`} className="w-full">View Profile</Link>
+                <Link href={`/users/${auth.username}/`} className="w-full">
+                  View Profile
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Link href={`/settings/`} className="w-full">Settings</Link>
+                <Link href={`/settings/`} className="w-full">
+                  Settings
+                </Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuItem>
-              <Link href={`/auth/logout/`} className="w-full">Sign out</Link>
+              <Link href={`/auth/logout/`} className="w-full">
+                Sign out
+              </Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-
       ) : (
         <div className="flex gap-2">
           <Button variant="outline" asChild>
-            <Link href={`/auth/login?next=${pathname}`}>
-              Sign in
-            </Link>
+            <Link href={`/auth/login?next=${pathname}`}>Sign in</Link>
           </Button>
           <Button asChild>
-            <Link href={`/auth/register/`}>
-              Sign up
-            </Link>
+            <Link href={`/auth/register/`}>Sign up</Link>
           </Button>
         </div>
       )}

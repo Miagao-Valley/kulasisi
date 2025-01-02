@@ -19,12 +19,12 @@ export interface RegisterInputs {
   password: string;
   email: string;
   phone_number: number;
-  first_name: string,
-  last_name: string,
-  date_of_birth: Date,
-  location: string,
-  gender: string,
-  language_proficiencies: { lang: string; level: LangProficiencyLevel }[],
+  first_name: string;
+  last_name: string;
+  date_of_birth: Date;
+  location: string;
+  gender: string;
+  language_proficiencies: { lang: string; level: LangProficiencyLevel }[];
 }
 
 const steps = [
@@ -38,18 +38,12 @@ const steps = [
   },
   {
     name: 'Personal',
-    fields: [
-      'first_name',
-      'last_name',
-      'date_of_birth',
-      'location',
-      'gender',
-    ]
+    fields: ['first_name', 'last_name', 'date_of_birth', 'location', 'gender'],
   },
   {
     name: 'Experience',
     fields: ['language_proficiencies'],
-  }
+  },
 ];
 
 export default function RegisterForm() {
@@ -64,21 +58,23 @@ export default function RegisterForm() {
     }
   }, [step]);
 
-  const form = useForm<RegisterInputs>()
-  const onSubmit: SubmitHandler<RegisterInputs> = async (data: RegisterInputs) => {
+  const form = useForm<RegisterInputs>();
+  const onSubmit: SubmitHandler<RegisterInputs> = async (
+    data: RegisterInputs,
+  ) => {
     const res = await register(data);
     if (res?.error) {
-      setFormErrors(res.error, form.setError)
+      setFormErrors(res.error, form.setError);
 
       // Goto step with error
-      const errorKeys = Object.keys(res?.error)
-      errorKeys.reverse().map(key => {
+      const errorKeys = Object.keys(res?.error);
+      errorKeys.reverse().map((key) => {
         steps.map((step, idx) => {
           if (step.fields.includes(key)) {
-            setStep(idx)
+            setStep(idx);
           }
-        })
-      })
+        });
+      });
     } else {
       auth.updateAuth();
     }
@@ -87,10 +83,18 @@ export default function RegisterForm() {
 
   return (
     <div className="flex flex-col align-middle">
-      <StepperIndicator className="mb-6" numSteps={steps.length} step={step} setStep={setStep} />
+      <StepperIndicator
+        className="mb-6"
+        numSteps={steps.length}
+        step={step}
+        setStep={setStep}
+      />
 
       <Form {...form}>
-        <form className="flex flex-col gap-3" onSubmit={form.handleSubmit(onSubmit)}>
+        <form
+          className="flex flex-col gap-3"
+          onSubmit={form.handleSubmit(onSubmit)}
+        >
           <h1>{steps[step].name}</h1>
 
           <FormMessage>
@@ -102,7 +106,13 @@ export default function RegisterForm() {
           <Personal form={form} className={step !== 2 ? '!hidden' : ''} />
           <Experience form={form} className={step !== 3 ? '!hidden' : ''} />
 
-          <NavButtons step={step} numSteps={steps.length} setStep={setStep} reachedEnd={reachedEnd} form={form} />
+          <NavButtons
+            step={step}
+            numSteps={steps.length}
+            setStep={setStep}
+            reachedEnd={reachedEnd}
+            form={form}
+          />
         </form>
       </Form>
     </div>

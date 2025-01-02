@@ -45,11 +45,19 @@ export default async function PhrasesPage({ searchParams }: Props) {
       <AddPhraseForm className="py-2 mb-4 border-t border-b" />
       <div className="mb-4 flex gap-2">
         <SearchInput currentSearchTerm={searchTerm} className="me-auto" />
-        <SortDropdown currentSortOption={sortOption} sortingOptions={sortingOptions} />
+        <SortDropdown
+          currentSortOption={sortOption}
+          sortingOptions={sortingOptions}
+        />
         <FilterMenu currentFilters={filters} filterOptions={filterOptions} />
       </div>
       <Suspense fallback={<PhrasesListSkeleton />}>
-        <PhrasesList searchTerm={searchTerm} sortOption={sortOption} filters={filters} page={page} />
+        <PhrasesList
+          searchTerm={searchTerm}
+          sortOption={sortOption}
+          filters={filters}
+          page={page}
+        />
       </Suspense>
     </>
   );

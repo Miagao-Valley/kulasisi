@@ -11,10 +11,10 @@ export default async function changeEmail(username: string, data: object) {
       {
         method: 'POST',
         headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
       },
       getToken(),
     );

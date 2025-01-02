@@ -44,18 +44,24 @@ export default function Overview({ user, className = '' }: Props) {
           </span>
         )}
         {user.location && (
-          <span className="flex items-center gap-1">
-            {user.location}
-          </span>
+          <span className="flex items-center gap-1">{user.location}</span>
         )}
         {user.date_of_birth && (
           <span className="flex items-center gap-1">
-            Born {user.date_of_birth.toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}
+            Born{' '}
+            {user.date_of_birth.toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+            })}
           </span>
         )}
         {user.date_joined && (
           <span className="flex items-center gap-1">
-            Joined {user.date_joined.toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}
+            Joined{' '}
+            {user.date_joined.toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+            })}
           </span>
         )}
       </div>

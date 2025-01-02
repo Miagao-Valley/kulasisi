@@ -43,14 +43,20 @@ export default async function TranslationsList({
   return (
     <>
       <ul className={cn(className, 'flex flex-col gap-3')}>
-        {translations && translations.results && translations.results.length > 0 ? (
+        {translations &&
+        translations.results &&
+        translations.results.length > 0 ? (
           translations.results.map(async (translation) => {
             const votes = await getVotes(translation);
             const revisions = await getTranslationRevisions(translation.id);
             return (
               <li key={translation.id}>
                 <div id={`translation-${translation.id}`}>
-                  <TranslationCard translation={translation} votes={votes} revisions={revisions.results} />
+                  <TranslationCard
+                    translation={translation}
+                    votes={votes}
+                    revisions={revisions.results}
+                  />
                 </div>
               </li>
             );
