@@ -4,7 +4,7 @@ export interface Lang {
   id: number;
   code: string;
   name: string;
-  user_count: string;
+  user_count: number;
   users_by_proficiency: {
     1: number;
     2: number;
