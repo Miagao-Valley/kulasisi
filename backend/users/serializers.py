@@ -9,7 +9,7 @@ from languages.serializers import LanguageProficiencySerializer
 
 
 class UserSerializer(serializers.ModelSerializer):
-    language_proficiencies = LanguageProficiencySerializer(many=True)
+    language_proficiencies = LanguageProficiencySerializer(many=True, required=False)
     reputation = serializers.SerializerMethodField()
     phrase_count = serializers.SerializerMethodField()
     translation_count = serializers.SerializerMethodField()
@@ -47,6 +47,10 @@ class UserSerializer(serializers.ModelSerializer):
             "last_login": {"read_only": True},
             "date_joined": {"read_only": True},
             "reputation": {"read_only": True},
+            "first_name": {"required": True},
+            "last_name": {"required": True},
+            "date_of_birth": {"required": True},
+            "location": {"required": True},
         }
 
     def get_reputation(self, obj):
@@ -94,6 +98,7 @@ class UserSerializer(serializers.ModelSerializer):
 
         for proficiency_data in language_proficiencies_data:
             lang = proficiency_data.get("lang")
+
             if lang:
                 LanguageProficiency.objects.create(
                     user=user,
