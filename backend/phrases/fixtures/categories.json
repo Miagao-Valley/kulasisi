@@ -1,0 +1,162 @@
+[
+  {
+    "model": "phrases.category",
+    "pk": null,
+    "fields": {
+      "name": "basics",
+      "description": "Common phrases for basic greetings and expressions."
+    }
+  },
+  {
+    "model": "phrases.category",
+    "pk": null,
+    "fields": {
+      "name": "problems",
+      "description": "Phrases for dealing with problems or difficulties."
+    }
+  },
+  {
+    "model": "phrases.category",
+    "pk": null,
+    "fields": {
+      "name": "numbers",
+      "description": "Phrases for dealing with numbers and quantities."
+    }
+  },
+  {
+    "model": "phrases.category",
+    "pk": null,
+    "fields": {
+      "name": "time",
+      "description": "Phrases related to time and scheduling."
+    }
+  },
+  {
+    "model": "phrases.category",
+    "pk": null,
+    "fields": {
+      "name": "weather",
+      "description": "Phrases for talking about weather conditions and climate."
+    }
+  },
+  {
+    "model": "phrases.category",
+    "pk": null,
+    "fields": {
+      "name": "transportation",
+      "description": "Phrases related to travel, transport, and directions."
+    }
+  },
+  {
+    "model": "phrases.category",
+    "pk": null,
+    "fields": {
+      "name": "driving",
+      "description": "Phrases related to driving and road signs."
+    }
+  },
+  {
+    "model": "phrases.category",
+    "pk": null,
+    "fields": {
+      "name": "lodging",
+      "description": "Phrases for booking rooms and dealing with accommodations."
+    }
+  },
+  {
+    "model": "phrases.category",
+    "pk": null,
+    "fields": {
+      "name": "money",
+      "description": "Phrases related to currency, payments, and exchanges."
+    }
+  },
+  {
+    "model": "phrases.category",
+    "pk": null,
+    "fields": {
+      "name": "eating",
+      "description": "Phrases for ordering food, talking about meals, and dining."
+    }
+  },
+  {
+    "model": "phrases.category",
+    "pk": null,
+    "fields": {
+      "name": "cooking",
+      "description": "Phrases for discussing cooking, recipes, and meal preparation."
+    }
+  },
+  {
+    "model": "phrases.category",
+    "pk": null,
+    "fields": {
+      "name": "bars",
+      "description": "Phrases for ordering drinks and talking about bars."
+    }
+  },
+  {
+    "model": "phrases.category",
+    "pk": null,
+    "fields": {
+      "name": "shopping",
+      "description": "Phrases for shopping, purchasing, and haggling."
+    }
+  },
+  {
+    "model": "phrases.category",
+    "pk": null,
+    "fields": {
+      "name": "health",
+      "description": "Phrases for health issues, doctor visits, and medical care."
+    }
+  },
+  {
+    "model": "phrases.category",
+    "pk": null,
+    "fields": {
+      "name": "emergency",
+      "description": "Phrases for urgent situations and emergencies."
+    }
+  },
+  {
+    "model": "phrases.category",
+    "pk": null,
+    "fields": {
+      "name": "sports",
+      "description": "Phrases related to sports activities, games, and exercise."
+    }
+  },
+  {
+    "model": "phrases.category",
+    "pk": null,
+    "fields": {
+      "name": "technology",
+      "description": "Phrases for discussing gadgets, the internet, and communication."
+    }
+  },
+  {
+    "model": "phrases.category",
+    "pk": null,
+    "fields": {
+      "name": "education",
+      "description": "Phrases related to education, classrooms, and academic activities."
+    }
+  },
+  {
+    "model": "phrases.category",
+    "pk": null,
+    "fields": {
+      "name": "religion",
+      "description": "Phrases related to religious practices, places of worship, and spiritual matters."
+    }
+  },
+  {
+    "model": "phrases.category",
+    "pk": null,
+    "fields": {
+      "name": "authority",
+      "description": "Phrases for dealing with authorities, law enforcement, and official matters."
+    }
+  }
+]

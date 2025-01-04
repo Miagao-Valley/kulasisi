@@ -7,14 +7,14 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 
-from .models import Phrase, Translation
+from .models import Phrase, Translation, Category
 from .serializers import (
     PhraseSerializer,
     PhraseHistorySerializer,
     TranslationSerializer,
     TranslationHistorySerializer,
+    CategorySerializer,
 )
-
 
 class ListCreatePhraseView(generics.ListCreateAPIView):
     queryset = Phrase.objects.all()
@@ -126,3 +126,21 @@ class ListTranslationHistoryView(generics.ListAPIView):
             Translation, id=self.kwargs.get("translation_pk")
         )
         return translation.history.all()
+
+
+class ListCreateCategoryView(generics.ListCreateAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    search_fields = ["name", "description"]
+    ordering_fields = ["name"]
+    ordering = ["name"]
+    pagination_class = None
+
+
+class RetrieveUpdateDestroyCategoryView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    lookup_field = "name"

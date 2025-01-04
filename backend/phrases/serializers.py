@@ -1,9 +1,21 @@
 from rest_framework import serializers
 
-from .models import Phrase, Translation
+from .models import Phrase, Translation, Category
 from users.models import User
 from languages.models import Language
 
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = [
+            "name",
+            "description",
+        ]
+
+    def update(self, instance, validated_data):
+        validated_data.pop("name", None)
+        return super().update(instance, validated_data)
 
 class PhraseSerializer(serializers.ModelSerializer):
     lang = serializers.SlugRelatedField(
@@ -13,6 +25,9 @@ class PhraseSerializer(serializers.ModelSerializer):
         queryset=User.objects.all(), slug_field="username", required=False
     )
     contributor_reputation = serializers.SerializerMethodField()
+    categories = serializers.SlugRelatedField(
+        queryset=Category.objects.all(), slug_field="name", many=True, required=False
+    )
     vote_count = serializers.SerializerMethodField()
     translation_count = serializers.SerializerMethodField()
 
@@ -24,6 +39,7 @@ class PhraseSerializer(serializers.ModelSerializer):
             "lang",
             "contributor",
             "contributor_reputation",
+            "categories",
             "created_at",
             "updated_at",
             "vote_count",
