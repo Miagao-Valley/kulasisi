@@ -70,7 +70,6 @@ export default function UpdateTranslationForm({
                 <AutosizeTextarea
                   className="p-1 text-base resize-none borderless-input"
                   placeholder="Enter updated translation"
-                  minHeight={24}
                   {...field}
                 />
               </FormControl>

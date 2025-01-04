@@ -83,7 +83,6 @@ export default function AddDefinitionForm({
                 <AutosizeTextarea
                   className="p-1 text-xl resize-none borderless-input"
                   placeholder="Enter your definition"
-                  minHeight={24}
                   {...field}
                 />
               </FormControl>

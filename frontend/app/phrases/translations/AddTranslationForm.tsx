@@ -83,7 +83,6 @@ export default function AddTranslationForm({
                 <AutosizeTextarea
                   className="p-1 text-xl resize-none borderless-input"
                   placeholder="Enter your translation"
-                  minHeight={24}
                   {...field}
                 />
               </FormControl>
