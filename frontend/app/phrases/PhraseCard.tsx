@@ -15,6 +15,7 @@ import {
   CardFooter,
   CardHeader,
 } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 
 interface Props {
   phrase: Phrase;
@@ -44,14 +45,20 @@ export default function PhraseCard({
       <CardContent>
         {isEditing ? (
           <UpdatePhraseForm
-            id={phrase.id}
-            initialContent={phrase.content}
+            phrase={phrase}
             setIsEditing={setIsEditing}
           />
         ) : (
-          <Link href={`/phrases/${phrase.id}/`}>
-            <p className="mb-2 whitespace-pre-line">{phrase.content}</p>
-          </Link>
+          <>
+            <Link href={`/phrases/${phrase.id}/`}>
+              <p className="mb-2 whitespace-pre-line">{phrase.content}</p>
+            </Link>
+            <div className="flex gap-2">
+              {phrase.categories.map(category => (
+                <Badge variant="secondary" key={category}>{category}</Badge>
+              ))}
+            </div>
+          </>
         )}
       </CardContent>
       <CardFooter>

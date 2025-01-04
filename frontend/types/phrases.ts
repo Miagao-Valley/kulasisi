@@ -4,6 +4,7 @@ export interface Phrase {
   lang: string;
   contributor: string;
   contributor_reputation: number;
+  categories: string[];
   created_at: Date;
   updated_at: Date;
   vote_count: number;
@@ -62,4 +63,9 @@ export interface TranslationRevision {
   content: string;
   history_user: string;
   history_date: Date;
+}
+
+export interface Category {
+  name: string;
+  description: string;
 }

@@ -1,9 +1,10 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '@/components/AuthProvider';
 import addPhrase from '@/lib/phrases/addPhrase';
+import getCategories from '@/lib/phrases/getCategories';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { useForm, SubmitHandler } from 'react-hook-form';
@@ -17,11 +18,13 @@ import {
 } from '@/components/ui/form';
 import { AutosizeTextarea } from '@/components/ui/autoresize-textarea';
 import { LoadingButton } from '@/components/ui/loading-button';
+import ListSelector from '@/components/ui/list-selector';
 import LangSelect from '@/components/LangSelect';
 
 export interface PhraseInputs {
   content: string;
   lang: string;
+  categories: string[];
 }
 
 interface Props {
@@ -32,6 +35,17 @@ export default function AddPhraseForm({ className = '' }: Props) {
   const auth = useAuth();
   const router = useRouter();
   const pathname = usePathname();
+
+  const [categoryOptions, setCategoryOptions] = useState<string[]>([]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const res = await getCategories();
+      setCategoryOptions(res.map(category => category.name));
+    }
+
+    fetchCategories();
+  }, [])
 
   const form = useForm<PhraseInputs>();
   const onSubmit: SubmitHandler<PhraseInputs> = async (data: PhraseInputs) => {
@@ -70,7 +84,6 @@ export default function AddPhraseForm({ className = '' }: Props) {
                 <AutosizeTextarea
                   className="p-1 text-xl resize-none borderless-input"
                   placeholder="Enter a phrase"
-                  minHeight={24}
                   {...field}
                 />
               </FormControl>
@@ -79,7 +92,7 @@ export default function AddPhraseForm({ className = '' }: Props) {
           )}
         />
 
-        <div className="flex gap-2 items-center">
+        <div className="flex flex-col md:flex-row gap-2 items-center">
           <FormField
             control={form.control}
             name="lang"
@@ -89,6 +102,30 @@ export default function AddPhraseForm({ className = '' }: Props) {
                   <LangSelect
                     selectedLang={field.value}
                     setSelectedLang={(value) => form.setValue('lang', value)}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="categories"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <ListSelector
+                    {...field}
+                    defaultOptions={categoryOptions}
+                    onSearch={async (q) => {
+                      q = q.toLowerCase();
+                      return categoryOptions.filter(option => option.toLowerCase().includes(q));
+                    }}
+                    triggerSearchOnFocus
+                    placeholder="Select categories..."
+                    hidePlaceholderWhenSelected
+                    emptyIndicator={<p className="text-center">No results found</p>}
                   />
                 </FormControl>
                 <FormMessage />
