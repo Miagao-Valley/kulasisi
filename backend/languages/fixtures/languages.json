@@ -27,32 +27,32 @@
     "model": "languages.language",
     "pk": 4,
     "fields": {
-      "code": "ilo",
-      "name": "Ilocano"
-    }
-  },
-  {
-    "model": "languages.language",
-    "pk": 5,
-    "fields": {
       "code": "hil",
       "name": "Hiligaynon"
     }
   },
   {
     "model": "languages.language",
+    "pk": 5,
+    "fields": {
+      "code": "ilo",
+      "name": "Ilocano"
+    }
+  },
+  {
+    "model": "languages.language",
     "pk": 6,
     "fields": {
-      "code": "war",
-      "name": "Waray-Waray"
+      "code": "bcl",
+      "name": "Central Bikol"
     }
   },
   {
     "model": "languages.language",
     "pk": 7,
     "fields": {
-      "code": "bcl",
-      "name": "Central Bikol"
+      "code": "war",
+      "name": "Waray-Waray"
     }
   },
   {
@@ -67,13 +67,29 @@
     "model": "languages.language",
     "pk": 9,
     "fields": {
+      "code": "mdh",
+      "name": "Maguindanaon"
+    }
+  },
+  {
+    "model": "languages.language",
+    "pk": 10,
+    "fields": {
       "code": "pag",
       "name": "Pangasinan"
     }
   },
   {
     "model": "languages.language",
-    "pk": 10,
+    "pk": 11,
+    "fields": {
+      "code": "tsg",
+      "name": "Tausug"
+    }
+  },
+  {
+    "model": "languages.language",
+    "pk": 12,
     "fields": {
       "code": "mrw",
       "name": "Maranao"
@@ -81,7 +97,7 @@
   },
   {
     "model": "languages.language",
-    "pk": 11,
+    "pk": 13,
     "fields": {
       "code": "krj",
       "name": "Kinaray-a"
@@ -89,18 +105,10 @@
   },
   {
     "model": "languages.language",
-    "pk": 12,
+    "pk": 14,
     "fields": {
       "code": "akl",
       "name": "Aklanon"
-    }
-  },
-  {
-    "model": "languages.language",
-    "pk": 13,
-    "fields": {
-      "code": "cps",
-      "name": "Capiznon"
     }
   }
 ]
