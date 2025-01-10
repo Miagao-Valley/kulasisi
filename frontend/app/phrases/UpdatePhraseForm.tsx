@@ -19,11 +19,13 @@ import { AutosizeTextarea } from '@/components/ui/autoresize-textarea';
 import { Button } from '@/components/ui/button';
 import { LoadingButton } from '@/components/ui/loading-button';
 import ListSelector from '@/components/ui/list-selector';
+import UsageNotePopover from '@/components/UsageNotePopover';
 import SourcePopover from '@/components/SourcePopover';
 
 export interface PhraseInputs {
   content: string;
   categories: string[];
+  usage_note: string;
   source_title: string;
   source_link: string;
 }
@@ -91,6 +93,11 @@ export default function UpdatePhraseForm({
         />
 
         <div className="flex flex-col md:flex-row gap-2 items-center">
+          <UsageNotePopover
+            form={form}
+            defaultUsageNote={phrase.usage_note}
+          />
+
           <SourcePopover
             form={form}
             defaultSourceTitle={phrase.source_title}
@@ -112,7 +119,7 @@ export default function UpdatePhraseForm({
                       return categoryOptions.filter(option => option.toLowerCase().includes(q));
                     }}
                     triggerSearchOnFocus
-                    placeholder="Select categories..."
+                    placeholder="Categories..."
                     hidePlaceholderWhenSelected
                     emptyIndicator={<p className="text-center">No results found</p>}
                   />

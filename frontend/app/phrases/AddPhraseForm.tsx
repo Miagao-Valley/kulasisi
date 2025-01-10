@@ -20,12 +20,14 @@ import { AutosizeTextarea } from '@/components/ui/autoresize-textarea';
 import { LoadingButton } from '@/components/ui/loading-button';
 import ListSelector from '@/components/ui/list-selector';
 import LangSelect from '@/components/LangSelect';
+import UsageNotePopover from '@/components/UsageNotePopover';
 import SourcePopover from '@/components/SourcePopover';
 
 export interface PhraseInputs {
   content: string;
   lang: string;
   categories: string[];
+  usage_note: string;
   source_title: string;
   source_link: string;
 }
@@ -113,6 +115,8 @@ export default function AddPhraseForm({ className = '' }: Props) {
             )}
           />
 
+          <UsageNotePopover form={form} />
+
           <SourcePopover form={form} />
 
           <FormField
@@ -129,7 +133,7 @@ export default function AddPhraseForm({ className = '' }: Props) {
                       return categoryOptions.filter(option => option.toLowerCase().includes(q));
                     }}
                     triggerSearchOnFocus
-                    placeholder="Categories"
+                    placeholder="Categories..."
                     hidePlaceholderWhenSelected
                     emptyIndicator={<p className="text-center">No results found</p>}
                   />

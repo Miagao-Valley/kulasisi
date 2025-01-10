@@ -5,6 +5,7 @@ export interface Phrase {
   contributor: string;
   contributor_reputation: number;
   categories: string[];
+  usage_note: string;
   source_title: string;
   source_link: string;
   created_at: Date;
