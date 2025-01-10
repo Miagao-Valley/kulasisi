@@ -15,6 +15,8 @@ import {
   CardFooter,
   CardHeader,
 } from '@/components/ui/card';
+import { badgeVariants } from '@/components/ui/badge';
+import { LinkIcon } from 'lucide-react';
 
 interface Props {
   translation: Translation;
@@ -44,17 +46,26 @@ export default function TranslationCard({
       <CardContent>
         {isEditing ? (
           <UpdateTranslationForm
-            phraseId={translation.phrase}
-            id={translation.id}
+            translation={translation}
             initialContent={translation.content}
             setIsEditing={setIsEditing}
           />
         ) : (
-          <Link
-            href={`/phrases/${translation.phrase}?tab=translations#${translation.id}`}
-          >
-            <p className="mb-2 whitespace-pre-line">{translation.content}</p>
-          </Link>
+          <>
+            <Link
+              href={`/phrases/${translation.phrase}?tab=translations#${translation.id}`}
+            >
+              <p className="mb-2 whitespace-pre-line">{translation.content}</p>
+            </Link>
+            <div className="flex gap-2">
+              {(translation.source_title || translation.source_link) &&
+                <a target="_blank" rel="noopener noreferrer" href={translation.source_link} className={badgeVariants({ variant: "outline" })}>
+                  <LinkIcon className="w-3 me-1" />
+                  {translation.source_title || translation.source_link}
+                </a>
+              }
+            </div>
+          </>
         )}
       </CardContent>
       <CardFooter>

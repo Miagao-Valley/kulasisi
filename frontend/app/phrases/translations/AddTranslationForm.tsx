@@ -18,11 +18,14 @@ import {
 import { AutosizeTextarea } from '@/components/ui/autoresize-textarea';
 import { LoadingButton } from '@/components/ui/loading-button';
 import LangSelect from '@/components/LangSelect';
+import SourcePopover from '@/components/SourcePopover';
 
 export interface TranslationInputs {
   phrase: number;
   content: string;
   lang: string;
+  source_title: string;
+  source_link: string;
 }
 
 interface Props {
@@ -108,6 +111,8 @@ export default function AddTranslationForm({
               </FormItem>
             )}
           />
+
+          <SourcePopover form={form} />
 
           <LoadingButton
             className="ms-auto"

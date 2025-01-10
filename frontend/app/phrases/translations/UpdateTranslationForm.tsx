@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import setFormErrors from '@/utils/setFormErrors';
+import { Translation } from '@/types/phrases';
 import {
   Form,
   FormControl,
@@ -16,22 +17,23 @@ import {
 import { AutosizeTextarea } from '@/components/ui/autoresize-textarea';
 import { Button } from '@/components/ui/button';
 import { LoadingButton } from '@/components/ui/loading-button';
+import SourcePopover from '@/components/SourcePopover';
 
 export interface TranslationInputs {
   content: string;
+  source_title: string;
+  source_link: string;
 }
 
 interface Props {
-  phraseId: number;
-  id: number;
+  translation: Translation;
   initialContent?: string;
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
   className?: string;
 }
 
 export default function UpdateTranslationForm({
-  phraseId,
-  id,
+  translation,
   initialContent = '',
   setIsEditing,
   className = '',
@@ -40,7 +42,7 @@ export default function UpdateTranslationForm({
   const onSubmit: SubmitHandler<TranslationInputs> = async (
     data: TranslationInputs,
   ) => {
-    const res = await updateTranslation(phraseId, id, data);
+    const res = await updateTranslation(translation.phrase, translation.id, data);
     if (res?.error) {
       setFormErrors(res.error, form.setError);
     } else {
@@ -78,6 +80,14 @@ export default function UpdateTranslationForm({
           )}
         />
 
+        <div className="flex flex-col md:flex-row gap-2 items-center">
+          <SourcePopover
+            form={form}
+            defaultSourceTitle={translation.source_title}
+            defaultSourceLink={translation.source_link}
+          />
+        </div>
+
         <div className="flex justify-end gap-2">
           <Button
             type="button"
@@ -89,10 +99,6 @@ export default function UpdateTranslationForm({
           <LoadingButton
             type="submit"
             loading={form.formState.isSubmitting}
-            disabled={
-              !form.watch('content')?.trim() ||
-              form.watch('content')?.trim() == initialContent
-            }
           >
             Save
           </LoadingButton>

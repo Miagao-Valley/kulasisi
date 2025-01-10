@@ -100,6 +100,8 @@ class TranslationSerializer(serializers.ModelSerializer):
             "lang",
             "contributor",
             "contributor_reputation",
+            "source_title",
+            "source_link",
             "created_at",
             "updated_at",
             "vote_count",
