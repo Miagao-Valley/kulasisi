@@ -40,6 +40,8 @@ class PhraseSerializer(serializers.ModelSerializer):
             "contributor",
             "contributor_reputation",
             "categories",
+            "source_title",
+            "source_link",
             "created_at",
             "updated_at",
             "vote_count",

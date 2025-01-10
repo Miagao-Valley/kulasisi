@@ -20,11 +20,14 @@ import { AutosizeTextarea } from '@/components/ui/autoresize-textarea';
 import { LoadingButton } from '@/components/ui/loading-button';
 import ListSelector from '@/components/ui/list-selector';
 import LangSelect from '@/components/LangSelect';
+import SourcePopover from '@/components/SourcePopover';
 
 export interface PhraseInputs {
   content: string;
   lang: string;
   categories: string[];
+  source_title: string;
+  source_link: string;
 }
 
 interface Props {
@@ -102,12 +105,15 @@ export default function AddPhraseForm({ className = '' }: Props) {
                   <LangSelect
                     selectedLang={field.value}
                     setSelectedLang={(value) => form.setValue('lang', value)}
+                    placeholder="Language"
                   />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
+
+          <SourcePopover form={form} />
 
           <FormField
             control={form.control}
@@ -123,7 +129,7 @@ export default function AddPhraseForm({ className = '' }: Props) {
                       return categoryOptions.filter(option => option.toLowerCase().includes(q));
                     }}
                     triggerSearchOnFocus
-                    placeholder="Select categories..."
+                    placeholder="Categories"
                     hidePlaceholderWhenSelected
                     emptyIndicator={<p className="text-center">No results found</p>}
                   />

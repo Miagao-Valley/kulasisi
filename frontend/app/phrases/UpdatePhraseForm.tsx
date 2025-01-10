@@ -19,10 +19,13 @@ import { AutosizeTextarea } from '@/components/ui/autoresize-textarea';
 import { Button } from '@/components/ui/button';
 import { LoadingButton } from '@/components/ui/loading-button';
 import ListSelector from '@/components/ui/list-selector';
+import SourcePopover from '@/components/SourcePopover';
 
 export interface PhraseInputs {
   content: string;
   categories: string[];
+  source_title: string;
+  source_link: string;
 }
 
 interface Props {
@@ -69,23 +72,29 @@ export default function UpdatePhraseForm({
           {form.formState.errors.root?.serverError.message}
         </FormMessage>
 
-        <div>
-          <FormField
-            control={form.control}
-            name="content"
-            defaultValue={phrase.content}
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <AutosizeTextarea
-                    className="p-1 text-base resize-none borderless-input"
-                    placeholder="Enter updated phrase"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+        <FormField
+          control={form.control}
+          name="content"
+          defaultValue={phrase.content}
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <AutosizeTextarea
+                  className="p-1 text-base resize-none borderless-input"
+                  placeholder="Enter updated phrase"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <div className="flex flex-col md:flex-row gap-2 items-center">
+          <SourcePopover
+            form={form}
+            defaultSourceTitle={phrase.source_title}
+            defaultSourceLink={phrase.source_link}
           />
 
           <FormField
@@ -125,11 +134,6 @@ export default function UpdatePhraseForm({
           <LoadingButton
             type="submit"
             loading={form.formState.isSubmitting}
-            disabled={
-              (!form.watch('content')?.trim() ||
-              form.watch('content')?.trim() === phrase.content) &&
-              form.watch('categories') == phrase.categories
-            }
           >
             Save
           </LoadingButton>

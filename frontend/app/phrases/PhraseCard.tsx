@@ -15,7 +15,8 @@ import {
   CardFooter,
   CardHeader,
 } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { Badge, badgeVariants } from '@/components/ui/badge';
+import { LinkIcon } from 'lucide-react';
 
 interface Props {
   phrase: Phrase;
@@ -54,6 +55,12 @@ export default function PhraseCard({
               <p className="mb-2 whitespace-pre-line">{phrase.content}</p>
             </Link>
             <div className="flex gap-2">
+              {(phrase.source_title || phrase.source_link) &&
+                <a target="_blank" rel="noopener noreferrer" href={phrase.source_link} className={badgeVariants({ variant: "outline" })}>
+                  <LinkIcon className="w-3 me-1" />
+                  {phrase.source_title || phrase.source_link}
+                </a>
+              }
               {phrase.categories.map(category => (
                 <Badge variant="secondary" key={category}>{category}</Badge>
               ))}

@@ -24,12 +24,14 @@ interface Props {
   selectedLang: string;
   setSelectedLang: (value: string) => void;
   exclude?: string[];
+  placeholder?: string;
 }
 
 export default function LangSelect({
   selectedLang,
   setSelectedLang,
   exclude = [],
+  placeholder = 'Select language...'
 }: Props) {
   const [langs, setLangs] = useState<Lang[]>([]);
   const [open, setOpen] = useState(false);
@@ -54,7 +56,7 @@ export default function LangSelect({
         >
           {selectedLang
             ? langs.find((lang) => lang.code === selectedLang)?.name
-            : `Select language...`}
+            : placeholder}
           <ChevronsUpDown className="opacity-50" />
         </Button>
       </PopoverTrigger>

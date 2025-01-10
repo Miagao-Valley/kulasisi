@@ -24,6 +24,8 @@ class Phrase(models.Model):
     )
     categories = models.ManyToManyField(Category, related_name="phrases")
     votes = GenericRelation(Vote, related_query_name="phrase")
+    source_title = models.CharField(max_length=255, null=True, blank=True)
+    source_link = models.URLField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     history = HistoricalRecords()
