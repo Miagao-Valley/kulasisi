@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { useDebounce } from 'use-debounce';
+import React from 'react';
 import { Path, PathValue, UseFormReturn } from 'react-hook-form';
+import { cn } from '@/lib/utils';
 import {
   FormControl,
   FormField,
@@ -24,11 +24,8 @@ interface Props<T extends Inputs> {
   defaultSourceLink?: string;
 }
 
-export default function SourcePopover<T extends Inputs>({ form , defaultSourceTitle, defaultSourceLink }: Props<T>) {
-  const [open, setOpen] = useState(false);
-  const [debouncedOpen,] = useDebounce(open, 200);
-
-  const handleButtonClick = (e: React.MouseEvent) => {
+export default function SourceForm<T extends Inputs>({ form , defaultSourceTitle, defaultSourceLink }: Props<T>) {
+  const handleButtonDoubleClick = (e: React.MouseEvent) => {
     e.preventDefault();
     const sourceLink = form.watch('source_link' as Path<T>)?.trim();
     if (sourceLink) {
@@ -37,16 +34,17 @@ export default function SourcePopover<T extends Inputs>({ form , defaultSourceTi
   };
 
   return (
-    <Popover open={debouncedOpen}>
+    <Popover>
       <PopoverTrigger
-        onMouseEnter={() => setOpen(true)}
-        onMouseLeave={() => setOpen(false)}
-        onClick={handleButtonClick}
+        onDoubleClick={handleButtonDoubleClick}
         asChild
       >
         <Button
           variant="outline"
-          className="max-w-32"
+          className={cn(
+            'max-w-32',
+            (form.formState.errors.source_title || form.formState.errors.source_link) && 'border-destructive'
+          )}
         >
           <LinkIcon />
           <span className="truncate">
@@ -59,11 +57,7 @@ export default function SourcePopover<T extends Inputs>({ form , defaultSourceTi
           </span>
         </Button>
       </PopoverTrigger>
-      <PopoverContent
-        className="w-80"
-        onMouseEnter={() => setOpen(true)}
-        onMouseLeave={() => setOpen(false)}
-      >
+      <PopoverContent className="w-80">
         <div className="flex flex-col gap-3">
           <FormLabel>Source</FormLabel>
           <FormField

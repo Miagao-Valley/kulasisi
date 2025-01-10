@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { useDebounce } from 'use-debounce';
+import React from 'react';
 import { Path, PathValue, UseFormReturn } from 'react-hook-form';
+import { cn } from '@/lib/utils';
 import {
   FormControl,
   FormField,
@@ -22,30 +22,22 @@ interface Props<T extends Inputs> {
   defaultUsageNote?: string;
 }
 
-export default function UsageNotePopover<T extends Inputs>({ form , defaultUsageNote }: Props<T>) {
-  const [open, setOpen] = useState(false);
-  const [debouncedOpen,] = useDebounce(open, 200);
-
+export default function UsageNoteForm<T extends Inputs>({ form , defaultUsageNote }: Props<T>) {
   return (
-    <Popover open={debouncedOpen}>
-      <PopoverTrigger
-        onMouseEnter={() => setOpen(true)}
-        onMouseLeave={() => setOpen(false)}
-        asChild
-      >
+    <Popover>
+      <PopoverTrigger asChild>
         <Button
           variant="outline"
-          className="max-w-32"
+          className={cn(
+            'max-w-32',
+            form.formState.errors.usage_note && 'border-destructive'
+          )}
         >
           <CircleHelp />
           Usage
         </Button>
       </PopoverTrigger>
-      <PopoverContent
-        className="w-80"
-        onMouseEnter={() => setOpen(true)}
-        onMouseLeave={() => setOpen(false)}
-      >
+      <PopoverContent className="w-80">
         <div className="flex flex-col gap-3">
           <FormLabel>How to use?</FormLabel>
           <FormField

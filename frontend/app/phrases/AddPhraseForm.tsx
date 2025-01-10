@@ -20,8 +20,8 @@ import { AutosizeTextarea } from '@/components/ui/autoresize-textarea';
 import { LoadingButton } from '@/components/ui/loading-button';
 import ListSelector from '@/components/ui/list-selector';
 import LangSelect from '@/components/LangSelect';
-import UsageNotePopover from '@/components/UsageNotePopover';
-import SourcePopover from '@/components/SourcePopover';
+import UsageNoteForm from '@/components/UsageNoteForm';
+import SourceForm from '@/components/SourceForm';
 
 export interface PhraseInputs {
   content: string;
@@ -115,9 +115,9 @@ export default function AddPhraseForm({ className = '' }: Props) {
             )}
           />
 
-          <UsageNotePopover form={form} />
+          <UsageNoteForm form={form} />
 
-          <SourcePopover form={form} />
+          <SourceForm form={form} />
 
           <FormField
             control={form.control}

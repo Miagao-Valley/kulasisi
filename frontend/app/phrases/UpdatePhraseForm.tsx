@@ -19,8 +19,8 @@ import { AutosizeTextarea } from '@/components/ui/autoresize-textarea';
 import { Button } from '@/components/ui/button';
 import { LoadingButton } from '@/components/ui/loading-button';
 import ListSelector from '@/components/ui/list-selector';
-import UsageNotePopover from '@/components/UsageNotePopover';
-import SourcePopover from '@/components/SourcePopover';
+import UsageNoteForm from '@/components/UsageNoteForm';
+import SourceForm from '@/components/SourceForm';
 
 export interface PhraseInputs {
   content: string;
@@ -93,12 +93,12 @@ export default function UpdatePhraseForm({
         />
 
         <div className="flex flex-col md:flex-row gap-2 items-center">
-          <UsageNotePopover
+          <UsageNoteForm
             form={form}
             defaultUsageNote={phrase.usage_note}
           />
 
-          <SourcePopover
+          <SourceForm
             form={form}
             defaultSourceTitle={phrase.source_title}
             defaultSourceLink={phrase.source_link}

@@ -17,7 +17,7 @@ import {
 import { AutosizeTextarea } from '@/components/ui/autoresize-textarea';
 import { Button } from '@/components/ui/button';
 import { LoadingButton } from '@/components/ui/loading-button';
-import SourcePopover from '@/components/SourcePopover';
+import SourceForm from '@/components/SourceForm';
 
 export interface TranslationInputs {
   content: string;
@@ -81,7 +81,7 @@ export default function UpdateTranslationForm({
         />
 
         <div className="flex flex-col md:flex-row gap-2 items-center">
-          <SourcePopover
+          <SourceForm
             form={form}
             defaultSourceTitle={translation.source_title}
             defaultSourceLink={translation.source_link}
