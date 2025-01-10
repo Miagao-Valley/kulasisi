@@ -5,9 +5,9 @@ export interface Phrase {
   contributor: string;
   contributor_reputation: number;
   categories: string[];
-  usage_note: string;
-  source_title: string;
-  source_link: string;
+  usage_note?: string;
+  source_title?: string;
+  source_link?: string;
   created_at: Date;
   updated_at: Date;
   vote_count: number;
@@ -42,8 +42,8 @@ export interface Translation {
   lang: string;
   contributor: string;
   contributor_reputation: number;
-  source_title: string;
-  source_link: string;
+  source_title?: string;
+  source_link?: string;
   created_at: Date;
   updated_at: Date;
   vote_count: number;
