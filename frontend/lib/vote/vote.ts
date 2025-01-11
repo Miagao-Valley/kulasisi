@@ -7,12 +7,17 @@ import { revalidatePath } from 'next/cache';
 import entryToUrl from '../../utils/entryToUrl';
 
 export default async function vote(entry: Entry, value: -1 | 0 | 1) {
-  const url = entryToUrl(entry);
+  const backendUrl = entryToUrl(entry);
   const frontendUrl = entryToUrl(entry, false);
+  if (frontendUrl === '')
+  {
+    console.error("Failed to get entry URL");
+  }
+
   let res = null;
   try {
     res = await fetcher(
-      `${url}votes/`,
+      `/${backendUrl}/votes/`,
       {
         method: 'POST',
         headers: {
