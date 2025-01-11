@@ -95,9 +95,12 @@ class DefinitionSerializer(serializers.ModelSerializer):
             "contributor",
             "contributor_reputation",
             "pos",
-            "vote_count",
+            "usage_note",
+            "source_title",
+            "source_link",
             "created_at",
             "updated_at",
+            "vote_count",
         ]
         extra_kwargs = {
             "contributor": {"read_only": True},

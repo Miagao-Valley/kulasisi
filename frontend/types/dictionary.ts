@@ -37,6 +37,9 @@ export interface Definition {
   contributor: string;
   contributor_reputation: number;
   pos?: string;
+  usage_note?: string;
+  source_title?: string;
+  source_link?: string;
   created_at: Date;
   updated_at: Date;
   vote_count: number;

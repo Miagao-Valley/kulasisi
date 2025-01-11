@@ -18,10 +18,15 @@ import { AutosizeTextarea } from '@/components/ui/autoresize-textarea';
 import { Button } from '@/components/ui/button';
 import { LoadingButton } from '@/components/ui/loading-button';
 import PosSelect from '@/components/PosSelect';
+import UsageNoteForm from '@/components/UsageNoteForm';
+import SourceForm from '@/components/SourceForm';
 
 export interface DefinitionInputs {
   description: string;
   pos: string;
+  usage_note: string;
+  source_title: string;
+  source_link: string;
 }
 interface Props {
   definition: Definition;
@@ -77,6 +82,17 @@ export default function UpdateDefinitionForm({
         />
 
         <div className="flex flex-col md:flex-row gap-2 items-center">
+          <UsageNoteForm
+            form={form}
+            defaultUsageNote={definition.usage_note}
+          />
+
+          <SourceForm
+            form={form}
+            defaultSourceTitle={definition.source_title}
+            defaultSourceLink={definition.source_link}
+          />
+
           <FormField
             control={form.control}
             name="pos"

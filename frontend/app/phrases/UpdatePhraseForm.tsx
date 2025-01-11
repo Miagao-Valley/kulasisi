@@ -43,14 +43,14 @@ export default function UpdatePhraseForm({
 }: Props) {
   const [categoryOptions, setCategoryOptions] = useState<string[]>([]);
 
-    useEffect(() => {
-      const fetchCategories = async () => {
-        const res = await getCategories();
-        setCategoryOptions(res.map(category => category.name));
-      }
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const res = await getCategories();
+      setCategoryOptions(res.map(category => category.name));
+    }
 
-      fetchCategories();
-    }, [])
+    fetchCategories();
+  }, [])
 
   const form = useForm<PhraseInputs>();
   const onSubmit: SubmitHandler<PhraseInputs> = async (data: PhraseInputs) => {

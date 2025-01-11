@@ -19,12 +19,17 @@ import { AutosizeTextarea } from '@/components/ui/autoresize-textarea';
 import { LoadingButton } from '@/components/ui/loading-button';
 import LangSelect from '@/components/LangSelect';
 import PosSelect from '@/components/PosSelect';
+import UsageNoteForm from '@/components/UsageNoteForm';
+import SourceForm from '@/components/SourceForm';
 
 export interface TranslationInputs {
   word: number;
   description: string;
   lang: string;
   pos: string;
+  usage_note: string;
+  source_title: string;
+  source_link: string;
 }
 
 interface Props {
@@ -111,6 +116,10 @@ export default function AddDefinitionForm({
               </FormItem>
             )}
           />
+
+          <UsageNoteForm form={form} />
+
+          <SourceForm form={form} />
 
           <FormField
             control={form.control}
