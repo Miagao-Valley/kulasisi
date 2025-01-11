@@ -1,8 +1,23 @@
 from rest_framework import serializers
 
-from .models import Word, Definition
+from .models import Word, Definition, PartOfSpeech
 from users.models import User
 from languages.models import Language
+
+
+class PartOfSpeechSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PartOfSpeech
+        fields = [
+            "abbr",
+            "name",
+            "description",
+        ]
+
+    def update(self, instance, validated_data):
+        validated_data.pop("code", None)
+        validated_data.pop("name", None)
+        return super().update(instance, validated_data)
 
 
 class WordSerializer(serializers.ModelSerializer):
@@ -64,6 +79,9 @@ class DefinitionSerializer(serializers.ModelSerializer):
     contributor = serializers.SlugRelatedField(
         queryset=User.objects.all(), slug_field="username", required=False
     )
+    pos = serializers.SlugRelatedField(
+        queryset=PartOfSpeech.objects.all(), slug_field="abbr", required=False
+    )
     contributor_reputation = serializers.SerializerMethodField()
     vote_count = serializers.SerializerMethodField()
 
@@ -76,6 +94,7 @@ class DefinitionSerializer(serializers.ModelSerializer):
             "description",
             "contributor",
             "contributor_reputation",
+            "pos",
             "vote_count",
             "created_at",
             "updated_at",

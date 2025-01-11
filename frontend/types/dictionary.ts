@@ -36,6 +36,7 @@ export interface Definition {
   lang: string;
   contributor: string;
   contributor_reputation: number;
+  pos?: string;
   created_at: Date;
   updated_at: Date;
   vote_count: number;
@@ -60,4 +61,10 @@ export interface DefinitionRevision {
   description: string;
   history_user: string;
   history_date: Date;
+}
+
+export interface PartOfSpeech {
+  abbr: string;
+  name: string;
+  description: string;
 }

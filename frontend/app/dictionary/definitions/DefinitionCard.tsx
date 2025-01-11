@@ -15,6 +15,7 @@ import {
   CardFooter,
   CardHeader,
 } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 
 interface Props {
   definition: Definition;
@@ -44,17 +45,20 @@ export default function DefinitionCard({
       <CardContent>
         {isEditing ? (
           <UpdateDefinitionForm
-            wordId={definition.word}
-            id={definition.id}
-            initialDescription={definition.description}
+            definition={definition}
             setIsEditing={setIsEditing}
           />
         ) : (
-          <Link
-            href={`/dictionary/${definition.word}?tab=definitions#${definition.id}`}
-          >
-            <p className="mb-2 whitespace-pre-line">{definition.description}</p>
-          </Link>
+          <>
+            <Link
+              href={`/dictionary/${definition.word}?tab=definitions#${definition.id}`}
+            >
+              <p className="mb-2 whitespace-pre-line">{definition.description}</p>
+            </Link>
+            <div className="flex gap-2">
+              <Badge variant="secondary">{definition.pos}</Badge>
+            </div>
+          </>
         )}
       </CardContent>
       <CardFooter>

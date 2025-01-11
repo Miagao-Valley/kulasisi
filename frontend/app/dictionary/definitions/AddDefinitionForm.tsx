@@ -18,11 +18,13 @@ import {
 import { AutosizeTextarea } from '@/components/ui/autoresize-textarea';
 import { LoadingButton } from '@/components/ui/loading-button';
 import LangSelect from '@/components/LangSelect';
+import PosSelect from '@/components/PosSelect';
 
 export interface TranslationInputs {
   word: number;
   description: string;
   lang: string;
+  pos: string;
 }
 
 interface Props {
@@ -102,6 +104,24 @@ export default function AddDefinitionForm({
                     selectedLang={field.value}
                     setSelectedLang={(value) => form.setValue('lang', value)}
                     exclude={[originalLang]}
+                    placeholder="Language"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="pos"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <PosSelect
+                    selectedPos={field.value}
+                    setSelectedPos={(value) => form.setValue('pos', value)}
+                    placeholder="POS"
                   />
                 </FormControl>
                 <FormMessage />

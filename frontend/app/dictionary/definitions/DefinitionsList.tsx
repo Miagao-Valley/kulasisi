@@ -34,6 +34,7 @@ export default async function DefinitionsList({
       ordering: sortOption,
       lang__code: filters?.lang || '',
       contributor__username: filters?.contributor || '',
+      pos__abbr: filters?.pos || '',
       limit: limit,
       offset: limit * (page - 1),
     },

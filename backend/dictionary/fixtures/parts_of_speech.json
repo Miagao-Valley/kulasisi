@@ -1,0 +1,155 @@
+[
+    {
+        "model": "dictionary.PartOfSpeech",
+        "pk": 1,
+        "fields": {
+            "abbr": "adj",
+            "name": "Adjective",
+            "description": "Describes a noun, e.g., big, old, green, first."
+        }
+    },
+    {
+        "model": "dictionary.PartOfSpeech",
+        "pk": 2,
+        "fields": {
+            "abbr": "adp",
+            "name": "Adposition",
+            "description": "Prepositions and postpositions, e.g., in, to, during."
+        }
+    },
+    {
+        "model": "dictionary.PartOfSpeech",
+        "pk": 3,
+        "fields": {
+            "abbr": "adv",
+            "name": "Adverb",
+            "description": "Modifies a verb, adjective, or other adverb, e.g., very, well, tomorrow."
+        }
+    },
+    {
+        "model": "dictionary.PartOfSpeech",
+        "pk": 4,
+        "fields": {
+            "abbr": "aux",
+            "name": "Auxiliary",
+            "description": "Auxiliary verbs, e.g., is, has, will."
+        }
+    },
+    {
+        "model": "dictionary.PartOfSpeech",
+        "pk": 5,
+        "fields": {
+            "abbr": "cconj",
+            "name": "Coordinating Conjunction",
+            "description": "Links words or phrases, e.g., and, or, but."
+        }
+    },
+    {
+        "model": "dictionary.PartOfSpeech",
+        "pk": 6,
+        "fields": {
+            "abbr": "det",
+            "name": "Determiner",
+            "description": "Introduces a noun, e.g., a, an, the."
+        }
+    },
+    {
+        "model": "dictionary.PartOfSpeech",
+        "pk": 7,
+        "fields": {
+            "abbr": "intj",
+            "name": "Interjection",
+            "description": "Expresses emotion, e.g., oh, wow, oops."
+        }
+    },
+    {
+        "model": "dictionary.PartOfSpeech",
+        "pk": 8,
+        "fields": {
+            "abbr": "noun",
+            "name": "Noun",
+            "description": "Person, place, thing, or idea, e.g., cat, company, music."
+        }
+    },
+    {
+        "model": "dictionary.PartOfSpeech",
+        "pk": 9,
+        "fields": {
+            "abbr": "num",
+            "name": "Numeral",
+            "description": "Numbers, e.g., one, two, second."
+        }
+    },
+    {
+        "model": "dictionary.PartOfSpeech",
+        "pk": 10,
+        "fields": {
+            "abbr": "part",
+            "name": "Particle",
+            "description": "Function words that must accompany other words, e.g., not, to (as in to go)."
+        }
+    },
+    {
+        "model": "dictionary.PartOfSpeech",
+        "pk": 11,
+        "fields": {
+            "abbr": "pron",
+            "name": "Pronoun",
+            "description": "Replaces a noun, e.g., he, she, they."
+        }
+    },
+    {
+        "model": "dictionary.PartOfSpeech",
+        "pk": 12,
+        "fields": {
+            "abbr": "propn",
+            "name": "Proper Noun",
+            "description": "Specific names, e.g., John, London, UN."
+        }
+    },
+    {
+        "model": "dictionary.PartOfSpeech",
+        "pk": 13,
+        "fields": {
+            "abbr": "punct",
+            "name": "Punctuation",
+            "description": "Punctuation marks, e.g., ., !, ?."
+        }
+    },
+    {
+        "model": "dictionary.PartOfSpeech",
+        "pk": 14,
+        "fields": {
+            "abbr": "sconj",
+            "name": "Subordinating Conjunction",
+            "description": "Introduces a subordinate clause, e.g., if, while, that."
+        }
+    },
+    {
+        "model": "dictionary.PartOfSpeech",
+        "pk": 15,
+        "fields": {
+            "abbr": "sym",
+            "name": "Symbol",
+            "description": "Symbols, e.g., $, %, &."
+        }
+    },
+    {
+        "model": "dictionary.PartOfSpeech",
+        "pk": 16,
+        "fields": {
+            "abbr": "verb",
+            "name": "Verb",
+            "description": "Actions or states, e.g., run, is, seem."
+        }
+    },
+    {
+        "model": "dictionary.PartOfSpeech",
+        "pk": 17,
+        "fields": {
+            "abbr": "x",
+            "name": "Other",
+            "description": "Other categories, e.g., filler, typos."
+        }
+    }
+]

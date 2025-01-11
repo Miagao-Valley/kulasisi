@@ -6,6 +6,7 @@ import SearchInput from '@/components/SearchInput';
 import SortDropdown, { SortOption } from '@/components/SortDropdown';
 import FilterMenu, { FilterOption } from '@/components/FilterMenu';
 import getLangs from '@/lib/langs/getLangs';
+import getPartsOfSpeech from '@/lib/definitions/getPartsOfSpeech';
 
 interface Props {
   word: Word;
@@ -22,11 +23,13 @@ export default async function DefinitionsSection({
   const page = Number(searchParams.page || 1);
 
   const langs = await getLangs();
+  const partsOfSpeech = await getPartsOfSpeech();
 
   const filters = { lang: lang };
 
   const sortingOptions: SortOption[] = [
     { label: 'Description', value: 'description' },
+    { label: 'POS ', value: 'pos' },
     { label: 'Votes ', value: '-vote_count' },
     { label: 'Date updated ', value: '-updated_at' },
     { label: 'Date created', value: '-created_at' },
@@ -40,6 +43,12 @@ export default async function DefinitionsSection({
       options: langs.results
         .filter(({ code }) => code !== word.lang)
         .map(({ code, name }) => ({ label: name, value: code })),
+    },
+    {
+      label: 'POS',
+      name: 'pos',
+      type: 'select',
+      options: partsOfSpeech.map(({ abbr, name }) => ({ label: name, value: abbr })),
     },
   ];
 

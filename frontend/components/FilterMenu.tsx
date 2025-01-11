@@ -76,28 +76,30 @@ export default function FilterMenu({
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-80">
-          {filterOptions.map(({ label, name, type, options }) =>
-            type === 'checkbox' ? (
-              <FilterCheckbox
-                key={name}
-                label={label}
-                name={name}
-                filters={filters}
-                setFilters={setFilters}
-              />
-            ) : type === 'select' && options ? (
-              <FilterSelect
-                key={name}
-                label={label}
-                name={name}
-                options={options}
-                filters={filters}
-                setFilters={setFilters}
-              />
-            ) : (
-              <div>No filters</div>
-            ),
-          )}
+          <div className="flex flex-col gap-3">
+            {filterOptions.map(({ label, name, type, options }) =>
+              type === 'checkbox' ? (
+                <FilterCheckbox
+                  key={name}
+                  label={label}
+                  name={name}
+                  filters={filters}
+                  setFilters={setFilters}
+                />
+              ) : type === 'select' && options ? (
+                <FilterSelect
+                  key={name}
+                  label={label}
+                  name={name}
+                  options={options}
+                  filters={filters}
+                  setFilters={setFilters}
+                />
+              ) : (
+                <div>No filters</div>
+              ),
+            )}
+          </div>
         </PopoverContent>
       </Popover>
     </div>

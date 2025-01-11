@@ -37,4 +37,6 @@ urlpatterns = [
         ListCreateVoteView.as_view(),
         name="definition_votes",
     ),
+    path("parts-of-speech/", views.ListCreatePartOfSpeechView.as_view(), name="parts_of_speech"),
+    path("parts-of-speech/<str:abbr>/", views.RetrieveUpdateDestroyPartOfSpeechView.as_view(), name="part_of_speech"),
 ]

@@ -7,12 +7,13 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 
-from .models import Word, Definition
+from .models import Word, Definition, PartOfSpeech
 from .serializers import (
     WordSerializer,
     WordHistorySerializer,
     DefinitionSerializer,
     DefinitionHistorySerializer,
+    PartOfSpeechSerializer,
 )
 
 
@@ -72,9 +73,9 @@ class ListCreateDefinitionView(generics.ListCreateAPIView):
     serializer_class = DefinitionSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ["word", "contributor__username"]
+    filterset_fields = ["word", "contributor__username", "pos"]
     search_fields = ["description"]
-    ordering_fields = ["description", "vote_count", "updated_at", "created_at"]
+    ordering_fields = ["description", "vote_count", "pos", "updated_at", "created_at"]
     ordering = ["-updated_at"]
 
     def get_queryset(self):
@@ -117,3 +118,21 @@ class ListDefinitionHistoryView(generics.ListAPIView):
     def get_queryset(self):
         word = get_object_or_404(Definition, id=self.kwargs.get("definition_pk"))
         return word.history.all()
+
+
+class ListCreatePartOfSpeechView(generics.ListCreateAPIView):
+    queryset = PartOfSpeech.objects.all()
+    serializer_class = PartOfSpeechSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    search_fields = ["abbr", "name", "description"]
+    ordering_fields = ["abbr", "name"]
+    ordering = ["name"]
+    pagination_class = None
+
+
+class RetrieveUpdateDestroyPartOfSpeechView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = PartOfSpeech.objects.all()
+    serializer_class = PartOfSpeechSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    lookup_field = "abbr"
