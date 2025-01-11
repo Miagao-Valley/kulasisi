@@ -39,9 +39,11 @@ class WordSerializer(serializers.ModelSerializer):
             "lang",
             "contributor",
             "contributor_reputation",
-            "vote_count",
+            "source_title",
+            "source_link",
             "created_at",
             "updated_at",
+            "vote_count",
         ]
         extra_kwargs = {
             "contributor": {"read_only": True},

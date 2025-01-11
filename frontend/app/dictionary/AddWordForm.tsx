@@ -18,10 +18,13 @@ import {
 import { Input } from '@/components/ui/input';
 import { LoadingButton } from '@/components/ui/loading-button';
 import LangSelect from '@/components/LangSelect';
+import SourceForm from '@/components/SourceForm';
 
 export interface WordInputs {
   word: string;
   lang: string;
+  source_title: string;
+  source_link: string;
 }
 
 interface Props {
@@ -95,6 +98,8 @@ export default function AddWordForm({ className = '' }: Props) {
               </FormItem>
             )}
           />
+
+          <SourceForm form={form} />
 
           <LoadingButton
             className="ms-auto"

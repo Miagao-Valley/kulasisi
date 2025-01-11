@@ -4,6 +4,8 @@ export interface Word {
   lang: string;
   contributor: string;
   contributor_reputation: number;
+  source_title?: string;
+  source_link?: string;
   created_at: Date;
   updated_at: Date;
   vote_count: number;

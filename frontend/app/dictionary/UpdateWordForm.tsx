@@ -2,6 +2,7 @@
 
 import React from 'react';
 import updateWord from '@/lib/words/updateWord';
+import { Word } from '@/types/dictionary';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { useForm, SubmitHandler } from 'react-hook-form';
@@ -16,27 +17,28 @@ import {
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { LoadingButton } from '@/components/ui/loading-button';
+import SourceForm from '@/components/SourceForm';
 
 export interface WordInputs {
   word: string;
+  source_title: string;
+  source_link: string;
 }
 
 interface Props {
-  id: number;
-  initialWord?: string;
+  word: Word;
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
   className?: string;
 }
 
 export default function UpdateWordForm({
-  id,
-  initialWord = '',
+  word,
   setIsEditing,
   className = '',
 }: Props) {
   const form = useForm<WordInputs>();
   const onSubmit: SubmitHandler<WordInputs> = async (data: WordInputs) => {
-    const res = await updateWord(id, data);
+    const res = await updateWord(word.id, data);
     if (res?.error) {
       setFormErrors(res.error, form.setError);
     } else {
@@ -59,7 +61,7 @@ export default function UpdateWordForm({
         <FormField
           control={form.control}
           name="word"
-          defaultValue={initialWord}
+          defaultValue={word.word}
           render={({ field }) => (
             <FormItem>
               <FormControl>
@@ -75,6 +77,14 @@ export default function UpdateWordForm({
           )}
         />
 
+        <div className="flex flex-col md:flex-row gap-2 items-center">
+          <SourceForm
+            form={form}
+            defaultSourceTitle={word.source_title}
+            defaultSourceLink={word.source_link}
+          />
+        </div>
+
         <div className="flex justify-end gap-2">
           <Button
             type="button"
@@ -86,10 +96,6 @@ export default function UpdateWordForm({
           <LoadingButton
             type="submit"
             loading={form.formState.isSubmitting}
-            disabled={
-              !form.watch('word')?.trim() ||
-              form.watch('word')?.trim() == initialWord
-            }
           >
             Save
           </LoadingButton>

@@ -14,7 +14,9 @@ import {
   CardFooter,
   CardHeader,
 } from '@/components/ui/card';
+import { badgeVariants } from '@/components/ui/badge';
 import WordDropdownMenu from './WordDropdownMenu';
+import { LinkIcon } from 'lucide-react';
 
 interface Props {
   word: Word;
@@ -44,14 +46,23 @@ export default function WordCard({
       <CardContent>
         {isEditing ? (
           <UpdateWordForm
-            id={word.id}
-            initialWord={word.word}
+            word={word}
             setIsEditing={setIsEditing}
           />
         ) : (
-          <Link href={`/dictionary/${word.id}/`}>
-            <p className="mb-2 text-xl font-bold">{word.word}</p>
-          </Link>
+          <>
+            <Link href={`/dictionary/${word.id}/`}>
+              <p className="mb-2 text-xl font-bold">{word.word}</p>
+            </Link>
+            <div className="flex gap-2">
+              {(word.source_title || word.source_link) &&
+                <a target="_blank" rel="noopener noreferrer" href={word.source_link} className={badgeVariants({ variant: "outline" })}>
+                  <LinkIcon className="w-3 me-1" />
+                  {word.source_title || word.source_link}
+                </a>
+              }
+            </div>
+          </>
         )}
       </CardContent>
       <CardFooter>
