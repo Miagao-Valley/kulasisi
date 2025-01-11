@@ -73,9 +73,9 @@ class ListCreateDefinitionView(generics.ListCreateAPIView):
     serializer_class = DefinitionSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ["word", "contributor__username", "pos"]
+    filterset_fields = ["word", "lang__code", "contributor__username", "pos__abbr"]
     search_fields = ["description"]
-    ordering_fields = ["description", "vote_count", "pos", "updated_at", "created_at"]
+    ordering_fields = ["description", "vote_count", "pos__abbr", "updated_at", "created_at"]
     ordering = ["-updated_at"]
 
     def get_queryset(self):

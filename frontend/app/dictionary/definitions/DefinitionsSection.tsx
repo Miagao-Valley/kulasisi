@@ -20,16 +20,17 @@ export default async function DefinitionsSection({
   const searchTerm = searchParams.q || '';
   const sortOption = searchParams.sort || '-vote_count';
   const lang = searchParams.lang || '';
+  const pos = searchParams.pos || '';
   const page = Number(searchParams.page || 1);
 
   const langs = await getLangs();
   const partsOfSpeech = await getPartsOfSpeech();
 
-  const filters = { lang: lang };
+  const filters = { lang: lang, pos: pos };
 
   const sortingOptions: SortOption[] = [
     { label: 'Description', value: 'description' },
-    { label: 'POS ', value: 'pos' },
+    { label: 'POS ', value: 'pos__abbr' },
     { label: 'Votes ', value: '-vote_count' },
     { label: 'Date updated ', value: '-updated_at' },
     { label: 'Date created', value: '-created_at' },
