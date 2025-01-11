@@ -43,7 +43,7 @@ export default function LangSelect({
     };
 
     fetchLangs();
-  }, [exclude]);
+  }, []);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>

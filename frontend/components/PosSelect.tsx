@@ -43,7 +43,7 @@ export default function PosSelect({
     };
 
     fetchPartsOfSpeech();
-  }, [exclude]);
+  }, []);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>

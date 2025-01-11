@@ -27,7 +27,7 @@ export default function LangHoverCard({ code, showName = false }: Props) {
     };
 
     fetchLang();
-  }, [code]);
+  }, []);
 
   return (
     <HoverCard>

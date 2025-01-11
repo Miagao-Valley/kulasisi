@@ -27,7 +27,7 @@ export default function UserHoverCard({ username, showAvatar = false }: Props) {
     };
 
     fetchUser();
-  }, [username]);
+  }, []);
 
   return (
     <HoverCard>
