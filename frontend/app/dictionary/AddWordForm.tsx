@@ -92,6 +92,7 @@ export default function AddWordForm({ className = '' }: Props) {
                   <LangSelect
                     selectedLang={field.value}
                     setSelectedLang={(value) => form.setValue('lang', value)}
+                    placeholder="Language"
                   />
                 </FormControl>
                 <FormMessage />

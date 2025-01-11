@@ -99,6 +99,7 @@ export default function LangProficienciesForm({
                 triggerSearchOnFocus
                 onChange={(options) => handleLanguageSelection(options)}
                 placeholder="Select languages..."
+                hidePlaceholderWhenSelected
                 emptyIndicator={<p className="text-center">No results found</p>}
               />
             )}

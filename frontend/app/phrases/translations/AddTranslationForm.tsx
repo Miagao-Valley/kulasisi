@@ -105,6 +105,7 @@ export default function AddTranslationForm({
                     selectedLang={field.value}
                     setSelectedLang={(value) => form.setValue('lang', value)}
                     exclude={[originalLang]}
+                    placeholder="Language"
                   />
                 </FormControl>
                 <FormMessage />
