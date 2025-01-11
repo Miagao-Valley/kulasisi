@@ -69,7 +69,7 @@ export default function TranslationCard({
         )}
       </CardContent>
       <CardFooter>
-        <EntryFooter entry={translation} votes={votes} type="translations" />
+        <EntryFooter entry={translation} votes={votes} />
       </CardFooter>
     </Card>
   );

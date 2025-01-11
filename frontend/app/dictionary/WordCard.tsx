@@ -66,7 +66,7 @@ export default function WordCard({
         )}
       </CardContent>
       <CardFooter>
-        <EntryFooter entry={word} votes={votes} type="phrases" />
+        <EntryFooter entry={word} votes={votes} />
       </CardFooter>
     </Card>
   );

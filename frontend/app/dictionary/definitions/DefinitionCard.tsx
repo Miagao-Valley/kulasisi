@@ -84,7 +84,7 @@ export default function DefinitionCard({
         )}
       </CardContent>
       <CardFooter>
-        <EntryFooter entry={definition} votes={votes} type="definitions" />
+        <EntryFooter entry={definition} votes={votes} />
       </CardFooter>
     </Card>
   );

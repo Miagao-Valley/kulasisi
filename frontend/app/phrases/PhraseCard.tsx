@@ -84,7 +84,7 @@ export default function PhraseCard({
         )}
       </CardContent>
       <CardFooter>
-        <EntryFooter entry={phrase} votes={votes} type="phrases" />
+        <EntryFooter entry={phrase} votes={votes} />
       </CardFooter>
     </Card>
   );
