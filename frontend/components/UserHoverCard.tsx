@@ -46,11 +46,11 @@ export default function UserHoverCard({ username, showAvatar = false }: Props) {
                   </AvatarFallback>
                 </Avatar>
               )}
-              <span className="font-bold">@{username}</span>
+              <span>@{username}</span>
             </Link>
           </HoverCardTrigger>
 
-          <HoverCardContent className="w-80">
+          <HoverCardContent className="max-w-80">
             <div className="flex gap-4">
               <Avatar>
                 <AvatarImage src="" alt={username} />

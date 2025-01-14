@@ -38,12 +38,12 @@ export default function LangHoverCard({ code, showName = false }: Props) {
               href={`/languages/${code}/`}
               className="flex gap-2 items-center"
             >
-              <Badge variant="outline">{code}</Badge>
-              {showName && <span className="font-semibold">{lang.name}</span>}
+              <Badge variant="outline" className="w-10 truncate flex justify-center">{code}</Badge>
+              {showName && <span>{lang.name}</span>}
             </Link>
           </HoverCardTrigger>
 
-          <HoverCardContent className="w-80">
+          <HoverCardContent className="max-w-80">
             <div className="gap-1">
               <h4 className="text-sm font-semibold">{lang.name}</h4>
               <span>{shortenNum(lang.user_count || 0)} Members</span>
