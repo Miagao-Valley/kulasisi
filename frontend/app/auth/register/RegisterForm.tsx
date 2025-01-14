@@ -13,6 +13,7 @@ import StepperIndicator from '@/components/StepperIndicator';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Form, FormMessage } from '@/components/ui/form';
 import setFormErrors from '@/utils/setFormErrors';
+import { H1 } from '@/components/ui/heading-with-anchor';
 
 export interface RegisterInputs {
   username: string;
@@ -95,7 +96,7 @@ export default function RegisterForm() {
           className="flex flex-col gap-3"
           onSubmit={form.handleSubmit(onSubmit)}
         >
-          <h1>{steps[step].name}</h1>
+          <H1>{steps[step].name}</H1>
 
           <FormMessage>
             {form.formState.errors.root?.serverError.message}

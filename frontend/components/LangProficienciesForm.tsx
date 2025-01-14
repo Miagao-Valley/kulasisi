@@ -77,33 +77,31 @@ export default function LangProficienciesForm({
   return (
     <>
       <div className="w-full flex items-center">
-        <h3 className="text-base me-auto">Language Proficiency</h3>
         {!disabled && (
-          <div className="w-96 px-4">
-            {options && (
-              <MultipleSelector
-                value={selectedLangProficiencies.map((item) => ({
-                  value: item.lang,
-                  label:
-                    langs.find((lang) => lang.code === item.lang)?.name ||
-                    item.lang,
-                }))}
-                onSearch={async (q) => {
-                  q = q.toLowerCase();
-                  return options.filter(
-                    (option) =>
-                      option.value.toLowerCase().includes(q) ||
-                      option.label.toLowerCase().includes(q),
-                  );
-                }}
-                triggerSearchOnFocus
-                onChange={(options) => handleLanguageSelection(options)}
-                placeholder="Select languages..."
-                hidePlaceholderWhenSelected
-                emptyIndicator={<p className="text-center">No results found</p>}
-              />
-            )}
-          </div>
+          options && (
+            <MultipleSelector
+              value={selectedLangProficiencies.map((item) => ({
+                value: item.lang,
+                label:
+                  langs.find((lang) => lang.code === item.lang)?.name ||
+                  item.lang,
+              }))}
+              onSearch={async (q) => {
+                q = q.toLowerCase();
+                return options.filter(
+                  (option) =>
+                    option.value.toLowerCase().includes(q) ||
+                    option.label.toLowerCase().includes(q),
+                );
+              }}
+              triggerSearchOnFocus
+              onChange={(options) => handleLanguageSelection(options)}
+              placeholder="Select languages..."
+              hidePlaceholderWhenSelected
+              emptyIndicator={<p className="text-center">No results found</p>}
+              className="mb-2"
+            />
+          )
         )}
       </div>
 

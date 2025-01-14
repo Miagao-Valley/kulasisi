@@ -59,7 +59,7 @@ export default function UserHoverCard({ username, showAvatar = false }: Props) {
                 </AvatarFallback>
               </Avatar>
               <div className="gap-1">
-                <h4 className="text-sm font-semibold">{`${user.first_name} ${user.last_name}`}</h4>
+                <h2 className="font-semibold truncate max-w-40">{`${user.first_name} ${user.last_name}`}</h2>
                 <span>{shortenNum(user.reputation || 0)} Reputation</span>
               </div>
             </div>

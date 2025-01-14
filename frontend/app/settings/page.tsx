@@ -8,6 +8,7 @@ import Loading from '../loading';
 import AccountTab from './AccountTab';
 import ProfileTab from './ProfileTab';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { H1 } from '@/components/ui/heading-with-anchor';
 
 interface Props {
   searchParams: {
@@ -39,7 +40,7 @@ export default function SettingsPage({ searchParams }: Props) {
 
   return (
     <>
-      <h1>Settings</h1>
+      <H1>Settings</H1>
 
       <Tabs defaultValue={currentTab}>
         <TabsList>

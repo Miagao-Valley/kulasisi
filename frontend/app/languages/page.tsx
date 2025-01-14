@@ -2,6 +2,7 @@ import React, { Suspense } from 'react';
 import LangsList, { LangsListSkeleton } from './LangsList';
 import SearchInput from '@/components/SearchInput';
 import SortDropdown, { SortOption } from '@/components/SortDropdown';
+import { H1 } from '@/components/ui/heading-with-anchor';
 
 interface Props {
   searchParams: { [key: string]: string | undefined };
@@ -23,7 +24,7 @@ export default async function LangsPage({ searchParams }: Props) {
 
   return (
     <>
-      <h1>Languages</h1>
+      <H1>Languages</H1>
       <div className="mb-4 flex gap-3">
         <SearchInput currentSearchTerm={searchTerm} className="me-auto" />
         <SortDropdown

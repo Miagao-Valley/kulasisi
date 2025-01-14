@@ -6,8 +6,9 @@ import { ChangeEmailModal } from './ChangeEmailModal';
 import { ChangePhoneNumberModal } from './ChangePhoneNumberModal';
 import { ChangePasswordModal } from './ChangePasswordModal';
 import { DeleteAccountModal } from './DeleteAccountModal';
-import { Button } from '@/components/ui/button';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { H2, H3 } from '@/components/ui/heading-with-anchor';
 
 interface Props {
   user: User;
@@ -17,11 +18,13 @@ export default function AccountTab({ user }: Props) {
   return (
     <div className="flex flex-col gap-5">
       <div>
-        <h2>General</h2>
+        <H2 anchor="general">General</H2>
 
         <ul className="flex flex-col gap-4">
           <li className="flex items-center gap-3">
-            <h3 className="text-base me-auto m-0">Email address</h3>
+            <H3 className="!text-base m-0 me-auto" anchor="email-address">
+              Email address
+            </H3>
 
             <span>{user.email}</span>
             <Dialog>
@@ -33,7 +36,9 @@ export default function AccountTab({ user }: Props) {
           </li>
 
           <li className="flex items-center gap-3">
-            <h3 className="text-base me-auto m-0">Phone number</h3>
+            <H3 className="!text-base m-0 me-auto" anchor="phone-number">
+              Phone number
+            </H3>
 
             <span>{user.phone_number}</span>
             <Dialog>
@@ -45,7 +50,9 @@ export default function AccountTab({ user }: Props) {
           </li>
 
           <li className="flex items-center gap-3">
-            <h3 className="text-base me-auto m-0">Password</h3>
+            <H3 className="!text-base m-0 me-auto" anchor="password">
+              Password
+            </H3>
 
             <Dialog>
               <DialogTrigger asChild>
@@ -58,11 +65,13 @@ export default function AccountTab({ user }: Props) {
       </div>
 
       <div>
-        <h2>Danger</h2>
+        <H2 anchor="danger">Danger</H2>
 
         <ul className="flex flex-col gap-4">
           <li className="flex items-center gap-3">
-            <h3 className="text-base me-auto m-0">Delete Account</h3>
+            <H3 className="!text-base m-0 me-auto" anchor="delete-account">
+              Delete Account
+            </H3>
 
             <Dialog>
               <DialogTrigger asChild>

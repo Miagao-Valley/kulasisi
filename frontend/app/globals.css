@@ -2,34 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-h1 {
-  @apply text-4xl font-bold mb-5;
-}
-
-h2 {
-  @apply text-3xl font-bold mb-4;
-}
-
-h3 {
-  @apply text-2xl font-semibold mb-3;
-}
-
-h4 {
-  @apply text-xl font-semibold mb-2;
-}
-
-h5 {
-  @apply text-lg font-medium mb-1;
-}
-
-h6 {
-  @apply text-base font-medium mb-1;
-}
-
-.custom-container {
-  @apply xl:px-24 lg:px-20 md:px-16 sm:px-14 px-6;
-}
-
 .borderless-input {
   @apply !border-transparent !outline-none !shadow-none !ring-0 !ring-offset-0;
 }

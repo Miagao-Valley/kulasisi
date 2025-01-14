@@ -6,6 +6,7 @@ import { useAuth } from '@/components/AuthProvider';
 import { User } from '@/types/users';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+import { H1 } from '@/components/ui/heading-with-anchor';
 import { Pen } from 'lucide-react';
 
 interface Props {
@@ -20,9 +21,9 @@ export default function Overview({ user, className = '' }: Props) {
     <div className={cn(className, '')}>
       <div className="flex gap-1">
         <div>
-          <h1 className="text-2xl mb-0">
+          <H1 className="!text-2xl m-0">
             {user.first_name} {user.last_name}
-          </h1>
+          </H1>
           <span>@{user.username}</span>
         </div>
         {auth.isAuthenticated && auth.username === user.username && (

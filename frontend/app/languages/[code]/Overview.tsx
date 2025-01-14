@@ -11,6 +11,7 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { Badge } from '@/components/ui/badge';
+import { H1 } from '@/components/ui/heading-with-anchor';
 
 interface Props {
   lang: Lang;
@@ -34,7 +35,8 @@ export default function Overview({ lang, className = '' }: Props) {
           </Tooltip>
         </TooltipProvider>
       </Link>
-      <h1 className="text-3xl mb-0">{lang.name}</h1>
+
+      <H1 className="!text-3xl m-0">{lang.name}</H1>
     </div>
   );
 }

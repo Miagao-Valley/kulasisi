@@ -25,7 +25,7 @@ export default function GetStarted({ form, className }: Props) {
         render={({ field }) => (
           <FormItem>
             <FormControl>
-              <FloatingLabelInput label="Usernname" autoFocus {...field} />
+              <FloatingLabelInput label="Username" autoFocus {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>

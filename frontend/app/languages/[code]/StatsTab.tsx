@@ -2,6 +2,7 @@ import React from 'react';
 import { Lang, LangProficiencyLevel } from '@/types/languages';
 import displayLangProficiency from '@/utils/displayLangProficiency';
 import { Progress } from '@/components/ui/progress';
+import { H3 } from '@/components/ui/heading-with-anchor';
 
 interface Props {
   lang: Lang;
@@ -9,10 +10,11 @@ interface Props {
 
 export default function StatsTab({ lang }: Props) {
   return (
-    <>
-      <div className="mb-5">
-        <h3 className="text-base">{lang.user_count} Members</h3>
-
+    <div className="flex flex-col gap-3">
+      <div>
+        <H3 className="!text-lg" anchor="members">
+          {lang.user_count} Members
+        </H3>
         <div className="flex flex-col gap-3">
           {lang?.users_by_proficiency &&
             Object.keys(lang.users_by_proficiency).map((l) => {
@@ -30,8 +32,9 @@ export default function StatsTab({ lang }: Props) {
       </div>
 
       <div>
-        <h3 className="text-base">Contribution</h3>
-
+        <H3 className="!text-lg" anchor="contribution">
+          Contribution
+        </H3>
         <div className="grid grid-cols-2 gap-4">
           <div className="flex flex-col">
             <span className="font-semibold">{lang.phrase_count}</span>
@@ -51,6 +54,6 @@ export default function StatsTab({ lang }: Props) {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

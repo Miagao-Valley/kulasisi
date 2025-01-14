@@ -16,6 +16,7 @@ import LangProficienciesForm from '@/components/LangProficienciesForm';
 import { LoadingButton } from '@/components/ui/loading-button';
 import setFormErrors from '@/utils/setFormErrors';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { H3 } from '@/components/ui/heading-with-anchor';
 
 interface LangProficienciesInputs {
   language_proficiencies: { lang: string; level: LangProficiencyLevel }[];
@@ -39,53 +40,59 @@ export default function StatsTab({ user }: Props) {
   };
 
   return (
-    <>
-      <Form {...form}>
-        <form
-          className="flex flex-col gap-3"
-          onSubmit={form.handleSubmit(onSubmit)}
-        >
-          <FormMessage>
-            {form.formState.errors.root?.serverError.message}
-          </FormMessage>
-          <FormField
-            control={form.control}
-            name="language_proficiencies"
-            defaultValue={user.language_proficiencies}
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <LangProficienciesForm
-                    selectedLangProficiencies={field.value}
-                    setSelectedLangProficiencies={(value) =>
-                      form.setValue('language_proficiencies', value)
-                    }
-                    disabled={
-                      !auth.isAuthenticated || auth.username !== user.username
-                    }
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
+    <div className="flex flex-col gap-3">
+      <div>
+        <H3 className="!text-lg" anchor="language-proficiency">
+          Language Proficiency
+        </H3>
+        <Form {...form}>
+          <form
+            className="flex flex-col gap-3"
+            onSubmit={form.handleSubmit(onSubmit)}
+          >
+            <FormMessage>
+              {form.formState.errors.root?.serverError.message}
+            </FormMessage>
+            <FormField
+              control={form.control}
+              name="language_proficiencies"
+              defaultValue={user.language_proficiencies}
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <LangProficienciesForm
+                      selectedLangProficiencies={field.value}
+                      setSelectedLangProficiencies={(value) =>
+                        form.setValue('language_proficiencies', value)
+                      }
+                      disabled={
+                        !auth.isAuthenticated || auth.username !== user.username
+                      }
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            {auth.isAuthenticated && auth.username === user.username && (
+              <div className="flex">
+                <LoadingButton
+                  type="submit"
+                  className="ms-auto"
+                  loading={form.formState.isSubmitting}
+                >
+                  Save
+                </LoadingButton>
+              </div>
             )}
-          />
-          {auth.isAuthenticated && auth.username === user.username && (
-            <div className="flex">
-              <LoadingButton
-                type="submit"
-                className="ms-auto"
-                loading={form.formState.isSubmitting}
-              >
-                Save
-              </LoadingButton>
-            </div>
-          )}
-        </form>
-      </Form>
+          </form>
+        </Form>
+      </div>
 
       <div>
-        <h3 className="phrase-base">Contribution</h3>
-
+        <H3 className="!text-lg" anchor="contribution">
+          Contribution
+        </H3>
         <div className="grid grid-cols-2 gap-4">
           <div className="flex flex-col">
             <span className="font-semibold">{user.reputation}</span>
@@ -113,6 +120,6 @@ export default function StatsTab({ user }: Props) {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

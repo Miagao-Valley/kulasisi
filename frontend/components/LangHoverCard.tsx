@@ -45,7 +45,7 @@ export default function LangHoverCard({ code, showName = false }: Props) {
 
           <HoverCardContent className="max-w-80">
             <div className="gap-1">
-              <h4 className="text-sm font-semibold">{lang.name}</h4>
+              <h2 className="font-semibold truncate max-w-40">{lang.name}</h2>
               <span>{shortenNum(lang.user_count || 0)} Members</span>
             </div>
           </HoverCardContent>
