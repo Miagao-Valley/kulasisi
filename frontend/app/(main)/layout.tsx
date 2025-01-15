@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Metadata } from 'next';
-import './globals.css';
-import { AuthProvider } from '../components/AuthProvider';
+import '../globals.css';
+import { AuthProvider } from '../../components/AuthProvider';
 import { Toaster } from '@/components/ui/sonner';
 import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/app-sidebar/AppSidebar';
@@ -23,7 +23,7 @@ export default function RootLayout({
         <AuthProvider>
           <Toaster />
           <SidebarProvider>
-            <AppSidebar>AppSidebar</AppSidebar>
+            <AppSidebar />
             <SidebarInset>
               <header className="h-12 flex gap-2 items-center shrink-0 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-16">
                 <AppHeader />

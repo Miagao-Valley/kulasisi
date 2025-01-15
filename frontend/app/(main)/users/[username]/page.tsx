@@ -3,14 +3,14 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs-w
 import getUser from '@/lib/users/getUser';
 import Overview from './Overview';
 import StatsTab from './StatsTab';
-import PhrasesList, { PhrasesListSkeleton } from '@/app/phrases/PhrasesList';
+import PhrasesList, { PhrasesListSkeleton } from '@/app/(main)/phrases/PhrasesList';
 import TranslationsList, {
   TranslationsListSkeleton,
-} from '@/app/phrases/translations/TranslationsList';
-import WordsList, { WordsListSkeleton } from '@/app/dictionary/WordsList';
+} from '@/app/(main)/phrases/translations/TranslationsList';
+import WordsList, { WordsListSkeleton } from '@/app/(main)/dictionary/WordsList';
 import DefinitionsList, {
   DefinitionsListSkeleton,
-} from '@/app/dictionary/definitions/DefinitionsList';
+} from '@/app/(main)/dictionary/definitions/DefinitionsList';
 
 interface Props {
   params: {

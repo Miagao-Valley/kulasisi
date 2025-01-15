@@ -2,14 +2,14 @@ import React, { Suspense } from 'react';
 import getLang from '@/lib/langs/getLang';
 import Overview from './Overview';
 import StatsTab from './StatsTab';
-import PhrasesList, { PhrasesListSkeleton } from '@/app/phrases/PhrasesList';
+import PhrasesList, { PhrasesListSkeleton } from '@/app/(main)/phrases/PhrasesList';
 import TranslationsList, {
   TranslationsListSkeleton,
-} from '@/app/phrases/translations/TranslationsList';
-import WordsList, { WordsListSkeleton } from '@/app/dictionary/WordsList';
+} from '@/app/(main)/phrases/translations/TranslationsList';
+import WordsList, { WordsListSkeleton } from '@/app/(main)/dictionary/WordsList';
 import DefinitionsList, {
   DefinitionsListSkeleton,
-} from '@/app/dictionary/definitions/DefinitionsList';
+} from '@/app/(main)/dictionary/definitions/DefinitionsList';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs-with-url';
 
 interface Props {
