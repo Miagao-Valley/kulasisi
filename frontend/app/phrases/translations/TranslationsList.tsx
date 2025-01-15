@@ -7,6 +7,7 @@ import TranslationCard from './TranslationCard';
 import ListPagination from '@/components/ListPagination';
 import { Filter } from '@/components/FilterMenu';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Separator } from '@/components/ui/separator';
 
 interface Props {
   phraseId?: number;
@@ -42,25 +43,29 @@ export default async function TranslationsList({
 
   return (
     <>
-      <ul className={cn(className, 'flex flex-col gap-3')}>
+      <ul className={cn(className, 'flex flex-col')}>
         {translations &&
         translations.results &&
         translations.results.length > 0 ? (
-          translations.results.map(async (translation) => {
-            const votes = await getVotes(translation);
-            const revisions = await getTranslationRevisions(translation.id);
-            return (
-              <li key={translation.id}>
-                <div id={`translation-${translation.id}`}>
-                  <TranslationCard
-                    translation={translation}
-                    votes={votes}
-                    revisions={revisions.results}
-                  />
-                </div>
-              </li>
-            );
-          })
+          <>
+            {translations.results.map(async (translation) => {
+              const votes = await getVotes(translation);
+              const revisions = await getTranslationRevisions(translation.id);
+              return (
+                <li key={translation.id}>
+                  <Separator className="my-2" />
+                  <div id={`translation-${translation.id}`}>
+                    <TranslationCard
+                      translation={translation}
+                      votes={votes}
+                      revisions={revisions.results}
+                    />
+                  </div>
+                </li>
+              );
+            })}
+            <Separator className="my-2" />
+          </>
         ) : (
           <li className="w-full col-span-full p-3 text-center">
             No translations found

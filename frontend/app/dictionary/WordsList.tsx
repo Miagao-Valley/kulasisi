@@ -7,6 +7,8 @@ import WordCard from './WordCard';
 import ListPagination from '@/components/ListPagination';
 import { Filter } from '@/components/FilterMenu';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Separator } from '@/components/ui/separator';
+
 interface Props {
   searchTerm?: string;
   sortOption?: string;
@@ -36,21 +38,25 @@ export default async function WordsList({
 
   return (
     <>
-      <ul className={cn(className, 'flex flex-col gap-3')}>
+      <ul className={cn(className, 'flex flex-col')}>
         {words && words.results && words.results.length > 0 ? (
-          words.results.map(async (word) => {
-            const votes = await getVotes(word);
-            const revisions = await getWordRevisions(word.id);
-            return (
-              <li key={word.id}>
-                <WordCard
-                  word={word}
-                  votes={votes}
-                  revisions={revisions.results}
-                />
-              </li>
-            );
-          })
+          <>
+            {words.results.map(async (word) => {
+              const votes = await getVotes(word);
+              const revisions = await getWordRevisions(word.id);
+              return (
+                <li key={word.id}>
+                  <Separator className="my-2" />
+                  <WordCard
+                    word={word}
+                    votes={votes}
+                    revisions={revisions.results}
+                  />
+                </li>
+              );
+            })}
+            <Separator className="my-2" />
+          </>
         ) : (
           <li className="w-full col-span-full p-3 text-center">
             No words found

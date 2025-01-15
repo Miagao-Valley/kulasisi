@@ -22,10 +22,11 @@ export default async function PostPage({ params, searchParams }: Props) {
   return (
     <>
       <WordCard
-        className="mb-3"
+        className="m-0 mb-3 p-0"
         word={word}
         votes={votes}
         revisions={revisions.results}
+        clickable={false}
       />
 
       <Tabs defaultValue={'definitions'}>

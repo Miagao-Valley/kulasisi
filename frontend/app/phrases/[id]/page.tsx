@@ -22,10 +22,11 @@ export default async function PhrasePage({ params, searchParams }: Props) {
   return (
     <>
       <PhraseCard
-        className="mb-3"
+        className="m-0 mb-3 p-0"
         phrase={phrase}
         votes={votes}
         revisions={revisions.results}
+        clickable={false}
       />
 
       <Tabs defaultValue={'translations'}>

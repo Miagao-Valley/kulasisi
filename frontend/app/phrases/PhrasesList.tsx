@@ -7,6 +7,7 @@ import PhraseCard from './PhraseCard';
 import ListPagination from '@/components/ListPagination';
 import { Filter } from '@/components/FilterMenu';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Separator } from '@/components/ui/separator';
 
 interface Props {
   searchTerm?: string;
@@ -37,21 +38,25 @@ export default async function PhrasesList({
 
   return (
     <>
-      <ul className={cn(className, 'flex flex-col gap-3')}>
+      <ul className={cn(className, 'flex flex-col')}>
         {phrases && phrases.results && phrases.results.length > 0 ? (
-          phrases.results.map(async (phrase) => {
-            const votes = await getVotes(phrase);
-            const revisions = await getPhraseRevisions(phrase.id);
-            return (
-              <li key={phrase.id}>
-                <PhraseCard
-                  phrase={phrase}
-                  votes={votes}
-                  revisions={revisions.results}
-                />
-              </li>
-            );
-          })
+          <>
+            {phrases.results.map(async (phrase) => {
+              const votes = await getVotes(phrase);
+              const revisions = await getPhraseRevisions(phrase.id);
+              return (
+                <li key={phrase.id}>
+                  <Separator className="my-2" />
+                  <PhraseCard
+                    phrase={phrase}
+                    votes={votes}
+                    revisions={revisions.results}
+                  />
+                </li>
+              );
+            })}
+            <Separator className="my-2" />
+          </>
         ) : (
           <li className="w-full col-span-full p-3 text-center">
             No phrases found

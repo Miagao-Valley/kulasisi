@@ -22,6 +22,7 @@ interface Props {
   translation: Translation;
   votes: Vote[];
   revisions: TranslationRevision[];
+  clickable?: boolean;
   className?: string;
 }
 
@@ -29,12 +30,15 @@ export default function TranslationCard({
   translation,
   votes,
   revisions,
+  clickable = true,
   className = '',
 }: Props) {
   const [isEditing, setIsEditing] = useState(false);
 
   return (
-    <Card className={cn(className, '')}>
+    <Card
+      className={cn(className, `border-transparent shadow-none ${clickable && 'hover:bg-accent/40'}`)}
+    >
       <CardHeader className="flex flex-row">
         <EntryHeader className="me-auto" entry={translation} />
         <TranslationDropdownMenu

@@ -24,6 +24,7 @@ interface Props {
   definition: Definition;
   votes: Vote[];
   revisions: DefinitionRevision[];
+  clickable?: boolean;
   className?: string;
 }
 
@@ -31,12 +32,15 @@ export default function DefinitionCard({
   definition,
   votes,
   revisions,
+  clickable = true,
   className = '',
 }: Props) {
   const [isEditing, setIsEditing] = useState(false);
 
   return (
-    <Card className={cn(className, '')}>
+    <Card
+      className={cn(className, `border-transparent shadow-none ${clickable && 'hover:bg-accent/40'}`)}
+    >
       <CardHeader className="flex flex-row">
         <EntryHeader className="me-auto" entry={definition} />
         <DefinitionDropdownMenu
