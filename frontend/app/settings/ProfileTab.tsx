@@ -1,5 +1,6 @@
 import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import Link from 'next/link';
 import { User } from '@/types/users';
 import updateUser from '@/lib/users/updateUser';
 import setFormErrors from '@/utils/setFormErrors';
@@ -10,6 +11,8 @@ import {
   FormItem,
   FormMessage,
 } from '@/components/ui/form';
+import { Textarea } from '@/components/ui/textarea';
+import { Input } from '@/components/ui/input';
 import { FloatingLabelInput } from '@/components/ui/floating-label-input';
 import { DateTimePicker } from '@/components/ui/datetime-picker';
 import {
@@ -19,9 +22,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { LoadingButton } from '@/components/ui/loading-button';
-import { Textarea } from '@/components/ui/textarea';
 import { H2, H3 } from '@/components/ui/heading-with-anchor';
+import { LoadingButton } from '@/components/ui/loading-button';
+import { Button } from '@/components/ui/button';
+import { UserRoundIcon } from 'lucide-react';
 
 export interface ProfileInputs {
   username: string;
@@ -60,7 +64,14 @@ export default function ProfileTab({ user }: Props) {
           className="flex flex-col gap-3"
           onSubmit={form.handleSubmit(onSubmit)}
         >
-          <H2 anchor="general">General</H2>
+          <div className="flex">
+            <H2 anchor="general">General</H2>
+            <Button variant="outline" className="ms-auto" asChild>
+              <Link href={`/users/${user.username}`}>
+                <UserRoundIcon /> View Profile
+              </Link>
+            </Button>
+          </div>
 
           <FormMessage>
             {form.formState.errors.root?.serverError.message}
@@ -134,7 +145,7 @@ export default function ProfileTab({ user }: Props) {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <FloatingLabelInput label="Location" {...field} />
+                    <Input placeholder="Location" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -198,7 +209,7 @@ export default function ProfileTab({ user }: Props) {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <FloatingLabelInput label="Website" {...field} />
+                    <Input placeholder="Website" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

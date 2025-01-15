@@ -5,9 +5,11 @@ import Link from 'next/link';
 import { useAuth } from '@/components/AuthProvider';
 import { User } from '@/types/users';
 import { cn } from '@/lib/utils';
+import { badgeVariants } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { H1 } from '@/components/ui/heading-with-anchor';
-import { Pen } from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { CakeSliceIcon, CalendarFoldIcon, LinkIcon, MapPinIcon, Pen } from 'lucide-react';
 
 interface Props {
   user: User;
@@ -20,11 +22,22 @@ export default function Overview({ user, className = '' }: Props) {
   return (
     <div className={cn(className, '')}>
       <div className="flex gap-1">
-        <div>
-          <H1 className="!text-2xl m-0">
-            {user.first_name} {user.last_name}
-          </H1>
-          <span>@{user.username}</span>
+        <div className="flex gap-3">
+          <Avatar className="h-16 w-16 rounded-lg">
+            <AvatarImage
+              src={''}
+              alt={user?.username}
+            />
+            <AvatarFallback>
+              {user?.username.slice(0, 1).toUpperCase()}
+            </AvatarFallback>
+          </Avatar>
+          <div>
+            <H1 className="!text-3xl m-0">
+              {user.first_name} {user.last_name}
+            </H1>
+            <span>@{user.username}</span>
+          </div>
         </div>
         {auth.isAuthenticated && auth.username === user.username && (
           <Button variant="outline" className="ms-auto" asChild>
@@ -37,18 +50,15 @@ export default function Overview({ user, className = '' }: Props) {
 
       <p className="mt-3 mb-2">{user.bio}</p>
       <div className="flex gap-3 text-sm mb-2">
-        {user.website && (
-          <span className="flex items-center gap-1">
-            <Link className="link link-primary link-hover" href={user.website}>
-              {new URL(user.website).hostname.replace(/^www\./, '')}
-            </Link>
-          </span>
-        )}
         {user.location && (
-          <span className="flex items-center gap-1">{user.location}</span>
+          <span className="flex items-center gap-0">
+            <MapPinIcon />
+            {user.location}
+          </span>
         )}
         {user.date_of_birth && (
           <span className="flex items-center gap-1">
+            <CalendarFoldIcon />
             Born{' '}
             {user.date_of_birth.toLocaleDateString('en-US', {
               year: 'numeric',
@@ -58,12 +68,21 @@ export default function Overview({ user, className = '' }: Props) {
         )}
         {user.date_joined && (
           <span className="flex items-center gap-1">
+            <CakeSliceIcon />
             Joined{' '}
             {user.date_joined.toLocaleDateString('en-US', {
               year: 'numeric',
               month: 'long',
             })}
           </span>
+        )}
+      </div>
+      <div className="flex gap-3 text-sm mb-2">
+        {user.website && (
+            <a target="_blank" rel="noopener noreferrer" href={user.website} className={badgeVariants({ variant: "outline" })}>
+              <LinkIcon className="w-3 me-1" />
+              {new URL(user.website).hostname.replace(/^www\./, '')}
+            </a>
         )}
       </div>
     </div>
