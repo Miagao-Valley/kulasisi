@@ -92,7 +92,7 @@ export const TabsTrigger = (props: {
     <Link
       {...props}
       className={cn(
-        'inline-flex items-center justify-center whitespace-nowrap px-3 py-1.5 text-sm font-medium ring-offset-background data-[state=active]:border-b-2 data-[state=active]:border-black data-[state=active]:text-foreground text-muted-foreground',
+        'inline-flex items-center justify-center whitespace-nowrap px-3 py-1.5 text-sm font-medium ring-offset-background data-[state=active]:border-b-2 data-[state=active]:border-primary data-[state=active]:text-foreground text-muted-foreground',
         props.className,
       )}
       data-state={context.selected === props.value ? 'active' : 'inactive'}

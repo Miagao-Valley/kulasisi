@@ -62,7 +62,7 @@ export default function VoteActions({ entry, votes }: Props) {
   };
 
   return (
-    <div className="p-0 flex items-center rounded-md border border-input bg-background shadow-sm">
+    <div className="p-0 flex items-center rounded-md border">
       <Button
         variant="ghost"
         size="icon"

@@ -22,9 +22,9 @@ export default function DiffText({
           key={i}
           className={`${
             part.added
-              ? 'bg-green-200'
+              ? 'bg-success/40'
               : part.removed
-                ? 'line-through bg-red-200'
+                ? 'bg-destructive/40 line-through'
                 : ''
           }`}
         >

@@ -6,6 +6,10 @@ import { Toaster } from '@/components/ui/sonner';
 import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/app-sidebar/AppSidebar';
 import AppHeader from '@/components/AppHeader';
+import { ThemeProvider } from '@/components/ThemeProvider';
+import { Bricolage_Grotesque } from "next/font/google";
+
+export const font = Bricolage_Grotesque({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: 'Kulasisi',
@@ -19,20 +23,27 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      <body className={font.className}>
         <AuthProvider>
-          <Toaster />
-          <SidebarProvider>
-            <AppSidebar />
-            <SidebarInset>
-              <header className="h-12 flex gap-2 items-center shrink-0 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-16">
-                <AppHeader />
-              </header>
-              <main className="p-4 pt-0">
-                {children}
-              </main>
-            </SidebarInset>
-          </SidebarProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <Toaster />
+            <SidebarProvider>
+              <AppSidebar />
+              <SidebarInset>
+                <header className="h-12 flex gap-2 items-center shrink-0 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-16">
+                  <AppHeader />
+                </header>
+                <main className="p-4 pt-0">
+                  {children}
+                </main>
+              </SidebarInset>
+            </SidebarProvider>
+          </ThemeProvider>
         </AuthProvider>
       </body>
     </html>

@@ -91,7 +91,7 @@ export default function UpdateTranslationForm({
         <div className="flex justify-end gap-2">
           <Button
             type="button"
-            variant="secondary"
+            variant="outline"
             onClick={() => setIsEditing(false)}
           >
             Cancel

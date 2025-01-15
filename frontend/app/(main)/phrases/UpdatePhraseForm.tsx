@@ -133,7 +133,7 @@ export default function UpdatePhraseForm({
         <div className="flex justify-end gap-2">
           <Button
             type="button"
-            variant="secondary"
+            variant="outline"
             onClick={() => setIsEditing(false)}
           >
             Cancel

@@ -101,7 +101,7 @@ export function DeleteAccountModal({ username }: Props) {
 
           <div className="ms-auto flex gap-2">
             <DialogClose asChild>
-              <Button variant="secondary">Cancel</Button>
+              <Button variant="outline">Cancel</Button>
             </DialogClose>
             <LoadingButton
               variant="destructive"

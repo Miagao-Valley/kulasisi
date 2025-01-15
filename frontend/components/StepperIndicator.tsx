@@ -26,7 +26,7 @@ export default function StepperIndicator({
         >
           <Button
             variant={idx <= step ? 'default' : 'outline'}
-            className="rounded-full"
+            className={`rounded-full ${idx <= step ? 'hover:bg-primary' : ''}`}
             onClick={() => setStep(idx)}
           >
             {idx < step ? <Check /> : idx + 1}

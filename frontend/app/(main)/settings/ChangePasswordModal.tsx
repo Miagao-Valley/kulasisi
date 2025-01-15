@@ -101,7 +101,7 @@ export function ChangePasswordModal({ username }: Props) {
 
           <div className="ms-auto flex gap-2">
             <DialogClose asChild>
-              <Button variant="secondary">Cancel</Button>
+              <Button variant="outline">Cancel</Button>
             </DialogClose>
             <LoadingButton type="submit" loading={form.formState.isSubmitting}>
               Save

@@ -479,6 +479,7 @@ const MultipleSelector = React.forwardRef<
                     'data-[fixed]:bg-muted-foreground data-[fixed]:text-muted data-[fixed]:hover:bg-muted-foreground',
                     badgeClassName,
                   )}
+                  variant={'secondary'}
                   data-fixed={option.fixed}
                   data-disabled={disabled || undefined}
                 >
