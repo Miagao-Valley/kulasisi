@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import Link from 'next/link';
 import { UseFormReturn } from 'react-hook-form';
 import { RegisterInputs } from './RegisterForm';
 import { Button } from '@/components/ui/button';
@@ -42,11 +41,6 @@ export default function NavButtons({
         >
           Sign up
         </LoadingButton>
-      )}
-      {!reachedEnd && step === 0 && (
-        <p className="text-center">
-          Already have an account? <Link href={`/auth/login/`}>Sign in</Link>
-        </p>
       )}
 
       <Button

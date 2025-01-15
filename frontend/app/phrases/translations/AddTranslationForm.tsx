@@ -54,7 +54,7 @@ export default function AddTranslationForm({
   ) => {
     if (!auth.isAuthenticated) {
       toast.error('You need to sign in to post.');
-      router.push(`/auth/login?next=${pathname}`);
+      router.push(`/login?next=${pathname}`);
       return;
     }
 

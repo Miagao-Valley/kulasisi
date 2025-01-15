@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import getAuth from './lib/auth/getAuth';
 
 const protectedRoutes: string[] = ['/settings'];
-const restrictedRoutes: string[] = ['/auth/login', '/auth/register'];
+const restrictedRoutes: string[] = ['/login', '/register'];
 
 export default async function middleware(req: NextRequest) {
   const path =
@@ -16,7 +16,7 @@ export default async function middleware(req: NextRequest) {
   const { isAuthenticated } = await getAuth();
 
   if (isProtectedRoute && !isAuthenticated) {
-    return NextResponse.redirect(new URL(`/auth/register/`, req.nextUrl));
+    return NextResponse.redirect(new URL(`/register/`, req.nextUrl));
   }
 
   if (isRestrictedRoute && isAuthenticated) {

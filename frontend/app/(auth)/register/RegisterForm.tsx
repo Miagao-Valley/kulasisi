@@ -14,6 +14,8 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { Form, FormMessage } from '@/components/ui/form';
 import setFormErrors from '@/utils/setFormErrors';
 import { H1 } from '@/components/ui/heading-with-anchor';
+import Link from 'next/link';
+import { BirdIcon } from 'lucide-react';
 
 export interface RegisterInputs {
   username: string;
@@ -83,21 +85,37 @@ export default function RegisterForm() {
   };
 
   return (
-    <div className="flex flex-col align-middle">
+    <div className="flex flex-col gap-6">
+      <div className="flex flex-col items-center gap-1">
+        <Link
+          href="/"
+          className="flex flex-col items-center"
+        >
+          <BirdIcon className="h-8 w-8" />
+          <span className="sr-only">kulasisi</span>
+        </Link>
+        <h1 className="text-xl font-bold">Welcome to kulasisi</h1>
+        <div className="text-center text-sm">
+          Already have an account?{" "}
+          <Link href="/login/" className="underline underline-offset-4">
+            Sign in
+          </Link>
+        </div>
+      </div>
+
       <StepperIndicator
-        className="mb-6"
         numSteps={steps.length}
         step={step}
         setStep={setStep}
       />
+
+      <H1 className="m-0">{steps[step].name}</H1>
 
       <Form {...form}>
         <form
           className="flex flex-col gap-3"
           onSubmit={form.handleSubmit(onSubmit)}
         >
-          <H1>{steps[step].name}</H1>
-
           <FormMessage>
             {form.formState.errors.root?.serverError.message}
           </FormMessage>

@@ -40,7 +40,7 @@ export default function AddWordForm({ className = '' }: Props) {
   const onSubmit: SubmitHandler<WordInputs> = async (data: WordInputs) => {
     if (!auth.isAuthenticated) {
       toast.error('You need to sign in to post.');
-      router.push(`/auth/login?next=${pathname}`);
+      router.push(`/login?next=${pathname}`);
       return;
     }
 

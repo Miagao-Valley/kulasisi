@@ -26,5 +26,5 @@ export default async function deleteUser(username: string, data: object) {
   }
 
   revalidatePath(`/users`);
-  redirect(`/auth/login`);
+  redirect(`/login`);
 }

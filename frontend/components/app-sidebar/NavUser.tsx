@@ -32,15 +32,32 @@ import {
   LogOutIcon,
   LogInIcon,
 } from 'lucide-react';
-
+import { useRouter } from 'next/navigation';
+import logout from '@/lib/auth/logout';
+import { Spinner } from '../ui/spinner';
 
 export function NavUser() {
   const auth = useAuth();
+  const router = useRouter();
   const pathname = usePathname();
   const { isMobile, open } = useSidebar();
 
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [loggingOut, setLoggingOut] = useState(false);
+
+  const handleLogout = async () => {
+    setLoggingOut(true);
+    try {
+      await logout();
+      auth.updateAuth();
+      router.push('/login/');
+    } catch (error) {
+      console.error('Error logging out:', error);
+    } finally {
+      setLoggingOut(false);
+    }
+  };
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -144,10 +161,14 @@ export function NavUser() {
               <DropdownMenuSeparator />
 
               <DropdownMenuItem>
-                <LogOutIcon />
-                <Link href="/auth/logout" className="w-full">
+                {loggingOut ? <Spinner size="small" /> : <LogOutIcon />}
+                <button
+                  className="w-full text-left cursor-pointer"
+                  onClick={handleLogout}
+                  disabled={loggingOut}
+                >
                   Sign out
-                </Link>
+                </button>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -155,13 +176,13 @@ export function NavUser() {
       </SidebarMenu>
     ) : (
       <SidebarMenu>
-        {open ?
+        {open ? (
           <>
             <span className="text-sm text-center truncate w-full my-2">Sign in to enjoy all the features.</span>
 
             <SidebarMenuItem>
               <Button variant="outline" className="w-full" asChild>
-                <Link href={`/auth/login?next=${pathname}`}>Sign in</Link>
+                <Link href={`/login?next=${pathname}`}>Sign in</Link>
               </Button>
             </SidebarMenuItem>
 
@@ -173,17 +194,17 @@ export function NavUser() {
 
             <SidebarMenuItem>
               <Button className="w-full" asChild>
-                <Link href="/auth/register/">Sign up</Link>
+                <Link href="/register/">Sign up</Link>
               </Button>
             </SidebarMenuItem>
           </>
-        :
+        ) : (
           <SidebarMenuItem>
             <SidebarMenuButton className="w-full" tooltip="Sign in" asChild>
-              <Link href="/auth/login/"><LogInIcon /></Link>
+              <Link href="/login/"><LogInIcon /></Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
-      }
+        )}
       </SidebarMenu>
     )
   );

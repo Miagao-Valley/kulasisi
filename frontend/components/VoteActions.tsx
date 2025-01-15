@@ -37,7 +37,7 @@ export default function VoteActions({ entry, votes }: Props) {
 
     if (!auth.isAuthenticated) {
       toast.error('You need to sign in to vote.');
-      router.push(`/auth/login?next=${pathname}`);
+      router.push(`/login?next=${pathname}`);
       setIsLoading(false);
       return;
     }
