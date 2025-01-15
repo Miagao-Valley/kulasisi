@@ -10,27 +10,22 @@ import WordsList, { WordsListSkeleton } from '@/app/dictionary/WordsList';
 import DefinitionsList, {
   DefinitionsListSkeleton,
 } from '@/app/dictionary/definitions/DefinitionsList';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs-with-url';
 
 interface Props {
   params: {
     code: string;
   };
-  searchParams: {
-    tab?: string;
-  };
 }
 
-export default async function LanguagePage({ params, searchParams }: Props) {
+export default async function LanguagePage({ params }: Props) {
   const lang = await getLang(params.code);
-
-  const currentTab = searchParams?.tab || 'stats';
 
   return (
     <>
       <Overview lang={lang} className="mb-5" />
 
-      <Tabs defaultValue={currentTab}>
+      <Tabs defaultValue={'stats'}>
         <TabsList>
           <TabsTrigger value="stats">Stats</TabsTrigger>
           <TabsTrigger value="phrases">Phrases</TabsTrigger>

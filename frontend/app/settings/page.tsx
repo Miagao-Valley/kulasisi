@@ -7,16 +7,10 @@ import getUser from '@/lib/users/getUser';
 import Loading from '../loading';
 import AccountTab from './AccountTab';
 import ProfileTab from './ProfileTab';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs-with-url';
 import { H1 } from '@/components/ui/heading-with-anchor';
 
-interface Props {
-  searchParams: {
-    tab?: string;
-  };
-}
-
-export default function SettingsPage({ searchParams }: Props) {
+export default function SettingsPage() {
   const auth = useAuth();
 
   const [user, setUser] = useState<User | null>(null);
@@ -32,8 +26,6 @@ export default function SettingsPage({ searchParams }: Props) {
     fetchUser();
   }, [auth.username, auth.isAuthenticated]);
 
-  const currentTab = searchParams?.tab || 'account';
-
   if (!user) {
     return <Loading />;
   }
@@ -42,7 +34,7 @@ export default function SettingsPage({ searchParams }: Props) {
     <>
       <H1>Settings</H1>
 
-      <Tabs defaultValue={currentTab}>
+      <Tabs defaultValue={'account'}>
         <TabsList>
           <TabsTrigger value="account">Account</TabsTrigger>
           <TabsTrigger value="profile">Profile</TabsTrigger>

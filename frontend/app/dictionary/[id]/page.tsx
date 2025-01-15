@@ -4,7 +4,7 @@ import getVotes from '@/lib/vote/getVotes';
 import getWordRevisions from '@/lib/words/getWordRevisions';
 import WordCard from '../WordCard';
 import DefinitionsSection from '../definitions/DefinitionsSection';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs-with-url';
 
 interface Props {
   params: {
@@ -19,8 +19,6 @@ export default async function PostPage({ params, searchParams }: Props) {
   const votes = await getVotes(word);
   const revisions = await getWordRevisions(id);
 
-  const currentTab = searchParams?.tab || 'definitions';
-
   return (
     <>
       <WordCard
@@ -30,7 +28,7 @@ export default async function PostPage({ params, searchParams }: Props) {
         revisions={revisions.results}
       />
 
-      <Tabs defaultValue={currentTab}>
+      <Tabs defaultValue={'definitions'}>
         <TabsList>
           <TabsTrigger value="definitions">Definitions</TabsTrigger>
         </TabsList>

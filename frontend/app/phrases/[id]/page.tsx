@@ -4,7 +4,7 @@ import getVotes from '@/lib/vote/getVotes';
 import getPhraseRevisions from '@/lib/phrases/getPhraseRevisions';
 import PhraseCard from '../PhraseCard';
 import TranslationsSection from '../translations/TranslationsSection';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs-with-url';
 
 interface Props {
   params: {
@@ -19,8 +19,6 @@ export default async function PhrasePage({ params, searchParams }: Props) {
   const votes = await getVotes(phrase);
   const revisions = await getPhraseRevisions(id);
 
-  const currentTab = searchParams?.tab || 'translations';
-
   return (
     <>
       <PhraseCard
@@ -30,7 +28,7 @@ export default async function PhrasePage({ params, searchParams }: Props) {
         revisions={revisions.results}
       />
 
-      <Tabs defaultValue={currentTab}>
+      <Tabs defaultValue={'translations'}>
         <TabsList>
           <TabsTrigger value="translations">Translations</TabsTrigger>
         </TabsList>

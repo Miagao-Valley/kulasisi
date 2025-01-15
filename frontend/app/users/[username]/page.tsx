@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs-with-url';
 import getUser from '@/lib/users/getUser';
 import Overview from './Overview';
 import StatsTab from './StatsTab';
@@ -16,21 +16,16 @@ interface Props {
   params: {
     username: string;
   };
-  searchParams: {
-    tab?: string;
-  };
 }
 
-export default async function UserPage({ params, searchParams }: Props) {
+export default async function UserPage({ params }: Props) {
   const user = await getUser(params.username);
-
-  const currentTab = searchParams?.tab || 'stats';
 
   return (
     <>
       <Overview user={user} className="mb-5" />
 
-      <Tabs defaultValue={currentTab}>
+      <Tabs defaultValue={'stats'}>
         <TabsList>
           <TabsTrigger value="stats">Stats</TabsTrigger>
           <TabsTrigger value="phrases">Phrases</TabsTrigger>
