@@ -32,7 +32,7 @@ export default function LangSelect({
   selectedLang,
   setSelectedLang,
   exclude = [],
-  className = ''
+  className = '',
 }: Props) {
   const [langs, setLangs] = useState<Lang[]>([]);
   const [open, setOpen] = useState(false);
@@ -54,12 +54,14 @@ export default function LangSelect({
           size="sm"
           role="combobox"
           aria-expanded={open}
-          className={cn("justify-between gap-1 px-1", className)}
+          className={cn('justify-between gap-1 px-1', className)}
         >
           <ChevronsUpDown className="opacity-50" />
-          {selectedLang
-            ? <Badge variant="outline">{selectedLang}</Badge>
-            : <LanguagesIcon />}
+          {selectedLang ? (
+            <Badge variant="outline">{selectedLang}</Badge>
+          ) : (
+            <LanguagesIcon />
+          )}
         </Button>
       </PopoverTrigger>
 

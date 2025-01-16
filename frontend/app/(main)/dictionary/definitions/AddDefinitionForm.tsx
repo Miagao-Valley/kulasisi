@@ -109,7 +109,9 @@ export default function AddDefinitionForm({
                     <FormControl>
                       <LangSelect
                         selectedLang={field.value}
-                        setSelectedLang={(value) => form.setValue('lang', value)}
+                        setSelectedLang={(value) =>
+                          form.setValue('lang', value)
+                        }
                         exclude={[originalLang]}
                       />
                     </FormControl>

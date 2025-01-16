@@ -94,7 +94,7 @@ export default function UpdateDefinitionForm({
                 defaultSourceTitle={definition.source_title}
                 defaultSourceLink={definition.source_link}
               />
-              </div>
+            </div>
             <FormField
               control={form.control}
               name="pos"
@@ -121,10 +121,7 @@ export default function UpdateDefinitionForm({
             >
               Cancel
             </Button>
-            <LoadingButton
-              type="submit"
-              loading={form.formState.isSubmitting}
-            >
+            <LoadingButton type="submit" loading={form.formState.isSubmitting}>
               Save
             </LoadingButton>
           </div>

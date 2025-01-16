@@ -21,11 +21,11 @@ export default function CategorySelect({
   useEffect(() => {
     const fetchCategories = async () => {
       const res = await getCategories();
-      setCategoryOptions(res.map(category => category.name));
-    }
+      setCategoryOptions(res.map((category) => category.name));
+    };
 
     fetchCategories();
-  }, [])
+  }, []);
 
   return (
     <ListSelector
@@ -34,13 +34,15 @@ export default function CategorySelect({
       onChange={setSelectedCategories}
       onSearch={async (q) => {
         q = q.toLowerCase();
-        return categoryOptions.filter(option => option.toLowerCase().includes(q));
+        return categoryOptions.filter((option) =>
+          option.toLowerCase().includes(q),
+        );
       }}
       triggerSearchOnFocus
       placeholder="categories..."
       hidePlaceholderWhenSelected
       emptyIndicator={<p className="text-center">No results found</p>}
-      className={cn("!text-xs border-0 bg-accent/20", className)}
+      className={cn('!text-xs border-0 bg-accent/20', className)}
     />
   );
 }

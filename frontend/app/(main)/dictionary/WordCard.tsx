@@ -36,7 +36,10 @@ export default function WordCard({
 
   return (
     <Card
-      className={cn(className, `border-transparent shadow-none ${clickable && 'hover:bg-accent/40'}`)}
+      className={cn(
+        className,
+        `border-transparent shadow-none ${clickable && 'hover:bg-accent/40'}`,
+      )}
     >
       <CardHeader className="flex flex-row">
         <EntryHeader className="me-auto" entry={word} />
@@ -48,19 +51,19 @@ export default function WordCard({
       </CardHeader>
       <CardContent>
         {isEditing ? (
-          <UpdateWordForm
-            word={word}
-            setIsEditing={setIsEditing}
-          />
+          <UpdateWordForm word={word} setIsEditing={setIsEditing} />
         ) : (
           <>
             <Link href={`/dictionary/${word.id}/`}>
               <p className="mb-2 text-xl font-bold">{word.word}</p>
             </Link>
             <div className="flex gap-0 items-center">
-              {(word.source_title || word.source_link) &&
-                <SourceButton source_title={word.source_title} source_link={word.source_link} />
-              }
+              {(word.source_title || word.source_link) && (
+                <SourceButton
+                  source_title={word.source_title}
+                  source_link={word.source_link}
+                />
+              )}
             </div>
           </>
         )}

@@ -11,7 +11,11 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
 import { Textarea } from './ui/textarea';
 import { CircleHelp } from 'lucide-react';
 
@@ -24,7 +28,10 @@ interface Props<T extends Inputs> {
   defaultUsageNote?: string;
 }
 
-export default function UsageNoteForm<T extends Inputs>({ form , defaultUsageNote }: Props<T>) {
+export default function UsageNoteForm<T extends Inputs>({
+  form,
+  defaultUsageNote,
+}: Props<T>) {
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -33,7 +40,7 @@ export default function UsageNoteForm<T extends Inputs>({ form , defaultUsageNot
           size="sm"
           className={cn(
             'max-w-32 p-2 h-fit',
-            form.formState.errors.usage_note && 'text-destructive'
+            form.formState.errors.usage_note && 'text-destructive',
           )}
         >
           <CircleHelp />
@@ -45,7 +52,7 @@ export default function UsageNoteForm<T extends Inputs>({ form , defaultUsageNot
 
           <FormField
             control={form.control}
-            name={"usage_note" as Path<T>}
+            name={'usage_note' as Path<T>}
             defaultValue={defaultUsageNote as PathValue<T, Path<T>>}
             render={({ field }) => (
               <FormItem>
@@ -62,10 +69,11 @@ export default function UsageNoteForm<T extends Inputs>({ form , defaultUsageNot
           />
 
           <p className="mt-1 text-xs text-muted-foreground">
-            This usage note should provides guidance on the correct context or meaning of the entry.
+            This usage note should provides guidance on the correct context or
+            meaning of the entry.
           </p>
         </div>
       </PopoverContent>
     </Popover>
-  )
+  );
 }

@@ -42,7 +42,11 @@ export default function UpdateTranslationForm({
   const onSubmit: SubmitHandler<TranslationInputs> = async (
     data: TranslationInputs,
   ) => {
-    const res = await updateTranslation(translation.phrase, translation.id, data);
+    const res = await updateTranslation(
+      translation.phrase,
+      translation.id,
+      data,
+    );
     if (res?.error) {
       setFormErrors(res.error, form.setError);
     } else {
@@ -96,10 +100,7 @@ export default function UpdateTranslationForm({
             >
               Cancel
             </Button>
-            <LoadingButton
-              type="submit"
-              loading={form.formState.isSubmitting}
-            >
+            <LoadingButton type="submit" loading={form.formState.isSubmitting}>
               Save
             </LoadingButton>
           </div>

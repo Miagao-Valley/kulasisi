@@ -84,10 +84,7 @@ export default function UpdatePhraseForm({
         <div className="flex flex-col sm:flex-row gap-1 items-center">
           <div className="w-full sm:w-fit flex gap-0 justify-between items-center">
             <div className="flex gap-0 items-center">
-              <UsageNoteForm
-                form={form}
-                defaultUsageNote={phrase.usage_note}
-              />
+              <UsageNoteForm form={form} defaultUsageNote={phrase.usage_note} />
               <SourceForm
                 form={form}
                 defaultSourceTitle={phrase.source_title}
@@ -103,7 +100,9 @@ export default function UpdatePhraseForm({
                   <FormControl>
                     <CategorySelect
                       selectedCategories={field.value}
-                      setSelectedCategories={(value) => form.setValue('categories', value)}
+                      setSelectedCategories={(value) =>
+                        form.setValue('categories', value)
+                      }
                     />
                   </FormControl>
                   <FormMessage />

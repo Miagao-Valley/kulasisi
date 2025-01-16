@@ -19,9 +19,7 @@ interface Props {
 export default function Experience({ form, className }: Props) {
   return (
     <div className={cn(className, 'flex flex-col gap-3')}>
-      <H3 className="!text-base m-0">
-        Language Proficiency
-      </H3>
+      <H3 className="!text-base m-0">Language Proficiency</H3>
       <FormField
         control={form.control}
         name="language_proficiencies"

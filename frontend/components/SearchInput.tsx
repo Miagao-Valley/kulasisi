@@ -32,7 +32,7 @@ export default function SearchInput({ currentSearchTerm, className }: Props) {
 
   return (
     <Input
-      className={cn(className, "text-sm h-fit")}
+      className={cn(className, 'text-sm h-fit')}
       type="text"
       value={searchTerm}
       placeholder="Search"

@@ -85,7 +85,6 @@ export default function UpdateWordForm({
             defaultSourceLink={word.source_link}
           />
 
-
           <div className="ms-auto flex justify-end gap-2">
             <Button
               type="button"
@@ -94,10 +93,7 @@ export default function UpdateWordForm({
             >
               Cancel
             </Button>
-            <LoadingButton
-              type="submit"
-              loading={form.formState.isSubmitting}
-            >
+            <LoadingButton type="submit" loading={form.formState.isSubmitting}>
               Save
             </LoadingButton>
           </div>

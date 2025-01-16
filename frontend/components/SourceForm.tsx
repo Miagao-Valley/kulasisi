@@ -11,7 +11,11 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
 import { FloatingLabelInput } from '@/components/ui/floating-label-input';
 import { LinkIcon } from 'lucide-react';
 
@@ -26,19 +30,27 @@ interface Props<T extends Inputs> {
   defaultSourceLink?: string;
 }
 
-export default function SourceForm<T extends Inputs>({ form, defaultSourceTitle, defaultSourceLink }: Props<T>) {
+export default function SourceForm<T extends Inputs>({
+  form,
+  defaultSourceTitle,
+  defaultSourceLink,
+}: Props<T>) {
   const [sourceLabel, setSourceLabel] = useState<string>(
     form.watch('source_title' as Path<T>)?.trim() ||
-    form.watch('source_link' as Path<T>)?.trim() ||
-    defaultSourceTitle || defaultSourceLink || ''
+      form.watch('source_link' as Path<T>)?.trim() ||
+      defaultSourceTitle ||
+      defaultSourceLink ||
+      '',
   );
 
   useEffect(() => {
     const subscription = form.watch((values) => {
       setSourceLabel(
         values.source_title?.trim() ||
-        values.source_link?.trim() ||
-        defaultSourceTitle || defaultSourceLink || ''
+          values.source_link?.trim() ||
+          defaultSourceTitle ||
+          defaultSourceLink ||
+          '',
       );
     });
 
@@ -55,23 +67,20 @@ export default function SourceForm<T extends Inputs>({ form, defaultSourceTitle,
 
   return (
     <Popover>
-      <PopoverTrigger
-        onDoubleClick={handleButtonDoubleClick}
-        asChild
-      >
+      <PopoverTrigger onDoubleClick={handleButtonDoubleClick} asChild>
         <Button
-          variant={"ghost"}
+          variant={'ghost'}
           size="sm"
           className={cn(
             `max-w-24 md:max-w-32 flex gap-1 p-2 h-fit ${form.watch('source_link' as Path<T>)?.trim() && 'text-primary'}`,
-            (form.formState.errors.source_title || form.formState.errors.source_link) && 'text-destructive'
+            (form.formState.errors.source_title ||
+              form.formState.errors.source_link) &&
+              'text-destructive',
           )}
         >
           <LinkIcon />
           {sourceLabel && (
-            <span className="truncate hidden sm:flex w-fit">
-              {sourceLabel}
-            </span>
+            <span className="truncate hidden sm:flex w-fit">{sourceLabel}</span>
           )}
         </Button>
       </PopoverTrigger>
@@ -80,16 +89,12 @@ export default function SourceForm<T extends Inputs>({ form, defaultSourceTitle,
           <FormLabel>Source</FormLabel>
           <FormField
             control={form.control}
-            name={"source_title" as Path<T>}
+            name={'source_title' as Path<T>}
             defaultValue={defaultSourceTitle as PathValue<T, Path<T>>}
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <FloatingLabelInput
-                    label="Title"
-                    autoFocus
-                    {...field}
-                  />
+                  <FloatingLabelInput label="Title" autoFocus {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -98,15 +103,12 @@ export default function SourceForm<T extends Inputs>({ form, defaultSourceTitle,
 
           <FormField
             control={form.control}
-            name={"source_link" as Path<T>}
+            name={'source_link' as Path<T>}
             defaultValue={defaultSourceLink as PathValue<T, Path<T>>}
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <FloatingLabelInput
-                    label="Link"
-                    {...field}
-                  />
+                  <FloatingLabelInput label="Link" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

@@ -17,6 +17,7 @@ class CategorySerializer(serializers.ModelSerializer):
         validated_data.pop("name", None)
         return super().update(instance, validated_data)
 
+
 class PhraseSerializer(serializers.ModelSerializer):
     lang = serializers.SlugRelatedField(
         queryset=Language.objects.all(), slug_field="code", required=False

@@ -90,122 +90,122 @@ export function NavUser() {
     );
   }
 
-  return (
-    auth.isAuthenticated && !isLoading ? (
-      <SidebarMenu>
-        <SidebarMenuItem>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <SidebarMenuButton
-                size="lg"
-                className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-              >
+  return auth.isAuthenticated && !isLoading ? (
+    <SidebarMenu>
+      <SidebarMenuItem>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <SidebarMenuButton
+              size="lg"
+              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+            >
+              <Avatar className="h-8 w-8 rounded-lg">
+                <AvatarImage src={''} alt={user?.username} />
+                <AvatarFallback>
+                  {user?.username.slice(0, 1).toUpperCase()}
+                </AvatarFallback>
+              </Avatar>
+              <div className="grid flex-1 text-left text-sm">
+                <span className="truncate font-semibold">
+                  {user?.first_name} {user?.last_name}
+                </span>
+                <span className="truncate text-xs">@{user?.username}</span>
+              </div>
+              <ChevronsUpDown className="ml-auto size-4" />
+            </SidebarMenuButton>
+          </DropdownMenuTrigger>
+
+          <DropdownMenuContent
+            className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
+            side={isMobile ? 'bottom' : 'right'}
+            align="end"
+            sideOffset={4}
+          >
+            <DropdownMenuLabel className="p-0 font-normal">
+              <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage
-                    src={''}
-                    alt={user?.username}
-                  />
+                  <AvatarImage src={''} alt={user?.username} />
                   <AvatarFallback>
                     {user?.username.slice(0, 1).toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm">
-                  <span className="truncate font-semibold">{user?.first_name} {user?.last_name}</span>
+                  <span className="truncate font-semibold">
+                    {user?.first_name} {user?.last_name}
+                  </span>
                   <span className="truncate text-xs">@{user?.username}</span>
                 </div>
-                <ChevronsUpDown className="ml-auto size-4" />
-              </SidebarMenuButton>
-            </DropdownMenuTrigger>
+              </div>
+            </DropdownMenuLabel>
 
-            <DropdownMenuContent
-              className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
-              side={isMobile ? "bottom" : "right"}
-              align="end"
-              sideOffset={4}
-            >
-              <DropdownMenuLabel className="p-0 font-normal">
-                <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                  <Avatar className="h-8 w-8 rounded-lg">
-                    <AvatarImage
-                      src={''}
-                      alt={user?.username}
-                    />
-                    <AvatarFallback>
-                      {user?.username.slice(0, 1).toUpperCase()}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className="grid flex-1 text-left text-sm">
-                    <span className="truncate font-semibold">{user?.first_name} {user?.last_name}</span>
-                    <span className="truncate text-xs">@{user?.username}</span>
-                  </div>
-                </div>
-              </DropdownMenuLabel>
+            <DropdownMenuSeparator />
 
-              <DropdownMenuSeparator />
-
-              <DropdownMenuGroup>
-                <DropdownMenuItem>
-                  <UserRoundIcon />
-                  <Link href={`/users/${user?.username}`} className="w-full">
-                    View Profile
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <SettingsIcon />
-                  <Link href="/settings" className="w-full">
-                    Settings
-                  </Link>
-                </DropdownMenuItem>
-              </DropdownMenuGroup>
-
-              <DropdownMenuSeparator />
-
+            <DropdownMenuGroup>
               <DropdownMenuItem>
-                {loggingOut ? <Spinner size="small" /> : <LogOutIcon />}
-                <button
-                  className="w-full text-left cursor-pointer"
-                  onClick={handleLogout}
-                  disabled={loggingOut}
-                >
-                  Sign out
-                </button>
+                <UserRoundIcon />
+                <Link href={`/users/${user?.username}`} className="w-full">
+                  View Profile
+                </Link>
               </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </SidebarMenuItem>
-      </SidebarMenu>
-    ) : (
-      <SidebarMenu>
-        {open ? (
-          <>
-            <span className="text-sm text-center truncate w-full my-2">Sign in to enjoy all the features.</span>
+              <DropdownMenuItem>
+                <SettingsIcon />
+                <Link href="/settings" className="w-full">
+                  Settings
+                </Link>
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
 
-            <SidebarMenuItem>
-              <Button variant="outline" className="w-full" asChild>
-                <Link href={`/login?next=${pathname}`}>Sign in</Link>
-              </Button>
-            </SidebarMenuItem>
+            <DropdownMenuSeparator />
 
-            <div className="flex items-center gap-3">
-              <Separator className="flex-1" />
-              <span className="text-xs text-muted-foreground">or</span>
-              <Separator className="flex-1" />
-            </div>
+            <DropdownMenuItem>
+              {loggingOut ? <Spinner size="small" /> : <LogOutIcon />}
+              <button
+                className="w-full text-left cursor-pointer"
+                onClick={handleLogout}
+                disabled={loggingOut}
+              >
+                Sign out
+              </button>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </SidebarMenuItem>
+    </SidebarMenu>
+  ) : (
+    <SidebarMenu>
+      {open ? (
+        <>
+          <span className="text-sm text-center truncate w-full my-2">
+            Sign in to enjoy all the features.
+          </span>
 
-            <SidebarMenuItem>
-              <Button className="w-full" asChild>
-                <Link href="/register/">Sign up</Link>
-              </Button>
-            </SidebarMenuItem>
-          </>
-        ) : (
           <SidebarMenuItem>
-            <SidebarMenuButton className="w-full" tooltip="Sign in" asChild>
-              <Link href="/login/"><LogInIcon /></Link>
-            </SidebarMenuButton>
+            <Button variant="outline" className="w-full" asChild>
+              <Link href={`/login?next=${pathname}`}>Sign in</Link>
+            </Button>
           </SidebarMenuItem>
-        )}
-      </SidebarMenu>
-    )
+
+          <div className="flex items-center gap-3">
+            <Separator className="flex-1" />
+            <span className="text-xs text-muted-foreground">or</span>
+            <Separator className="flex-1" />
+          </div>
+
+          <SidebarMenuItem>
+            <Button className="w-full" asChild>
+              <Link href="/register/">Sign up</Link>
+            </Button>
+          </SidebarMenuItem>
+        </>
+      ) : (
+        <SidebarMenuItem>
+          <SidebarMenuButton className="w-full" tooltip="Sign in" asChild>
+            <Link href="/login/">
+              <LogInIcon />
+            </Link>
+          </SidebarMenuButton>
+        </SidebarMenuItem>
+      )}
+    </SidebarMenu>
   );
 }

@@ -22,11 +22,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
         <div className="flex gap-1 items-center">
-          {open &&
+          {open && (
             <Link href="/" className="px-2 flex gap-1 items-center">
               <Wordmark className="w-24" />
             </Link>
-          }
+          )}
           {!isMobile && <SidebarTrigger className="ms-auto" />}
         </div>
       </SidebarHeader>

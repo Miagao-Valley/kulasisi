@@ -78,7 +78,9 @@ export default function ProfileTab({ user }: Props) {
           </FormMessage>
 
           <div>
-            <H3 className="!text-base mb-1" anchor="name">Name</H3>
+            <H3 className="!text-base mb-1" anchor="name">
+              Name
+            </H3>
             <div className="flex flex-col sm:flex-row gap-2">
               <FormField
                 control={form.control}
@@ -114,7 +116,9 @@ export default function ProfileTab({ user }: Props) {
           </div>
 
           <div>
-            <H3 className="!text-base mb-1" anchor="birthdate">Birthdate</H3>
+            <H3 className="!text-base mb-1" anchor="birthdate">
+              Birthdate
+            </H3>
             <FormField
               control={form.control}
               name="date_of_birth"
@@ -137,7 +141,9 @@ export default function ProfileTab({ user }: Props) {
           </div>
 
           <div>
-            <H3 className="!text-base mb-1" anchor="location">Location</H3>
+            <H3 className="!text-base mb-1" anchor="location">
+              Location
+            </H3>
             <FormField
               control={form.control}
               name="location"
@@ -154,7 +160,9 @@ export default function ProfileTab({ user }: Props) {
           </div>
 
           <div>
-            <H3 className="!text-base mb-1" anchor="gender">Gender</H3>
+            <H3 className="!text-base mb-1" anchor="gender">
+              Gender
+            </H3>
             <FormField
               control={form.control}
               name="gender"
@@ -184,7 +192,9 @@ export default function ProfileTab({ user }: Props) {
           </div>
 
           <div>
-            <H3 className="!text-base mb-1" anchor="bio">Bio</H3>
+            <H3 className="!text-base mb-1" anchor="bio">
+              Bio
+            </H3>
             <FormField
               control={form.control}
               name="bio"
@@ -201,7 +211,9 @@ export default function ProfileTab({ user }: Props) {
           </div>
 
           <div>
-            <H3 className="!text-base mb-1" anchor="website">Website</H3>
+            <H3 className="!text-base mb-1" anchor="website">
+              Website
+            </H3>
             <FormField
               control={form.control}
               name="website"

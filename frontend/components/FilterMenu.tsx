@@ -72,7 +72,7 @@ export default function FilterMenu({
     <div className={cn(className, '')}>
       <Popover>
         <PopoverTrigger asChild>
-          <Button variant="ghost" size="sm" className="p-1 h-fit flex gap-1" >
+          <Button variant="ghost" size="sm" className="p-1 h-fit flex gap-1">
             <Filter /> Filter
           </Button>
         </PopoverTrigger>

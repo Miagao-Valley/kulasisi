@@ -49,7 +49,10 @@ export default async function DefinitionsSection({
       label: 'POS',
       name: 'pos',
       type: 'select',
-      options: partsOfSpeech.map(({ abbr, name }) => ({ label: name, value: abbr })),
+      options: partsOfSpeech.map(({ abbr, name }) => ({
+        label: name,
+        value: abbr,
+      })),
     },
   ];
 

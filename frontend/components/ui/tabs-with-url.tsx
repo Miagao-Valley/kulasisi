@@ -53,7 +53,7 @@ export const Tabs = (props: {
       <div className={className}>{children}</div>
     </TabsContext.Provider>
   );
-}
+};
 
 const useContext = () => {
   const context = React.useContext(TabsContext);
@@ -79,7 +79,7 @@ export const TabsList = (props: {
       )}
     />
   );
-}
+};
 
 export const TabsTrigger = (props: {
   children: React.ReactNode;
@@ -123,4 +123,4 @@ export const TabsContent = (props: {
       )}
     />
   );
-}
+};

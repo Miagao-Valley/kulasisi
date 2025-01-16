@@ -85,7 +85,9 @@ export function NavLang() {
                 ) : (
                   <SidebarMenuSubItem>
                     <SidebarMenuSubButton asChild>
-                      <span className="text-sm truncate">You have no languages.</span>
+                      <span className="text-sm truncate">
+                        You have no languages.
+                      </span>
                     </SidebarMenuSubButton>
                   </SidebarMenuSubItem>
                 )}

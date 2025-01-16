@@ -6,7 +6,12 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { BookAIcon, MessageSquareQuoteIcon, TagsIcon, UsersRoundIcon } from 'lucide-react';
+import {
+  BookAIcon,
+  MessageSquareQuoteIcon,
+  TagsIcon,
+  UsersRoundIcon,
+} from 'lucide-react';
 
 const items = [
   {

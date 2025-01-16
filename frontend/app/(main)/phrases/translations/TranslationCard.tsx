@@ -36,7 +36,10 @@ export default function TranslationCard({
 
   return (
     <Card
-      className={cn(className, `border-transparent shadow-none ${clickable && 'hover:bg-accent/40'}`)}
+      className={cn(
+        className,
+        `border-transparent shadow-none ${clickable && 'hover:bg-accent/40'}`,
+      )}
     >
       <CardHeader className="flex flex-row">
         <EntryHeader className="me-auto" entry={translation} />
@@ -61,9 +64,12 @@ export default function TranslationCard({
               <p className="mb-2 whitespace-pre-line">{translation.content}</p>
             </Link>
             <div className="flex gap-0 items-center">
-              {(translation.source_title || translation.source_link) &&
-                <SourceButton source_title={translation.source_title} source_link={translation.source_link} />
-              }
+              {(translation.source_title || translation.source_link) && (
+                <SourceButton
+                  source_title={translation.source_title}
+                  source_link={translation.source_link}
+                />
+              )}
             </div>
           </>
         )}

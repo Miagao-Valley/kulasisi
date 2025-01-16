@@ -16,6 +16,7 @@ class Category(models.Model):
     def __str__(self):
         return f"{self.name}"
 
+
 class Phrase(models.Model):
     content = models.TextField()
     lang = models.ForeignKey(Language, on_delete=models.PROTECT, related_name="phrases")
@@ -36,6 +37,7 @@ class Phrase(models.Model):
 
     def __str__(self):
         return f"{self.content} ({self.lang.code})"
+
 
 class Translation(models.Model):
     phrase = models.ForeignKey(

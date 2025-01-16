@@ -87,27 +87,20 @@ export default function RegisterForm() {
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col items-center gap-1">
-        <Link
-          href="/"
-          className="flex flex-col items-center"
-        >
+        <Link href="/" className="flex flex-col items-center">
           <Logo className="w-12 mb-4" />
           <span className="sr-only">kulasisi</span>
         </Link>
         <h1 className="text-xl font-bold">Welcome to kulasisi</h1>
         <div className="text-center text-sm">
-          Already have an account?{" "}
+          Already have an account?{' '}
           <Link href="/login/" className="underline underline-offset-4">
             Sign in
           </Link>
         </div>
       </div>
 
-      <StepperIndicator
-        numSteps={steps.length}
-        step={step}
-        setStep={setStep}
-      />
+      <StepperIndicator numSteps={steps.length} step={step} setStep={setStep} />
 
       <H1 className="m-0">{steps[step].name}</H1>
 

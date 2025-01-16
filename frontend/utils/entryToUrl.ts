@@ -7,17 +7,13 @@ export default function entryToUrl(
   backend: boolean = true,
 ): string {
   if (isPhrase(entry)) {
-    return backend
-      ? `phrases/${entry.id}`
-      : `phrases/${entry.id}`;
+    return backend ? `phrases/${entry.id}` : `phrases/${entry.id}`;
   } else if (isTranslation(entry)) {
     return backend
       ? `phrases/translations/${entry.id}`
       : `phrases/${entry.phrase}`;
   } else if (isWord(entry)) {
-    return backend
-      ? `/dictionary/${entry.id}`
-      : `dictionary/${entry.id}`;
+    return backend ? `/dictionary/${entry.id}` : `dictionary/${entry.id}`;
   } else if (isDefinition(entry)) {
     return backend
       ? `dictionary/definitions/${entry.id}`

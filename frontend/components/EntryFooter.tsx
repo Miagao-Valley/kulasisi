@@ -13,11 +13,7 @@ interface Props {
   className?: string;
 }
 
-export default function EntryFooter({
-  entry,
-  votes,
-  className = '',
-}: Props) {
+export default function EntryFooter({ entry, votes, className = '' }: Props) {
   return (
     <div className={cn(className, 'flex flex-row gap-2 items-center text-sm')}>
       <VoteActions entry={entry} votes={votes} />

@@ -38,7 +38,10 @@ export default function PhraseCard({
 
   return (
     <Card
-      className={cn(className, `border-transparent shadow-none ${clickable && 'hover:bg-accent/40'}`)}
+      className={cn(
+        className,
+        `border-transparent shadow-none ${clickable && 'hover:bg-accent/40'}`,
+      )}
     >
       <CardHeader className="flex flex-row">
         <EntryHeader className="me-auto" entry={phrase} />
@@ -50,10 +53,7 @@ export default function PhraseCard({
       </CardHeader>
       <CardContent>
         {isEditing ? (
-          <UpdatePhraseForm
-            phrase={phrase}
-            setIsEditing={setIsEditing}
-          />
+          <UpdatePhraseForm phrase={phrase} setIsEditing={setIsEditing} />
         ) : (
           <>
             <Link href={`/phrases/${phrase.id}/`}>
@@ -61,18 +61,19 @@ export default function PhraseCard({
             </Link>
             <div className="flex gap-0 items-center">
               <div className="flex gap-1 items-center me-1">
-                {phrase.categories.map(category => (
+                {phrase.categories.map((category) => (
                   <Badge variant="secondary" className="h-fit" key={category}>
                     {category}
                   </Badge>
                 ))}
               </div>
-              {(phrase.source_title || phrase.source_link) &&
-                <SourceButton source_title={phrase.source_title} source_link={phrase.source_link} />
-              }
-              {phrase.usage_note &&
-                <UsageNote note={phrase.usage_note} />
-              }
+              {(phrase.source_title || phrase.source_link) && (
+                <SourceButton
+                  source_title={phrase.source_title}
+                  source_link={phrase.source_link}
+                />
+              )}
+              {phrase.usage_note && <UsageNote note={phrase.usage_note} />}
             </div>
           </>
         )}

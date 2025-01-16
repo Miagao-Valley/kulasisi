@@ -1,6 +1,10 @@
 import React, { useState, useRef, ChangeEvent } from 'react';
 import { cn } from '@/lib/utils';
-import { AutosizeTextarea, AutosizeTextAreaProps, AutosizeTextAreaRef } from './autoresize-textarea';
+import {
+  AutosizeTextarea,
+  AutosizeTextAreaProps,
+  AutosizeTextAreaRef,
+} from './autoresize-textarea';
 import applyHighlights from '../applyHighlights';
 
 interface HighlightedTextareaProps extends AutosizeTextAreaProps {
@@ -9,7 +13,12 @@ interface HighlightedTextareaProps extends AutosizeTextAreaProps {
   className?: string;
 }
 
-const HighlightedTextarea: React.FC<HighlightedTextareaProps> = ({ highlight, highlightClass, className, ...props }) => {
+const HighlightedTextarea: React.FC<HighlightedTextareaProps> = ({
+  highlight,
+  highlightClass,
+  className,
+  ...props
+}) => {
   const [text, setText] = useState(props.value || '');
   const textareaRef = useRef<AutosizeTextAreaRef>(null);
   const backdropRef = useRef<HTMLDivElement>(null);
@@ -24,8 +33,8 @@ const HighlightedTextarea: React.FC<HighlightedTextareaProps> = ({ highlight, hi
       <div
         ref={backdropRef}
         className={cn(
-          "absolute top-0 left-0 w-full h-full overflow-auto whitespace-pre-wrap break-words",
-          className
+          'absolute top-0 left-0 w-full h-full overflow-auto whitespace-pre-wrap break-words',
+          className,
         )}
       >
         <div>{applyHighlights(text as string, highlight, highlightClass)}</div>
@@ -36,8 +45,8 @@ const HighlightedTextarea: React.FC<HighlightedTextareaProps> = ({ highlight, hi
         value={text}
         onInput={handleInput}
         className={cn(
-          "relative z-10 w-full h-full bg-transparent text-transparent caret-gray-800",
-          className
+          'relative z-10 w-full h-full bg-transparent text-transparent caret-gray-800',
+          className,
         )}
         {...props}
       />

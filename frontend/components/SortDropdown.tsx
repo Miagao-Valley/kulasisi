@@ -56,7 +56,12 @@ export default function SortDropdown({
 
   return (
     <div className={cn(className, 'flex flex-row')}>
-      <Button variant="ghost" size="sm" className="p-1 h-fit" onClick={toggleSort}>
+      <Button
+        variant="ghost"
+        size="sm"
+        className="p-1 h-fit"
+        onClick={toggleSort}
+      >
         {sortOption.startsWith('-') ? (
           <ArrowDownWideNarrow className="h-2 w-2" />
         ) : (

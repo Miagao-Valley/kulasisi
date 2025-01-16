@@ -1,20 +1,23 @@
-import { LinkIcon } from "lucide-react";
+import { LinkIcon } from 'lucide-react';
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip"
-import { Button } from "./ui/button";
+} from '@/components/ui/tooltip';
+import { Button } from './ui/button';
 
 interface Props {
   source_title?: string;
   source_link?: string;
 }
 
-export default function SourceButton({ source_title = '', source_link = ''}: Props) {
+export default function SourceButton({
+  source_title = '',
+  source_link = '',
+}: Props) {
   return (
-     <TooltipProvider>
+    <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
           <Button
@@ -23,7 +26,7 @@ export default function SourceButton({ source_title = '', source_link = ''}: Pro
             className={`p-2 h-fit ${source_link && 'text-primary'}`}
             asChild={!!source_link}
           >
-            {source_link ?
+            {source_link ? (
               <a
                 href={source_link || '#'}
                 target="_blank"
@@ -33,17 +36,19 @@ export default function SourceButton({ source_title = '', source_link = ''}: Pro
                 <LinkIcon className="w-3 me-1" />
                 {source_title || source_link}
               </a>
-            :
+            ) : (
               <span className="flex gap-0">
                 <LinkIcon className="w-3 me-1" />
                 {source_title}
               </span>
-            }
+            )}
           </Button>
         </TooltipTrigger>
         <TooltipContent side="bottom">
-          <p>Source: <b>{source_title || source_link}</b></p>
-          {source_title && source_link &&
+          <p>
+            Source: <b>{source_title || source_link}</b>
+          </p>
+          {source_title && source_link && (
             <a
               href={source_link || '#'}
               target="_blank"
@@ -52,9 +57,9 @@ export default function SourceButton({ source_title = '', source_link = ''}: Pro
             >
               {source_link}
             </a>
-          }
+          )}
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
-  )
+  );
 }

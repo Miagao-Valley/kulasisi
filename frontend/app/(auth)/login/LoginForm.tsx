@@ -48,16 +48,13 @@ export default function LoginForm() {
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col items-center gap-1">
-        <Link
-          href="/"
-          className="flex flex-col items-center"
-        >
+        <Link href="/" className="flex flex-col items-center">
           <Logo className="w-12 mb-4" />
           <span className="sr-only">kulasisi</span>
         </Link>
         <h1 className="text-xl font-bold">Welcome to kulasisi</h1>
         <div className="text-center text-sm">
-          Don't have an account?{" "}
+          Don't have an account?{' '}
           <Link href="/register/" className="underline underline-offset-4">
             Sign up
           </Link>

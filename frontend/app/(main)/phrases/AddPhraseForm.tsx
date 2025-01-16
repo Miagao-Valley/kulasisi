@@ -96,7 +96,9 @@ export default function AddPhraseForm({ className = '' }: Props) {
                     <FormControl>
                       <LangSelect
                         selectedLang={field.value}
-                        setSelectedLang={(value) => form.setValue('lang', value)}
+                        setSelectedLang={(value) =>
+                          form.setValue('lang', value)
+                        }
                         className="w-full"
                       />
                     </FormControl>
@@ -104,8 +106,8 @@ export default function AddPhraseForm({ className = '' }: Props) {
                   </FormItem>
                 )}
               />
-                <UsageNoteForm form={form} />
-                <SourceForm form={form} />
+              <UsageNoteForm form={form} />
+              <SourceForm form={form} />
             </div>
             <FormField
               control={form.control}
@@ -115,7 +117,9 @@ export default function AddPhraseForm({ className = '' }: Props) {
                   <FormControl>
                     <CategorySelect
                       selectedCategories={field.value}
-                      setSelectedCategories={(value) => form.setValue('categories', value)}
+                      setSelectedCategories={(value) =>
+                        form.setValue('categories', value)
+                      }
                     />
                   </FormControl>
                   <FormMessage />

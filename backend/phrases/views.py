@@ -16,6 +16,7 @@ from .serializers import (
     CategorySerializer,
 )
 
+
 class ListCreatePhraseView(generics.ListCreateAPIView):
     queryset = Phrase.objects.all()
     serializer_class = PhraseSerializer

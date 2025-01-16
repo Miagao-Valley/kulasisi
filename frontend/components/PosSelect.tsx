@@ -40,7 +40,9 @@ export default function PosSelect({
   useEffect(() => {
     const fetchPartsOfSpeech = async () => {
       const results = await getPartsOfSpeech();
-      setPartsOfSpeech(results.filter((result) => !exclude.includes(result.abbr)));
+      setPartsOfSpeech(
+        results.filter((result) => !exclude.includes(result.abbr)),
+      );
     };
 
     fetchPartsOfSpeech();
@@ -54,12 +56,16 @@ export default function PosSelect({
           size="sm"
           role="combobox"
           aria-expanded={open}
-          className={cn("justify-between gap-1 px-1", className)}
+          className={cn('justify-between gap-1 px-1', className)}
         >
           <ChevronsUpDown className="opacity-50" />
-          {selectedPos
-            ? <Badge variant="outline">{partsOfSpeech.find((pos) => pos.abbr === selectedPos)?.abbr}</Badge>
-            : 'POS'}
+          {selectedPos ? (
+            <Badge variant="outline">
+              {partsOfSpeech.find((pos) => pos.abbr === selectedPos)?.abbr}
+            </Badge>
+          ) : (
+            'POS'
+          )}
         </Button>
       </PopoverTrigger>
 
@@ -69,12 +75,14 @@ export default function PosSelect({
           filter={(abbr, search) => {
             const pos = partsOfSpeech.find((pos) => pos.abbr === abbr);
             if (!pos) return 0;
-            if (pos.name.toLowerCase().includes(search.toLowerCase()))
-              return 1;
+            if (pos.name.toLowerCase().includes(search.toLowerCase())) return 1;
             return 0;
           }}
         >
-          <CommandInput placeholder={`Search part of speech...`} className="h-9" />
+          <CommandInput
+            placeholder={`Search part of speech...`}
+            className="h-9"
+          />
           <CommandList>
             <CommandEmpty>No part of speech found.</CommandEmpty>
             <CommandGroup>

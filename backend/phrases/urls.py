@@ -42,5 +42,9 @@ urlpatterns = [
         name="translations_votes",
     ),
     path("categories/", views.ListCreateCategoryView.as_view(), name="categories"),
-    path("categories/<str:name>/", views.RetrieveUpdateDestroyCategoryView.as_view(), name="category"),
+    path(
+        "categories/<str:name>/",
+        views.RetrieveUpdateDestroyCategoryView.as_view(),
+        name="category",
+    ),
 ]

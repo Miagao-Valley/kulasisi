@@ -38,7 +38,10 @@ export default function DefinitionCard({
 
   return (
     <Card
-      className={cn(className, `border-transparent shadow-none ${clickable && 'hover:bg-accent/40'}`)}
+      className={cn(
+        className,
+        `border-transparent shadow-none ${clickable && 'hover:bg-accent/40'}`,
+      )}
     >
       <CardHeader className="flex flex-row">
         <EntryHeader className="me-auto" entry={definition} />
@@ -59,16 +62,23 @@ export default function DefinitionCard({
             <Link
               href={`/dictionary/${definition.word}?tab=definitions#${definition.id}`}
             >
-              <p className="mb-2 whitespace-pre-line">{definition.description}</p>
+              <p className="mb-2 whitespace-pre-line">
+                {definition.description}
+              </p>
             </Link>
             <div className="flex gap-0 items-center">
-              <Badge variant="secondary" className="h-fit me-1">{definition.pos}</Badge>
-              {(definition.source_title || definition.source_link) &&
-                <SourceButton source_title={definition.source_title} source_link={definition.source_link} />
-              }
-              {definition.usage_note &&
+              <Badge variant="secondary" className="h-fit me-1">
+                {definition.pos}
+              </Badge>
+              {(definition.source_title || definition.source_link) && (
+                <SourceButton
+                  source_title={definition.source_title}
+                  source_link={definition.source_link}
+                />
+              )}
+              {definition.usage_note && (
                 <UsageNote note={definition.usage_note} />
-              }
+              )}
             </div>
           </>
         )}

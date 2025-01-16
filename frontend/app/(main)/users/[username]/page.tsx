@@ -1,13 +1,22 @@
 import React, { Suspense } from 'react';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs-with-url';
+import {
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  TabsContent,
+} from '@/components/ui/tabs-with-url';
 import getUser from '@/lib/users/getUser';
 import Overview from './Overview';
 import StatsTab from './StatsTab';
-import PhrasesList, { PhrasesListSkeleton } from '@/app/(main)/phrases/PhrasesList';
+import PhrasesList, {
+  PhrasesListSkeleton,
+} from '@/app/(main)/phrases/PhrasesList';
 import TranslationsList, {
   TranslationsListSkeleton,
 } from '@/app/(main)/phrases/translations/TranslationsList';
-import WordsList, { WordsListSkeleton } from '@/app/(main)/dictionary/WordsList';
+import WordsList, {
+  WordsListSkeleton,
+} from '@/app/(main)/dictionary/WordsList';
 import DefinitionsList, {
   DefinitionsListSkeleton,
 } from '@/app/(main)/dictionary/definitions/DefinitionsList';

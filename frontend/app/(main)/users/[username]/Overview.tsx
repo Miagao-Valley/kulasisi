@@ -9,7 +9,13 @@ import { badgeVariants } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { H1 } from '@/components/ui/heading-with-anchor';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { CakeSliceIcon, CalendarFoldIcon, LinkIcon, MapPinIcon, Pen } from 'lucide-react';
+import {
+  CakeSliceIcon,
+  CalendarFoldIcon,
+  LinkIcon,
+  MapPinIcon,
+  Pen,
+} from 'lucide-react';
 
 interface Props {
   user: User;
@@ -24,10 +30,7 @@ export default function Overview({ user, className = '' }: Props) {
       <div className="flex gap-1">
         <div className="flex gap-3">
           <Avatar className="h-16 w-16 rounded-lg">
-            <AvatarImage
-              src={''}
-              alt={user?.username}
-            />
+            <AvatarImage src={''} alt={user?.username} />
             <AvatarFallback>
               {user?.username.slice(0, 1).toUpperCase()}
             </AvatarFallback>
@@ -80,10 +83,15 @@ export default function Overview({ user, className = '' }: Props) {
       </div>
       <div className="flex gap-3 text-sm mb-2">
         {user.website && (
-            <a target="_blank" rel="noopener noreferrer" href={user.website} className={badgeVariants({ variant: "outline" })}>
-              <LinkIcon className="w-3 me-1" />
-              {new URL(user.website).hostname.replace(/^www\./, '')}
-            </a>
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href={user.website}
+            className={badgeVariants({ variant: 'outline' })}
+          >
+            <LinkIcon className="w-3 me-1" />
+            {new URL(user.website).hostname.replace(/^www\./, '')}
+          </a>
         )}
       </div>
     </div>

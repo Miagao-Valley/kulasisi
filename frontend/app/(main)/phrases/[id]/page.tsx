@@ -4,7 +4,12 @@ import getVotes from '@/lib/vote/getVotes';
 import getPhraseRevisions from '@/lib/phrases/getPhraseRevisions';
 import PhraseCard from '../PhraseCard';
 import TranslationsSection from '../translations/TranslationsSection';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs-with-url';
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '@/components/ui/tabs-with-url';
 
 interface Props {
   params: {

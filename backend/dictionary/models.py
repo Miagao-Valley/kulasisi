@@ -47,7 +47,13 @@ class Definition(models.Model):
     contributor = models.ForeignKey(
         User, on_delete=models.PROTECT, related_name="definitions"
     )
-    pos = models.ForeignKey(PartOfSpeech, on_delete=models.PROTECT, related_name="definitions", null=True, blank=True)
+    pos = models.ForeignKey(
+        PartOfSpeech,
+        on_delete=models.PROTECT,
+        related_name="definitions",
+        null=True,
+        blank=True,
+    )
     votes = GenericRelation(Vote, related_query_name="definitions")
     usage_note = models.TextField(null=True, blank=True)
     source_title = models.CharField(max_length=255, null=True, blank=True)

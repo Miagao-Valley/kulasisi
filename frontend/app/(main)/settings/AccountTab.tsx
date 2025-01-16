@@ -61,7 +61,7 @@ export default function AccountTab({ user }: Props) {
 
             <Dialog>
               <DialogTrigger asChild>
-                <Button  variant="ghost" size="icon">
+                <Button variant="ghost" size="icon">
                   <PenIcon />
                 </Button>
               </DialogTrigger>
