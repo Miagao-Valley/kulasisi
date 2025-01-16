@@ -19,19 +19,20 @@ import {
   CommandList,
 } from '@/components/ui/command';
 import { ChevronsUpDown, Check } from 'lucide-react';
+import { Badge } from './ui/badge';
 
 interface Props {
   selectedPos: string;
   setSelectedPos: (value: string) => void;
   exclude?: string[];
-  placeholder?: string;
+  className?: string;
 }
 
 export default function PosSelect({
   selectedPos,
   setSelectedPos,
   exclude = [],
-  placeholder = 'Select part of speech...'
+  className = '',
 }: Props) {
   const [partsOfSpeech, setPartsOfSpeech] = useState<PartOfSpeech[]>([]);
   const [open, setOpen] = useState(false);
@@ -49,15 +50,16 @@ export default function PosSelect({
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
-          variant="outline"
+          variant={selectedPos ? null : 'ghost'}
+          size="sm"
           role="combobox"
           aria-expanded={open}
-          className="justify-between"
+          className={cn("justify-between gap-1 px-1", className)}
         >
-          {selectedPos
-            ? partsOfSpeech.find((pos) => pos.abbr === selectedPos)?.name
-            : placeholder}
           <ChevronsUpDown className="opacity-50" />
+          {selectedPos
+            ? <Badge variant="outline">{partsOfSpeech.find((pos) => pos.abbr === selectedPos)?.abbr}</Badge>
+            : 'POS'}
         </Button>
       </PopoverTrigger>
 

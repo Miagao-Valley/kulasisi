@@ -55,7 +55,7 @@ export default function UpdateTranslationForm({
   return (
     <Form {...form}>
       <form
-        className={cn(className, 'flex flex-col gap-3')}
+        className={cn(className, 'flex flex-col gap-0')}
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <FormMessage>
@@ -70,8 +70,9 @@ export default function UpdateTranslationForm({
             <FormItem>
               <FormControl>
                 <AutosizeTextarea
-                  className="p-1 text-base resize-none borderless-input"
+                  className="p-1 text-base resize-none borderless-input bg-transparent"
                   placeholder="Enter updated translation"
+                  autoFocus
                   {...field}
                 />
               </FormControl>
@@ -80,28 +81,28 @@ export default function UpdateTranslationForm({
           )}
         />
 
-        <div className="flex flex-col md:flex-row gap-2 items-center">
+        <div className="flex gap-0 items-center">
           <SourceForm
             form={form}
             defaultSourceTitle={translation.source_title}
             defaultSourceLink={translation.source_link}
           />
-        </div>
 
-        <div className="flex justify-end gap-2">
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => setIsEditing(false)}
-          >
-            Cancel
-          </Button>
-          <LoadingButton
-            type="submit"
-            loading={form.formState.isSubmitting}
-          >
-            Save
-          </LoadingButton>
+          <div className="ms-auto flex justify-end gap-2">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setIsEditing(false)}
+            >
+              Cancel
+            </Button>
+            <LoadingButton
+              type="submit"
+              loading={form.formState.isSubmitting}
+            >
+              Save
+            </LoadingButton>
+          </div>
         </div>
       </form>
     </Form>

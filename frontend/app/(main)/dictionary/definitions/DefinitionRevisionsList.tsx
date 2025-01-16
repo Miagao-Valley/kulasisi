@@ -29,14 +29,16 @@ export default function DefinitionRevisionsList({ revisions }: Props) {
               value={`revision-${index}`}
               key={revision.history_id}
             >
-              <AccordionTrigger>
-                <div className="flex items-center gap-2">
-                  <span className="font-medium">
-                    #{revisions.length - index}
-                  </span>
-                  <UserHoverCard username={revision.history_user} />
-                  <span className="text-muted-foreground">
-                    modified description {naturalTime(revision.history_date)}
+              <AccordionTrigger className="hover:no-underline font-normal">
+                <div className="flex flex-col sm:flex-row items-left sm:items-center gap-0">
+                  <div className="flex gap-1 me-1">
+                    <span className="font-medium">
+                      #{revisions.length - index}
+                    </span>
+                    <UserHoverCard username={revision.history_user} />
+                  </div>
+                  <span className="truncate text-xs text-muted-foreground">
+                    modified content {naturalTime(revision.history_date)}
                   </span>
                 </div>
               </AccordionTrigger>

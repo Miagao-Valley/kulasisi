@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import LangsList, { LangsListSkeleton } from './LangsList';
-import SearchInput from '@/components/SearchInput';
-import SortDropdown, { SortOption } from '@/components/SortDropdown';
+import { SortOption } from '@/components/SortDropdown';
+import FilterControls from '@/components/FilterControls';
 import { H1 } from '@/components/ui/heading-with-anchor';
 
 interface Props {
@@ -25,13 +25,12 @@ export default async function LangsPage({ searchParams }: Props) {
   return (
     <>
       <H1>Languages</H1>
-      <div className="mb-4 flex gap-3">
-        <SearchInput currentSearchTerm={searchTerm} className="me-auto" />
-        <SortDropdown
-          currentSortOption={sortOption}
-          sortingOptions={sortingOptions}
-        />
-      </div>
+      <FilterControls
+        searchTerm={searchTerm}
+        sortOption={sortOption}
+        sortingOptions={sortingOptions}
+        className="mb-4"
+      />
       <Suspense fallback={<LangsListSkeleton />}>
         <LangsList searchTerm={searchTerm} sortOption={sortOption} />
       </Suspense>

@@ -2,9 +2,9 @@ import React, { Suspense } from 'react';
 import getLangs from '@/lib/langs/getLangs';
 import AddWordForm from './AddWordForm';
 import WordsList, { WordsListSkeleton } from './WordsList';
-import SearchInput from '@/components/SearchInput';
-import SortDropdown, { SortOption } from '@/components/SortDropdown';
-import FilterMenu, { FilterOption } from '@/components/FilterMenu';
+import { SortOption } from '@/components/SortDropdown';
+import { FilterOption } from '@/components/FilterMenu';
+import FilterControls from '@/components/FilterControls';
 
 interface Props {
   searchParams: { [key: string]: string | undefined };
@@ -21,7 +21,7 @@ export default async function DictionaryPage({ searchParams }: Props) {
   const langs = await getLangs();
 
   const sortingOptions: SortOption[] = [
-    { label: 'Word', value: 'content' },
+    { label: 'Word', value: 'word' },
     { label: 'Votes ', value: '-vote_count' },
     { label: 'Date updated ', value: '-updated_at' },
     { label: 'Date created', value: '-created_at' },
@@ -42,14 +42,13 @@ export default async function DictionaryPage({ searchParams }: Props) {
   return (
     <>
       <AddWordForm className="py-2 mb-4 border-t border-b" />
-      <div className="mb-4 flex gap-2">
-        <SearchInput currentSearchTerm={searchTerm} className="me-auto" />
-        <SortDropdown
-          currentSortOption={sortOption}
-          sortingOptions={sortingOptions}
-        />
-        <FilterMenu currentFilters={filters} filterOptions={filterOptions} />
-      </div>
+      <FilterControls
+        searchTerm={searchTerm}
+        sortOption={sortOption}
+        sortingOptions={sortingOptions}
+        filters={filters}
+        filterOptions={filterOptions}
+      />
       <Suspense fallback={<WordsListSkeleton />}>
         <WordsList
           searchTerm={searchTerm}

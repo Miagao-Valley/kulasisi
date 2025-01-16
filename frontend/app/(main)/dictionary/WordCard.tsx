@@ -5,18 +5,17 @@ import Link from 'next/link';
 import { Vote } from '@/types/core';
 import { Word, WordRevision } from '@/types/dictionary';
 import { cn } from '@/lib/utils';
-import UpdateWordForm from './UpdateWordForm';
 import EntryHeader from '@/components/EntryHeader';
 import EntryFooter from '@/components/EntryFooter';
+import SourceButton from '@/components/SourceButton';
+import WordDropdownMenu from './WordDropdownMenu';
+import UpdateWordForm from './UpdateWordForm';
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
 } from '@/components/ui/card';
-import { badgeVariants } from '@/components/ui/badge';
-import WordDropdownMenu from './WordDropdownMenu';
-import { LinkIcon } from 'lucide-react';
 
 interface Props {
   word: Word;
@@ -58,12 +57,9 @@ export default function WordCard({
             <Link href={`/dictionary/${word.id}/`}>
               <p className="mb-2 text-xl font-bold">{word.word}</p>
             </Link>
-            <div className="flex gap-2">
+            <div className="flex gap-0 items-center">
               {(word.source_title || word.source_link) &&
-                <a target="_blank" rel="noopener noreferrer" href={word.source_link} className={badgeVariants({ variant: "outline" })}>
-                  <LinkIcon className="w-3 me-1" />
-                  {word.source_title || word.source_link}
-                </a>
+                <SourceButton source_title={word.source_title} source_link={word.source_link} />
               }
             </div>
           </>

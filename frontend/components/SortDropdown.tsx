@@ -55,24 +55,26 @@ export default function SortDropdown({
   };
 
   return (
-    <div className={cn(className, 'flex flex-row gap-1')}>
-      <Button variant="outline" size="icon" onClick={toggleSort}>
+    <div className={cn(className, 'flex flex-row')}>
+      <Button variant="ghost" size="sm" className="p-1 h-fit" onClick={toggleSort}>
         {sortOption.startsWith('-') ? (
-          <ArrowDownWideNarrow />
+          <ArrowDownWideNarrow className="h-2 w-2" />
         ) : (
-          <ArrowUpNarrowWide />
+          <ArrowUpNarrowWide className="h-2 w-2" />
         )}
       </Button>
 
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="outline">
+          <Button variant="ghost" size="sm" className="p-1 h-fit flex gap-1">
             Sort:{' '}
-            {sortingOptions.find(
-              (option) =>
-                option.value.replace(/^-/g, '') ===
-                sortOption.replace(/^-/g, ''),
-            )?.label || 'None'}
+            <b>
+              {sortingOptions.find(
+                (option) =>
+                  option.value.replace(/^-/g, '') ===
+                  sortOption.replace(/^-/g, ''),
+              )?.label || 'None'}
+            </b>
           </Button>
         </DropdownMenuTrigger>
 

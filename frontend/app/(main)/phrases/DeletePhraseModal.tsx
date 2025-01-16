@@ -50,6 +50,7 @@ export default function DeletePhraseModal({ id }: Props) {
           <LoadingButton
             variant="destructive"
             type="submit"
+            className="w-full"
             loading={isLoading}
           >
             Delete

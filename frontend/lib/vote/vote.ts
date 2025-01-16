@@ -8,7 +8,9 @@ import entryToUrl from '../../utils/entryToUrl';
 
 export default async function vote(entry: Entry, value: -1 | 0 | 1) {
   const backendUrl = entryToUrl(entry);
+  console.log(backendUrl)
   const frontendUrl = entryToUrl(entry, false);
+  console.log(frontendUrl)
   if (frontendUrl === '')
   {
     console.error("Failed to get entry URL");

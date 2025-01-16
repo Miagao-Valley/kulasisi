@@ -5,20 +5,19 @@ import Link from 'next/link';
 import { Vote } from '@/types/core';
 import { Phrase, PhraseRevision } from '@/types/phrases';
 import { cn } from '@/lib/utils';
-import UpdatePhraseForm from './UpdatePhraseForm';
-import PhraseDropdownMenu from './PhraseDropdownMenu';
 import EntryHeader from '@/components/EntryHeader';
 import EntryFooter from '@/components/EntryFooter';
+import SourceButton from '@/components/SourceButton';
+import UsageNote from '@/components/UsageNote';
+import PhraseDropdownMenu from './PhraseDropdownMenu';
+import UpdatePhraseForm from './UpdatePhraseForm';
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
 } from '@/components/ui/card';
-import { Badge, badgeVariants } from '@/components/ui/badge';
-import { Label } from '@/components/ui/label';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { CircleHelp, LinkIcon } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 
 interface Props {
   phrase: Phrase;
@@ -60,29 +59,20 @@ export default function PhraseCard({
             <Link href={`/phrases/${phrase.id}/`}>
               <p className="mb-1 whitespace-pre-line">{phrase.content}</p>
             </Link>
-            <div className="flex gap-2">
-              {phrase.usage_note &&
-                <Popover>
-                  <PopoverTrigger>
-                    <Badge variant="outline" className="h-full">
-                      <CircleHelp className="w-4" />
-                    </Badge>
-                  </PopoverTrigger>
-                  <PopoverContent>
-                    <Label>How to use?</Label>
-                    <p className="m-0">{phrase.usage_note}</p>
-                  </PopoverContent>
-                </Popover>
-              }
+            <div className="flex gap-0 items-center">
+              <div className="flex gap-1 items-center me-1">
+                {phrase.categories.map(category => (
+                  <Badge variant="secondary" className="h-fit" key={category}>
+                    {category}
+                  </Badge>
+                ))}
+              </div>
               {(phrase.source_title || phrase.source_link) &&
-                <a target="_blank" rel="noopener noreferrer" href={phrase.source_link} className={badgeVariants({ variant: "outline" })}>
-                  <LinkIcon className="w-3 me-1" />
-                  {phrase.source_title || phrase.source_link}
-                </a>
+                <SourceButton source_title={phrase.source_title} source_link={phrase.source_link} />
               }
-              {phrase.categories.map(category => (
-                <Badge variant="secondary" key={category}>{category}</Badge>
-              ))}
+              {phrase.usage_note &&
+                <UsageNote note={phrase.usage_note} />
+              }
             </div>
           </>
         )}

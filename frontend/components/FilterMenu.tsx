@@ -19,6 +19,7 @@ import {
   CommandList,
 } from '@/components/ui/command';
 import { Filter, ChevronsUpDown, Check } from 'lucide-react';
+import { Label } from './ui/label';
 
 export interface Filter {
   [key: string]: boolean | string;
@@ -71,12 +72,13 @@ export default function FilterMenu({
     <div className={cn(className, '')}>
       <Popover>
         <PopoverTrigger asChild>
-          <Button variant="outline">
+          <Button variant="ghost" size="sm" className="p-1 h-fit flex gap-1" >
             <Filter /> Filter
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-80">
+        <PopoverContent className="w-72">
           <div className="flex flex-col gap-3">
+            <Label className="font-bold">Filter</Label>
             {filterOptions.map(({ label, name, type, options }) =>
               type === 'checkbox' ? (
                 <FilterCheckbox

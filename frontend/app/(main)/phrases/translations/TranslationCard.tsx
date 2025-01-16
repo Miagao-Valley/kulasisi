@@ -7,6 +7,7 @@ import { Translation, TranslationRevision } from '@/types/phrases';
 import { cn } from '@/lib/utils';
 import EntryHeader from '@/components/EntryHeader';
 import EntryFooter from '@/components/EntryFooter';
+import SourceButton from '@/components/SourceButton';
 import TranslationDropdownMenu from './TranslationDropdownMenu';
 import UpdateTranslationForm from './UpdateTranslationForm';
 import {
@@ -15,8 +16,6 @@ import {
   CardFooter,
   CardHeader,
 } from '@/components/ui/card';
-import { badgeVariants } from '@/components/ui/badge';
-import { LinkIcon } from 'lucide-react';
 
 interface Props {
   translation: Translation;
@@ -61,12 +60,9 @@ export default function TranslationCard({
             >
               <p className="mb-2 whitespace-pre-line">{translation.content}</p>
             </Link>
-            <div className="flex gap-2">
+            <div className="flex gap-0 items-center">
               {(translation.source_title || translation.source_link) &&
-                <a target="_blank" rel="noopener noreferrer" href={translation.source_link} className={badgeVariants({ variant: "outline" })}>
-                  <LinkIcon className="w-3 me-1" />
-                  {translation.source_title || translation.source_link}
-                </a>
+                <SourceButton source_title={translation.source_title} source_link={translation.source_link} />
               }
             </div>
           </>

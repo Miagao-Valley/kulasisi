@@ -9,6 +9,7 @@ import { DeleteAccountModal } from './DeleteAccountModal';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { H2, H3 } from '@/components/ui/heading-with-anchor';
+import { PenIcon } from 'lucide-react';
 
 interface Props {
   user: User;
@@ -23,13 +24,15 @@ export default function AccountTab({ user }: Props) {
         <ul className="flex flex-col gap-4">
           <li className="flex items-center gap-3">
             <H3 className="!text-base m-0 me-auto" anchor="email-address">
-              Email address
+              Email
             </H3>
 
-            <span>{user.email}</span>
+            <span className="text-xs truncate">{user.email}</span>
             <Dialog>
               <DialogTrigger asChild>
-                <Button variant="outline">Change</Button>
+                <Button variant="ghost" size="icon">
+                  <PenIcon />
+                </Button>
               </DialogTrigger>
               <ChangeEmailModal username={user.username} />
             </Dialog>
@@ -40,10 +43,12 @@ export default function AccountTab({ user }: Props) {
               Phone number
             </H3>
 
-            <span>{user.phone_number}</span>
+            <span className="text-xs truncate">{user.phone_number}</span>
             <Dialog>
               <DialogTrigger asChild>
-                <Button variant="outline">Change</Button>
+                <Button variant="ghost" size="icon">
+                  <PenIcon />
+                </Button>
               </DialogTrigger>
               <ChangePhoneNumberModal username={user.username} />
             </Dialog>
@@ -56,7 +61,9 @@ export default function AccountTab({ user }: Props) {
 
             <Dialog>
               <DialogTrigger asChild>
-                <Button variant="outline">Change</Button>
+                <Button  variant="ghost" size="icon">
+                  <PenIcon />
+                </Button>
               </DialogTrigger>
               <ChangePasswordModal username={user.username} />
             </Dialog>

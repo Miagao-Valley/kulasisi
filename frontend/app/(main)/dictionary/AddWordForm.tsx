@@ -82,7 +82,7 @@ export default function AddWordForm({ className = '' }: Props) {
           )}
         />
 
-        <div className="flex gap-2 items-center">
+        <div className="flex gap-0 items-center">
           <FormField
             control={form.control}
             name="lang"
@@ -92,7 +92,6 @@ export default function AddWordForm({ className = '' }: Props) {
                   <LangSelect
                     selectedLang={field.value}
                     setSelectedLang={(value) => form.setValue('lang', value)}
-                    placeholder="Language"
                   />
                 </FormControl>
                 <FormMessage />

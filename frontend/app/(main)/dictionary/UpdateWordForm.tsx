@@ -51,7 +51,7 @@ export default function UpdateWordForm({
   return (
     <Form {...form}>
       <form
-        className={cn(className, 'flex flex-col gap-3')}
+        className={cn(className, 'flex flex-col gap-0')}
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <FormMessage>
@@ -66,9 +66,10 @@ export default function UpdateWordForm({
             <FormItem>
               <FormControl>
                 <Input
-                  className="p-0 !text-xl font-bold borderless-input"
                   type="text"
+                  className="p-0 !text-xl font-bold borderless-input bg-transparent"
                   placeholder="Enter updated word"
+                  autoFocus
                   {...field}
                 />
               </FormControl>
@@ -77,28 +78,29 @@ export default function UpdateWordForm({
           )}
         />
 
-        <div className="flex flex-col md:flex-row gap-2 items-center">
+        <div className="flex gap-0 items-center">
           <SourceForm
             form={form}
             defaultSourceTitle={word.source_title}
             defaultSourceLink={word.source_link}
           />
-        </div>
 
-        <div className="flex justify-end gap-2">
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => setIsEditing(false)}
-          >
-            Cancel
-          </Button>
-          <LoadingButton
-            type="submit"
-            loading={form.formState.isSubmitting}
-          >
-            Save
-          </LoadingButton>
+
+          <div className="ms-auto flex justify-end gap-2">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setIsEditing(false)}
+            >
+              Cancel
+            </Button>
+            <LoadingButton
+              type="submit"
+              loading={form.formState.isSubmitting}
+            >
+              Save
+            </LoadingButton>
+          </div>
         </div>
       </form>
     </Form>

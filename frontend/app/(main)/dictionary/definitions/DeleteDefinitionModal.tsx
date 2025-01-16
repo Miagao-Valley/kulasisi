@@ -51,6 +51,7 @@ export default function DeleteDefinitionModal({ wordId, id }: Props) {
           <LoadingButton
             variant="destructive"
             type="submit"
+            className="w-full"
             loading={isLoading}
           >
             Delete

@@ -18,20 +18,21 @@ import {
   CommandItem,
   CommandList,
 } from '@/components/ui/command';
-import { ChevronsUpDown, Check } from 'lucide-react';
+import { ChevronsUpDown, Check, LanguagesIcon } from 'lucide-react';
+import { Badge } from './ui/badge';
 
 interface Props {
   selectedLang: string;
   setSelectedLang: (value: string) => void;
   exclude?: string[];
-  placeholder?: string;
+  className?: string;
 }
 
 export default function LangSelect({
   selectedLang,
   setSelectedLang,
   exclude = [],
-  placeholder = 'Select language...'
+  className = ''
 }: Props) {
   const [langs, setLangs] = useState<Lang[]>([]);
   const [open, setOpen] = useState(false);
@@ -49,15 +50,16 @@ export default function LangSelect({
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
-          variant="outline"
+          variant={selectedLang ? null : 'ghost'}
+          size="sm"
           role="combobox"
           aria-expanded={open}
-          className="justify-between"
+          className={cn("justify-between gap-1 px-1", className)}
         >
-          {selectedLang
-            ? langs.find((lang) => lang.code === selectedLang)?.name
-            : placeholder}
           <ChevronsUpDown className="opacity-50" />
+          {selectedLang
+            ? <Badge variant="outline">{selectedLang}</Badge>
+            : <LanguagesIcon />}
         </Button>
       </PopoverTrigger>
 

@@ -98,48 +98,47 @@ export default function AddDefinitionForm({
           )}
         />
 
-        <div className="flex gap-2 items-center">
-          <FormField
-            control={form.control}
-            name="lang"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <LangSelect
-                    selectedLang={field.value}
-                    setSelectedLang={(value) => form.setValue('lang', value)}
-                    exclude={[originalLang]}
-                    placeholder="Language"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <UsageNoteForm form={form} />
-
-          <SourceForm form={form} />
-
-          <FormField
-            control={form.control}
-            name="pos"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <PosSelect
-                    selectedPos={field.value}
-                    setSelectedPos={(value) => form.setValue('pos', value)}
-                    placeholder="POS"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+        <div className="flex flex-col sm:flex-row gap-1 items-center">
+          <div className="w-full sm:w-fit flex gap-0 justify-between items-center">
+            <div className="flex gap-0 items-center">
+              <FormField
+                control={form.control}
+                name="lang"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <LangSelect
+                        selectedLang={field.value}
+                        setSelectedLang={(value) => form.setValue('lang', value)}
+                        exclude={[originalLang]}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <UsageNoteForm form={form} />
+              <SourceForm form={form} />
+            </div>
+            <FormField
+              control={form.control}
+              name="pos"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <PosSelect
+                      selectedPos={field.value}
+                      setSelectedPos={(value) => form.setValue('pos', value)}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
 
           <LoadingButton
-            className="ms-auto"
+            className="ms-auto w-full sm:w-fit"
             type="submit"
             loading={form.formState.isSubmitting}
             disabled={

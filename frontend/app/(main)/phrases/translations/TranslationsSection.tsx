@@ -3,9 +3,9 @@ import { Phrase } from '@/types/phrases';
 import getLangs from '@/lib/langs/getLangs';
 import AddTranslationForm from './AddTranslationForm';
 import TranslationsList, { TranslationsListSkeleton } from './TranslationsList';
-import SearchInput from '@/components/SearchInput';
-import SortDropdown, { SortOption } from '@/components/SortDropdown';
-import FilterMenu, { FilterOption } from '@/components/FilterMenu';
+import { SortOption } from '@/components/SortDropdown';
+import { FilterOption } from '@/components/FilterMenu';
+import FilterControls from '@/components/FilterControls';
 
 interface Props {
   phrase: Phrase;
@@ -50,14 +50,13 @@ export default async function TranslationsSection({
         originalLang={phrase.lang}
         className="py-2 mb-4 border-t border-b"
       />
-      <div className="mb-4 flex gap-2">
-        <SearchInput currentSearchTerm={searchTerm} className="me-auto" />
-        <SortDropdown
-          currentSortOption={sortOption}
-          sortingOptions={sortingOptions}
-        />
-        <FilterMenu currentFilters={filters} filterOptions={filterOptions} />
-      </div>
+      <FilterControls
+        searchTerm={searchTerm}
+        sortOption={sortOption}
+        sortingOptions={sortingOptions}
+        filters={filters}
+        filterOptions={filterOptions}
+      />
       <Suspense fallback={<TranslationsListSkeleton />}>
         <TranslationsList
           phraseId={phrase.id}

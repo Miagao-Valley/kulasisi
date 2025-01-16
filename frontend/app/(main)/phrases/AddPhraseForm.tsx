@@ -1,10 +1,9 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '@/components/AuthProvider';
 import addPhrase from '@/lib/phrases/addPhrase';
-import getCategories from '@/lib/phrases/getCategories';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { useForm, SubmitHandler } from 'react-hook-form';
@@ -18,10 +17,10 @@ import {
 } from '@/components/ui/form';
 import { AutosizeTextarea } from '@/components/ui/autoresize-textarea';
 import { LoadingButton } from '@/components/ui/loading-button';
-import ListSelector from '@/components/ui/list-selector';
 import LangSelect from '@/components/LangSelect';
 import UsageNoteForm from '@/components/UsageNoteForm';
 import SourceForm from '@/components/SourceForm';
+import CategorySelect from '@/components/CategorySelect';
 
 export interface PhraseInputs {
   content: string;
@@ -40,17 +39,6 @@ export default function AddPhraseForm({ className = '' }: Props) {
   const auth = useAuth();
   const router = useRouter();
   const pathname = usePathname();
-
-  const [categoryOptions, setCategoryOptions] = useState<string[]>([]);
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      const res = await getCategories();
-      setCategoryOptions(res.map(category => category.name));
-    }
-
-    fetchCategories();
-  }, [])
 
   const form = useForm<PhraseInputs>();
   const onSubmit: SubmitHandler<PhraseInputs> = async (data: PhraseInputs) => {
@@ -97,54 +85,47 @@ export default function AddPhraseForm({ className = '' }: Props) {
           )}
         />
 
-        <div className="flex flex-col md:flex-row gap-2 items-center">
-          <FormField
-            control={form.control}
-            name="lang"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <LangSelect
-                    selectedLang={field.value}
-                    setSelectedLang={(value) => form.setValue('lang', value)}
-                    placeholder="Language"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <UsageNoteForm form={form} />
-
-          <SourceForm form={form} />
-
-          <FormField
-            control={form.control}
-            name="categories"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <ListSelector
-                    {...field}
-                    defaultOptions={categoryOptions}
-                    onSearch={async (q) => {
-                      q = q.toLowerCase();
-                      return categoryOptions.filter(option => option.toLowerCase().includes(q));
-                    }}
-                    triggerSearchOnFocus
-                    placeholder="Categories..."
-                    hidePlaceholderWhenSelected
-                    emptyIndicator={<p className="text-center">No results found</p>}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+        <div className="flex flex-col sm:flex-row gap-1 items-center">
+          <div className="w-full sm:w-fit flex gap-0 justify-between items-center">
+            <div className="flex gap-0 items-center">
+              <FormField
+                control={form.control}
+                name="lang"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <LangSelect
+                        selectedLang={field.value}
+                        setSelectedLang={(value) => form.setValue('lang', value)}
+                        className="w-full"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+                <UsageNoteForm form={form} />
+                <SourceForm form={form} />
+            </div>
+            <FormField
+              control={form.control}
+              name="categories"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <CategorySelect
+                      selectedCategories={field.value}
+                      setSelectedCategories={(value) => form.setValue('categories', value)}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
 
           <LoadingButton
-            className="ms-auto"
+            className="ms-auto w-full sm:w-fit"
             type="submit"
             loading={form.formState.isSubmitting}
             disabled={!(form.watch('content')?.trim() && form.watch('lang'))}

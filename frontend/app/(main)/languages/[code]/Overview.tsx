@@ -36,7 +36,7 @@ export default function Overview({ lang, className = '' }: Props) {
         </TooltipProvider>
       </Link>
 
-      <H1 className="!text-3xl m-0">{lang.name}</H1>
+      <H1 className="!text-3xl truncate m-0">{lang.name}</H1>
     </div>
   );
 }

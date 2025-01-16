@@ -2,9 +2,9 @@ import React, { Suspense } from 'react';
 import getLangs from '@/lib/langs/getLangs';
 import AddPhraseForm from './AddPhraseForm';
 import PhrasesList, { PhrasesListSkeleton } from './PhrasesList';
-import SearchInput from '@/components/SearchInput';
-import SortDropdown, { SortOption } from '@/components/SortDropdown';
-import FilterMenu, { FilterOption } from '@/components/FilterMenu';
+import { SortOption } from '@/components/SortDropdown';
+import { FilterOption } from '@/components/FilterMenu';
+import FilterControls from '@/components/FilterControls';
 
 interface Props {
   searchParams: { [key: string]: string | undefined };
@@ -42,15 +42,14 @@ export default async function PhrasesPage({ searchParams }: Props) {
 
   return (
     <>
-      <AddPhraseForm className="py-2 mb-4 border-t border-b" />
-      <div className="mb-4 flex gap-2">
-        <SearchInput currentSearchTerm={searchTerm} className="me-auto" />
-        <SortDropdown
-          currentSortOption={sortOption}
-          sortingOptions={sortingOptions}
-        />
-        <FilterMenu currentFilters={filters} filterOptions={filterOptions} />
-      </div>
+      <AddPhraseForm className="mb-4 py-2 border-t border-b" />
+      <FilterControls
+        searchTerm={searchTerm}
+        sortOption={sortOption}
+        sortingOptions={sortingOptions}
+        filters={filters}
+        filterOptions={filterOptions}
+      />
       <Suspense fallback={<PhrasesListSkeleton />}>
         <PhrasesList
           searchTerm={searchTerm}

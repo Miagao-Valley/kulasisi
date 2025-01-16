@@ -56,7 +56,7 @@ export default function UpdateDefinitionForm({
   return (
     <Form {...form}>
       <form
-        className={cn(className, 'flex flex-col gap-3')}
+        className={cn(className, 'flex flex-col gap-0')}
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <FormMessage>
@@ -71,8 +71,9 @@ export default function UpdateDefinitionForm({
             <FormItem>
               <FormControl>
                 <AutosizeTextarea
-                  className="p-1 text-base resize-none borderless-input"
+                  className="p-1 text-base resize-none borderless-input bg-transparent"
                   placeholder="Enter updated definition"
+                  autoFocus
                   {...field}
                 />
               </FormControl>
@@ -81,51 +82,52 @@ export default function UpdateDefinitionForm({
           )}
         />
 
-        <div className="flex flex-col md:flex-row gap-2 items-center">
-          <UsageNoteForm
-            form={form}
-            defaultUsageNote={definition.usage_note}
-          />
+        <div className="flex flex-col sm:flex-row gap-1 items-center">
+          <div className="w-full sm:w-fit flex gap-0 justify-between items-center">
+            <div className="flex gap-0 items-center">
+              <UsageNoteForm
+                form={form}
+                defaultUsageNote={definition.usage_note}
+              />
+              <SourceForm
+                form={form}
+                defaultSourceTitle={definition.source_title}
+                defaultSourceLink={definition.source_link}
+              />
+              </div>
+            <FormField
+              control={form.control}
+              name="pos"
+              defaultValue={definition.pos}
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <PosSelect
+                      selectedPos={field.value}
+                      setSelectedPos={(value) => form.setValue('pos', value)}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
 
-          <SourceForm
-            form={form}
-            defaultSourceTitle={definition.source_title}
-            defaultSourceLink={definition.source_link}
-          />
-
-          <FormField
-            control={form.control}
-            name="pos"
-            defaultValue={definition.pos}
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <PosSelect
-                    selectedPos={field.value}
-                    setSelectedPos={(value) => form.setValue('pos', value)}
-                    placeholder="POS"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-
-        <div className="flex justify-end gap-2">
-          <Button
-            variant="outline"
-            type="button"
-            onClick={() => setIsEditing(false)}
-          >
-            Cancel
-          </Button>
-          <LoadingButton
-            type="submit"
-            loading={form.formState.isSubmitting}
-          >
-            Save
-          </LoadingButton>
+          <div className="ms-auto flex justify-end gap-2">
+            <Button
+              variant="outline"
+              type="button"
+              onClick={() => setIsEditing(false)}
+            >
+              Cancel
+            </Button>
+            <LoadingButton
+              type="submit"
+              loading={form.formState.isSubmitting}
+            >
+              Save
+            </LoadingButton>
+          </div>
         </div>
       </form>
     </Form>

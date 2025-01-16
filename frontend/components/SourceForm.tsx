@@ -1,4 +1,6 @@
-import React from 'react';
+'use client';
+
+import React, { useState, useEffect } from 'react';
 import { Path, PathValue, UseFormReturn } from 'react-hook-form';
 import { cn } from '@/lib/utils';
 import {
@@ -24,7 +26,25 @@ interface Props<T extends Inputs> {
   defaultSourceLink?: string;
 }
 
-export default function SourceForm<T extends Inputs>({ form , defaultSourceTitle, defaultSourceLink }: Props<T>) {
+export default function SourceForm<T extends Inputs>({ form, defaultSourceTitle, defaultSourceLink }: Props<T>) {
+  const [sourceLabel, setSourceLabel] = useState<string>(
+    form.watch('source_title' as Path<T>)?.trim() ||
+    form.watch('source_link' as Path<T>)?.trim() ||
+    defaultSourceTitle || defaultSourceLink || ''
+  );
+
+  useEffect(() => {
+    const subscription = form.watch((values) => {
+      setSourceLabel(
+        values.source_title?.trim() ||
+        values.source_link?.trim() ||
+        defaultSourceTitle || defaultSourceLink || ''
+      );
+    });
+
+    return () => subscription.unsubscribe();
+  }, [form, defaultSourceTitle, defaultSourceLink]);
+
   const handleButtonDoubleClick = (e: React.MouseEvent) => {
     e.preventDefault();
     const sourceLink = form.watch('source_link' as Path<T>)?.trim();
@@ -40,24 +60,22 @@ export default function SourceForm<T extends Inputs>({ form , defaultSourceTitle
         asChild
       >
         <Button
-          variant="outline"
+          variant={"ghost"}
+          size="sm"
           className={cn(
-            'max-w-32',
-            (form.formState.errors.source_title || form.formState.errors.source_link) && 'border-destructive'
+            `max-w-24 md:max-w-32 flex gap-1 p-2 h-fit ${form.watch('source_link' as Path<T>)?.trim() && 'text-primary'}`,
+            (form.formState.errors.source_title || form.formState.errors.source_link) && 'text-destructive'
           )}
         >
           <LinkIcon />
-          <span className="truncate">
-            {
-              form.watch('source_title' as Path<T>)?.trim() ||
-              form.watch('source_link' as Path<T>)?.trim() ||
-              defaultSourceTitle || defaultSourceLink ||
-              'Source'
-            }
-          </span>
+          {sourceLabel && (
+            <span className="truncate hidden sm:flex w-fit">
+              {sourceLabel}
+            </span>
+          )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-80">
+      <PopoverContent className="max-w-80">
         <div className="flex flex-col gap-3">
           <FormLabel>Source</FormLabel>
           <FormField
@@ -69,6 +87,7 @@ export default function SourceForm<T extends Inputs>({ form , defaultSourceTitle
                 <FormControl>
                   <FloatingLabelInput
                     label="Title"
+                    autoFocus
                     {...field}
                   />
                 </FormControl>
@@ -96,5 +115,5 @@ export default function SourceForm<T extends Inputs>({ form , defaultSourceTitle
         </div>
       </PopoverContent>
     </Popover>
-  )
+  );
 }

@@ -33,7 +33,7 @@ export default function Overview({ user, className = '' }: Props) {
             </AvatarFallback>
           </Avatar>
           <div>
-            <H1 className="!text-3xl m-0">
+            <H1 className="!text-2xl truncate m-0">
               {user.first_name} {user.last_name}
             </H1>
             <span>@{user.username}</span>
@@ -42,23 +42,24 @@ export default function Overview({ user, className = '' }: Props) {
         {auth.isAuthenticated && auth.username === user.username && (
           <Button variant="outline" className="ms-auto" asChild>
             <Link href={`/settings/?tab=profile`}>
-              <Pen /> Edit Profile
+              <Pen />
+              <span className="hidden md:flex">Edit Profile</span>
             </Link>
           </Button>
         )}
       </div>
 
       <p className="mt-3 mb-2">{user.bio}</p>
-      <div className="flex gap-3 text-sm mb-2">
+      <div className="flex flex-col sm:flex-row gap-0 sm:gap-3 text-sm mb-2">
         {user.location && (
           <span className="flex items-center gap-0">
-            <MapPinIcon />
+            <MapPinIcon className="w-4" />
             {user.location}
           </span>
         )}
         {user.date_of_birth && (
           <span className="flex items-center gap-1">
-            <CalendarFoldIcon />
+            <CalendarFoldIcon className="w-4" />
             Born{' '}
             {user.date_of_birth.toLocaleDateString('en-US', {
               year: 'numeric',
@@ -68,7 +69,7 @@ export default function Overview({ user, className = '' }: Props) {
         )}
         {user.date_joined && (
           <span className="flex items-center gap-1">
-            <CakeSliceIcon />
+            <CakeSliceIcon className="w-4" />
             Joined{' '}
             {user.date_joined.toLocaleDateString('en-US', {
               year: 'numeric',

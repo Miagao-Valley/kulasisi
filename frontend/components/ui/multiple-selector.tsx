@@ -457,9 +457,9 @@ const MultipleSelector = React.forwardRef<
       >
         <div
           className={cn(
-            'min-h-10 rounded-md border border-input text-base md:text-sm ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2',
+            'rounded-md border border-input text-base md:text-sm ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2',
             {
-              'px-3 py-2': selected.length !== 0,
+              'px-2 py-1': selected.length !== 0,
               'cursor-text': !disabled && selected.length !== 0,
             },
             className,
@@ -556,7 +556,7 @@ const MultipleSelector = React.forwardRef<
                   'hidden',
               )}
             >
-              <X />
+              <X className="h-4 w-4" />
             </button>
           </div>
         </div>

@@ -1,12 +1,11 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import updatePhrase from '@/lib/phrases/updatePhrase';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import setFormErrors from '@/utils/setFormErrors';
-import getCategories from '@/lib/phrases/getCategories';
 import { Phrase } from '@/types/phrases';
 import {
   Form,
@@ -18,9 +17,9 @@ import {
 import { AutosizeTextarea } from '@/components/ui/autoresize-textarea';
 import { Button } from '@/components/ui/button';
 import { LoadingButton } from '@/components/ui/loading-button';
-import ListSelector from '@/components/ui/list-selector';
 import UsageNoteForm from '@/components/UsageNoteForm';
 import SourceForm from '@/components/SourceForm';
+import CategorySelect from '@/components/CategorySelect';
 
 export interface PhraseInputs {
   content: string;
@@ -41,17 +40,6 @@ export default function UpdatePhraseForm({
   setIsEditing,
   className = '',
 }: Props) {
-  const [categoryOptions, setCategoryOptions] = useState<string[]>([]);
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      const res = await getCategories();
-      setCategoryOptions(res.map(category => category.name));
-    }
-
-    fetchCategories();
-  }, [])
-
   const form = useForm<PhraseInputs>();
   const onSubmit: SubmitHandler<PhraseInputs> = async (data: PhraseInputs) => {
     const res = await updatePhrase(phrase.id, data);
@@ -67,7 +55,7 @@ export default function UpdatePhraseForm({
   return (
     <Form {...form}>
       <form
-        className={cn(className, 'flex flex-col gap-3')}
+        className={cn(className, 'flex flex-col gap-0')}
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <FormMessage>
@@ -82,8 +70,9 @@ export default function UpdatePhraseForm({
             <FormItem>
               <FormControl>
                 <AutosizeTextarea
-                  className="p-1 text-base resize-none borderless-input"
+                  className="p-1 text-base resize-none borderless-input bg-transparent"
                   placeholder="Enter updated phrase"
+                  autoFocus
                   {...field}
                 />
               </FormControl>
@@ -92,58 +81,54 @@ export default function UpdatePhraseForm({
           )}
         />
 
-        <div className="flex flex-col md:flex-row gap-2 items-center">
-          <UsageNoteForm
-            form={form}
-            defaultUsageNote={phrase.usage_note}
-          />
+        <div className="flex flex-col sm:flex-row gap-1 items-center">
+          <div className="w-full sm:w-fit flex gap-0 justify-between items-center">
+            <div className="flex gap-0 items-center">
+              <UsageNoteForm
+                form={form}
+                defaultUsageNote={phrase.usage_note}
+              />
+              <SourceForm
+                form={form}
+                defaultSourceTitle={phrase.source_title}
+                defaultSourceLink={phrase.source_link}
+              />
+            </div>
+            <FormField
+              control={form.control}
+              name="categories"
+              defaultValue={phrase.categories}
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <CategorySelect
+                      selectedCategories={field.value}
+                      setSelectedCategories={(value) => form.setValue('categories', value)}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
 
-          <SourceForm
-            form={form}
-            defaultSourceTitle={phrase.source_title}
-            defaultSourceLink={phrase.source_link}
-          />
-
-          <FormField
-            control={form.control}
-            name="categories"
-            defaultValue={phrase.categories}
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <ListSelector
-                    {...field}
-                    defaultOptions={categoryOptions}
-                    onSearch={async (q) => {
-                      q = q.toLowerCase();
-                      return categoryOptions.filter(option => option.toLowerCase().includes(q));
-                    }}
-                    triggerSearchOnFocus
-                    placeholder="Categories..."
-                    hidePlaceholderWhenSelected
-                    emptyIndicator={<p className="text-center">No results found</p>}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-
-        <div className="flex justify-end gap-2">
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => setIsEditing(false)}
-          >
-            Cancel
-          </Button>
-          <LoadingButton
-            type="submit"
-            loading={form.formState.isSubmitting}
-          >
-            Save
-          </LoadingButton>
+          <div className="ms-auto w-full sm:w-fit flex justify-end gap-2">
+            <Button
+              type="button"
+              variant="outline"
+              className="w-full sm:w-fit"
+              onClick={() => setIsEditing(false)}
+            >
+              Cancel
+            </Button>
+            <LoadingButton
+              type="submit"
+              className="w-full sm:w-fit"
+              loading={form.formState.isSubmitting}
+            >
+              Save
+            </LoadingButton>
+          </div>
         </div>
       </form>
     </Form>
