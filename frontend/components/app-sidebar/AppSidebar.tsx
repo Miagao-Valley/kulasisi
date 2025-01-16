@@ -13,7 +13,7 @@ import {
 import { NavMain } from './NavMain';
 import { NavUser } from './NavUser';
 import { NavLang } from './NavLang';
-import { BirdIcon } from 'lucide-react';
+import Wordmark from '../brand/wordmark';
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { open, isMobile } = useSidebar();
@@ -24,8 +24,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <div className="flex gap-1 items-center">
           {open &&
             <Link href="/" className="px-2 flex gap-1 items-center">
-              <BirdIcon />
-              <h1 className="text-2xl m-0 p-0 truncate">kulasisi</h1>
+              <Wordmark className="w-24" />
             </Link>
           }
           {!isMobile && <SidebarTrigger className="ms-auto" />}

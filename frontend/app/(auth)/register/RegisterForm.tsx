@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '@/components/AuthProvider';
+import Link from 'next/link';
 import { LangProficiencyLevel } from '@/types/languages';
 import register from '@/lib/auth/register';
 import GetStarted from './steps/GetStarted';
@@ -14,8 +15,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { Form, FormMessage } from '@/components/ui/form';
 import setFormErrors from '@/utils/setFormErrors';
 import { H1 } from '@/components/ui/heading-with-anchor';
-import Link from 'next/link';
-import { BirdIcon } from 'lucide-react';
+import Logo from '@/components/brand/logo';
 
 export interface RegisterInputs {
   username: string;
@@ -91,7 +91,7 @@ export default function RegisterForm() {
           href="/"
           className="flex flex-col items-center"
         >
-          <BirdIcon className="h-8 w-8" />
+          <Logo className="w-12 mb-4" />
           <span className="sr-only">kulasisi</span>
         </Link>
         <h1 className="text-xl font-bold">Welcome to kulasisi</h1>

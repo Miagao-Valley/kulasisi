@@ -17,7 +17,7 @@ import {
 import { FloatingLabelInput } from '@/components/ui/floating-label-input';
 import { PasswordInput } from '@/components/ui/password-input';
 import { LoadingButton } from '@/components/ui/loading-button';
-import { BirdIcon } from 'lucide-react';
+import Logo from '@/components/brand/logo';
 
 export interface LoginInputs {
   username: string;
@@ -52,7 +52,7 @@ export default function LoginForm() {
           href="/"
           className="flex flex-col items-center"
         >
-          <BirdIcon className="h-8 w-8" />
+          <Logo className="w-12 mb-4" />
           <span className="sr-only">kulasisi</span>
         </Link>
         <h1 className="text-xl font-bold">Welcome to kulasisi</h1>
