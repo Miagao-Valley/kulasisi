@@ -1,0 +1,2732 @@
+openapi: 3.0.3
+info:
+  title: Kulasisi API
+  version: 1.0.0
+  description: Kulasisi description
+paths:
+  /dictionary/:
+    get:
+      operationId: dictionary_list
+      parameters:
+      - in: query
+        name: contributor__username
+        schema:
+          type: string
+      - in: query
+        name: lang__code
+        schema:
+          type: string
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - dictionary
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedWordList'
+          description: ''
+    post:
+      operationId: dictionary_create
+      tags:
+      - dictionary
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Word'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Word'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Word'
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Word'
+          description: ''
+  /dictionary/{word_pk}/:
+    get:
+      operationId: dictionary_retrieve
+      parameters:
+      - in: path
+        name: word_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - dictionary
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Word'
+          description: ''
+    put:
+      operationId: dictionary_update
+      parameters:
+      - in: path
+        name: word_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - dictionary
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Word'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Word'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Word'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Word'
+          description: ''
+    patch:
+      operationId: dictionary_partial_update
+      parameters:
+      - in: path
+        name: word_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - dictionary
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedWord'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedWord'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedWord'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Word'
+          description: ''
+    delete:
+      operationId: dictionary_destroy
+      parameters:
+      - in: path
+        name: word_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - dictionary
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /dictionary/{word_pk}/history/:
+    get:
+      operationId: dictionary_history_list
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      - in: path
+        name: word_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - dictionary
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedWordHistoryList'
+          description: ''
+  /dictionary/{word_pk}/votes/:
+    get:
+      operationId: dictionary_votes_list
+      parameters:
+      - in: path
+        name: word_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - dictionary
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Vote'
+          description: ''
+    post:
+      operationId: dictionary_votes_create
+      parameters:
+      - in: path
+        name: word_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - dictionary
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Vote'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Vote'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Vote'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vote'
+          description: ''
+  /dictionary/definitions/:
+    get:
+      operationId: dictionary_definitions_list
+      parameters:
+      - in: query
+        name: contributor__username
+        schema:
+          type: string
+      - in: query
+        name: lang__code
+        schema:
+          type: string
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - in: query
+        name: pos__abbr
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - in: query
+        name: word
+        schema:
+          type: integer
+      tags:
+      - dictionary
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedDefinitionList'
+          description: ''
+    post:
+      operationId: dictionary_definitions_create
+      tags:
+      - dictionary
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Definition'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Definition'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Definition'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Definition'
+          description: ''
+  /dictionary/definitions/{definition_pk}/:
+    get:
+      operationId: dictionary_definitions_retrieve
+      parameters:
+      - in: path
+        name: definition_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - dictionary
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Definition'
+          description: ''
+    put:
+      operationId: dictionary_definitions_update
+      parameters:
+      - in: path
+        name: definition_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - dictionary
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Definition'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Definition'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Definition'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Definition'
+          description: ''
+    patch:
+      operationId: dictionary_definitions_partial_update
+      parameters:
+      - in: path
+        name: definition_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - dictionary
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedDefinition'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedDefinition'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedDefinition'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Definition'
+          description: ''
+    delete:
+      operationId: dictionary_definitions_destroy
+      parameters:
+      - in: path
+        name: definition_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - dictionary
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /dictionary/definitions/{definition_pk}/history/:
+    get:
+      operationId: dictionary_definitions_history_list
+      parameters:
+      - in: path
+        name: definition_pk
+        schema:
+          type: integer
+        required: true
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      tags:
+      - dictionary
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedDefinitionHistoryList'
+          description: ''
+  /dictionary/definitions/{definition_pk}/votes/:
+    get:
+      operationId: dictionary_definitions_votes_list
+      parameters:
+      - in: path
+        name: definition_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - dictionary
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Vote'
+          description: ''
+    post:
+      operationId: dictionary_definitions_votes_create
+      parameters:
+      - in: path
+        name: definition_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - dictionary
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Vote'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Vote'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Vote'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vote'
+          description: ''
+  /dictionary/parts-of-speech/:
+    get:
+      operationId: dictionary_parts_of_speech_list
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - dictionary
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartOfSpeech'
+          description: ''
+    post:
+      operationId: dictionary_parts_of_speech_create
+      tags:
+      - dictionary
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PartOfSpeech'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PartOfSpeech'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PartOfSpeech'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartOfSpeech'
+          description: ''
+  /dictionary/parts-of-speech/{abbr}/:
+    get:
+      operationId: dictionary_parts_of_speech_retrieve
+      parameters:
+      - in: path
+        name: abbr
+        schema:
+          type: string
+        required: true
+      tags:
+      - dictionary
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartOfSpeech'
+          description: ''
+    put:
+      operationId: dictionary_parts_of_speech_update
+      parameters:
+      - in: path
+        name: abbr
+        schema:
+          type: string
+        required: true
+      tags:
+      - dictionary
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PartOfSpeech'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PartOfSpeech'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PartOfSpeech'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartOfSpeech'
+          description: ''
+    patch:
+      operationId: dictionary_parts_of_speech_partial_update
+      parameters:
+      - in: path
+        name: abbr
+        schema:
+          type: string
+        required: true
+      tags:
+      - dictionary
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedPartOfSpeech'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedPartOfSpeech'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedPartOfSpeech'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartOfSpeech'
+          description: ''
+    delete:
+      operationId: dictionary_parts_of_speech_destroy
+      parameters:
+      - in: path
+        name: abbr
+        schema:
+          type: string
+        required: true
+      tags:
+      - dictionary
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /languages/:
+    get:
+      operationId: languages_list
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - languages
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedLanguageList'
+          description: ''
+  /languages/{code}/:
+    get:
+      operationId: languages_retrieve
+      parameters:
+      - in: path
+        name: code
+        schema:
+          type: string
+        required: true
+      tags:
+      - languages
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Language'
+          description: ''
+  /phrases/:
+    get:
+      operationId: phrases_list
+      parameters:
+      - in: query
+        name: contributor__username
+        schema:
+          type: string
+      - in: query
+        name: lang__code
+        schema:
+          type: string
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - phrases
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedPhraseList'
+          description: ''
+    post:
+      operationId: phrases_create
+      tags:
+      - phrases
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Phrase'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Phrase'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Phrase'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Phrase'
+          description: ''
+  /phrases/{phrase_pk}/:
+    get:
+      operationId: phrases_retrieve
+      parameters:
+      - in: path
+        name: phrase_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - phrases
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Phrase'
+          description: ''
+    put:
+      operationId: phrases_update
+      parameters:
+      - in: path
+        name: phrase_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - phrases
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Phrase'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Phrase'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Phrase'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Phrase'
+          description: ''
+    patch:
+      operationId: phrases_partial_update
+      parameters:
+      - in: path
+        name: phrase_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - phrases
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedPhrase'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedPhrase'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedPhrase'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Phrase'
+          description: ''
+    delete:
+      operationId: phrases_destroy
+      parameters:
+      - in: path
+        name: phrase_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - phrases
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /phrases/{phrase_pk}/history/:
+    get:
+      operationId: phrases_history_list
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      - in: path
+        name: phrase_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - phrases
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedPhraseHistoryList'
+          description: ''
+  /phrases/{phrase_pk}/votes/:
+    get:
+      operationId: phrases_votes_list
+      parameters:
+      - in: path
+        name: phrase_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - phrases
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Vote'
+          description: ''
+    post:
+      operationId: phrases_votes_create
+      parameters:
+      - in: path
+        name: phrase_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - phrases
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Vote'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Vote'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Vote'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vote'
+          description: ''
+  /phrases/categories/:
+    get:
+      operationId: phrases_categories_list
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - phrases
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Category'
+          description: ''
+    post:
+      operationId: phrases_categories_create
+      tags:
+      - phrases
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Category'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Category'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Category'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+          description: ''
+  /phrases/categories/{name}/:
+    get:
+      operationId: phrases_categories_retrieve
+      parameters:
+      - in: path
+        name: name
+        schema:
+          type: string
+        required: true
+      tags:
+      - phrases
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+          description: ''
+    put:
+      operationId: phrases_categories_update
+      parameters:
+      - in: path
+        name: name
+        schema:
+          type: string
+        required: true
+      tags:
+      - phrases
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Category'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Category'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Category'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+          description: ''
+    patch:
+      operationId: phrases_categories_partial_update
+      parameters:
+      - in: path
+        name: name
+        schema:
+          type: string
+        required: true
+      tags:
+      - phrases
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedCategory'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedCategory'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCategory'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+          description: ''
+    delete:
+      operationId: phrases_categories_destroy
+      parameters:
+      - in: path
+        name: name
+        schema:
+          type: string
+        required: true
+      tags:
+      - phrases
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /phrases/translations/:
+    get:
+      operationId: phrases_translations_list
+      parameters:
+      - in: query
+        name: contributor__username
+        schema:
+          type: string
+      - in: query
+        name: lang__code
+        schema:
+          type: string
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - in: query
+        name: phrase
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - phrases
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedTranslationList'
+          description: ''
+    post:
+      operationId: phrases_translations_create
+      tags:
+      - phrases
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Translation'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Translation'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Translation'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Translation'
+          description: ''
+  /phrases/translations/{translation_pk}/:
+    get:
+      operationId: phrases_translations_retrieve
+      parameters:
+      - in: path
+        name: translation_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - phrases
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Translation'
+          description: ''
+    put:
+      operationId: phrases_translations_update
+      parameters:
+      - in: path
+        name: translation_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - phrases
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Translation'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Translation'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Translation'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Translation'
+          description: ''
+    patch:
+      operationId: phrases_translations_partial_update
+      parameters:
+      - in: path
+        name: translation_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - phrases
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedTranslation'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedTranslation'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedTranslation'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Translation'
+          description: ''
+    delete:
+      operationId: phrases_translations_destroy
+      parameters:
+      - in: path
+        name: translation_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - phrases
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /phrases/translations/{translation_pk}/history/:
+    get:
+      operationId: phrases_translations_history_list
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      - in: path
+        name: translation_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - phrases
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedTranslationHistoryList'
+          description: ''
+  /phrases/translations/{translation_pk}/votes/:
+    get:
+      operationId: phrases_translations_votes_list
+      parameters:
+      - in: path
+        name: translation_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - phrases
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Vote'
+          description: ''
+    post:
+      operationId: phrases_translations_votes_create
+      parameters:
+      - in: path
+        name: translation_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - phrases
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Vote'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Vote'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Vote'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vote'
+          description: ''
+  /register/:
+    post:
+      operationId: register_create
+      tags:
+      - register
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+  /token/:
+    post:
+      operationId: token_create
+      description: |-
+        Takes a set of user credentials and returns an access and refresh JSON web
+        token pair to prove the authentication of those credentials.
+      tags:
+      - token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomTokenObtainPair'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CustomTokenObtainPair'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CustomTokenObtainPair'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomTokenObtainPair'
+          description: ''
+  /token/refresh/:
+    post:
+      operationId: token_refresh_create
+      description: |-
+        Takes a refresh type JSON web token and returns an access type JSON web
+        token if the refresh token is valid.
+      tags:
+      - token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenRefresh'
+          description: ''
+  /users/:
+    get:
+      operationId: users_list
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - users
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedUserList'
+          description: ''
+  /users/{username}/:
+    get:
+      operationId: users_retrieve
+      parameters:
+      - in: path
+        name: username
+        schema:
+          type: string
+        required: true
+      tags:
+      - users
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+  /users/{username}/change-email/:
+    post:
+      operationId: users_change_email_create
+      parameters:
+      - in: path
+        name: username
+        schema:
+          type: string
+        required: true
+      tags:
+      - users
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /users/{username}/change-password/:
+    post:
+      operationId: users_change_password_create
+      parameters:
+      - in: path
+        name: username
+        schema:
+          type: string
+        required: true
+      tags:
+      - users
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /users/{username}/change-phone-number/:
+    post:
+      operationId: users_change_phone_number_create
+      parameters:
+      - in: path
+        name: username
+        schema:
+          type: string
+        required: true
+      tags:
+      - users
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /users/{username}/delete/:
+    delete:
+      operationId: users_delete_destroy
+      parameters:
+      - in: path
+        name: username
+        schema:
+          type: string
+        required: true
+      tags:
+      - users
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /users/{username}/update/:
+    put:
+      operationId: users_update_update
+      parameters:
+      - in: path
+        name: username
+        schema:
+          type: string
+        required: true
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+    patch:
+      operationId: users_update_partial_update
+      parameters:
+      - in: path
+        name: username
+        schema:
+          type: string
+        required: true
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+components:
+  schemas:
+    BlankEnum:
+      enum:
+      - ''
+    Category:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 64
+        description:
+          type: string
+          nullable: true
+          maxLength: 255
+      required:
+      - name
+    CustomTokenObtainPair:
+      type: object
+      properties:
+        username:
+          type: string
+          writeOnly: true
+        password:
+          type: string
+          writeOnly: true
+      required:
+      - password
+      - username
+    Definition:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        word:
+          type: integer
+        lang:
+          type: string
+        description:
+          type: string
+          maxLength: 512
+        contributor:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+        contributor_reputation:
+          type: string
+          readOnly: true
+        pos:
+          type: string
+        usage_note:
+          type: string
+          nullable: true
+        source_title:
+          type: string
+          nullable: true
+          maxLength: 255
+        source_link:
+          type: string
+          format: uri
+          nullable: true
+          maxLength: 200
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        vote_count:
+          type: string
+          readOnly: true
+      required:
+      - contributor_reputation
+      - created_at
+      - description
+      - id
+      - updated_at
+      - vote_count
+    DefinitionHistory:
+      type: object
+      properties:
+        history_id:
+          type: integer
+          readOnly: true
+        description:
+          type: string
+          maxLength: 512
+        history_user:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+        history_date:
+          type: string
+          format: date-time
+      required:
+      - description
+      - history_date
+      - history_id
+    GenderEnum:
+      enum:
+      - M
+      - F
+      - O
+      - N
+      type: string
+      description: |-
+        * `M` - Male
+        * `F` - Female
+        * `O` - Other
+        * `N` - Prefer not to say
+    Language:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        code:
+          type: string
+          maxLength: 3
+        name:
+          type: string
+          maxLength: 32
+        user_count:
+          type: string
+          readOnly: true
+        phrase_count:
+          type: string
+          readOnly: true
+        translation_count:
+          type: string
+          readOnly: true
+        word_count:
+          type: string
+          readOnly: true
+        definition_count:
+          type: string
+          readOnly: true
+        users_by_proficiency:
+          type: string
+          readOnly: true
+      required:
+      - code
+      - definition_count
+      - id
+      - name
+      - phrase_count
+      - translation_count
+      - user_count
+      - users_by_proficiency
+      - word_count
+    LanguageProficiency:
+      type: object
+      properties:
+        lang:
+          type: string
+        level:
+          allOf:
+          - $ref: '#/components/schemas/LevelEnum'
+          minimum: 0
+          maximum: 9223372036854775807
+      required:
+      - level
+    LevelEnum:
+      enum:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      type: integer
+      description: |-
+        * `1` - Elementary Proficiency
+        * `2` - Limited Working Proficiency
+        * `3` - Professional Working Proficiency
+        * `4` - Full Professional Proficiency
+        * `5` - Native / Bilingual Proficiency
+    NullEnum:
+      enum:
+      - null
+    PaginatedDefinitionHistoryList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/DefinitionHistory'
+    PaginatedDefinitionList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Definition'
+    PaginatedLanguageList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Language'
+    PaginatedPhraseHistoryList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/PhraseHistory'
+    PaginatedPhraseList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Phrase'
+    PaginatedTranslationHistoryList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/TranslationHistory'
+    PaginatedTranslationList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Translation'
+    PaginatedUserList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+    PaginatedWordHistoryList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/WordHistory'
+    PaginatedWordList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Word'
+    PartOfSpeech:
+      type: object
+      properties:
+        abbr:
+          type: string
+          maxLength: 8
+        name:
+          type: string
+          maxLength: 64
+        description:
+          type: string
+          nullable: true
+          maxLength: 255
+      required:
+      - abbr
+      - name
+    PatchedCategory:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 64
+        description:
+          type: string
+          nullable: true
+          maxLength: 255
+    PatchedDefinition:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        word:
+          type: integer
+        lang:
+          type: string
+        description:
+          type: string
+          maxLength: 512
+        contributor:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+        contributor_reputation:
+          type: string
+          readOnly: true
+        pos:
+          type: string
+        usage_note:
+          type: string
+          nullable: true
+        source_title:
+          type: string
+          nullable: true
+          maxLength: 255
+        source_link:
+          type: string
+          format: uri
+          nullable: true
+          maxLength: 200
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        vote_count:
+          type: string
+          readOnly: true
+    PatchedPartOfSpeech:
+      type: object
+      properties:
+        abbr:
+          type: string
+          maxLength: 8
+        name:
+          type: string
+          maxLength: 64
+        description:
+          type: string
+          nullable: true
+          maxLength: 255
+    PatchedPhrase:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        content:
+          type: string
+        lang:
+          type: string
+        contributor:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+        contributor_reputation:
+          type: string
+          readOnly: true
+        categories:
+          type: array
+          items:
+            type: string
+        usage_note:
+          type: string
+          nullable: true
+        source_title:
+          type: string
+          nullable: true
+          maxLength: 255
+        source_link:
+          type: string
+          format: uri
+          nullable: true
+          maxLength: 200
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        vote_count:
+          type: string
+          readOnly: true
+        translation_count:
+          type: string
+          readOnly: true
+    PatchedTranslation:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        phrase:
+          type: integer
+        content:
+          type: string
+        lang:
+          type: string
+        contributor:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+        contributor_reputation:
+          type: string
+          readOnly: true
+        source_title:
+          type: string
+          nullable: true
+          maxLength: 255
+        source_link:
+          type: string
+          format: uri
+          nullable: true
+          maxLength: 200
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        vote_count:
+          type: string
+          readOnly: true
+    PatchedUser:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        password:
+          type: string
+          writeOnly: true
+          maxLength: 128
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        phone_number:
+          type: string
+          nullable: true
+          maxLength: 15
+        first_name:
+          type: string
+          nullable: true
+          maxLength: 30
+        last_name:
+          type: string
+          nullable: true
+          maxLength: 30
+        date_of_birth:
+          type: string
+          format: date
+          nullable: true
+        location:
+          type: string
+          nullable: true
+          maxLength: 255
+        gender:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/GenderEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        bio:
+          type: string
+          nullable: true
+          maxLength: 200
+        website:
+          type: string
+          format: uri
+          nullable: true
+          maxLength: 200
+        reputation:
+          type: string
+          readOnly: true
+        phrase_count:
+          type: string
+          readOnly: true
+        translation_count:
+          type: string
+          readOnly: true
+        word_count:
+          type: string
+          readOnly: true
+        definition_count:
+          type: string
+          readOnly: true
+        vote_count:
+          type: string
+          readOnly: true
+        language_proficiencies:
+          type: array
+          items:
+            $ref: '#/components/schemas/LanguageProficiency'
+        last_login:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        date_joined:
+          type: string
+          format: date-time
+          readOnly: true
+    PatchedWord:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        word:
+          type: string
+          maxLength: 64
+        lang:
+          type: string
+        contributor:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+        contributor_reputation:
+          type: string
+          readOnly: true
+        source_title:
+          type: string
+          nullable: true
+          maxLength: 255
+        source_link:
+          type: string
+          format: uri
+          nullable: true
+          maxLength: 200
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        vote_count:
+          type: string
+          readOnly: true
+    Phrase:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        content:
+          type: string
+        lang:
+          type: string
+        contributor:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+        contributor_reputation:
+          type: string
+          readOnly: true
+        categories:
+          type: array
+          items:
+            type: string
+        usage_note:
+          type: string
+          nullable: true
+        source_title:
+          type: string
+          nullable: true
+          maxLength: 255
+        source_link:
+          type: string
+          format: uri
+          nullable: true
+          maxLength: 200
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        vote_count:
+          type: string
+          readOnly: true
+        translation_count:
+          type: string
+          readOnly: true
+      required:
+      - content
+      - contributor_reputation
+      - created_at
+      - id
+      - translation_count
+      - updated_at
+      - vote_count
+    PhraseHistory:
+      type: object
+      properties:
+        history_id:
+          type: integer
+          readOnly: true
+        content:
+          type: string
+        history_user:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+        history_date:
+          type: string
+          format: date-time
+      required:
+      - content
+      - history_date
+      - history_id
+    TokenRefresh:
+      type: object
+      properties:
+        access:
+          type: string
+          readOnly: true
+        refresh:
+          type: string
+          writeOnly: true
+      required:
+      - access
+      - refresh
+    Translation:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        phrase:
+          type: integer
+        content:
+          type: string
+        lang:
+          type: string
+        contributor:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+        contributor_reputation:
+          type: string
+          readOnly: true
+        source_title:
+          type: string
+          nullable: true
+          maxLength: 255
+        source_link:
+          type: string
+          format: uri
+          nullable: true
+          maxLength: 200
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        vote_count:
+          type: string
+          readOnly: true
+      required:
+      - content
+      - contributor_reputation
+      - created_at
+      - id
+      - updated_at
+      - vote_count
+    TranslationHistory:
+      type: object
+      properties:
+        history_id:
+          type: integer
+          readOnly: true
+        content:
+          type: string
+        history_user:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+        history_date:
+          type: string
+          format: date-time
+      required:
+      - content
+      - history_date
+      - history_id
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        password:
+          type: string
+          writeOnly: true
+          maxLength: 128
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        phone_number:
+          type: string
+          nullable: true
+          maxLength: 15
+        first_name:
+          type: string
+          nullable: true
+          maxLength: 30
+        last_name:
+          type: string
+          nullable: true
+          maxLength: 30
+        date_of_birth:
+          type: string
+          format: date
+          nullable: true
+        location:
+          type: string
+          nullable: true
+          maxLength: 255
+        gender:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/GenderEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        bio:
+          type: string
+          nullable: true
+          maxLength: 200
+        website:
+          type: string
+          format: uri
+          nullable: true
+          maxLength: 200
+        reputation:
+          type: string
+          readOnly: true
+        phrase_count:
+          type: string
+          readOnly: true
+        translation_count:
+          type: string
+          readOnly: true
+        word_count:
+          type: string
+          readOnly: true
+        definition_count:
+          type: string
+          readOnly: true
+        vote_count:
+          type: string
+          readOnly: true
+        language_proficiencies:
+          type: array
+          items:
+            $ref: '#/components/schemas/LanguageProficiency'
+        last_login:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        date_joined:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - date_joined
+      - date_of_birth
+      - definition_count
+      - email
+      - first_name
+      - id
+      - last_login
+      - last_name
+      - location
+      - password
+      - phrase_count
+      - reputation
+      - translation_count
+      - username
+      - vote_count
+      - word_count
+    ValueEnum:
+      enum:
+      - 1
+      - -1
+      - 0
+      type: integer
+      description: |-
+        * `1` - Upvote
+        * `-1` - Downvote
+        * `0` - Unvote
+    Vote:
+      type: object
+      properties:
+        user:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+        value:
+          $ref: '#/components/schemas/ValueEnum'
+        voted_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - value
+      - voted_at
+    Word:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        word:
+          type: string
+          maxLength: 64
+        lang:
+          type: string
+        contributor:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+        contributor_reputation:
+          type: string
+          readOnly: true
+        source_title:
+          type: string
+          nullable: true
+          maxLength: 255
+        source_link:
+          type: string
+          format: uri
+          nullable: true
+          maxLength: 200
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        vote_count:
+          type: string
+          readOnly: true
+      required:
+      - contributor_reputation
+      - created_at
+      - id
+      - updated_at
+      - vote_count
+    WordHistory:
+      type: object
+      properties:
+        history_id:
+          type: integer
+          readOnly: true
+        word:
+          type: string
+          maxLength: 64
+        history_user:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+        history_date:
+          type: string
+          format: date-time
+      required:
+      - history_date
+      - history_id
+      - word
+  securitySchemes:
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

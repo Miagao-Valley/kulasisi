@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     "languages",
     "phrases",
     "dictionary",
+    "drf_spectacular",
     "rest_framework",
     "corsheaders",
     "django_filters",
@@ -174,8 +175,16 @@ REST_FRAMEWORK = {
     ],
     "DEFAULT_PAGINATION_CLASS": "core.pagination.CustomPagination",
     "PAGE_SIZE": 100,
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Kulasisi API",
+    "DESCRIPTION": "This is the Kulasisi API.",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+}
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
