@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     "languages",
     "phrases",
     "dictionary",
+    "drf_redesign",
     "drf_spectacular",
     "rest_framework",
     "corsheaders",
