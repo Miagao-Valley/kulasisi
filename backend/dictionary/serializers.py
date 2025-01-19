@@ -84,6 +84,12 @@ class DefinitionSerializer(serializers.ModelSerializer):
     pos = serializers.SlugRelatedField(
         queryset=PartOfSpeech.objects.all(), slug_field="abbr", required=False
     )
+    synonyms = serializers.SlugRelatedField(
+        queryset=Word.objects.all(), slug_field="word", many=True, required=False
+    )
+    antonyms = serializers.SlugRelatedField(
+        queryset=Word.objects.all(), slug_field="word", many=True, required=False
+    )
     contributor_reputation = serializers.SerializerMethodField()
     vote_count = serializers.SerializerMethodField()
 
@@ -97,6 +103,8 @@ class DefinitionSerializer(serializers.ModelSerializer):
             "contributor",
             "contributor_reputation",
             "pos",
+            "synonyms",
+            "antonyms",
             "usage_note",
             "source_title",
             "source_link",

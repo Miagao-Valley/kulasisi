@@ -20,10 +20,13 @@ import { LoadingButton } from '@/components/ui/loading-button';
 import PosSelect from '@/components/PosSelect';
 import UsageNoteForm from '@/components/UsageNoteForm';
 import SourceForm from '@/components/SourceForm';
+import WordsSelect from '@/components/WordsSelect';
 
 export interface DefinitionInputs {
   description: string;
   pos: string;
+  synonyms: string[];
+  antonyms: string[];
   usage_note: string;
   source_title: string;
   source_link: string;
@@ -105,6 +108,47 @@ export default function UpdateDefinitionForm({
                     <PosSelect
                       selectedPos={field.value}
                       setSelectedPos={(value) => form.setValue('pos', value)}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
+          <div className="flex gap-2">
+            <FormField
+              control={form.control}
+              name="synonyms"
+              defaultValue={definition.synonyms}
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <WordsSelect
+                      selectedWords={field.value}
+                      setSelectedWords={(value) =>
+                        form.setValue('synonyms', value)
+                      }
+                      placeholder="synonyms..."
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="antonyms"
+              defaultValue={definition.antonyms}
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <WordsSelect
+                      selectedWords={field.value}
+                      setSelectedWords={(value) =>
+                        form.setValue('antonyms', value)
+                      }
+                      placeholder="antonyms..."
                     />
                   </FormControl>
                   <FormMessage />

@@ -39,6 +39,8 @@ export interface Definition {
   contributor: string;
   contributor_reputation: number;
   pos?: string;
+  synonyms?: string[];
+  antonyms?: string[];
   usage_note?: string;
   source_title?: string;
   source_link?: string;
