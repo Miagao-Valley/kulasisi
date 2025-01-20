@@ -1,8 +1,8 @@
 import fetcher from '@/utils/fetcher';
 import { Word } from '@/types/dictionary';
 
-export default async function getWord(id: number): Promise<Word> {
-  const res = await fetcher(`/dictionary/${id}/`, {
+export default async function getWord(lang: string, word: string): Promise<Word> {
+  const res = await fetcher(`/dictionary/${lang}/${word}/`, {
     cache: 'no-store',
   });
   if ('created_at' in res && 'updated_at' in res) {

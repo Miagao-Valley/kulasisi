@@ -33,7 +33,7 @@ export interface WordRevision {
 
 export interface Definition {
   id: number;
-  word: number;
+  word: {word: string, lang: string};
   description: string;
   lang: string;
   contributor: string;
@@ -52,7 +52,6 @@ export interface Definition {
 export function isDefinition(obj: any): obj is Definition {
   return (
     typeof obj.id === 'number' &&
-    typeof obj.word === 'number' &&
     typeof obj.description === 'string' &&
     typeof obj.lang === 'string' &&
     typeof obj.contributor === 'string' &&

@@ -2,8 +2,8 @@ import React from 'react';
 import getWord from '@/lib/words/getWord';
 import getVotes from '@/lib/vote/getVotes';
 import getWordRevisions from '@/lib/words/getWordRevisions';
-import WordCard from '../WordCard';
-import DefinitionsSection from '../definitions/DefinitionsSection';
+import WordCard from '../../WordCard';
+import DefinitionsSection from '../../definitions/DefinitionsSection';
 import {
   Tabs,
   TabsContent,
@@ -13,16 +13,16 @@ import {
 
 interface Props {
   params: {
-    id: string;
+    lang: string;
+    word: string;
   };
   searchParams: { [key: string]: string | undefined };
 }
 
 export default async function PostPage({ params, searchParams }: Props) {
-  const id = Number(params.id);
-  const word = await getWord(id);
+  const word = await getWord(params.lang, params.word);
   const votes = await getVotes(word);
-  const revisions = await getWordRevisions(id);
+  const revisions = await getWordRevisions(params.lang, params.word);
 
   return (
     <>

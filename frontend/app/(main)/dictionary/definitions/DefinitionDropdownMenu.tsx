@@ -51,7 +51,7 @@ export default function DefinitionDropdownMenu({
             className="hover:cursor-pointer"
             onClick={() =>
               copyLinkToClipboard(
-                `/dictionary/${definition.word}?tab=definitions#${definition.id}`,
+                `/dictionary/${definition.word.lang}/${definition.word.word}?tab=definitions#${definition.id}`,
               )
             }
           >
@@ -84,7 +84,8 @@ export default function DefinitionDropdownMenu({
                     Delete
                   </AlertDialogTrigger>
                   <DeleteDefinitionModal
-                    wordId={definition.word}
+                    word={definition.word.word}
+                    wordLang={definition.word.lang}
                     id={definition.id}
                   />
                 </AlertDialog>

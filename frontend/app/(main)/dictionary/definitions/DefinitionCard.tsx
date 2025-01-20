@@ -60,7 +60,7 @@ export default function DefinitionCard({
         ) : (
           <>
             <Link
-              href={`/dictionary/${definition.word}?tab=definitions#${definition.id}`}
+              href={`/dictionary/${definition.word.lang}/${definition.word.word}?tab=definitions#${definition.id}`}
             >
               <p className="mb-2 whitespace-pre-line">
                 {definition.description}

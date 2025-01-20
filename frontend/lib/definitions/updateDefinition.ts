@@ -6,7 +6,8 @@ import fetcher, { FetchError } from '@/utils/fetcher';
 import getToken from '../tokens/getToken';
 
 export default async function updateDefinition(
-  wordId: number,
+  wordLang: string,
+  word: string,
   id: number,
   data: object,
 ) {
@@ -29,6 +30,6 @@ export default async function updateDefinition(
     return { error: fetchError.resBody };
   }
 
-  revalidatePath(`/dictionary/${wordId}`);
-  redirect(`/dictionary/${wordId}`);
+  revalidatePath(`/dictionary/${wordLang}/${word}`);
+  redirect(`/dictionary/${wordLang}/${word}`);
 }

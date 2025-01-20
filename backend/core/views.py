@@ -4,6 +4,7 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from phrases.models import Phrase, Translation
 from dictionary.models import Word, Definition
+from languages.models import Language
 from .serializers import VoteSerializer
 
 
@@ -16,19 +17,15 @@ class ListCreateVoteView(generics.ListCreateAPIView):
         view_kwargs = self.kwargs
 
         if "phrase_pk" in view_kwargs:
-            target_model = Phrase
-            object_id = view_kwargs["phrase_pk"]
+            target_object = get_object_or_404(Phrase, id=view_kwargs["phrase_pk"])
         elif "translation_pk" in view_kwargs:
-            target_model = Translation
-            object_id = view_kwargs["translation_pk"]
-        elif "word_pk" in view_kwargs:
-            target_model = Word
-            object_id = view_kwargs["word_pk"]
+            target_object = get_object_or_404(Translation, id=view_kwargs["translation_pk"])
+        elif "word" in view_kwargs:
+            lang = get_object_or_404(Language, code=view_kwargs["lang"])
+            target_object = get_object_or_404(Word, lang=lang, word=view_kwargs["word"])
         elif "definition_pk" in view_kwargs:
-            target_model = Definition
-            object_id = view_kwargs["definition_pk"]
+            target_object = get_object_or_404(Definition, id=view_kwargs["definition_pk"])
         else:
             raise ValueError("Invalid target for votes.")
 
-        target_object = get_object_or_404(target_model, id=object_id)
         return target_object.votes.all()

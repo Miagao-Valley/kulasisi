@@ -14,10 +14,11 @@ import {
 } from '@/components/ui/alert-dialog';
 
 interface Props {
-  id: number;
+  lang: string,
+  word: string,
 }
 
-export default function DeleteWordModal({ id }: Props) {
+export default function DeleteWordModal({ lang, word }: Props) {
   const [isLoading, setIsLoading] = useState(false);
 
   return (
@@ -37,7 +38,7 @@ export default function DeleteWordModal({ id }: Props) {
             e.preventDefault();
             setIsLoading(true);
             try {
-              await deleteWord(id);
+              await deleteWord(lang, word);
               toast.success('Entry deleted');
             } catch (error) {
               console.error(error);

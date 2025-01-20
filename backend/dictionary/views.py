@@ -8,9 +8,11 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 
 from .models import Word, Definition, PartOfSpeech
+from languages.models import Language
 from .serializers import (
     WordSerializer,
     WordHistorySerializer,
+    CreateDefinitionSerializer,
     DefinitionSerializer,
     DefinitionHistorySerializer,
     PartOfSpeechSerializer,
@@ -53,10 +55,15 @@ class ListCreateWordView(generics.ListCreateAPIView):
 
 
 class RetrieveUpdateDestroyWordView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Word.objects.all()
     serializer_class = WordSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
-    lookup_url_kwarg = "word_pk"
+    lookup_field = "word"
+
+    def get_object(self):
+        lang = get_object_or_404(Language, code=self.kwargs.get("lang"))
+        word = get_object_or_404(Word, lang=lang, word=self.kwargs.get("word"))
+        return word
+
 
 
 class ListWordHistoryView(generics.ListAPIView):
@@ -64,16 +71,16 @@ class ListWordHistoryView(generics.ListAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get_queryset(self):
-        word = get_object_or_404(Word, id=self.kwargs.get("word_pk"))
+        lang = get_object_or_404(Language, code=self.kwargs.get("lang"))
+        word = get_object_or_404(Word, lang=lang, word=self.kwargs.get("word"))
         return word.history.all()
-
 
 class ListCreateDefinitionView(generics.ListCreateAPIView):
     queryset = Definition.objects.all()
     serializer_class = DefinitionSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ["word", "lang__code", "contributor__username", "pos__abbr"]
+    filterset_fields = ["word__word", "word__lang__code", "lang__code", "contributor__username", "pos__abbr"]
     search_fields = ["description"]
     ordering_fields = [
         "description",
@@ -104,10 +111,14 @@ class ListCreateDefinitionView(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         if serializer.is_valid():
-            word = get_object_or_404(Word, id=self.request.data.get("word"))
-            serializer.save(word=word, contributor=self.request.user)
+            serializer.save(contributor=self.request.user)
         else:
             print(serializer.errors)
+
+    def get_serializer_class(self):
+        if self.request.method == 'POST':
+            return CreateDefinitionSerializer
+        return DefinitionSerializer
 
 
 class RetrieveUpdateDestroyDefinitionView(generics.RetrieveUpdateDestroyAPIView):

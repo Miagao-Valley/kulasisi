@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache';
 import fetcher, { FetchError } from '@/utils/fetcher';
 import getToken from '../tokens/getToken';
 
-export default async function addDefinition(wordId: number, data: object) {
+export default async function addDefinition(wordLang: string, word: string, data: object) {
   let res = null;
   try {
     res = await fetcher(
@@ -24,6 +24,6 @@ export default async function addDefinition(wordId: number, data: object) {
     return { error: fetchError.resBody };
   }
 
-  revalidatePath(`/dictionary/${wordId}/`);
+  revalidatePath(`/dictionary/${wordLang}/${word}/`);
   return res;
 }

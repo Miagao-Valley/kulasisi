@@ -43,7 +43,7 @@ export default async function WordsList({
           <>
             {words.results.map(async (word) => {
               const votes = await getVotes(word);
-              const revisions = await getWordRevisions(word.id);
+              const revisions = await getWordRevisions(word.lang, word.word);
               return (
                 <li key={word.id}>
                   <Separator className="my-2" />

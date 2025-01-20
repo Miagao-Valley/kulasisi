@@ -48,7 +48,7 @@ export default function AddWordForm({ className = '' }: Props) {
     if (res?.error) {
       setFormErrors(res.error, form.setError);
     } else {
-      router.push(`/dictionary/${res.id}/`);
+      router.push(`/dictionary/${res.lang}/${res.word}/`);
       toast.success('Posted');
     }
     return res;

@@ -54,7 +54,7 @@ export default function WordCard({
           <UpdateWordForm word={word} setIsEditing={setIsEditing} />
         ) : (
           <>
-            <Link href={`/dictionary/${word.id}/`}>
+            <Link href={`/dictionary/${word.lang}/${word.word}/`}>
               <p className="mb-2 text-xl font-bold">{word.word}</p>
             </Link>
             <div className="flex gap-0 items-center">

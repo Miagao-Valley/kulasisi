@@ -3,9 +3,10 @@ import { PaginationDetails } from '@/types/core';
 import { WordRevision } from '@/types/dictionary';
 
 export default async function getWordRevisions(
-  id: number,
+  lang: string,
+  word: string,
 ): Promise<PaginationDetails & { results: WordRevision[] }> {
-  const res = await fetcher(`/dictionary/${id}/history/`, {
+  const res = await fetcher(`/dictionary/${lang}/${word}/history/`, {
     cache: 'no-store',
   });
   for (const entry of res.results) {

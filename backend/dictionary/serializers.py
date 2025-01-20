@@ -3,7 +3,7 @@ from rest_framework import serializers
 from .models import Word, Definition, PartOfSpeech
 from users.models import User
 from languages.models import Language
-
+from core.serializers import DynamicFieldsSerializer
 
 class PartOfSpeechSerializer(serializers.ModelSerializer):
     class Meta:
@@ -20,7 +20,7 @@ class PartOfSpeechSerializer(serializers.ModelSerializer):
         return super().update(instance, validated_data)
 
 
-class WordSerializer(serializers.ModelSerializer):
+class WordSerializer(DynamicFieldsSerializer):
     word = serializers.CharField(max_length=64, required=False)
     lang = serializers.SlugRelatedField(
         queryset=Language.objects.all(), slug_field="code", required=False
@@ -57,6 +57,7 @@ class WordSerializer(serializers.ModelSerializer):
         return obj.contributor.get_reputation()
 
     def update(self, instance, validated_data):
+        validated_data.pop("word", None)
         validated_data.pop("lang", None)
         return super().update(instance, validated_data)
 
@@ -72,8 +73,8 @@ class WordHistorySerializer(serializers.ModelSerializer):
 
 
 class DefinitionSerializer(serializers.ModelSerializer):
-    word = serializers.PrimaryKeyRelatedField(
-        queryset=Word.objects.all(), required=False
+    word = WordSerializer(
+        required=False, fields=["word", "lang"]
     )
     lang = serializers.SlugRelatedField(
         queryset=Language.objects.all(), slug_field="code", required=False
@@ -127,6 +128,10 @@ class DefinitionSerializer(serializers.ModelSerializer):
         validated_data.pop("lang", None)
         validated_data.pop("word", None)
         return super().update(instance, validated_data)
+
+
+class CreateDefinitionSerializer(DefinitionSerializer):
+    word = serializers.PrimaryKeyRelatedField(queryset=Word.objects.all())
 
 
 class DefinitionHistorySerializer(serializers.ModelSerializer):

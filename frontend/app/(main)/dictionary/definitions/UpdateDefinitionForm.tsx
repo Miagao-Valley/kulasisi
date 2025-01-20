@@ -46,7 +46,7 @@ export default function UpdateDefinitionForm({
   const onSubmit: SubmitHandler<DefinitionInputs> = async (
     data: DefinitionInputs,
   ) => {
-    const res = await updateDefinition(definition.word, definition.id, data);
+    const res = await updateDefinition(definition.word.lang, definition.word.word, definition.id, data);
     if (res?.error) {
       setFormErrors(res.error, form.setError);
     } else {

@@ -50,7 +50,7 @@ export default function WordDropdownMenu({
         <DropdownMenuGroup>
           <DropdownMenuItem
             className="hover:cursor-pointer"
-            onClick={() => copyLinkToClipboard(`/dictionary/${word.id}/`)}
+            onClick={() => copyLinkToClipboard(`/dictionary/${word.lang}/${word.word}/`)}
           >
             Copy link
           </DropdownMenuItem>
@@ -80,7 +80,7 @@ export default function WordDropdownMenu({
                   <AlertDialogTrigger className="w-full text-left">
                     Delete
                   </AlertDialogTrigger>
-                  <DeleteWordModal id={word.id} />
+                  <DeleteWordModal lang={word.lang} word={word.word} />
                 </AlertDialog>
               </DropdownMenuItem>
             </>

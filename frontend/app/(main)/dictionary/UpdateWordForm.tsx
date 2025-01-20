@@ -9,18 +9,14 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import setFormErrors from '@/utils/setFormErrors';
 import {
   Form,
-  FormControl,
-  FormField,
-  FormItem,
   FormMessage,
 } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { LoadingButton } from '@/components/ui/loading-button';
 import SourceForm from '@/components/SourceForm';
+import { Input } from '@/components/ui/input';
 
 export interface WordInputs {
-  word: string;
   source_title: string;
   source_link: string;
 }
@@ -38,7 +34,7 @@ export default function UpdateWordForm({
 }: Props) {
   const form = useForm<WordInputs>();
   const onSubmit: SubmitHandler<WordInputs> = async (data: WordInputs) => {
-    const res = await updateWord(word.id, data);
+    const res = await updateWord(word.lang, word.word, data);
     if (res?.error) {
       setFormErrors(res.error, form.setError);
     } else {
@@ -58,27 +54,15 @@ export default function UpdateWordForm({
           {form.formState.errors.root?.serverError.message}
         </FormMessage>
 
-        <FormField
-          control={form.control}
-          name="word"
-          defaultValue={word.word}
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <Input
-                  type="text"
-                  className="p-0 !text-xl font-bold borderless-input bg-transparent"
-                  placeholder="Enter updated word"
-                  autoFocus
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+        <Input
+          type="text"
+          className="p-0 !text-xl font-bold borderless-input bg-transparent"
+          placeholder={word.word}
+          disabled
         />
 
         <div className="flex gap-0 items-center">
+
           <SourceForm
             form={form}
             defaultSourceTitle={word.source_title}

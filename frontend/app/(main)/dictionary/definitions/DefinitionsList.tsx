@@ -10,7 +10,8 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Separator } from '@/components/ui/separator';
 
 interface Props {
-  wordId?: number;
+  wordLang?: string;
+  word?: string;
   searchTerm?: string;
   sortOption?: string;
   isDescending?: boolean;
@@ -20,7 +21,8 @@ interface Props {
 }
 
 export default async function DefinitionsList({
-  wordId,
+  wordLang,
+  word,
   searchTerm = '',
   sortOption = 'content',
   filters = {},
@@ -39,7 +41,8 @@ export default async function DefinitionsList({
       limit: limit,
       offset: limit * (page - 1),
     },
-    wordId,
+    wordLang || '',
+    word || '',
   );
 
   return (

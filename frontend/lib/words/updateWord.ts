@@ -4,10 +4,10 @@ import { revalidatePath } from 'next/cache';
 import fetcher, { FetchError } from '@/utils/fetcher';
 import getToken from '../tokens/getToken';
 
-export default async function updateWord(id: number, data: object) {
+export default async function updateWord(lang: string, word: string, data: object) {
   try {
     const promise = fetcher(
-      `/dictionary/${id}/`,
+      `/dictionary/${lang}/${word}/`,
       {
         method: 'PUT',
         headers: {
@@ -24,6 +24,6 @@ export default async function updateWord(id: number, data: object) {
     return { error: fetchError.resBody };
   }
 
-  revalidatePath(`dictionary/${id}`);
+  revalidatePath(`dictionary/${lang}/${word}`);
   return null;
 }

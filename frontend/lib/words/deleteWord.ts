@@ -5,9 +5,9 @@ import fetcher from '@/utils/fetcher';
 import { redirect } from 'next/navigation';
 import getToken from '../tokens/getToken';
 
-export default async function deleteWord(id: number) {
+export default async function deleteWord(lang: string, word: string) {
   await fetcher(
-    `/dictionary/${id}/`,
+    `/dictionary/${lang}/${word}/`,
     {
       method: 'DELETE',
     },

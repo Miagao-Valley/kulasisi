@@ -59,7 +59,8 @@ export default async function DefinitionsSection({
   return (
     <>
       <AddDefinitionForm
-        wordId={word.id}
+        wordLang={word.lang}
+        word={word.word}
         originalLang={word.lang}
         className="py-2 mb-4 border-t border-b"
       />
@@ -72,7 +73,8 @@ export default async function DefinitionsSection({
       />
       <Suspense fallback={<DefinitionsListSkeleton />}>
         <DefinitionsList
-          wordId={word.id}
+          wordLang={word.lang}
+          word={word.word}
           searchTerm={searchTerm}
           sortOption={sortOption}
           filters={filters}

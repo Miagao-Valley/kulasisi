@@ -4,10 +4,11 @@ import { Definition } from '@/types/dictionary';
 
 export default async function getDefinitions(
   queryParams: Record<string, any> = {},
-  wordId?: number,
+  wordLang: string,
+  word: string,
 ): Promise<PaginationDetails & { results: Definition[] }> {
   const queryString = new URLSearchParams(queryParams).toString();
-  const url = `/dictionary/definitions/?word=${wordId || ''}&${queryString}`;
+  const url = `/dictionary/definitions/?word__word=${word || ''}&word__lang__code=${wordLang || ''}&${queryString}`;
 
   const res = await fetcher(url, {
     cache: 'no-store',
