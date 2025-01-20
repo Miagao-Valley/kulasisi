@@ -1,12 +1,12 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import '../globals.css';
-import { AuthProvider } from '../../components/AuthProvider';
+import { AuthProvider } from '../../components/providers/AuthProvider';
 import { Toaster } from '@/components/ui/sonner';
 import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/app-sidebar/AppSidebar';
-import AppHeader from '@/components/AppHeader';
-import { ThemeProvider } from '@/components/ThemeProvider';
+import AppHeader from '@/components/app-header/AppHeader';
+import { ThemeProvider } from '@/components/providers/ThemeProvider';
 import { Bricolage_Grotesque } from 'next/font/google';
 
 export const font = Bricolage_Grotesque({ subsets: ['latin'] });

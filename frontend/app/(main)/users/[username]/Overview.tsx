@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { useAuth } from '@/components/AuthProvider';
+import { useAuth } from '@/components/providers/AuthProvider';
 import { User } from '@/types/users';
 import { cn } from '@/lib/utils';
 import { badgeVariants } from '@/components/ui/badge';

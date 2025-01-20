@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import { useAuth } from '@/components/AuthProvider';
+import { useAuth } from '@/components/providers/AuthProvider';
 import addPhrase from '@/lib/phrases/addPhrase';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
@@ -17,10 +17,10 @@ import {
 } from '@/components/ui/form';
 import { AutosizeTextarea } from '@/components/ui/autoresize-textarea';
 import { LoadingButton } from '@/components/ui/loading-button';
-import LangSelect from '@/components/LangSelect';
-import UsageNoteForm from '@/components/UsageNoteForm';
-import SourceForm from '@/components/SourceForm';
-import CategorySelect from '@/components/CategorySelect';
+import LangSelect from '@/components/forms/LangSelect';
+import UsageNoteForm from '@/components/forms/UsageNoteForm';
+import SourceForm from '@/components/forms/SourceForm';
+import CategoriesSelect from '@/components/forms/CategoriesSelect';
 
 export interface PhraseInputs {
   content: string;
@@ -115,7 +115,7 @@ export default function AddPhraseForm({ className = '' }: Props) {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <CategorySelect
+                    <CategoriesSelect
                       selectedCategories={field.value}
                       setSelectedCategories={(value) =>
                         form.setValue('categories', value)

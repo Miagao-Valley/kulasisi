@@ -5,9 +5,9 @@ import Link from 'next/link';
 import { Vote } from '@/types/core';
 import { Word, WordRevision } from '@/types/dictionary';
 import { cn } from '@/lib/utils';
-import EntryHeader from '@/components/EntryHeader';
-import EntryFooter from '@/components/EntryFooter';
-import SourceButton from '@/components/SourceButton';
+import EntryHeader from '@/components/entry/EntryHeader';
+import EntryFooter from '@/components/entry/EntryFooter';
+import Source from '@/components/hover-cards/Source';
 import WordDropdownMenu from './WordDropdownMenu';
 import UpdateWordForm from './UpdateWordForm';
 import {
@@ -59,7 +59,7 @@ export default function WordCard({
             </Link>
             <div className="flex gap-0 items-center">
               {(word.source_title || word.source_link) && (
-                <SourceButton
+                <Source
                   source_title={word.source_title}
                   source_link={word.source_link}
                 />

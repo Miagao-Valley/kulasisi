@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useAuth } from '@/components/AuthProvider';
+import { useAuth } from '@/components/providers/AuthProvider';
 import { Definition, DefinitionRevision } from '@/types/dictionary';
 import copyLinkToClipboard from '@/utils/copyLinkToClipboard';
 import DefinitionRevisionsList from './DefinitionRevisionsList';

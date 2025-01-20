@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useAuth } from '@/components/AuthProvider';
+import { useAuth } from '@/components/providers/AuthProvider';
 import { Word, WordRevision } from '@/types/dictionary';
 import copyLinkToClipboard from '@/utils/copyLinkToClipboard';
 import WordRevisionsList from './WordRevisionsList';

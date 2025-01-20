@@ -4,8 +4,8 @@ import getTranslations from '@/lib/translations/getTranslations';
 import getTranslationRevisions from '@/lib/translations/getTranslationRevisions';
 import { cn } from '@/lib/utils';
 import TranslationCard from './TranslationCard';
-import ListPagination from '@/components/ListPagination';
-import { Filter } from '@/components/FilterMenu';
+import ListPagination from '@/components/pagination/ListPagination';
+import { Filter } from '@/components/filter/FilterMenu';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Separator } from '@/components/ui/separator';
 

@@ -2,10 +2,10 @@ import React from 'react';
 import type { Metadata } from 'next';
 import { font } from '../(main)/layout';
 import '../globals.css';
-import { AuthProvider } from '../../components/AuthProvider';
+import { AuthProvider } from '../../components/providers/AuthProvider';
 import { Toaster } from '@/components/ui/sonner';
-import { ThemeProvider } from '@/components/ThemeProvider';
-import { ThemeToggle } from '@/components/ThemeToggle';
+import { ThemeProvider } from '@/components/providers/ThemeProvider';
+import { ThemeToggle } from '@/components/app-header/ThemeToggle';
 import Link from 'next/link';
 import Wordmark from '@/components/brand/wordmark';
 

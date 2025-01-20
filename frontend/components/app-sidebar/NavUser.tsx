@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
-import { useAuth } from '../AuthProvider';
+import { useAuth } from '../providers/AuthProvider';
 import { User } from '@/types/users';
 import getUser from '@/lib/users/getUser';
 import Link from 'next/link';

@@ -5,10 +5,10 @@ import Link from 'next/link';
 import { Vote } from '@/types/core';
 import { Definition, DefinitionRevision } from '@/types/dictionary';
 import { cn } from '@/lib/utils';
-import EntryHeader from '@/components/EntryHeader';
-import EntryFooter from '@/components/EntryFooter';
-import SourceButton from '@/components/SourceButton';
-import UsageNote from '@/components/UsageNote';
+import EntryHeader from '@/components/entry/EntryHeader';
+import EntryFooter from '@/components/entry/EntryFooter';
+import Source from '@/components/hover-cards/Source';
+import UsageNote from '@/components/hover-cards/UsageNote';
 import DefinitionDropdownMenu from './DefinitionDropdownMenu';
 import UpdateDefinitionForm from './UpdateDefinitionForm';
 import {
@@ -74,7 +74,7 @@ export default function DefinitionCard({
                   </Badge>
                 }
                 {(definition.source_title || definition.source_link) && (
-                  <SourceButton
+                  <Source
                     source_title={definition.source_title}
                     source_link={definition.source_link}
                   />

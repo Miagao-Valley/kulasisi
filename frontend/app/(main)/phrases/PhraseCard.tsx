@@ -5,10 +5,10 @@ import Link from 'next/link';
 import { Vote } from '@/types/core';
 import { Phrase, PhraseRevision } from '@/types/phrases';
 import { cn } from '@/lib/utils';
-import EntryHeader from '@/components/EntryHeader';
-import EntryFooter from '@/components/EntryFooter';
-import SourceButton from '@/components/SourceButton';
-import UsageNote from '@/components/UsageNote';
+import EntryHeader from '@/components/entry/EntryHeader';
+import EntryFooter from '@/components/entry/EntryFooter';
+import Source from '@/components/hover-cards/Source';
+import UsageNote from '@/components/hover-cards/UsageNote';
 import PhraseDropdownMenu from './PhraseDropdownMenu';
 import UpdatePhraseForm from './UpdatePhraseForm';
 import {
@@ -68,7 +68,7 @@ export default function PhraseCard({
                 ))}
               </div>
               {(phrase.source_title || phrase.source_link) && (
-                <SourceButton
+                <Source
                   source_title={phrase.source_title}
                   source_link={phrase.source_link}
                 />

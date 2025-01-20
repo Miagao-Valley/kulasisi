@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useAuth } from '../AuthProvider';
+import { useAuth } from '../providers/AuthProvider';
 import { User } from '@/types/users';
 import getUser from '@/lib/users/getUser';
 import {
@@ -19,7 +19,7 @@ import {
   SidebarMenuSubItem,
 } from '@/components/ui/sidebar';
 import { Skeleton } from '../ui/skeleton';
-import LangHoverCard from '../LangHoverCard';
+import LangHoverCard from '../hover-cards/LangHoverCard';
 import { ChevronRight, LanguagesIcon } from 'lucide-react';
 
 export function NavLang() {

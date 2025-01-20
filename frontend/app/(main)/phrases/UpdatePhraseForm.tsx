@@ -17,9 +17,9 @@ import {
 import { AutosizeTextarea } from '@/components/ui/autoresize-textarea';
 import { Button } from '@/components/ui/button';
 import { LoadingButton } from '@/components/ui/loading-button';
-import UsageNoteForm from '@/components/UsageNoteForm';
-import SourceForm from '@/components/SourceForm';
-import CategorySelect from '@/components/CategorySelect';
+import UsageNoteForm from '@/components/forms/UsageNoteForm';
+import SourceForm from '@/components/forms/SourceForm';
+import CategoriesSelect from '@/components/forms/CategoriesSelect';
 
 export interface PhraseInputs {
   content: string;
@@ -98,7 +98,7 @@ export default function UpdatePhraseForm({
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <CategorySelect
+                    <CategoriesSelect
                       selectedCategories={field.value}
                       setSelectedCategories={(value) =>
                         form.setValue('categories', value)

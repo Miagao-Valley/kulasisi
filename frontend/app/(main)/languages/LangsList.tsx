@@ -1,7 +1,7 @@
 import React from 'react';
 import getLangs from '@/lib/langs/getLangs';
 import { cn } from '@/lib/utils';
-import LangHoverCard from '@/components/LangHoverCard';
+import LangHoverCard from '@/components/hover-cards/LangHoverCard';
 import { Skeleton } from '@/components/ui/skeleton';
 
 interface Props {

@@ -5,9 +5,9 @@ import naturalTime from '@/utils/naturalTime';
 import { Phrase, Translation } from '@/types/phrases';
 import { Word, Definition } from '@/types/dictionary';
 import { cn } from '@/lib/utils';
-import LangHoverCard from './LangHoverCard';
-import UserHoverCard from './UserHoverCard';
-import { Skeleton } from './ui/skeleton';
+import LangHoverCard from '../hover-cards/LangHoverCard';
+import UserHoverCard from '../hover-cards/UserHoverCard';
+import { Skeleton } from '../ui/skeleton';
 
 interface Props {
   entry: Phrase | Translation | Word | Definition;

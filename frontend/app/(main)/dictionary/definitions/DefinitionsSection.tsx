@@ -2,11 +2,11 @@ import React, { Suspense } from 'react';
 import { Word } from '@/types/dictionary';
 import AddDefinitionForm from './AddDefinitionForm';
 import DefinitionsList, { DefinitionsListSkeleton } from './DefinitionsList';
-import { SortOption } from '@/components/SortDropdown';
-import { FilterOption } from '@/components/FilterMenu';
+import { SortOption } from '@/components/filter/SortDropdown';
+import { FilterOption } from '@/components/filter/FilterMenu';
 import getLangs from '@/lib/langs/getLangs';
 import getPartsOfSpeech from '@/lib/definitions/getPartsOfSpeech';
-import FilterControls from '@/components/FilterControls';
+import FilterControls from '@/components/filter/FilterControls';
 
 interface Props {
   word: Word;

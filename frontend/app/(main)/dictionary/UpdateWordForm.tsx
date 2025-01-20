@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
 import { LoadingButton } from '@/components/ui/loading-button';
-import SourceForm from '@/components/SourceForm';
+import SourceForm from '@/components/forms/SourceForm';
 import { Input } from '@/components/ui/input';
 
 export interface WordInputs {

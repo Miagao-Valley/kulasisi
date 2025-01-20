@@ -3,9 +3,9 @@ import { Phrase } from '@/types/phrases';
 import getLangs from '@/lib/langs/getLangs';
 import AddTranslationForm from './AddTranslationForm';
 import TranslationsList, { TranslationsListSkeleton } from './TranslationsList';
-import { SortOption } from '@/components/SortDropdown';
-import { FilterOption } from '@/components/FilterMenu';
-import FilterControls from '@/components/FilterControls';
+import { SortOption } from '@/components/filter/SortDropdown';
+import { FilterOption } from '@/components/filter/FilterMenu';
+import FilterControls from '@/components/filter/FilterControls';
 
 interface Props {
   phrase: Phrase;

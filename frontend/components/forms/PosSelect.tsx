@@ -19,7 +19,7 @@ import {
   CommandList,
 } from '@/components/ui/command';
 import { ChevronsUpDown, Check } from 'lucide-react';
-import { Badge } from './ui/badge';
+import { Badge } from '../ui/badge';
 
 interface Props {
   selectedPos: string;

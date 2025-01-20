@@ -17,7 +17,7 @@ import {
 import { AutosizeTextarea } from '@/components/ui/autoresize-textarea';
 import { Button } from '@/components/ui/button';
 import { LoadingButton } from '@/components/ui/loading-button';
-import SourceForm from '@/components/SourceForm';
+import SourceForm from '@/components/forms/SourceForm';
 
 export interface TranslationInputs {
   content: string;

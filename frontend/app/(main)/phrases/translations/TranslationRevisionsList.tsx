@@ -2,7 +2,7 @@ import React from 'react';
 import naturalTime from '@/utils/naturalTime';
 import { TranslationRevision } from '@/types/phrases';
 import DiffText from '@/components/DiffText';
-import UserHoverCard from '@/components/UserHoverCard';
+import UserHoverCard from '@/components/hover-cards/UserHoverCard';
 import {
   Accordion,
   AccordionItem,

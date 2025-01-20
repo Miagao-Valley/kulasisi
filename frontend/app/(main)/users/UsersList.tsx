@@ -2,8 +2,8 @@ import React from 'react';
 import Link from 'next/link';
 import getUsers from '@/lib/users/getUsers';
 import { cn } from '@/lib/utils';
-import ListPagination from '@/components/ListPagination';
-import UserHoverCard from '@/components/UserHoverCard';
+import ListPagination from '@/components/pagination/ListPagination';
+import UserHoverCard from '@/components/hover-cards/UserHoverCard';
 import { Skeleton } from '@/components/ui/skeleton';
 
 interface Props {

@@ -5,14 +5,14 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { Button } from './ui/button';
+import { Button } from '../ui/button';
 
 interface Props {
   source_title?: string;
   source_link?: string;
 }
 
-export default function SourceButton({
+export default function Source({
   source_title = '',
   source_link = '',
 }: Props) {

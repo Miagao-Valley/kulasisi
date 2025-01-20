@@ -1,9 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import { SidebarTrigger, useSidebar } from './ui/sidebar';
+import { SidebarTrigger, useSidebar } from '../ui/sidebar';
 import { ThemeToggle } from './ThemeToggle';
-import Wordmark from './brand/wordmark';
+import Wordmark from '../brand/wordmark';
 
 export default function AppHeader() {
   const { isMobile } = useSidebar();

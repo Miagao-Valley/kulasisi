@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import getCategories from '@/lib/phrases/getCategories';
 import { cn } from '@/lib/utils';
-import ListSelector from './ui/list-selector';
+import ListSelector from '../ui/list-selector';
 
 interface Props {
   selectedCategories: string[];
@@ -11,7 +11,7 @@ interface Props {
   className?: string;
 }
 
-export default function CategorySelect({
+export default function CategoriesSelect({
   selectedCategories,
   setSelectedCategories,
   className = '',

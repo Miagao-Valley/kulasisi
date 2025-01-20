@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import getWords from '@/lib/words/getWords';
 import { cn } from '@/lib/utils';
-import ListSelector from './ui/list-selector';
+import ListSelector from '../ui/list-selector';
 
 interface Props {
   selectedWords: string[];

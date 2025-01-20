@@ -8,7 +8,7 @@ import {
   FormItem,
   FormMessage,
 } from '@/components/ui/form';
-import LanguageProficienciesForm from '@/components/LangProficienciesForm';
+import LanguageProficienciesForm from '@/components/forms/LangProficienciesForm';
 import { H3 } from '@/components/ui/heading-with-anchor';
 
 interface Props {

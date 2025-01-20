@@ -4,8 +4,8 @@ import getWordRevisions from '@/lib/words/getWordRevisions';
 import getVotes from '@/lib/vote/getVotes';
 import { cn } from '@/lib/utils';
 import WordCard from './WordCard';
-import ListPagination from '@/components/ListPagination';
-import { Filter } from '@/components/FilterMenu';
+import ListPagination from '@/components/pagination/ListPagination';
+import { Filter } from '@/components/filter/FilterMenu';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Separator } from '@/components/ui/separator';
 

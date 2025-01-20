@@ -4,8 +4,8 @@ import getPhraseRevisions from '@/lib/phrases/getPhraseRevisions';
 import getVotes from '@/lib/vote/getVotes';
 import { cn } from '@/lib/utils';
 import PhraseCard from './PhraseCard';
-import ListPagination from '@/components/ListPagination';
-import { Filter } from '@/components/FilterMenu';
+import ListPagination from '@/components/pagination/ListPagination';
+import { Filter } from '@/components/filter/FilterMenu';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Separator } from '@/components/ui/separator';
 

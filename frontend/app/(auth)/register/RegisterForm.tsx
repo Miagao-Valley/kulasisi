@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { useAuth } from '@/components/AuthProvider';
+import { useAuth } from '@/components/providers/AuthProvider';
 import Link from 'next/link';
 import { LangProficiencyLevel } from '@/types/languages';
 import register from '@/lib/auth/register';
@@ -10,7 +10,7 @@ import Contact from './steps/Contact';
 import Personal from './steps/Personal';
 import Experience from './steps/Experience';
 import NavButtons from './NavButtons';
-import StepperIndicator from '@/components/StepperIndicator';
+import StepperIndicator from '@/components/pagination/StepperIndicator';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Form, FormMessage } from '@/components/ui/form';
 import setFormErrors from '@/utils/setFormErrors';

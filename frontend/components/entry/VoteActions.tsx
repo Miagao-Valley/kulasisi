@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import { useAuth } from './AuthProvider';
+import { useAuth } from '../providers/AuthProvider';
 import { Entry, Vote } from '@/types/core';
 import vote from '@/lib/vote/vote';
 import { toast } from 'sonner';

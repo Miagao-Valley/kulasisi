@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import { useAuth } from '@/components/AuthProvider';
+import { useAuth } from '@/components/providers/AuthProvider';
 import addDefinition from '@/lib/definitions/addDefinition';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
@@ -17,11 +17,11 @@ import {
 } from '@/components/ui/form';
 import { AutosizeTextarea } from '@/components/ui/autoresize-textarea';
 import { LoadingButton } from '@/components/ui/loading-button';
-import LangSelect from '@/components/LangSelect';
-import PosSelect from '@/components/PosSelect';
-import UsageNoteForm from '@/components/UsageNoteForm';
-import SourceForm from '@/components/SourceForm';
-import WordsSelect from '@/components/WordsSelect';
+import LangSelect from '@/components/forms/LangSelect';
+import PosSelect from '@/components/forms/PosSelect';
+import UsageNoteForm from '@/components/forms/UsageNoteForm';
+import SourceForm from '@/components/forms/SourceForm';
+import WordsSelect from '@/components/forms/WordsSelect';
 import getWord from '@/lib/words/getWord';
 
 export interface TranslationInputs {

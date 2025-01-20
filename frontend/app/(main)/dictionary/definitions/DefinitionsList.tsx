@@ -4,8 +4,8 @@ import getDefinitions from '@/lib/definitions/getDefinitions';
 import getDefinitionRevisions from '@/lib/definitions/getDefinitionRevisions';
 import { cn } from '@/lib/utils';
 import DefinitionCard from './DefinitionCard';
-import ListPagination from '@/components/ListPagination';
-import { Filter } from '@/components/FilterMenu';
+import ListPagination from '@/components/pagination/ListPagination';
+import { Filter } from '@/components/filter/FilterMenu';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Separator } from '@/components/ui/separator';
 

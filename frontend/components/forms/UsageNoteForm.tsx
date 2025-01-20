@@ -16,7 +16,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { Textarea } from './ui/textarea';
+import { Textarea } from '../ui/textarea';
 import { CircleHelp } from 'lucide-react';
 
 export interface Inputs {

@@ -19,7 +19,7 @@ import {
   CommandList,
 } from '@/components/ui/command';
 import { Filter, ChevronsUpDown, Check } from 'lucide-react';
-import { Label } from './ui/label';
+import { Label } from '../ui/label';
 
 export interface Filter {
   [key: string]: boolean | string;

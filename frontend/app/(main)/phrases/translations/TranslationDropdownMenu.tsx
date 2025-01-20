@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useAuth } from '@/components/AuthProvider';
+import { useAuth } from '@/components/providers/AuthProvider';
 import { Translation, TranslationRevision } from '@/types/phrases';
 import copyLinkToClipboard from '@/utils/copyLinkToClipboard';
 import TranslationRevisionsList from './TranslationRevisionsList';

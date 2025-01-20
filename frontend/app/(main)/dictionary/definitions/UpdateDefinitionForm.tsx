@@ -17,10 +17,10 @@ import {
 import { AutosizeTextarea } from '@/components/ui/autoresize-textarea';
 import { Button } from '@/components/ui/button';
 import { LoadingButton } from '@/components/ui/loading-button';
-import PosSelect from '@/components/PosSelect';
-import UsageNoteForm from '@/components/UsageNoteForm';
-import SourceForm from '@/components/SourceForm';
-import WordsSelect from '@/components/WordsSelect';
+import PosSelect from '@/components/forms/PosSelect';
+import UsageNoteForm from '@/components/forms/UsageNoteForm';
+import SourceForm from '@/components/forms/SourceForm';
+import WordsSelect from '@/components/forms/WordsSelect';
 
 export interface DefinitionInputs {
   description: string;

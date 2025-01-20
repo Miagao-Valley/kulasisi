@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '@/components/AuthProvider';
+import { useAuth } from '@/components/providers/AuthProvider';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import changePassword from '@/lib/users/changePassword';
 import setFormErrors from '@/utils/setFormErrors';

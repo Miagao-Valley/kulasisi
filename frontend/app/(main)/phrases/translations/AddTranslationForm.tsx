@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import { useAuth } from '@/components/AuthProvider';
+import { useAuth } from '@/components/providers/AuthProvider';
 import addTranslation from '@/lib/translations/addTranslation';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
@@ -17,8 +17,8 @@ import {
 } from '@/components/ui/form';
 import { AutosizeTextarea } from '@/components/ui/autoresize-textarea';
 import { LoadingButton } from '@/components/ui/loading-button';
-import LangSelect from '@/components/LangSelect';
-import SourceForm from '@/components/SourceForm';
+import LangSelect from '@/components/forms/LangSelect';
+import SourceForm from '@/components/forms/SourceForm';
 
 export interface TranslationInputs {
   phrase: number;

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { useAuth } from '@/components/AuthProvider';
+import { useAuth } from '@/components/providers/AuthProvider';
 import { User } from '@/types/users';
 import getUser from '@/lib/users/getUser';
 import Loading from '../loading';

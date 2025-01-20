@@ -5,9 +5,9 @@ import Link from 'next/link';
 import { Vote } from '@/types/core';
 import { Translation, TranslationRevision } from '@/types/phrases';
 import { cn } from '@/lib/utils';
-import EntryHeader from '@/components/EntryHeader';
-import EntryFooter from '@/components/EntryFooter';
-import SourceButton from '@/components/SourceButton';
+import EntryHeader from '@/components/entry/EntryHeader';
+import EntryFooter from '@/components/entry/EntryFooter';
+import Source from '@/components/hover-cards/Source';
 import TranslationDropdownMenu from './TranslationDropdownMenu';
 import UpdateTranslationForm from './UpdateTranslationForm';
 import {
@@ -65,7 +65,7 @@ export default function TranslationCard({
             </Link>
             <div className="flex gap-0 items-center">
               {(translation.source_title || translation.source_link) && (
-                <SourceButton
+                <Source
                   source_title={translation.source_title}
                   source_link={translation.source_link}
                 />

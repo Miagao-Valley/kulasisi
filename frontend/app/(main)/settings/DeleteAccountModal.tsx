@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { useAuth } from '@/components/AuthProvider';
+import { useAuth } from '@/components/providers/AuthProvider';
 import deleteUser from '@/lib/users/deleteUser';
 import setFormErrors from '@/utils/setFormErrors';
 import { Button } from '@/components/ui/button';

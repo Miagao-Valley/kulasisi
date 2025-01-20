@@ -6,7 +6,7 @@ import displayLangProficiency from '@/utils/displayLangProficiency';
 import getLangs from '@/lib/langs/getLangs';
 import MultipleSelector, { Option } from '@/components/ui/multiple-selector';
 import { Slider } from '@/components/ui/slider';
-import LangHoverCard from './LangHoverCard';
+import LangHoverCard from '../hover-cards/LangHoverCard';
 
 interface Props {
   selectedLangProficiencies: { lang: string; level: LangProficiencyLevel }[];

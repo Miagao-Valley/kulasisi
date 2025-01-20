@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useAuth } from '@/components/AuthProvider';
+import { useAuth } from '@/components/providers/AuthProvider';
 import { LangProficiencyLevel } from '@/types/languages';
 import { User } from '@/types/users';
 import updateUser from '@/lib/users/updateUser';
@@ -12,7 +12,7 @@ import {
   FormItem,
   FormMessage,
 } from '@/components/ui/form';
-import LangProficienciesForm from '@/components/LangProficienciesForm';
+import LangProficienciesForm from '@/components/forms/LangProficienciesForm';
 import { LoadingButton } from '@/components/ui/loading-button';
 import setFormErrors from '@/utils/setFormErrors';
 import { SubmitHandler, useForm } from 'react-hook-form';
