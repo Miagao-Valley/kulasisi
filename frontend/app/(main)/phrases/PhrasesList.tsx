@@ -32,6 +32,7 @@ export default async function PhrasesList({
     ordering: sortOption,
     lang__code: filters?.lang || '',
     contributor__username: filters?.contributor || '',
+    categories__name: filters?.category || '',
     limit: limit,
     offset: limit * (page - 1),
   });

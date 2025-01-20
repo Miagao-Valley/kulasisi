@@ -1,10 +1,12 @@
 import React, { Suspense } from 'react';
 import getLangs from '@/lib/langs/getLangs';
+import getCategories from '@/lib/phrases/getCategories';
 import AddPhraseForm from './AddPhraseForm';
 import PhrasesList, { PhrasesListSkeleton } from './PhrasesList';
 import { SortOption } from '@/components/filter/SortDropdown';
 import { FilterOption } from '@/components/filter/FilterMenu';
 import FilterControls from '@/components/filter/FilterControls';
+import CategoryCard from './CategoryCard';
 
 interface Props {
   searchParams: { [key: string]: string | undefined };
@@ -14,11 +16,13 @@ export default async function PhrasesPage({ searchParams }: Props) {
   const searchTerm = searchParams.q || '';
   const sortOption = searchParams.sort || '-vote_count';
   const lang = searchParams.lang || '';
+  const category = searchParams.category || '';
   const page = Number(searchParams.page || 1);
 
   const langs = await getLangs();
+  const categories = await getCategories();
 
-  const filters = { lang: lang };
+  const filters = { lang: lang, category: category };
 
   const sortingOptions: SortOption[] = [
     { label: 'Content', value: 'content' },
@@ -38,6 +42,15 @@ export default async function PhrasesPage({ searchParams }: Props) {
         value: code,
       })),
     },
+    {
+      label: 'Category',
+      name: 'category',
+      type: 'select',
+      options: categories.map(({ name }) => ({
+        label: name,
+        value: name,
+      })),
+    },
   ];
 
   return (
@@ -49,7 +62,11 @@ export default async function PhrasesPage({ searchParams }: Props) {
         sortingOptions={sortingOptions}
         filters={filters}
         filterOptions={filterOptions}
+        className="my-1"
       />
+      {filters.category &&
+        <CategoryCard name={category} className="my-2" />
+      }
       <Suspense fallback={<PhrasesListSkeleton />}>
         <PhrasesList
           searchTerm={searchTerm}

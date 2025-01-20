@@ -9,6 +9,7 @@ import EntryHeader from '@/components/entry/EntryHeader';
 import EntryFooter from '@/components/entry/EntryFooter';
 import Source from '@/components/hover-cards/Source';
 import UsageNote from '@/components/hover-cards/UsageNote';
+import CategoryHoverCard from '@/components/hover-cards/CategoryHoverCard';
 import PhraseDropdownMenu from './PhraseDropdownMenu';
 import UpdatePhraseForm from './UpdatePhraseForm';
 import {
@@ -17,7 +18,6 @@ import {
   CardFooter,
   CardHeader,
 } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 
 interface Props {
   phrase: Phrase;
@@ -62,9 +62,7 @@ export default function PhraseCard({
             <div className="flex gap-0 items-center">
               <div className="flex gap-1 items-center me-1">
                 {phrase.categories.map((category) => (
-                  <Badge variant="secondary" className="h-fit" key={category}>
-                    {category}
-                  </Badge>
+                  <CategoryHoverCard name={category} key={category} />
                 ))}
               </div>
               {(phrase.source_title || phrase.source_link) && (

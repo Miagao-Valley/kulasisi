@@ -22,7 +22,7 @@ class ListCreatePhraseView(generics.ListCreateAPIView):
     serializer_class = PhraseSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ["lang__code", "contributor__username"]
+    filterset_fields = ["lang__code", "contributor__username", "categories__name"]
     search_fields = ["content"]
     ordering_fields = [
         "content",

@@ -8,6 +8,7 @@ import {
 } from '@/components/ui/sidebar';
 import {
   BookAIcon,
+  HashIcon,
   MessageSquareQuoteIcon,
   TagsIcon,
   UsersRoundIcon,
@@ -21,8 +22,8 @@ const items = [
   },
   {
     title: 'Categories',
-    url: '#',
-    icon: TagsIcon,
+    url: '/phrases/categories/',
+    icon: HashIcon,
   },
   {
     title: 'Dictionary',
