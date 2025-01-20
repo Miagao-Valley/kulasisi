@@ -29,6 +29,7 @@ class WordSerializer(DynamicFieldsSerializer):
         queryset=User.objects.all(), slug_field="username", required=False
     )
     contributor_reputation = serializers.SerializerMethodField()
+    parts_of_speech = serializers.SerializerMethodField()
     vote_count = serializers.SerializerMethodField()
 
     class Meta:
@@ -39,6 +40,7 @@ class WordSerializer(DynamicFieldsSerializer):
             "lang",
             "contributor",
             "contributor_reputation",
+            "parts_of_speech",
             "source_title",
             "source_link",
             "created_at",
@@ -50,11 +52,14 @@ class WordSerializer(DynamicFieldsSerializer):
             "vote_count": {"read_only": True},
         }
 
-    def get_vote_count(self, obj):
-        return obj.votes.filter(value=1).count() - obj.votes.filter(value=-1).count()
-
     def get_contributor_reputation(self, obj):
         return obj.contributor.get_reputation()
+
+    def get_parts_of_speech(self, obj):
+        return [definition.pos.abbr for definition in obj.definitions.all() if definition.pos]
+
+    def get_vote_count(self, obj):
+        return obj.votes.filter(value=1).count() - obj.votes.filter(value=-1).count()
 
     def update(self, instance, validated_data):
         validated_data.pop("word", None)

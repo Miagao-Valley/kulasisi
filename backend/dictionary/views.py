@@ -24,7 +24,7 @@ class ListCreateWordView(generics.ListCreateAPIView):
     serializer_class = WordSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ["lang__code", "contributor__username"]
+    filterset_fields = ["lang__code", "contributor__username", "definitions__pos__abbr"]
     search_fields = ["word"]
     ordering_fields = ["word", "vote_count", "updated_at", "created_at"]
     ordering = ["-updated_at"]

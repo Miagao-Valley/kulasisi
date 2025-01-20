@@ -4,6 +4,7 @@ export interface Word {
   lang: string;
   contributor: string;
   contributor_reputation: number;
+  parts_of_speech: string[];
   source_title?: string;
   source_link?: string;
   created_at: Date;

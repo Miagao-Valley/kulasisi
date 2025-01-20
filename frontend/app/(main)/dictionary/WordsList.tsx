@@ -32,6 +32,7 @@ export default async function WordsList({
     ordering: sortOption,
     lang__code: filters?.lang || '',
     contributor__username: filters?.contributor || '',
+    definitions__pos__abbr: filters?.pos || '',
     limit: limit,
     offset: limit * (page - 1),
   });

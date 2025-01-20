@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils';
 import EntryHeader from '@/components/entry/EntryHeader';
 import EntryFooter from '@/components/entry/EntryFooter';
 import Source from '@/components/hover-cards/Source';
+import PosHoverCard from '@/components/hover-cards/PosHoverCard';
 import WordDropdownMenu from './WordDropdownMenu';
 import UpdateWordForm from './UpdateWordForm';
 import {
@@ -58,6 +59,11 @@ export default function WordCard({
               <p className="mb-2 text-xl font-bold">{word.word}</p>
             </Link>
             <div className="flex gap-0 items-center">
+              <div className="flex gap-1 items-center me-1">
+                {word.parts_of_speech.map((pos) => (
+                  <PosHoverCard abbr={pos} key={pos} />
+                ))}
+              </div>
               {(word.source_title || word.source_link) && (
                 <Source
                   source_title={word.source_title}

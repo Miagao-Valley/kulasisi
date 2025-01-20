@@ -32,7 +32,7 @@ const items = [
   },
   {
     title: 'Parts of Speech',
-    url: '#',
+    url: '/dictionary/parts-of-speech/',
     icon: TagsIcon,
   },
   {
