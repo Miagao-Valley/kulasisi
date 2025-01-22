@@ -9,6 +9,7 @@ import EntryHeader from '@/components/entry/EntryHeader';
 import EntryFooter from '@/components/entry/EntryFooter';
 import Source from '@/components/hover-cards/Source';
 import UsageNote from '@/components/hover-cards/UsageNote';
+import PosHoverCard from '@/components/hover-cards/PosHoverCard';
 import WordHoverCard from '@/components/hover-cards/WordHoverCard';
 import DefinitionDropdownMenu from './DefinitionDropdownMenu';
 import UpdateDefinitionForm from './UpdateDefinitionForm';
@@ -18,7 +19,6 @@ import {
   CardFooter,
   CardHeader,
 } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 
 interface Props {
   definition: Definition;
@@ -70,9 +70,7 @@ export default function DefinitionCard({
             <div className="flex flex-col gap-1">
               <div className="flex gap-0 items-center">
                 {definition.pos &&
-                  <Badge variant="secondary" className="h-fit me-1">
-                    {definition.pos}
-                  </Badge>
+                  <PosHoverCard abbr={definition.pos} />
                 }
                 {(definition.source_title || definition.source_link) && (
                   <Source
