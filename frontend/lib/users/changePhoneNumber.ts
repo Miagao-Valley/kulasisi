@@ -2,7 +2,6 @@
 
 import fetcher, { FetchError } from '@/utils/fetcher';
 import getToken from '../tokens/getToken';
-import { redirect } from 'next/navigation';
 
 export default async function changePhoneNumber(
   username: string,
@@ -27,6 +26,5 @@ export default async function changePhoneNumber(
     return { error: fetchError.resBody };
   }
 
-  redirect('/settings/?tab=account');
   return null;
 }

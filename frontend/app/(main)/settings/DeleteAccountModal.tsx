@@ -1,8 +1,10 @@
 'use client';
 
 import React from 'react';
+import { useRouter } from 'next/navigation';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useAuth } from '@/components/providers/AuthProvider';
+import logout from '@/lib/auth/logout';
 import deleteUser from '@/lib/users/deleteUser';
 import setFormErrors from '@/utils/setFormErrors';
 import { Button } from '@/components/ui/button';
@@ -34,6 +36,7 @@ interface Props {
 }
 
 export function DeleteAccountModal({ username }: Props) {
+  const router = useRouter();
   const auth = useAuth();
 
   const form = useForm<DeleteAccountInputs>();
@@ -45,8 +48,9 @@ export function DeleteAccountModal({ username }: Props) {
     if (res?.error) {
       setFormErrors(res.error, form.setError);
     } else {
-      await fetch('/api/logout');
+      await logout();
       auth.updateAuth();
+      router.push('/register/');
     }
     return res;
   };

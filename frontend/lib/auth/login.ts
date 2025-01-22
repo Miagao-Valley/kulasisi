@@ -1,7 +1,6 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
 import fetcher, { FetchError } from '@/utils/fetcher';
 import setToken from '../tokens/setToken';
 
@@ -24,5 +23,4 @@ export default async function login(data: object) {
   }
 
   revalidatePath('/');
-  redirect('/');
 }

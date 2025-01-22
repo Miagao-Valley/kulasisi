@@ -1,7 +1,6 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
 import fetcher, { FetchError } from '@/utils/fetcher';
 import getToken from '../tokens/getToken';
 
@@ -26,5 +25,4 @@ export default async function deleteUser(username: string, data: object) {
   }
 
   revalidatePath(`/users`);
-  redirect(`/login`);
 }

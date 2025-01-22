@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useAuth } from '@/components/providers/AuthProvider';
 import Link from 'next/link';
 import { LangProficiencyLevel } from '@/types/languages';
@@ -50,6 +51,7 @@ const steps = [
 ];
 
 export default function RegisterForm() {
+  const router = useRouter();
   const auth = useAuth();
 
   const [step, setStep] = useState(0);
@@ -80,6 +82,7 @@ export default function RegisterForm() {
       });
     } else {
       auth.updateAuth();
+      router.push('/');
     }
     return res;
   };

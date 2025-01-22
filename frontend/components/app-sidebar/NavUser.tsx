@@ -1,8 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { usePathname } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { useAuth } from '../providers/AuthProvider';
+import logout from '@/lib/auth/logout';
 import { User } from '@/types/users';
 import getUser from '@/lib/users/getUser';
 import Link from 'next/link';
@@ -32,8 +33,6 @@ import {
   LogOutIcon,
   LogInIcon,
 } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import logout from '@/lib/auth/logout';
 import { Spinner } from '../ui/spinner';
 
 export function NavUser() {
