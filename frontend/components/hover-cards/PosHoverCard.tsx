@@ -10,6 +10,7 @@ import {
   HoverCardTrigger,
 } from '@/components/ui/hover-card';
 import { Badge } from '@/components/ui/badge';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface Props {
   abbr: string;
@@ -17,42 +18,57 @@ interface Props {
 
 export default function PosHoverCard({ abbr }: Props) {
   const [pos, setPos] = useState<PartOfSpeech>();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchPos = async () => {
+      setLoading(true);
       const res = await getPartOfSpeech(abbr);
       setPos(res);
+      setLoading(false);
     };
 
     fetchPos();
-  }, []);
+  }, [abbr]);
 
   return (
     <HoverCard>
-      {pos && (
-        <>
-          <HoverCardTrigger asChild>
-            <Link
-              href={`/dictionary?pos=${abbr}`}
-              className="flex gap-2 items-center"
-            >
-              <Badge
-                variant="secondary"
-                className="truncate flex justify-center"
-              >
-                {pos.abbr}
-              </Badge>
-            </Link>
-          </HoverCardTrigger>
+      <HoverCardTrigger asChild>
+        <Link
+          href={`/dictionary?pos=${abbr}`}
+          className="flex gap-2 items-center"
+        >
+          <Badge
+            variant="secondary"
+            className="truncate flex justify-center"
+          >
+            {abbr}
+          </Badge>
+        </Link>
+      </HoverCardTrigger>
 
-          <HoverCardContent className="max-w-80">
-            <div className="gap-1">
-              <h2 className="text-secondary-foreground font-semibold truncate max-w-40">{pos.name}</h2>
-              <p className="text-xs w-full max-w-40">{pos.description}</p>
+      <HoverCardContent className="max-w-80">
+        <div className="flex flex-col gap-1">
+          {loading ?
+            <Skeleton className="w-24 h-4" />
+          :
+            <h2 className="text-secondary-foreground font-semibold truncate">
+              {pos?.name}
+            </h2>
+          }
+
+          {loading ?
+            <div className="flex flex-col gap-1">
+              <Skeleton className="w-32 h-2" />
+              <Skeleton className="w-28 h-2" />
             </div>
-          </HoverCardContent>
-        </>
-      )}
+          :
+            <p className="text-xs w-full">
+              {pos?.description}
+            </p>
+          }
+        </div>
+      </HoverCardContent>
     </HoverCard>
   );
 }

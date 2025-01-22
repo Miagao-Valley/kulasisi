@@ -1,5 +1,4 @@
 import React from 'react';
-import Link from 'next/link';
 import getUsers from '@/lib/users/getUsers';
 import { cn } from '@/lib/utils';
 import ListPagination from '@/components/pagination/ListPagination';
@@ -38,9 +37,7 @@ export default async function UsersList({
         {users && users.results && users.results.length > 0 ? (
           users.results.map((user) => (
             <li key={user.id}>
-              <Link href={`/users/${user.username}/`}>
-                <UserHoverCard username={user.username} showAvatar />
-              </Link>
+              <UserHoverCard username={user.username} showAvatar />
             </li>
           ))
         ) : (

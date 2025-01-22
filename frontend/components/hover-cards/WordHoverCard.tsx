@@ -10,6 +10,7 @@ import {
   HoverCardTrigger,
 } from '@/components/ui/hover-card';
 import { Badge } from '@/components/ui/badge';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface Props {
   lang: string;
@@ -18,15 +19,18 @@ interface Props {
 
 export default function WordHoverCard({ lang, word }: Props) {
   const [wordObj, setWordObj] = useState<Word>();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchWord = async () => {
+      setLoading(true);
       const res = await getWord(lang, word);
       setWordObj(res);
+      setLoading(false);
     };
 
     fetchWord();
-  }, []);
+  }, [lang, word]);
 
   return (
     <HoverCard>
@@ -47,19 +51,38 @@ export default function WordHoverCard({ lang, word }: Props) {
           </HoverCardTrigger>
 
           <HoverCardContent className="max-w-80">
-            <div className="gap-1">
-              <div className="mb-2">
-                <h2 className="font-semibold truncate max-w-40">{word}</h2>
+            <div className="flex flex-col gap-1">
+              <div className="flex flex-col gap-1">
+                {loading ?
+                  <Skeleton className="w-24 h-4" />
+                :
+                  <h2 className="font-semibold truncate">
+                    {word}
+                  </h2>
+                }
                 <div className="flex gap-1 items-center">
-                  {wordObj?.parts_of_speech.slice(0, 3).map((pos) => (
-                    <Badge variant="secondary" key={pos}>{pos}</Badge>
-                  ))}
-                  {(wordObj?.parts_of_speech.length || 0) > 3 && (
+                  {loading ? (
+                    <Skeleton className="w-8 h-4" />
+                  ) : (
+                    wordObj?.parts_of_speech.slice(0, 3).map((pos) => (
+                      <Badge variant="secondary" key={pos}>
+                        {pos}
+                      </Badge>
+                    ))
+                  )}
+                  {(wordObj?.parts_of_speech.length || 0) > 3 && !loading && (
                     <span className="text-muted-foreground">...</span>
                   )}
                 </div>
               </div>
-              <p className="text-xs w-full max-w-40">{wordObj?.best_definition || 'This word has no definition'}</p>
+
+              {loading ?
+                <Skeleton className="w-32 h-2" />
+              :
+                <p className="text-xs w-full">
+                  {wordObj?.best_definition || 'This word has no definition'}
+                </p>
+              }
             </div>
           </HoverCardContent>
         </>
