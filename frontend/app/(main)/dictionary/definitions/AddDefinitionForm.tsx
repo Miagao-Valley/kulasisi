@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { useAuth } from '@/components/providers/AuthProvider';
 import addDefinition from '@/lib/definitions/addDefinition';
@@ -16,10 +16,9 @@ import PosSelect from '@/components/forms/PosSelect';
 import UsageNoteForm from '@/components/forms/UsageNoteForm';
 import SourceForm from '@/components/forms/SourceForm';
 import WordsSelect from '@/components/forms/WordsSelect';
-import getWord from '@/lib/words/getWord';
 
 export interface TranslationInputs {
-  word: number;
+  word: { word: string; lang: string };
   description: string;
   lang: string;
   pos: string;
@@ -45,30 +44,11 @@ export default function AddDefinitionForm({
   const router = useRouter();
   const pathname = usePathname();
 
-  const [wordId, setWordId] = useState<number>();
-
-  useEffect(() => {
-    const fetchWord = async () => {
-      const res = await getWord(wordLang, word);
-      setWordId(res.id);
-    }
-
-    fetchWord();
-  }, [wordLang, word]);
-
   const form = useForm<TranslationInputs>({
     defaultValues: {
-      word: wordId
+      word: { word: word, lang: wordLang }
     },
   });
-
-  useEffect(() => {
-    if (wordId !== null) {
-      form.reset({
-        word: wordId,
-      });
-    }
-  }, [wordId, form]);
 
   const onSubmit: SubmitHandler<TranslationInputs> = async (data: TranslationInputs) => {
     if (!auth.isAuthenticated) {

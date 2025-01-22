@@ -12,7 +12,6 @@ from languages.models import Language
 from .serializers import (
     WordSerializer,
     WordHistorySerializer,
-    CreateDefinitionSerializer,
     DefinitionSerializer,
     DefinitionHistorySerializer,
     PartOfSpeechSerializer,
@@ -114,11 +113,6 @@ class ListCreateDefinitionView(generics.ListCreateAPIView):
             serializer.save(contributor=self.request.user,)
         else:
             print(serializer.errors)
-
-    def get_serializer_class(self):
-        if self.request.method == 'POST':
-            return CreateDefinitionSerializer
-        return DefinitionSerializer
 
 
 class RetrieveUpdateDestroyDefinitionView(generics.RetrieveUpdateDestroyAPIView):

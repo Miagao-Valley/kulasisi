@@ -147,9 +147,9 @@ class DefinitionSerializer(serializers.ModelSerializer):
         return obj.contributor.get_reputation()
 
     def to_internal_value(self, data):
-        lang_code = data.get("lang")
-        if not lang_code and self.instance:
-            lang_code = self.instance.lang.code
+        lang_code = data.get("lang", self.instance.lang.code if self.instance else None)
+
+        word_data = data.pop("word", None)
 
         synonyms = list(set(data.pop("synonyms", [])))
         antonyms = list(set(data.pop("antonyms", [])))
@@ -160,29 +160,22 @@ class DefinitionSerializer(serializers.ModelSerializer):
 
         processed_data = super().to_internal_value(data)
 
-        synonym_objects = []
-        antonym_objects = []
-        for synonym in synonyms:
-            synonym_instance = get_object_or_404(Word, word=synonym, lang__code=lang_code)
-            synonym_objects.append(synonym_instance)
-        for antonym in antonyms:
-            antonym_instance = get_object_or_404(Word, word=antonym, lang__code=lang_code)
-            antonym_objects.append(antonym_instance)
+        if word_data:
+            word_object = get_object_or_404(Word, word=word_data["word"], lang__code=word_data["lang"])
+            processed_data["word"] = word_object
+
+        synonym_objects = [get_object_or_404(Word, word=synonym, lang__code=lang_code) for synonym in synonyms]
+        antonym_objects = [get_object_or_404(Word, word=antonym, lang__code=lang_code) for antonym in antonyms]
 
         processed_data["synonyms"] = synonym_objects
         processed_data["antonyms"] = antonym_objects
 
         return processed_data
 
-
     def update(self, instance, validated_data):
         validated_data.pop("lang", None)
         validated_data.pop("word", None)
         return super().update(instance, validated_data)
-
-
-class CreateDefinitionSerializer(DefinitionSerializer):
-    word = serializers.PrimaryKeyRelatedField(queryset=Word.objects.all())
 
 
 class DefinitionHistorySerializer(serializers.ModelSerializer):
