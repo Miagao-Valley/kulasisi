@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 
 from .models import Word, Definition, PartOfSpeech
@@ -30,6 +31,7 @@ class WordSerializer(DynamicFieldsSerializer):
     )
     contributor_reputation = serializers.SerializerMethodField()
     parts_of_speech = serializers.SerializerMethodField()
+    best_definition = serializers.SerializerMethodField()
     vote_count = serializers.SerializerMethodField()
 
     class Meta:
@@ -41,6 +43,7 @@ class WordSerializer(DynamicFieldsSerializer):
             "contributor",
             "contributor_reputation",
             "parts_of_speech",
+            "best_definition",
             "source_title",
             "source_link",
             "created_at",
@@ -57,6 +60,20 @@ class WordSerializer(DynamicFieldsSerializer):
 
     def get_parts_of_speech(self, obj):
         return [definition.pos.abbr for definition in obj.definitions.all() if definition.pos]
+
+    def get_best_definition(self, obj):
+        definitions = obj.definitions.filter(lang=obj.lang)
+        if not definitions:
+            definitions = obj.definitions.filter(lang__code="eng")
+        if not definitions:
+            definitions = obj.definitions.all()
+
+        best_definition = max(
+            obj.definitions.all(),
+            key=lambda definition: definition.votes.filter(value=1).count() - definition.votes.filter(value=-1).count(),
+            default=None,
+        )
+        return best_definition.description if best_definition else ""
 
     def get_vote_count(self, obj):
         return obj.votes.filter(value=1).count() - obj.votes.filter(value=-1).count()
@@ -87,16 +104,16 @@ class DefinitionSerializer(serializers.ModelSerializer):
     contributor = serializers.SlugRelatedField(
         queryset=User.objects.all(), slug_field="username", required=False
     )
+    contributor_reputation = serializers.SerializerMethodField()
     pos = serializers.SlugRelatedField(
         queryset=PartOfSpeech.objects.all(), slug_field="abbr", required=False
     )
     synonyms = serializers.SlugRelatedField(
-        queryset=Word.objects.all(), slug_field="word", many=True, required=False
+        slug_field="word", many=True, required=False, read_only=True
     )
     antonyms = serializers.SlugRelatedField(
-        queryset=Word.objects.all(), slug_field="word", many=True, required=False
+        slug_field="word", many=True, required=False, read_only=True
     )
-    contributor_reputation = serializers.SerializerMethodField()
     vote_count = serializers.SerializerMethodField()
 
     class Meta:
@@ -128,6 +145,35 @@ class DefinitionSerializer(serializers.ModelSerializer):
 
     def get_contributor_reputation(self, obj):
         return obj.contributor.get_reputation()
+
+    def to_internal_value(self, data):
+        lang_code = data.get("lang")
+        if not lang_code and self.instance:
+            lang_code = self.instance.lang.code
+
+        synonyms = list(set(data.pop("synonyms", [])))
+        antonyms = list(set(data.pop("antonyms", [])))
+
+        overlapping_words = set(synonyms) & set(antonyms)
+        if overlapping_words:
+            raise ValueError(f"The following words cannot be both synonyms and antonyms: {', '.join(overlapping_words)}")
+
+        processed_data = super().to_internal_value(data)
+
+        synonym_objects = []
+        antonym_objects = []
+        for synonym in synonyms:
+            synonym_instance = get_object_or_404(Word, word=synonym, lang__code=lang_code)
+            synonym_objects.append(synonym_instance)
+        for antonym in antonyms:
+            antonym_instance = get_object_or_404(Word, word=antonym, lang__code=lang_code)
+            antonym_objects.append(antonym_instance)
+
+        processed_data["synonyms"] = synonym_objects
+        processed_data["antonyms"] = antonym_objects
+
+        return processed_data
+
 
     def update(self, instance, validated_data):
         validated_data.pop("lang", None)

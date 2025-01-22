@@ -111,7 +111,7 @@ class ListCreateDefinitionView(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         if serializer.is_valid():
-            serializer.save(contributor=self.request.user)
+            serializer.save(contributor=self.request.user,)
         else:
             print(serializer.errors)
 

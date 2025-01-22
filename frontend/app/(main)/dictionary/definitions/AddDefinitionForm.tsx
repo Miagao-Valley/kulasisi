@@ -1,20 +1,14 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { useAuth } from '@/components/providers/AuthProvider';
 import addDefinition from '@/lib/definitions/addDefinition';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import setFormErrors from '@/utils/setFormErrors';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from '@/components/ui/form';
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { AutosizeTextarea } from '@/components/ui/autoresize-textarea';
 import { LoadingButton } from '@/components/ui/loading-button';
 import LangSelect from '@/components/forms/LangSelect';
@@ -39,14 +33,12 @@ export interface TranslationInputs {
 interface Props {
   wordLang: string;
   word: string;
-  originalLang: string;
   className?: string;
 }
 
 export default function AddDefinitionForm({
   wordLang,
   word,
-  originalLang,
   className = '',
 }: Props) {
   const auth = useAuth();
@@ -62,7 +54,7 @@ export default function AddDefinitionForm({
     }
 
     fetchWord();
-  }, [])
+  }, [wordLang, word]);
 
   const form = useForm<TranslationInputs>({
     defaultValues: {
@@ -78,10 +70,7 @@ export default function AddDefinitionForm({
     }
   }, [wordId, form]);
 
-
-  const onSubmit: SubmitHandler<TranslationInputs> = async (
-    data: TranslationInputs,
-  ) => {
+  const onSubmit: SubmitHandler<TranslationInputs> = async (data: TranslationInputs) => {
     if (!auth.isAuthenticated) {
       toast.error('You need to sign in to post.');
       router.push(`/login?next=${pathname}`);
@@ -103,9 +92,7 @@ export default function AddDefinitionForm({
         className={cn(className, 'flex flex-col gap-3')}
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <FormMessage>
-          {form.formState.errors.root?.serverError.message}
-        </FormMessage>
+        <FormMessage>{form.formState.errors.root?.serverError?.message}</FormMessage>
 
         <FormField
           control={form.control}
@@ -138,7 +125,6 @@ export default function AddDefinitionForm({
                         setSelectedLang={(value) =>
                           form.setValue('lang', value)
                         }
-                        exclude={[originalLang]}
                       />
                     </FormControl>
                     <FormMessage />
@@ -178,7 +164,10 @@ export default function AddDefinitionForm({
                       setSelectedWords={(value) =>
                         form.setValue('synonyms', value)
                       }
+                      exclude={[word, ...(form.watch('antonyms') || [])]}
+                      lang={form.watch('lang')}
                       placeholder="synonyms..."
+                      disabled={!form.watch('lang')}
                     />
                   </FormControl>
                   <FormMessage />
@@ -196,7 +185,10 @@ export default function AddDefinitionForm({
                       setSelectedWords={(value) =>
                         form.setValue('antonyms', value)
                       }
+                      exclude={[word, ...(form.watch('synonyms') || [])]}
+                      lang={form.watch('lang')}
                       placeholder="antonyms..."
+                      disabled={!form.watch('lang')}
                     />
                   </FormControl>
                   <FormMessage />
@@ -209,9 +201,7 @@ export default function AddDefinitionForm({
             className="ms-auto w-full sm:w-fit"
             type="submit"
             loading={form.formState.isSubmitting}
-            disabled={
-              !(form.watch('description')?.trim() && form.watch('lang'))
-            }
+            disabled={!(form.watch('description')?.trim() && form.watch('lang'))}
           >
             Add
           </LoadingButton>

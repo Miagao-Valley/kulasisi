@@ -9,6 +9,7 @@ import EntryHeader from '@/components/entry/EntryHeader';
 import EntryFooter from '@/components/entry/EntryFooter';
 import Source from '@/components/hover-cards/Source';
 import UsageNote from '@/components/hover-cards/UsageNote';
+import WordHoverCard from '@/components/hover-cards/WordHoverCard';
 import DefinitionDropdownMenu from './DefinitionDropdownMenu';
 import UpdateDefinitionForm from './UpdateDefinitionForm';
 import {
@@ -87,9 +88,7 @@ export default function DefinitionCard({
                 <div className="flex gap-1 items-center me-1">
                   <span className="text-sm text-muted-foreground">Synonyms: </span>
                   {definition.synonyms.map((synonym) => (
-                    <Badge variant="outline" className="h-fit" key={synonym}>
-                      {synonym}
-                    </Badge>
+                    <WordHoverCard lang={definition.lang} word={synonym} key={`${synonym} (${definition.lang})`} />
                   ))}
                 </div>
               }
@@ -97,9 +96,7 @@ export default function DefinitionCard({
                 <div className="flex gap-1 items-center me-1">
                   <span className="text-sm text-muted-foreground">Antonyms: </span>
                   {definition.antonyms.map((antonym) => (
-                    <Badge variant="outline" className="h-fit" key={antonym}>
-                      {antonym}
-                    </Badge>
+                    <WordHoverCard lang={definition.lang} word={antonym} key={`${antonym} (${definition.lang})`} />
                   ))}
                 </div>
               }

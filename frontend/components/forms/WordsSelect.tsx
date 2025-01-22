@@ -9,8 +9,10 @@ interface Props {
   selectedWords: string[];
   setSelectedWords: (value: string[]) => void;
   exclude?: string[];
+  lang?: string;
   placeholder?: string;
   hidePlaceholderWhenSelected?: boolean;
+  disabled?: boolean;
   className?: string;
 }
 
@@ -18,8 +20,10 @@ export default function WordsSelect({
   selectedWords,
   setSelectedWords,
   exclude = [],
+  lang,
   placeholder = 'words...',
   hidePlaceholderWhenSelected = false,
+  disabled = false,
   className = '',
 }: Props) {
   const [wordOptions, setWordOptions] = useState<string[]>([]);
@@ -27,11 +31,20 @@ export default function WordsSelect({
   useEffect(() => {
     const fetchWords = async () => {
       const { results } = await getWords();
-      setWordOptions(results.map((word) => word.word).filter((word) => !exclude.includes(word)));
+      const uniqueWords = new Set(
+        results
+          .filter(
+            (word) =>
+              !exclude.includes(word.word) &&
+              (!lang || word.lang === lang)
+          )
+          .map(word => word.word)
+      );
+      setWordOptions(Array.from(uniqueWords));
     };
 
     fetchWords();
-  }, []);
+  }, [exclude, lang]);
 
   return (
     <ListSelector
@@ -48,6 +61,7 @@ export default function WordsSelect({
       placeholder={placeholder}
       hidePlaceholderWhenSelected={hidePlaceholderWhenSelected}
       emptyIndicator={<p className="text-center">No results found</p>}
+      disabled={disabled}
       className={cn('!text-xs border-0 bg-accent/20', className)}
     />
   );

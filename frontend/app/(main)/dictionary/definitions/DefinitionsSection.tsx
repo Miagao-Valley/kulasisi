@@ -61,7 +61,6 @@ export default async function DefinitionsSection({
       <AddDefinitionForm
         wordLang={word.lang}
         word={word.word}
-        originalLang={word.lang}
         className="py-2 mb-4 border-t border-b"
       />
       <FilterControls
