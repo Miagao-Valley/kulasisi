@@ -8,7 +8,13 @@ import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import setFormErrors from '@/utils/setFormErrors';
-import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from '@/components/ui/form';
 import { AutosizeTextarea } from '@/components/ui/autoresize-textarea';
 import { LoadingButton } from '@/components/ui/loading-button';
 import LangSelect from '@/components/forms/LangSelect';
@@ -46,11 +52,13 @@ export default function AddDefinitionForm({
 
   const form = useForm<TranslationInputs>({
     defaultValues: {
-      word: { word: word, lang: wordLang }
+      word: { word: word, lang: wordLang },
     },
   });
 
-  const onSubmit: SubmitHandler<TranslationInputs> = async (data: TranslationInputs) => {
+  const onSubmit: SubmitHandler<TranslationInputs> = async (
+    data: TranslationInputs,
+  ) => {
     if (!auth.isAuthenticated) {
       toast.error('You need to sign in to post.');
       router.push(`/login?next=${pathname}`);
@@ -72,7 +80,9 @@ export default function AddDefinitionForm({
         className={cn(className, 'flex flex-col gap-3')}
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <FormMessage>{form.formState.errors.root?.serverError?.message}</FormMessage>
+        <FormMessage>
+          {form.formState.errors.root?.serverError?.message}
+        </FormMessage>
 
         <FormField
           control={form.control}
@@ -181,7 +191,9 @@ export default function AddDefinitionForm({
             className="ms-auto w-full sm:w-fit"
             type="submit"
             loading={form.formState.isSubmitting}
-            disabled={!(form.watch('description')?.trim() && form.watch('lang'))}
+            disabled={
+              !(form.watch('description')?.trim() && form.watch('lang'))
+            }
           >
             Add
           </LoadingButton>

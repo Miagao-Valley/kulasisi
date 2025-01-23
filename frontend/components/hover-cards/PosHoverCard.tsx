@@ -38,10 +38,7 @@ export default function PosHoverCard({ abbr }: Props) {
           href={`/dictionary?pos=${abbr}`}
           className="flex gap-2 items-center"
         >
-          <Badge
-            variant="secondary"
-            className="truncate flex justify-center"
-          >
+          <Badge variant="secondary" className="truncate flex justify-center">
             {abbr}
           </Badge>
         </Link>
@@ -49,24 +46,22 @@ export default function PosHoverCard({ abbr }: Props) {
 
       <HoverCardContent className="max-w-80">
         <div className="flex flex-col gap-1">
-          {loading ?
+          {loading ? (
             <Skeleton className="w-24 h-4" />
-          :
+          ) : (
             <h2 className="text-secondary-foreground font-semibold truncate">
               {pos?.name}
             </h2>
-          }
+          )}
 
-          {loading ?
+          {loading ? (
             <div className="flex flex-col gap-1">
               <Skeleton className="w-32 h-2" />
               <Skeleton className="w-28 h-2" />
             </div>
-          :
-            <p className="text-xs w-full">
-              {pos?.description}
-            </p>
-          }
+          ) : (
+            <p className="text-xs w-full">{pos?.description}</p>
+          )}
         </div>
       </HoverCardContent>
     </HoverCard>

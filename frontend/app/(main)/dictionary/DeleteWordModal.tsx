@@ -14,8 +14,8 @@ import {
 } from '@/components/ui/alert-dialog';
 
 interface Props {
-  lang: string,
-  word: string,
+  lang: string;
+  word: string;
 }
 
 export default function DeleteWordModal({ lang, word }: Props) {

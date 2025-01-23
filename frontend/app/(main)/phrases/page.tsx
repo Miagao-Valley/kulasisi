@@ -64,9 +64,7 @@ export default async function PhrasesPage({ searchParams }: Props) {
         filterOptions={filterOptions}
         className="my-1"
       />
-      {filters.category &&
-        <CategoryCard name={category} className="my-2" />
-      }
+      {filters.category && <CategoryCard name={category} className="my-2" />}
       <Suspense fallback={<PhrasesListSkeleton />}>
         <PhrasesList
           searchTerm={searchTerm}

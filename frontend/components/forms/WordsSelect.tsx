@@ -35,10 +35,9 @@ export default function WordsSelect({
         results
           .filter(
             (word) =>
-              !exclude.includes(word.word) &&
-              (!lang || word.lang === lang)
+              !exclude.includes(word.word) && (!lang || word.lang === lang),
           )
-          .map(word => word.word)
+          .map((word) => word.word),
       );
       setWordOptions(Array.from(uniqueWords));
     };
@@ -53,9 +52,7 @@ export default function WordsSelect({
       onChange={setSelectedWords}
       onSearch={async (q) => {
         q = q.toLowerCase();
-        return wordOptions.filter((option) =>
-          option.toLowerCase().includes(q),
-        );
+        return wordOptions.filter((option) => option.toLowerCase().includes(q));
       }}
       triggerSearchOnFocus
       placeholder={placeholder}

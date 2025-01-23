@@ -46,7 +46,12 @@ export default function UpdateDefinitionForm({
   const onSubmit: SubmitHandler<DefinitionInputs> = async (
     data: DefinitionInputs,
   ) => {
-    const res = await updateDefinition(definition.word.lang, definition.word.word, definition.id, data);
+    const res = await updateDefinition(
+      definition.word.lang,
+      definition.word.word,
+      definition.id,
+      data,
+    );
     if (res?.error) {
       setFormErrors(res.error, form.setError);
     } else {
@@ -129,7 +134,12 @@ export default function UpdateDefinitionForm({
                       setSelectedWords={(value) =>
                         form.setValue('synonyms', value)
                       }
-                      exclude={[definition.word.word, ...(form.watch('antonyms') || definition.antonyms || [])]}
+                      exclude={[
+                        definition.word.word,
+                        ...(form.watch('antonyms') ||
+                          definition.antonyms ||
+                          []),
+                      ]}
                       lang={definition.lang}
                       placeholder="synonyms..."
                     />
@@ -150,7 +160,12 @@ export default function UpdateDefinitionForm({
                       setSelectedWords={(value) =>
                         form.setValue('antonyms', value)
                       }
-                      exclude={[definition.word.word, ...(form.watch('synonyms') || definition.synonyms || [])]}
+                      exclude={[
+                        definition.word.word,
+                        ...(form.watch('synonyms') ||
+                          definition.synonyms ||
+                          []),
+                      ]}
                       lang={definition.lang}
                       placeholder="antonyms..."
                     />

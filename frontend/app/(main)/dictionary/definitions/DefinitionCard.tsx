@@ -69,9 +69,7 @@ export default function DefinitionCard({
             </Link>
             <div className="flex flex-col gap-1">
               <div className="flex gap-0 items-center">
-                {definition.pos &&
-                  <PosHoverCard abbr={definition.pos} />
-                }
+                {definition.pos && <PosHoverCard abbr={definition.pos} />}
                 {(definition.source_title || definition.source_link) && (
                   <Source
                     source_title={definition.source_title}
@@ -82,22 +80,34 @@ export default function DefinitionCard({
                   <UsageNote note={definition.usage_note} />
                 )}
               </div>
-              {definition.synonyms && definition.synonyms.length > 0 &&
+              {definition.synonyms && definition.synonyms.length > 0 && (
                 <div className="flex gap-1 items-center me-1">
-                  <span className="text-sm text-muted-foreground">Synonyms: </span>
+                  <span className="text-sm text-muted-foreground">
+                    Synonyms:{' '}
+                  </span>
                   {definition.synonyms.map((synonym) => (
-                    <WordHoverCard lang={definition.lang} word={synonym} key={`${synonym} (${definition.lang})`} />
+                    <WordHoverCard
+                      lang={definition.lang}
+                      word={synonym}
+                      key={`${synonym} (${definition.lang})`}
+                    />
                   ))}
                 </div>
-              }
-              {definition.antonyms && definition.antonyms.length > 0 &&
+              )}
+              {definition.antonyms && definition.antonyms.length > 0 && (
                 <div className="flex gap-1 items-center me-1">
-                  <span className="text-sm text-muted-foreground">Antonyms: </span>
+                  <span className="text-sm text-muted-foreground">
+                    Antonyms:{' '}
+                  </span>
                   {definition.antonyms.map((antonym) => (
-                    <WordHoverCard lang={definition.lang} word={antonym} key={`${antonym} (${definition.lang})`} />
+                    <WordHoverCard
+                      lang={definition.lang}
+                      word={antonym}
+                      key={`${antonym} (${definition.lang})`}
+                    />
                   ))}
                 </div>
-              }
+              )}
             </div>
           </>
         )}

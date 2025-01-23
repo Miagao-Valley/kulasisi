@@ -50,7 +50,9 @@ export default function WordDropdownMenu({
         <DropdownMenuGroup>
           <DropdownMenuItem
             className="hover:cursor-pointer"
-            onClick={() => copyLinkToClipboard(`/dictionary/${word.lang}/${word.word}/`)}
+            onClick={() =>
+              copyLinkToClipboard(`/dictionary/${word.lang}/${word.word}/`)
+            }
           >
             Copy link
           </DropdownMenuItem>

@@ -4,7 +4,11 @@ import { revalidatePath } from 'next/cache';
 import fetcher, { FetchError } from '@/utils/fetcher';
 import getToken from '../tokens/getToken';
 
-export default async function updateWord(lang: string, word: string, data: object) {
+export default async function updateWord(
+  lang: string,
+  word: string,
+  data: object,
+) {
   try {
     const promise = fetcher(
       `/dictionary/${lang}/${word}/`,

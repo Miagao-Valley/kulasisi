@@ -6,6 +6,7 @@ from users.models import User
 from languages.models import Language
 from core.serializers import DynamicFieldsSerializer
 
+
 class PartOfSpeechSerializer(serializers.ModelSerializer):
     class Meta:
         model = PartOfSpeech
@@ -59,7 +60,11 @@ class WordSerializer(DynamicFieldsSerializer):
         return obj.contributor.get_reputation()
 
     def get_parts_of_speech(self, obj):
-        return [definition.pos.abbr for definition in obj.definitions.all() if definition.pos]
+        return [
+            definition.pos.abbr
+            for definition in obj.definitions.all()
+            if definition.pos
+        ]
 
     def get_best_definition(self, obj):
         definitions = obj.definitions.filter(lang=obj.lang)
@@ -70,7 +75,8 @@ class WordSerializer(DynamicFieldsSerializer):
 
         best_definition = max(
             obj.definitions.all(),
-            key=lambda definition: definition.votes.filter(value=1).count() - definition.votes.filter(value=-1).count(),
+            key=lambda definition: definition.votes.filter(value=1).count()
+            - definition.votes.filter(value=-1).count(),
             default=None,
         )
         return best_definition.description if best_definition else ""
@@ -95,9 +101,7 @@ class WordHistorySerializer(serializers.ModelSerializer):
 
 
 class DefinitionSerializer(serializers.ModelSerializer):
-    word = WordSerializer(
-        required=False, fields=["word", "lang"]
-    )
+    word = WordSerializer(required=False, fields=["word", "lang"])
     lang = serializers.SlugRelatedField(
         queryset=Language.objects.all(), slug_field="code", required=False
     )
@@ -156,16 +160,26 @@ class DefinitionSerializer(serializers.ModelSerializer):
 
         overlapping_words = set(synonyms) & set(antonyms)
         if overlapping_words:
-            raise ValueError(f"The following words cannot be both synonyms and antonyms: {', '.join(overlapping_words)}")
+            raise ValueError(
+                f"The following words cannot be both synonyms and antonyms: {', '.join(overlapping_words)}"
+            )
 
         processed_data = super().to_internal_value(data)
 
         if word_data:
-            word_object = get_object_or_404(Word, word=word_data["word"], lang__code=word_data["lang"])
+            word_object = get_object_or_404(
+                Word, word=word_data["word"], lang__code=word_data["lang"]
+            )
             processed_data["word"] = word_object
 
-        synonym_objects = [get_object_or_404(Word, word=synonym, lang__code=lang_code) for synonym in synonyms]
-        antonym_objects = [get_object_or_404(Word, word=antonym, lang__code=lang_code) for antonym in antonyms]
+        synonym_objects = [
+            get_object_or_404(Word, word=synonym, lang__code=lang_code)
+            for synonym in synonyms
+        ]
+        antonym_objects = [
+            get_object_or_404(Word, word=antonym, lang__code=lang_code)
+            for antonym in antonyms
+        ]
 
         processed_data["synonyms"] = synonym_objects
         processed_data["antonyms"] = antonym_objects

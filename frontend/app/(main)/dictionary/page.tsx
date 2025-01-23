@@ -63,9 +63,7 @@ export default async function DictionaryPage({ searchParams }: Props) {
         filterOptions={filterOptions}
         className="my-1"
       />
-      {filters.pos &&
-        <PosCard abbr={pos} className="my-2" />
-      }
+      {filters.pos && <PosCard abbr={pos} className="my-2" />}
       <Suspense fallback={<WordsListSkeleton />}>
         <WordsList
           searchTerm={searchTerm}

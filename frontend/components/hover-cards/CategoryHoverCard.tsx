@@ -38,10 +38,7 @@ export default function CategoryHoverCard({ name }: Props) {
           href={`/phrases?category=${name}`}
           className="flex gap-2 items-center"
         >
-          <Badge
-            variant="secondary"
-            className="truncate flex justify-center"
-          >
+          <Badge variant="secondary" className="truncate flex justify-center">
             #{name}
           </Badge>
         </Link>

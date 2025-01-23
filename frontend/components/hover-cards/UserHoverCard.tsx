@@ -36,10 +36,7 @@ export default function UserHoverCard({ username, showAvatar = false }: Props) {
   return (
     <HoverCard>
       <HoverCardTrigger asChild>
-        <Link
-          href={`/users/${username}/`}
-          className="flex gap-2 items-center"
-        >
+        <Link href={`/users/${username}/`} className="flex gap-2 items-center">
           {showAvatar && (
             <Avatar>
               {loading ? (
@@ -81,7 +78,9 @@ export default function UserHoverCard({ username, showAvatar = false }: Props) {
             {loading ? (
               <Skeleton className="w-20 h-4" />
             ) : (
-              <span className="text-sm">{shortenNum(user?.reputation || 0)} Reputation</span>
+              <span className="text-sm">
+                {shortenNum(user?.reputation || 0)} Reputation
+              </span>
             )}
           </div>
         </div>

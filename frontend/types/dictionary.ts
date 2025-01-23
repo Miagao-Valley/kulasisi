@@ -35,7 +35,7 @@ export interface WordRevision {
 
 export interface Definition {
   id: number;
-  word: {word: string, lang: string};
+  word: { word: string; lang: string };
   description: string;
   lang: string;
   contributor: string;

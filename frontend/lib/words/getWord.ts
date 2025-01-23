@@ -1,7 +1,10 @@
 import fetcher from '@/utils/fetcher';
 import { Word } from '@/types/dictionary';
 
-export default async function getWord(lang: string, word: string): Promise<Word> {
+export default async function getWord(
+  lang: string,
+  word: string,
+): Promise<Word> {
   const res = await fetcher(`/dictionary/${lang}/${word}/`, {
     cache: 'no-store',
   });

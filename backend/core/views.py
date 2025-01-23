@@ -19,12 +19,16 @@ class ListCreateVoteView(generics.ListCreateAPIView):
         if "phrase_pk" in view_kwargs:
             target_object = get_object_or_404(Phrase, id=view_kwargs["phrase_pk"])
         elif "translation_pk" in view_kwargs:
-            target_object = get_object_or_404(Translation, id=view_kwargs["translation_pk"])
+            target_object = get_object_or_404(
+                Translation, id=view_kwargs["translation_pk"]
+            )
         elif "word" in view_kwargs:
             lang = get_object_or_404(Language, code=view_kwargs["lang"])
             target_object = get_object_or_404(Word, lang=lang, word=view_kwargs["word"])
         elif "definition_pk" in view_kwargs:
-            target_object = get_object_or_404(Definition, id=view_kwargs["definition_pk"])
+            target_object = get_object_or_404(
+                Definition, id=view_kwargs["definition_pk"]
+            )
         else:
             raise ValueError("Invalid target for votes.")
 

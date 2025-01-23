@@ -27,9 +27,8 @@ export default function VoteActions({ entry, votes }: Props) {
   const [isLoading, setIsLoading] = useState(false);
 
   const [currentVote, setCurrentVote] = useState<Vote | undefined>(
-    votes.find((vote) => vote.user === auth.username)
+    votes.find((vote) => vote.user === auth.username),
   );
-
 
   const handleVote = async (value: -1 | 0 | 1) => {
     setIsLoading(true);
@@ -58,7 +57,10 @@ export default function VoteActions({ entry, votes }: Props) {
 
     try {
       const res = await vote(entry, value);
-      if (res && typeof res === 'object' && Object.keys(res).length === 0 || res?.error) {
+      if (
+        (res && typeof res === 'object' && Object.keys(res).length === 0) ||
+        res?.error
+      ) {
         setCurrentVote(previousVote);
         toast.error('Failed to vote.');
       }

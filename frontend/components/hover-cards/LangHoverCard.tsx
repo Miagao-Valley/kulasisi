@@ -36,10 +36,7 @@ export default function LangHoverCard({ code, showName = false }: Props) {
   return (
     <HoverCard>
       <HoverCardTrigger asChild>
-        <Link
-          href={`/languages/${code}/`}
-          className="flex gap-2 items-center"
-        >
+        <Link href={`/languages/${code}/`} className="flex gap-2 items-center">
           <Badge
             variant="outline"
             className="w-10 truncate flex justify-center"
@@ -61,12 +58,16 @@ export default function LangHoverCard({ code, showName = false }: Props) {
           {loading ? (
             <Skeleton className="w-24 h-4" />
           ) : (
-            <h2 className="font-semibold truncate max-w-60">{lang?.name || ''}</h2>
+            <h2 className="font-semibold truncate max-w-60">
+              {lang?.name || ''}
+            </h2>
           )}
           {loading ? (
             <Skeleton className="w-16 h-4" />
           ) : (
-            <span className="text-sm">{shortenNum(lang?.user_count || 0)} Members</span>
+            <span className="text-sm">
+              {shortenNum(lang?.user_count || 0)} Members
+            </span>
           )}
         </div>
       </HoverCardContent>

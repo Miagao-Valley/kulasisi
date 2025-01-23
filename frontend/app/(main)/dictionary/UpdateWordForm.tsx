@@ -7,10 +7,7 @@ import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import setFormErrors from '@/utils/setFormErrors';
-import {
-  Form,
-  FormMessage,
-} from '@/components/ui/form';
+import { Form, FormMessage } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
 import { LoadingButton } from '@/components/ui/loading-button';
 import SourceForm from '@/components/forms/SourceForm';
@@ -62,7 +59,6 @@ export default function UpdateWordForm({
         />
 
         <div className="flex gap-0 items-center">
-
           <SourceForm
             form={form}
             defaultSourceTitle={word.source_title}

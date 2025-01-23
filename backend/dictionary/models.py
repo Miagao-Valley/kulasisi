@@ -54,8 +54,12 @@ class Definition(models.Model):
         null=True,
         blank=True,
     )
-    synonyms = models.ManyToManyField(Word, related_name="indirect_synonyms", blank=True)
-    antonyms = models.ManyToManyField(Word, related_name="indirect_antonyms", blank=True)
+    synonyms = models.ManyToManyField(
+        Word, related_name="indirect_synonyms", blank=True
+    )
+    antonyms = models.ManyToManyField(
+        Word, related_name="indirect_antonyms", blank=True
+    )
     votes = GenericRelation(Vote, related_query_name="definitions")
     usage_note = models.TextField(null=True, blank=True)
     source_title = models.CharField(max_length=255, null=True, blank=True)

@@ -13,7 +13,9 @@ export default function entryToUrl(
       ? `phrases/translations/${entry.id}`
       : `phrases/${entry.phrase}`;
   } else if (isWord(entry)) {
-    return backend ? `/dictionary/${entry.lang}/${entry.word}` : `dictionary/${entry.lang}/${entry.word}`;
+    return backend
+      ? `/dictionary/${entry.lang}/${entry.word}`
+      : `dictionary/${entry.lang}/${entry.word}`;
   } else if (isDefinition(entry)) {
     return backend
       ? `dictionary/definitions/${entry.id}`

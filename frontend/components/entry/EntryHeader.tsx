@@ -18,8 +18,7 @@ export default function EntryHeader({ entry, className = '' }: Props) {
     <div className={cn(className, 'flex flex-row gap-1 items-center text-sm')}>
       <LangHoverCard code={entry.lang} />
       •
-      <UserHoverCard username={entry.contributor} />
-      •
+      <UserHoverCard username={entry.contributor} />•
       <span className="text-sm text-muted-foreground truncate">
         {naturalTime(entry.updated_at)}
       </span>

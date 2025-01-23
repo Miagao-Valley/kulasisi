@@ -64,7 +64,6 @@ class RetrieveUpdateDestroyWordView(generics.RetrieveUpdateDestroyAPIView):
         return word
 
 
-
 class ListWordHistoryView(generics.ListAPIView):
     serializer_class = WordHistorySerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
@@ -74,12 +73,19 @@ class ListWordHistoryView(generics.ListAPIView):
         word = get_object_or_404(Word, lang=lang, word=self.kwargs.get("word"))
         return word.history.all()
 
+
 class ListCreateDefinitionView(generics.ListCreateAPIView):
     queryset = Definition.objects.all()
     serializer_class = DefinitionSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ["word__word", "word__lang__code", "lang__code", "contributor__username", "pos__abbr"]
+    filterset_fields = [
+        "word__word",
+        "word__lang__code",
+        "lang__code",
+        "contributor__username",
+        "pos__abbr",
+    ]
     search_fields = ["description"]
     ordering_fields = [
         "description",
@@ -110,7 +116,9 @@ class ListCreateDefinitionView(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         if serializer.is_valid():
-            serializer.save(contributor=self.request.user,)
+            serializer.save(
+                contributor=self.request.user,
+            )
         else:
             print(serializer.errors)
 

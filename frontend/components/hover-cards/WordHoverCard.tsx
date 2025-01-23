@@ -41,10 +41,7 @@ export default function WordHoverCard({ lang, word }: Props) {
               href={`/dictionary/${lang}/${word}/`}
               className="flex gap-2 items-center"
             >
-              <Badge
-                variant="outline"
-                className="truncate flex justify-center"
-              >
+              <Badge variant="outline" className="truncate flex justify-center">
                 {word}
               </Badge>
             </Link>
@@ -53,13 +50,11 @@ export default function WordHoverCard({ lang, word }: Props) {
           <HoverCardContent className="max-w-80">
             <div className="flex flex-col gap-1">
               <div className="flex flex-col gap-1">
-                {loading ?
+                {loading ? (
                   <Skeleton className="w-24 h-4" />
-                :
-                  <h2 className="font-semibold truncate">
-                    {word}
-                  </h2>
-                }
+                ) : (
+                  <h2 className="font-semibold truncate">{word}</h2>
+                )}
                 <div className="flex gap-1 items-center">
                   {loading ? (
                     <Skeleton className="w-8 h-4" />
@@ -76,13 +71,13 @@ export default function WordHoverCard({ lang, word }: Props) {
                 </div>
               </div>
 
-              {loading ?
+              {loading ? (
                 <Skeleton className="w-32 h-2" />
-              :
+              ) : (
                 <p className="text-xs w-full">
                   {wordObj?.best_definition || 'This word has no definition'}
                 </p>
-              }
+              )}
             </div>
           </HoverCardContent>
         </>

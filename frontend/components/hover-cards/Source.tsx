@@ -12,10 +12,7 @@ interface Props {
   source_link?: string;
 }
 
-export default function Source({
-  source_title = '',
-  source_link = '',
-}: Props) {
+export default function Source({ source_title = '', source_link = '' }: Props) {
   return (
     <TooltipProvider>
       <Tooltip>
