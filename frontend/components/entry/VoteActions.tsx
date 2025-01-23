@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '../providers/AuthProvider';
 import { Entry, Vote } from '@/types/core';
@@ -26,11 +26,10 @@ export default function VoteActions({ entry, votes }: Props) {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const [currentVote, setCurrentVote] = useState<Vote | undefined>();
+  const [currentVote, setCurrentVote] = useState<Vote | undefined>(
+    votes.find((vote) => vote.user === auth.username)
+  );
 
-  useEffect(() => {
-    setCurrentVote(votes.find((vote) => vote.user === auth.username));
-  }, [votes, auth.username]);
 
   const handleVote = async (value: -1 | 0 | 1) => {
     setIsLoading(true);
@@ -48,13 +47,24 @@ export default function VoteActions({ entry, votes }: Props) {
       return;
     }
 
+    const previousVote = currentVote;
+    const now = new Date();
+
+    setCurrentVote({
+      user: auth.username,
+      value: value,
+      voted_at: now,
+    });
+
     try {
       const res = await vote(entry, value);
-      if (res?.error) {
+      if (res && typeof res === 'object' && Object.keys(res).length === 0 || res?.error) {
+        setCurrentVote(previousVote);
         toast.error('Failed to vote.');
       }
     } catch (error) {
       console.error(error);
+      setCurrentVote(previousVote);
       toast.error('Failed to vote.');
     } finally {
       setIsLoading(false);
@@ -67,7 +77,7 @@ export default function VoteActions({ entry, votes }: Props) {
         variant="ghost"
         size="icon"
         className="p-0 text-lg"
-        type="submit"
+        type="button"
         disabled={isLoading}
         onClick={() => handleVote(currentVote?.value === 1 ? 0 : 1)}
       >
@@ -80,7 +90,7 @@ export default function VoteActions({ entry, votes }: Props) {
         variant="ghost"
         size="icon"
         className="p-0 text-lg"
-        type="submit"
+        type="button"
         disabled={isLoading}
         onClick={() => handleVote(currentVote?.value === -1 ? 0 : -1)}
       >
