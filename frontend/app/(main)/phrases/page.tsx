@@ -1,7 +1,6 @@
 import React, { Suspense } from 'react';
 import getLangs from '@/lib/langs/getLangs';
 import getCategories from '@/lib/phrases/getCategories';
-import AddPhraseForm from './AddPhraseForm';
 import PhrasesList, { PhrasesListSkeleton } from './PhrasesList';
 import { SortOption } from '@/components/filter/SortDropdown';
 import { FilterOption } from '@/components/filter/FilterMenu';
@@ -55,7 +54,6 @@ export default async function PhrasesPage({ searchParams }: Props) {
 
   return (
     <>
-      <AddPhraseForm className="mb-4 py-2 border-t border-b" />
       <FilterControls
         searchTerm={searchTerm}
         sortOption={sortOption}

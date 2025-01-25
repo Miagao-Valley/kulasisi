@@ -77,6 +77,7 @@ export default function AddPhraseForm({ className = '' }: Props) {
                 <AutosizeTextarea
                   className="p-1 text-xl resize-none borderless-input"
                   placeholder="Enter a phrase"
+                  autoFocus
                   {...field}
                 />
               </FormControl>
