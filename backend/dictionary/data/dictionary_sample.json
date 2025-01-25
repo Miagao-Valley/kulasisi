@@ -1,0 +1,174 @@
+[
+  {
+    "word": "good",
+    "lang": "eng",
+    "source_title": "Example Source",
+    "source_link": "https://example.com/",
+    "definitions": [
+      {
+        "description": "mabait",
+        "lang": "tgl",
+        "pos": "adj",
+        "synonyms": ["kind"],
+        "antonyms": ["bad"],
+        "usage_note": "A common usage for describing someone with good qualities.",
+        "source_title": "Example Source",
+        "source_link": "https://example.com/"
+      }
+    ]
+  },
+  {
+    "word": "kind",
+    "lang": "eng",
+    "source_title": "Example Source",
+    "source_link": "https://example.com/",
+    "definitions": [
+      {
+        "description": "mabait",
+        "lang": "tgl",
+        "pos": "adj",
+        "synonyms": [],
+        "antonyms": [],
+        "usage_note": "A common usage for describing someone with good qualities.",
+        "source_title": "Example Source",
+        "source_link": "https://example.com/"
+      }
+    ]
+  },
+  {
+    "word": "bad",
+    "lang": "eng",
+    "source_title": "Example Source",
+    "source_link": "https://example.com/",
+    "definitions": [
+      {
+        "description": "masama",
+        "lang": "tgl",
+        "pos": "adj",
+        "synonyms": [],
+        "antonyms": [],
+        "usage_note": "A common usage for describing someone with bad qualities.",
+        "source_title": "Example Source",
+        "source_link": "https://example.com/"
+      }
+    ]
+  },
+  {},
+  {
+    "word": "",
+    "lang": "",
+    "source_title": "",
+    "source_link": "",
+    "definitions": []
+  },
+  {
+    "word": "invalid source",
+    "lang": "eng",
+    "source_title": "Invalid Source",
+    "source_link": "broken.link",
+    "definitions": [
+      {
+        "description": "di wastong source",
+        "lang": "tgl",
+        "pos": "noun",
+        "synonyms": [],
+        "antonyms": [],
+        "usage_note": "Describes something that is invalid.",
+        "source_title": "Invalid Source",
+        "source_link": "broken.link"
+      }
+    ]
+  },
+  {
+    "word": "empty pos",
+    "lang": "eng",
+    "source_title": "Example Source",
+    "source_link": "https://example.com/",
+    "definitions": [
+      {
+        "description": "walang pos",
+        "lang": "tgl",
+        "pos": "",
+        "synonyms": [],
+        "antonyms": [],
+        "usage_note": "Used to describe something with no content.",
+        "source_title": "Example Source",
+        "source_link": "https://example.com/"
+      }
+    ]
+  },
+  {
+    "word": "invalid pos",
+    "lang": "eng",
+    "source_title": "Example Source",
+    "source_link": "https://example.com/",
+    "definitions": [
+      {
+        "description": "di wastong pos",
+        "lang": "tgl",
+        "pos": "xyz",
+        "synonyms": [],
+        "antonyms": [],
+        "usage_note": "Describes something that is not valid or acceptable.",
+        "source_title": "Example Source",
+        "source_link": "https://example.com/"
+      }
+    ]
+  },
+  {
+    "word": "synonyms and antonyms error",
+    "lang": "eng",
+    "source_title": "Example Source",
+    "source_link": "https://example.com/",
+    "definitions": [
+      {
+        "description": "maling synonyms at antonyms",
+        "lang": "tgl",
+        "pos": "noun",
+        "synonyms": ["nonexistentword"],
+        "antonyms": ["anothernonexistentword"],
+        "usage_note": "This entry has invalid synonyms and antonyms.",
+        "source_title": "Example Source",
+        "source_link": "https://example.com/"
+      }
+    ]
+  },
+  {
+    "word": "pneumonoultramicroscopicsilicovolcanoconiosis",
+    "lang": "eng",
+    "source_title": "This is a very long source which you cannot read in full (The thirty first of January, 1999)",
+    "source_link": "http://llanfairpwllgwyngyllgogerychwyrndrobwllllantysiliogogogoch.co.uk/",
+    "definitions": [
+      {
+        "description": "Ang pinakamahabang salita sa wikang Ingles ay pneumonoultramicroscopicsilicovolcanoconiosis, na mayroong 45 letra. Ito ay tumutukoy sa isang sakit sa baga na dulot ng paglanghap ng silica dust mula sa mga bulkan.",
+        "lang": "tgl",
+        "pos": "noun",
+        "synonyms": [],
+        "antonyms": [],
+        "usage_note": "This definition text is so long that it might be difficult to read fully in certain interfaces, potentially requiring truncation or special handling for display.",
+        "source_title": "This is a very long source which you cannot read in full (The thirty first of January, 1999)",
+        "source_link": "http://llanfairpwllgwyngyllgogerychwyrndrobwllllantysiliogogogoch.co.uk/"
+      }
+    ]
+  },
+  {
+    "word": "invalid fields",
+    "lang": "eng",
+    "source_title": "Example Source",
+    "source_link": "https://example.com/",
+    "new_field": "I don't belong here.",
+    "definitions": [
+      {
+        "description": "may mga maling fields",
+        "lang": "tgl",
+        "pos": "noun",
+        "synonyms": [],
+        "antonyms": [],
+        "usage_note": "This entry has invalid fields.",
+        "source_title": "Example Source",
+        "source_link": "https://example.com/",
+        "another_field": "I don't belong here either."
+      }
+    ]
+  }
+]

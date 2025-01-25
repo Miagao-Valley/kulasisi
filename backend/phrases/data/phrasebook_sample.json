@@ -1,0 +1,209 @@
+[
+  {
+    "phrase": "Good morning",
+    "lang": "eng",
+    "categories": ["basics"],
+    "usage_note": "A common greeting in the morning.",
+    "source_title": "Basic Phrase Source",
+    "source_link": "https://example.com/good-morning",
+    "translations": [
+      {
+        "content": "Magandang umaga",
+        "lang": "tgl",
+        "source_title": "Basic Phrase Source",
+        "source_link": "https://example.com/good-morning"
+      }
+    ]
+  },
+  {},
+  {
+    "phrase": "",
+    "lang": "",
+    "translations": []
+  },
+  {
+    "phrase": "",
+    "lang": "eng",
+    "categories": ["basics"],
+    "usage_note": "This phrase has no content.",
+    "source_title": "Example Source",
+    "source_link": "https://example.com/",
+    "translations": [
+      {
+        "content": "Walang laman",
+        "lang": "tgl",
+        "source_title": "Example Source",
+        "source_link": "https://example.com/"
+      }
+    ]
+  },
+  {
+    "phrase": "I have no translations",
+    "lang": "eng",
+    "categories": ["basics"],
+    "usage_note": "This phrase has an empty list of translations.",
+    "source_title": "Example Source",
+    "source_link": "https://example.com/",
+    "translations": []
+  },
+  {
+    "phrase": "I have no translation content",
+    "lang": "eng",
+    "categories": ["basics"],
+    "usage_note": "This phrase has a translation with no content.",
+    "source_title": "Example Source",
+    "source_link": "https://example.com/",
+    "translations": [
+      {
+        "content": "",
+        "lang": "tgl",
+        "source_title": "Example Source",
+        "source_link": "https://example.com/"
+      }
+    ]
+  },
+  {
+    "phrase": "I have many translations",
+    "lang": "eng",
+    "categories": ["basics"],
+    "usage_note": "This phrase has multiple translation.",
+    "source_title": "Example Source",
+    "source_link": "https://example.com/",
+    "translations": [
+      {
+        "content": "Isa",
+        "lang": "tgl",
+        "source_title": "Example Source",
+        "source_link": "https://example.com/"
+      },
+      {
+        "content": "Dalawa",
+        "lang": "tgl",
+        "source_title": "Example Source",
+        "source_link": "https://example.com/"
+      }
+    ]
+  },
+  {
+    "phrase": "I have no language",
+    "lang": "",
+    "categories": ["basics"],
+    "usage_note": "This phrase has no language code.",
+    "source_title": "Example Source",
+    "source_link": "https://example.com/",
+    "translations": []
+  },
+  {
+    "phrase": "I have an invalid language",
+    "lang": "xyz",
+    "categories": ["problems"],
+    "usage_note": "This phrase has an invalid language code.",
+    "source_title": "Example Source",
+    "source_link": "https://example.com/",
+    "translations": []
+  },
+  {
+    "phrase": "I'm from another language",
+    "lang": "ceb",
+    "categories": ["basics"],
+    "usage_note": "This phrase has a different language code.",
+    "source_title": "Example Source",
+    "source_link": "https://example.com/",
+    "translations": [
+      {
+        "content": "Ambot",
+        "lang": "hil",
+        "source_title": "Example Source",
+        "source_link": "https://example.com/"
+      }
+    ]
+  },
+  {
+    "phrase": "I have no source title",
+    "lang": "eng",
+    "categories": ["basics"],
+    "usage_note": "This phrase is assigned an empty source title.",
+    "source_title": "",
+    "source_link": "https://example.com/",
+    "translations": []
+  },
+  {
+    "phrase": "I have no source link",
+    "lang": "eng",
+    "categories": ["basics"],
+    "usage_note": "This phrase is assigned an empty source link.",
+    "source_title": "No Link",
+    "source_link": "",
+    "translations": []
+  },
+  {
+    "phrase": "404 here, I'm broken:(",
+    "lang": "eng",
+    "categories": ["problems"],
+    "usage_note": "This phrase is assigned a broken link.",
+    "source_title": "",
+    "source_link": "broken.link",
+    "translations": []
+  },
+  {
+    "phrase": "I have no categories",
+    "lang": "eng",
+    "categories": [],
+    "usage_note": "This phrase is assigned no categories.",
+    "source_title": "Example Source",
+    "source_link": "https://example.com/",
+    "translations": []
+  },
+  {
+    "phrase": "I have too many categories",
+    "lang": "eng",
+    "categories": ["basics", "problems", "health", "transportation", "weather", "sports", "shopping"],
+    "usage_note": "This phrase is assigned to too many categories, which may make it difficult to manage and categorize effectively.",
+    "source_title": "Example Source",
+    "source_link": "https://example.com/",
+    "translations": []
+  },
+  {
+    "phrase": "My category is not found",
+    "lang": "eng",
+    "categories": ["notfound"],
+    "usage_note": "The category 'notfound' does not exist in the provided category list.",
+    "source_title": "Example Source",
+    "source_link": "https://example.com/",
+    "translations": []
+  },
+  {
+    "phrase": "Sentences can be made arbitrarily long in various ways, such as 'Someone thinks that someone thinks that someone thinks that nobody thinks that...,'",
+    "lang": "eng",
+    "source_title": "This is a very long source which you cannot read in full (The thirty first of January, 1999)",
+    "source_link": "http://llanfairpwllgwyngyllgogerychwyrndrobwllllantysiliogogogoch.co.uk/",
+    "categories": ["health"],
+    "usage_note": "This phrase is unusually long and may need to be split for easier reading on mobile devices or in small interfaces where it is harder to fit such texts, as it takes so much, yes, so much space. Even this usage note is so long you may not even be reading this last sentence. Oh, right, this is the last sentence. Oops, this might be it. Shoot, here it goes again. Ah, here it is. End.",
+    "translations": [
+      {
+        "content": "Maaaring gawing arbitraryo ang haba ng mga pangungusap sa iba't ibang paraan, gaya ng 'Iniisip ng isang tao na iniisip ng isang tao na iniisip ng isang tao na walang nag-iisip na...,'",
+        "lang": "tgl",
+        "source_title": "This is the same very long source which you cannot read in full (The thirty first of January, 1999)",
+        "source_link": "http://llanfairpwllgwyngyllgogerychwyrndrobwllllantysiliogogogoch.co.uk/"
+      }
+    ]
+  },
+  {
+    "phrase": "I am confused",
+    "lang": "eng",
+    "source_title": "Example Source",
+    "source_link": "https://example.com/",
+    "categories": ["problems"],
+    "usage_note": "This entry has an invalid field which is not recognized in the expected format.",
+    "new_field": "This field doesn't belong here",
+    "translations": [
+      {
+        "content": "Nalilito ako",
+        "lang": "tgl",
+        "source_title": "Example Source",
+        "source_link": "https://example.com/",
+        "another_field": "This also field doesn't belong here"
+      }
+    ]
+  }
+]
