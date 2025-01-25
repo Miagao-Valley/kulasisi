@@ -25,6 +25,8 @@ interface Props {
   selectedLang: string;
   setSelectedLang: (value: string) => void;
   exclude?: string[];
+  showChevrons?: boolean;
+  placeholder?: string;
   className?: string;
 }
 
@@ -32,6 +34,8 @@ export default function LangSelect({
   selectedLang,
   setSelectedLang,
   exclude = [],
+  showChevrons = true,
+  placeholder,
   className = '',
 }: Props) {
   const [langs, setLangs] = useState<Lang[]>([]);
@@ -50,25 +54,25 @@ export default function LangSelect({
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
-          variant={selectedLang ? null : 'ghost'}
+          variant={(selectedLang || placeholder) ? null : 'ghost'}
           size="sm"
           role="combobox"
           aria-expanded={open}
           className={cn('justify-between gap-1 px-1', className)}
         >
-          <ChevronsUpDown className="opacity-50" />
+          {showChevrons && <ChevronsUpDown className="opacity-50" />}
           {selectedLang ? (
             <Badge variant="outline">{selectedLang}</Badge>
           ) : (
-            <LanguagesIcon />
+            placeholder ? <Badge variant="outline">{placeholder}</Badge> : <LanguagesIcon />
           )}
         </Button>
       </PopoverTrigger>
 
       <PopoverContent className="w-56 p-0">
         <Command
-          onValueChange={(value) => setSelectedLang(value)}
-          filter={(code, search) => {
+          onValueChange={(value: string) => setSelectedLang(value)}
+          filter={(code: string, search: string) => {
             const lang = langs.find((lang) => lang.code === code);
             if (!lang) return 0;
             if (lang.name.toLowerCase().includes(search.toLowerCase()))

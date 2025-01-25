@@ -1,3 +1,4 @@
+from django.db.models import Count, Q
 from rest_framework import serializers
 
 from .models import Phrase, Translation, Category
@@ -30,6 +31,7 @@ class PhraseSerializer(serializers.ModelSerializer):
         queryset=Category.objects.all(), slug_field="name", many=True, required=False
     )
     vote_count = serializers.SerializerMethodField()
+    best_translations = serializers.SerializerMethodField()
     translation_count = serializers.SerializerMethodField()
 
     class Meta:
@@ -47,6 +49,7 @@ class PhraseSerializer(serializers.ModelSerializer):
             "created_at",
             "updated_at",
             "vote_count",
+            "best_translations",
             "translation_count",
         ]
         extra_kwargs = {
@@ -57,6 +60,29 @@ class PhraseSerializer(serializers.ModelSerializer):
 
     def get_vote_count(self, obj):
         return obj.votes.filter(value=1).count() - obj.votes.filter(value=-1).count()
+
+    def get_best_translations(self, obj):
+        translations = obj.translations.annotate(
+            vote_count=Count("votes", filter=Q(votes__value=1)) - Count("votes", filter=Q(votes__value=-1))
+        )
+
+        best_translations = {}
+        langs = obj.translations.values("lang").distinct()
+
+        for l in langs:
+            lang_id = l["lang"]
+
+            try:
+                lang = Language.objects.get(id=lang_id)
+            except Language.DoesNotExist:
+                continue
+
+            best_translation = translations.filter(lang=lang).order_by("-vote_count").first()
+
+            if best_translation:
+                best_translations[lang.code] = best_translation.content
+
+        return best_translations
 
     def get_translation_count(self, obj):
         return obj.translations.count()

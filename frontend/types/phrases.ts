@@ -11,6 +11,7 @@ export interface Phrase {
   created_at: Date;
   updated_at: Date;
   vote_count: number;
+  best_translations: { [key: string]: string }
   translation_count: number;
 }
 
