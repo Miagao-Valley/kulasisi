@@ -1,12 +1,19 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.fields import GenericRelation
+from django.core.validators import RegexValidator
 from simple_history.models import HistoricalRecords
 from core.models import Vote
 from users.models import User
 from languages.models import Language
 
 User = get_user_model()
+
+
+word_validator = RegexValidator(
+    regex=r'^[a-zA-Z0-9\-_ ]+$',  # Only letters, numbers, dashes, underscores, and spaces allowed
+    message="Invalid word. Only alphanumeric characters and underscores are allowed."
+)
 
 
 class PartOfSpeech(models.Model):
@@ -19,7 +26,7 @@ class PartOfSpeech(models.Model):
 
 
 class Word(models.Model):
-    word = models.CharField(max_length=64)
+    word = models.CharField(max_length=64, validators=[word_validator])
     lang = models.ForeignKey(Language, on_delete=models.PROTECT, related_name="words")
     contributor = models.ForeignKey(
         User, on_delete=models.PROTECT, related_name="words"
