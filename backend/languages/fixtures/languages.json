@@ -43,8 +43,8 @@
     "model": "languages.language",
     "pk": 6,
     "fields": {
-      "code": "bcl",
-      "name": "Central Bikol"
+      "code": "bik",
+      "name": "Bikol"
     }
   },
   {
