@@ -1,11 +1,11 @@
 import React, { Suspense } from 'react';
-import getLangs from '@/lib/langs/getLangs';
 import getPartsOfSpeech from '@/lib/definitions/getPartsOfSpeech';
-import AddWordForm from './AddWordForm';
 import WordsList, { WordsListSkeleton } from './WordsList';
 import { SortOption } from '@/components/filter/SortDropdown';
 import { FilterOption } from '@/components/filter/FilterMenu';
 import FilterControls from '@/components/filter/FilterControls';
+import WordSearch from './WordSearch';
+import LangFilter from '@/components/filter/LangFilter';
 import PosCard from './PosCard';
 
 interface Props {
@@ -15,13 +15,13 @@ interface Props {
 export default async function DictionaryPage({ searchParams }: Props) {
   const searchTerm = searchParams.q || '';
   const sortOption = searchParams.sort || '-vote_count';
-  const lang = searchParams.lang || '';
+  const sourceLang = searchParams.sl || '';
+  const targetLang = searchParams.tl || '';
   const pos = searchParams.pos || '';
   const page = Number(searchParams.page || 1);
 
-  const filters = { lang: lang, pos: pos };
+  const filters = { pos: pos };
 
-  const langs = await getLangs();
   const partsOfSpeech = await getPartsOfSpeech();
 
   const sortingOptions: SortOption[] = [
@@ -32,15 +32,6 @@ export default async function DictionaryPage({ searchParams }: Props) {
   ];
 
   const filterOptions: FilterOption[] = [
-    {
-      label: 'Language',
-      name: 'lang',
-      type: 'select',
-      options: langs.results.map(({ code, name }) => ({
-        label: name,
-        value: code,
-      })),
-    },
     {
       label: 'POS',
       name: 'pos',
@@ -54,18 +45,22 @@ export default async function DictionaryPage({ searchParams }: Props) {
 
   return (
     <>
-      <AddWordForm className="py-2 mb-4 border-t border-b" />
-      <FilterControls
-        searchTerm={searchTerm}
-        sortOption={sortOption}
-        sortingOptions={sortingOptions}
-        filters={filters}
-        filterOptions={filterOptions}
-        className="my-1"
-      />
+      <WordSearch currentSearchTerm={searchTerm} />
+      <div className="w-full flex justify-between">
+        <LangFilter currentSourceLang={sourceLang} currentTargetLang={targetLang} />
+        <FilterControls
+          sortOption={sortOption}
+          sortingOptions={sortingOptions}
+          filters={filters}
+          filterOptions={filterOptions}
+          className="!w-fit my-1"
+        />
+      </div>
       {filters.pos && <PosCard abbr={pos} className="my-2" />}
       <Suspense fallback={<WordsListSkeleton />}>
         <WordsList
+          sourceLang={sourceLang}
+          targetLang={targetLang}
           searchTerm={searchTerm}
           sortOption={sortOption}
           filters={filters}

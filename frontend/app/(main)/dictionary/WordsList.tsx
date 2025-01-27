@@ -10,6 +10,8 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Separator } from '@/components/ui/separator';
 
 interface Props {
+  sourceLang?: string;
+  targetLang?: string;
   searchTerm?: string;
   sortOption?: string;
   isDescending?: boolean;
@@ -19,6 +21,8 @@ interface Props {
 }
 
 export default async function WordsList({
+  sourceLang = '',
+  targetLang = '',
   searchTerm = '',
   sortOption = 'content',
   filters = {},
@@ -30,7 +34,7 @@ export default async function WordsList({
   const words = await getWords({
     search: searchTerm,
     ordering: sortOption,
-    lang__code: filters?.lang || '',
+    lang__code: sourceLang || '',
     contributor__username: filters?.contributor || '',
     definitions__pos__abbr: filters?.pos || '',
     limit: limit,
@@ -52,6 +56,7 @@ export default async function WordsList({
                     word={word}
                     votes={votes}
                     revisions={revisions.results}
+                    targetLang={targetLang}
                   />
                 </li>
               );

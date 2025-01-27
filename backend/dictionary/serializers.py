@@ -1,3 +1,4 @@
+from django.db.models import Count, Q
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 
@@ -33,6 +34,7 @@ class WordSerializer(DynamicFieldsSerializer):
     contributor_reputation = serializers.SerializerMethodField()
     parts_of_speech = serializers.SerializerMethodField()
     best_definition = serializers.SerializerMethodField()
+    best_definitions = serializers.SerializerMethodField()
     vote_count = serializers.SerializerMethodField()
 
     class Meta:
@@ -45,6 +47,7 @@ class WordSerializer(DynamicFieldsSerializer):
             "contributor_reputation",
             "parts_of_speech",
             "best_definition",
+            "best_definitions",
             "source_title",
             "source_link",
             "created_at",
@@ -80,6 +83,29 @@ class WordSerializer(DynamicFieldsSerializer):
             default=None,
         )
         return best_definition.description if best_definition else ""
+
+    def get_best_definitions(self, obj):
+        definitions = obj.definitions.annotate(
+            vote_count=Count("votes", filter=Q(votes__value=1)) - Count("votes", filter=Q(votes__value=-1))
+        )
+
+        best_definitions = {}
+        langs = obj.definitions.values("lang").distinct()
+
+        for l in langs:
+            lang_id = l["lang"]
+
+            try:
+                lang = Language.objects.get(id=lang_id)
+            except Language.DoesNotExist:
+                continue
+
+            best_definition = definitions.filter(lang=lang).order_by("-vote_count").first()
+
+            if best_definition:
+                best_definitions[lang.code] = best_definition.description
+
+        return best_definitions
 
     def get_vote_count(self, obj):
         return obj.votes.filter(value=1).count() - obj.votes.filter(value=-1).count()

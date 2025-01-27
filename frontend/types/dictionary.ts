@@ -6,6 +6,7 @@ export interface Word {
   contributor_reputation: number;
   parts_of_speech: string[];
   best_definition: string;
+  best_definitions: { [key: string]: string }
   source_title?: string;
   source_link?: string;
   created_at: Date;

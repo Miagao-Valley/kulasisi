@@ -22,6 +22,7 @@ interface Props {
   word: Word;
   votes: Vote[];
   revisions: WordRevision[];
+  targetLang?: string;
   clickable?: boolean;
   className?: string;
 }
@@ -30,6 +31,7 @@ export default function WordCard({
   word,
   votes,
   revisions,
+  targetLang,
   clickable = true,
   className = '',
 }: Props) {
@@ -58,6 +60,13 @@ export default function WordCard({
             <Link href={`/dictionary/${word.lang}/${word.word}/`}>
               <p className="mb-2 text-xl font-bold">{word.word}</p>
             </Link>
+            {(targetLang && word.best_definitions[targetLang]) &&
+              <Link href={`/dictionary/${word.lang}/${word.word}?tab=definitions`}>
+                <p className="text-sm bg-accent/50 text-accent-foreground hover:text-primary rounded-sm p-2 mb-1 whitespace-pre-line">
+                  {word.best_definitions[targetLang]}
+                </p>
+              </Link>
+            }
             <div className="flex gap-0 items-center">
               <div className="flex gap-1 items-center me-1">
                 {word.parts_of_speech.map((pos) => (
