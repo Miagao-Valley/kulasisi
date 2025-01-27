@@ -3,6 +3,7 @@ import { Phrase } from '@/types/phrases';
 import getLangs from '@/lib/langs/getLangs';
 import AddTranslationForm from './AddTranslationForm';
 import TranslationsList, { TranslationsListSkeleton } from './TranslationsList';
+import GoogleTranslateCard from '../GoogleTranslateCard';
 import { SortOption } from '@/components/filter/SortDropdown';
 import { FilterOption } from '@/components/filter/FilterMenu';
 import FilterControls from '@/components/filter/FilterControls';
@@ -56,7 +57,11 @@ export default async function TranslationsSection({
         sortingOptions={sortingOptions}
         filters={filters}
         filterOptions={filterOptions}
+        className="my-1"
       />
+      {(phrase.content && phrase.lang && filters.lang) &&
+        <GoogleTranslateCard text={phrase.content} source={phrase.lang} target={filters.lang} className="my-1" />
+      }
       <Suspense fallback={<TranslationsListSkeleton />}>
         <TranslationsList
           phraseId={phrase.id}

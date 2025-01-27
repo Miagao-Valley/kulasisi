@@ -47,4 +47,5 @@ urlpatterns = [
         views.RetrieveUpdateDestroyCategoryView.as_view(),
         name="category",
     ),
+    path("google-translate/", views.GoogleTranslateView.as_view(), name="google-translate"),
 ]

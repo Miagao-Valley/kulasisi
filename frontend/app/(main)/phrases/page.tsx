@@ -7,6 +7,7 @@ import FilterControls from '@/components/filter/FilterControls';
 import CategoryCard from './CategoryCard';
 import PhraseSearch from './PhraseSearch';
 import LangFilter from '@/components/filter/LangFilter';
+import GoogleTranslateCard from './GoogleTranslateCard';
 
 interface Props {
   searchParams: { [key: string]: string | undefined };
@@ -58,6 +59,9 @@ export default async function PhrasesPage({ searchParams }: Props) {
         />
       </div>
       {filters.category && <CategoryCard name={category} className="my-2" />}
+      {(searchTerm && sourceLang && targetLang) &&
+        <GoogleTranslateCard text={searchTerm} source={sourceLang} target={targetLang} className="my-1" />
+      }
       <Suspense fallback={<PhrasesListSkeleton />}>
         <PhrasesList
           sourceLang={sourceLang}
