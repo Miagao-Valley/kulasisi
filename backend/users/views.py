@@ -2,10 +2,11 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth import update_session_auth_hash
 from django.db.models import Count, Avg, Q
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.exceptions import PermissionDenied, ValidationError
+from rest_framework.exceptions import PermissionDenied
 from rest_framework.permissions import IsAuthenticated
-from rest_framework import generics, views
+from rest_framework import generics
 from rest_framework.filters import SearchFilter, OrderingFilter
 
 from .models import User
@@ -84,103 +85,82 @@ class UpdateUserView(generics.UpdateAPIView):
         return user
 
 
-class ChangeEmailView(views.APIView):
+class ChangeEmailView(generics.GenericAPIView):
     permission_classes = [IsAuthenticated]
+    serializer_class = ChangeEmailSerializer
 
     def post(self, request, *args, **kwargs):
         user = get_object_or_404(User, username=self.kwargs["username"])
 
-        if user != self.request.user:
-            raise PermissionDenied(
-                detail="You do not have permission to change this account's password."
-            )
+        if user != request.user:
+            raise PermissionDenied("You do not have permission to change this account's email.")
 
-        serializer = ChangeEmailSerializer(
-            data=request.data, context={"request": request}
-        )
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
 
-        if not serializer.is_valid():
-            raise ValidationError(serializer.errors)
-
-        new_email = serializer.validated_data["new_email"]
-        user.email = new_email
+        user.email = serializer.validated_data["new_email"]
         user.save()
 
-        return Response({"detail": "Email updated successfully."}, status=200)
+        return Response({"detail": "Email updated successfully."}, status=status.HTTP_200_OK)
 
 
-class ChangePhoneNumberView(views.APIView):
+class ChangePhoneNumberView(generics.GenericAPIView):
     permission_classes = [IsAuthenticated]
+    serializer_class = ChangePhoneNumberSerializer
 
     def post(self, request, *args, **kwargs):
         user = get_object_or_404(User, username=self.kwargs["username"])
 
-        if user != self.request.user:
-            raise PermissionDenied(
-                detail="You do not have permission to change this account's password."
-            )
+        if user != request.user:
+            raise PermissionDenied("You do not have permission to change this account's phone number.")
 
-        serializer = ChangePhoneNumberSerializer(
-            data=request.data, context={"request": request}
-        )
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
 
-        if not serializer.is_valid():
-            raise ValidationError(serializer.errors)
-
-        new_phone_number = serializer.validated_data["new_phone_number"]
-        user.phone_number = new_phone_number
+        user.phone_number = serializer.validated_data["new_phone_number"]
         user.save()
 
-        return Response({"detail": "Phone number updated successfully."}, status=200)
+        return Response({"detail": "Phone number updated successfully."}, status=status.HTTP_200_OK)
 
 
-class ChangePasswordView(views.APIView):
+class ChangePasswordView(generics.GenericAPIView):
     permission_classes = [IsAuthenticated]
+    serializer_class = ChangePasswordSerializer
 
     def post(self, request, *args, **kwargs):
         user = get_object_or_404(User, username=self.kwargs["username"])
 
-        if user != self.request.user:
-            raise PermissionDenied(
-                detail="You do not have permission to change this account's password."
-            )
+        if user != request.user:
+            raise PermissionDenied("You do not have permission to change this account's password.")
 
-        serializer = ChangePasswordSerializer(
-            data=request.data, context={"request": request}
-        )
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
 
-        if not serializer.is_valid():
-            raise ValidationError(serializer.errors)
-
-        new_password = serializer.validated_data["new_password"]
-        user.set_password(new_password)
+        user.set_password(serializer.validated_data["new_password"])
         user.save()
 
         update_session_auth_hash(request, user)
 
-        return Response({"detail": "Password changed successfully."}, status=200)
+        return Response({"detail": "Password changed successfully."}, status=status.HTTP_200_OK)
 
 
 class DeleteUserView(generics.DestroyAPIView):
     queryset = User.objects.all()
-    lookup_field = "username"
+    serializer_class = DeleteUserSerializer
     permission_classes = [IsAuthenticated]
+    lookup_field = "username"
 
     def get_object(self):
         user = get_object_or_404(User, username=self.kwargs["username"])
 
         if user != self.request.user:
-            raise PermissionDenied(
-                detail="You do not have permission to delete this account."
-            )
+            raise PermissionDenied("You do not have permission to delete this account.")
 
         return user
 
     def perform_destroy(self, instance):
-        serializer = DeleteUserSerializer(data=self.request.data)
-
-        if not serializer.is_valid():
-            raise ValidationError(serializer.errors)
+        serializer = self.get_serializer(data=self.request.data)
+        serializer.is_valid(raise_exception=True)
 
         instance.delete()
-        return Response({"detail": "User account deleted successfully."}, status=204)
+        return Response({"detail": "User account deleted successfully."}, status=status.HTTP_204_NO_CONTENT)
