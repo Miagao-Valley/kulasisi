@@ -58,10 +58,10 @@ class PhraseSerializer(serializers.ModelSerializer):
             "translation_count": {"read_only": True},
         }
 
-    def get_vote_count(self, obj):
+    def get_vote_count(self, obj: Phrase) -> int:
         return obj.votes.filter(value=1).count() - obj.votes.filter(value=-1).count()
 
-    def get_best_translations(self, obj):
+    def get_best_translations(self, obj: Phrase) -> dict[str, str]:
         translations = obj.translations.annotate(
             vote_count=Count("votes", filter=Q(votes__value=1)) - Count("votes", filter=Q(votes__value=-1))
         )
@@ -84,10 +84,10 @@ class PhraseSerializer(serializers.ModelSerializer):
 
         return best_translations
 
-    def get_translation_count(self, obj):
+    def get_translation_count(self, obj: Phrase) -> int:
         return obj.translations.count()
 
-    def get_contributor_reputation(self, obj):
+    def get_contributor_reputation(self, obj: Phrase) -> int:
         return obj.contributor.get_reputation()
 
     def update(self, instance, validated_data):
@@ -138,10 +138,10 @@ class TranslationSerializer(serializers.ModelSerializer):
             "vote_count": {"read_only": True},
         }
 
-    def get_vote_count(self, obj):
+    def get_vote_count(self, obj: Translation) -> int:
         return obj.votes.filter(value=1).count() - obj.votes.filter(value=-1).count()
 
-    def get_contributor_reputation(self, obj):
+    def get_contributor_reputation(self, obj: Translation) -> int:
         return obj.contributor.get_reputation()
 
     def validate(self, attrs):

@@ -53,22 +53,22 @@ class UserSerializer(serializers.ModelSerializer):
             "location": {"required": True},
         }
 
-    def get_reputation(self, obj):
+    def get_reputation(self, obj: User) -> int:
         return obj.get_reputation()
 
-    def get_phrase_count(self, obj):
+    def get_phrase_count(self, obj: User) -> int:
         return obj.phrases.count()
 
-    def get_translation_count(self, obj):
+    def get_translation_count(self, obj: User) -> int:
         return obj.translations.count()
 
-    def get_word_count(self, obj):
+    def get_word_count(self, obj: User) -> int:
         return obj.words.count()
 
-    def get_definition_count(self, obj):
+    def get_definition_count(self, obj: User) -> int:
         return obj.definitions.count()
 
-    def get_vote_count(self, obj):
+    def get_vote_count(self, obj: User) -> int:
         return obj.votes.count()
 
     def validate(self, data):

@@ -25,22 +25,22 @@ class LanguageSerializer(serializers.ModelSerializer):
             "users_by_proficiency",
         ]
 
-    def get_user_count(self, obj):
+    def get_user_count(self, obj: Language) -> int:
         return obj.proficiencies.count()
 
-    def get_phrase_count(self, obj):
+    def get_phrase_count(self, obj: Language) -> int:
         return obj.phrases.count()
 
-    def get_translation_count(self, obj):
+    def get_translation_count(self, obj: Language) -> int:
         return obj.translations.count()
 
-    def get_word_count(self, obj):
+    def get_word_count(self, obj: Language) -> int:
         return obj.words.count()
 
-    def get_definition_count(self, obj):
+    def get_definition_count(self, obj: Language) -> int:
         return obj.definitions.count()
 
-    def get_users_by_proficiency(self, obj):
+    def get_users_by_proficiency(self, obj: Language) -> dict[str, int]:
         users_by_level = {}
         for level in [1, 2, 3, 4, 5]:
             users_by_level[level] = obj.proficiencies.filter(level=level).count()

@@ -59,17 +59,17 @@ class WordSerializer(DynamicFieldsSerializer):
             "vote_count": {"read_only": True},
         }
 
-    def get_contributor_reputation(self, obj):
+    def get_contributor_reputation(self, obj: Word) -> int:
         return obj.contributor.get_reputation()
 
-    def get_parts_of_speech(self, obj):
+    def get_parts_of_speech(self, obj: Word) -> list[str]:
         return [
             definition.pos.abbr
             for definition in obj.definitions.all()
             if definition.pos
         ]
 
-    def get_best_definition(self, obj):
+    def get_best_definition(self, obj: Word) -> str:
         definitions = obj.definitions.filter(lang=obj.lang)
         if not definitions:
             definitions = obj.definitions.filter(lang__code="eng")
@@ -84,7 +84,7 @@ class WordSerializer(DynamicFieldsSerializer):
         )
         return best_definition.description if best_definition else ""
 
-    def get_best_definitions(self, obj):
+    def get_best_definitions(self, obj: Word) -> list[str]:
         definitions = obj.definitions.annotate(
             vote_count=Count("votes", filter=Q(votes__value=1)) - Count("votes", filter=Q(votes__value=-1))
         )
@@ -107,7 +107,7 @@ class WordSerializer(DynamicFieldsSerializer):
 
         return best_definitions
 
-    def get_vote_count(self, obj):
+    def get_vote_count(self, obj: Word) -> int:
         return obj.votes.filter(value=1).count() - obj.votes.filter(value=-1).count()
 
     def update(self, instance, validated_data):
@@ -170,10 +170,10 @@ class DefinitionSerializer(serializers.ModelSerializer):
             "vote_count": {"read_only": True},
         }
 
-    def get_vote_count(self, obj):
+    def get_vote_count(self, obj: Definition) -> int:
         return obj.votes.filter(value=1).count() - obj.votes.filter(value=-1).count()
 
-    def get_contributor_reputation(self, obj):
+    def get_contributor_reputation(self, obj: Definition) -> int:
         return obj.contributor.get_reputation()
 
     def to_internal_value(self, data):
