@@ -1,5 +1,5 @@
 """
-URL configuration for backend project.
+URL confsiguration for backend project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.1/topics/http/urls/
@@ -27,8 +27,9 @@ from users.views import CreateUserView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("schema/", SpectacularAPIView.as_view(), name="schema"),
     path("", SpectacularRedocView.as_view(url_name="schema"), name="redoc"),
+    path('swagger/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    path("schema/", SpectacularAPIView.as_view(), name="schema"),
     path("register/", CreateUserView.as_view(), name="register"),
     path("token/", TokenObtainPairView.as_view(), name="get_token"),
     path("token/refresh/", TokenRefreshView.as_view(), name="refresh_token"),
