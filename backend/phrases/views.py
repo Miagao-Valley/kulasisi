@@ -6,7 +6,6 @@ from django.db.models.functions import Coalesce
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
 from rest_framework import generics
-from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
@@ -20,6 +19,7 @@ from .serializers import (
     TranslationSerializer,
     TranslationHistorySerializer,
     CategorySerializer,
+    GoogleTranslateSerializer,
 )
 from .constants import ISO639_3_to_GoogleTranslate
 
@@ -154,8 +154,8 @@ class RetrieveUpdateDestroyCategoryView(generics.RetrieveUpdateDestroyAPIView):
     lookup_field = "name"
 
 
-class GoogleTranslateView(APIView):
-    permission_classes = [IsAuthenticatedOrReadOnly]
+class GoogleTranslateView(generics.GenericAPIView):
+    serializer_class = GoogleTranslateSerializer
 
     async def translate_text(self, text, source, target):
         """Helper method to handle the async translation."""
@@ -163,34 +163,33 @@ class GoogleTranslateView(APIView):
             result = await translator.translate(text, src=source, dest=target)
             return result.text
 
-    def get(self, request, *args, **kwargs):
-        text = request.query_params.get("text", "")
-        source = request.query_params.get("sl", "auto")
-        target = request.query_params.get("tl", "eng")
-        print(text, source, target)
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
 
-        if not text.strip():
-            return Response({"text": "Text is required."}, status=status.HTTP_400_BAD_REQUEST)
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        if source not in ISO639_3_to_GoogleTranslate:
-            return Response({"source": f"Invalid source language code: {source}"}, status=status.HTTP_400_BAD_REQUEST)
-
-        if target not in ISO639_3_to_GoogleTranslate:
-            return Response({"target": f"Invalid target language code: {target}"}, status=status.HTTP_400_BAD_REQUEST)
-
-        source = ISO639_3_to_GoogleTranslate[source]
-        target = ISO639_3_to_GoogleTranslate[target]
+        validated_data = serializer.validated_data
+        text = validated_data["text"]
+        source = ISO639_3_to_GoogleTranslate[validated_data["source"]]
+        target = ISO639_3_to_GoogleTranslate[validated_data["target"]]
 
         try:
             translated_text = asyncio.run(self.translate_text(text, source, target))
         except Exception as e:
-            return Response({"detail": f"An error occurred during translation: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(
+                {"detail": f"An error occurred during translation: {str(e)}"},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
 
         encoded_text = quote(text)
         google_translate_url = f"https://translate.google.com/?sl={source}&tl={target}&text={encoded_text}"
 
-        return Response({
-            "original": text,
-            "translated": translated_text,
-            "google_translate_url": google_translate_url
-        }, status=status.HTTP_200_OK)
+        return Response(
+            {
+                "text": text,
+                "translated": translated_text,
+                "google_translate_url": google_translate_url,
+            },
+            status=status.HTTP_200_OK,
+        )

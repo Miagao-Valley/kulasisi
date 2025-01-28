@@ -4,7 +4,7 @@ from rest_framework import serializers
 from .models import Phrase, Translation, Category
 from users.models import User
 from languages.models import Language
-
+from .constants import ISO639_3_to_GoogleTranslate
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -169,3 +169,12 @@ class TranslationHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Translation.history.model
         fields = ["history_id", "content", "history_user", "history_date"]
+
+
+class GoogleTranslateSerializer(serializers.Serializer):
+    text = serializers.CharField(required=True)
+    source = serializers.ChoiceField(choices=list(ISO639_3_to_GoogleTranslate.keys()), default="auto", write_only=True)
+    target = serializers.ChoiceField(choices=list(ISO639_3_to_GoogleTranslate.keys()), default="eng", write_only=True)
+    original = serializers.CharField(read_only=True)
+    translated = serializers.CharField(read_only=True)
+    google_translate_url = serializers.URLField(read_only=True)

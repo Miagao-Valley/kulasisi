@@ -5,14 +5,19 @@ export default async function googleTranslate(
 ) {
   let res = null;
   try {
-    const query = new URLSearchParams({
+    const body = JSON.stringify({
       text,
-      sl: source,
-      tl: target,
+      source,
+      target,
     });
 
-
-    res = await fetcher(`/phrases/google-translate?${query.toString()}`,);
+    res = await fetcher('/phrases/google-translate/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: body,
+    });
   } catch (error) {
     const fetchError = error as FetchError;
     return { error: fetchError.resBody };

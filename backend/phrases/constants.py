@@ -1,4 +1,5 @@
 ISO639_3_to_GoogleTranslate = {
+    "auto": "auto",
     "eng": "en",
     "tgl": "tl",
     "ceb": "ceb",
