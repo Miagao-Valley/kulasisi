@@ -41,6 +41,8 @@ class ListUserView(generics.ListAPIView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
+
+        # Annotate each language with reputations, language proficiencies, entry counts, and vote count.
         base_points = Count("phrases") + Count("translations")
         upvotes = Count("votes", filter=Q(votes__value=1)) * 10
         downvotes = Count("votes", filter=Q(votes__value=-1)) * -2
@@ -54,6 +56,7 @@ class ListUserView(generics.ListAPIView):
             definition_count=Count("definitions"),
             vote_count=Count("votes"),
         )
+
         return queryset
 
 
@@ -78,9 +81,7 @@ class UpdateUserView(generics.UpdateAPIView):
         user = get_object_or_404(User, username=self.kwargs["username"])
 
         if user != self.request.user:
-            raise PermissionDenied(
-                detail="You do not have permission to update this account."
-            )
+            raise PermissionDenied(detail="You do not have permission to update this account.")
 
         return user
 
@@ -93,7 +94,7 @@ class ChangeEmailView(generics.GenericAPIView):
         user = get_object_or_404(User, username=self.kwargs["username"])
 
         if user != request.user:
-            raise PermissionDenied("You do not have permission to change this account's email.")
+            raise PermissionDenied(detail="You do not have permission to change this account's email.")
 
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -101,7 +102,7 @@ class ChangeEmailView(generics.GenericAPIView):
         user.email = serializer.validated_data["new_email"]
         user.save()
 
-        return Response({"detail": "Email updated successfully."}, status=status.HTTP_200_OK)
+        return Response({"new_email": user.email}, status=status.HTTP_200_OK)
 
 
 class ChangePhoneNumberView(generics.GenericAPIView):
@@ -112,7 +113,7 @@ class ChangePhoneNumberView(generics.GenericAPIView):
         user = get_object_or_404(User, username=self.kwargs["username"])
 
         if user != request.user:
-            raise PermissionDenied("You do not have permission to change this account's phone number.")
+            raise PermissionDenied(detail="You do not have permission to change this account's phone number.")
 
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -120,7 +121,7 @@ class ChangePhoneNumberView(generics.GenericAPIView):
         user.phone_number = serializer.validated_data["new_phone_number"]
         user.save()
 
-        return Response({"detail": "Phone number updated successfully."}, status=status.HTTP_200_OK)
+        return Response({"new_phone_number": user.phone_number}, status=status.HTTP_200_OK)
 
 
 class ChangePasswordView(generics.GenericAPIView):
@@ -131,7 +132,7 @@ class ChangePasswordView(generics.GenericAPIView):
         user = get_object_or_404(User, username=self.kwargs["username"])
 
         if user != request.user:
-            raise PermissionDenied("You do not have permission to change this account's password.")
+            raise PermissionDenied(detail="You do not have permission to change this account's password.")
 
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -154,7 +155,7 @@ class DeleteUserView(generics.DestroyAPIView):
         user = get_object_or_404(User, username=self.kwargs["username"])
 
         if user != self.request.user:
-            raise PermissionDenied("You do not have permission to delete this account.")
+            raise PermissionDenied(detail="You do not have permission to delete this account.")
 
         return user
 

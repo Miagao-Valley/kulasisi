@@ -27,6 +27,8 @@ class ListLanguageView(generics.ListAPIView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
+
+        # Annotate each language with language proficiencies and entry counts.
         queryset = queryset.annotate(
             user_count=Count("proficiencies"),
             avg_proficiency=Coalesce(
@@ -49,6 +51,7 @@ class ListLanguageView(generics.ListAPIView):
             word_count=Count("words"),
             definition_count=Count("definitions"),
         )
+
         return queryset
 
 

@@ -30,6 +30,8 @@ class ListCreateWordView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
+
+        # Annotate each word with vote count.
         queryset = queryset.annotate(
             vote_count=Coalesce(
                 Sum(
@@ -44,6 +46,7 @@ class ListCreateWordView(generics.ListCreateAPIView):
                 Value(0),
             ),
         )
+
         return queryset
 
     def perform_create(self, serializer):
@@ -98,6 +101,8 @@ class ListCreateDefinitionView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
+
+        # Annotate each definition with vote count.
         queryset = queryset.annotate(
             vote_count=Coalesce(
                 Sum(

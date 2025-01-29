@@ -11,7 +11,6 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from googletrans import Translator
 
-
 from .models import Phrase, Translation, Category
 from .serializers import (
     PhraseSerializer,
@@ -34,7 +33,6 @@ class ListCreatePhraseView(generics.ListCreateAPIView):
     ordering_fields = [
         "content",
         "vote_count",
-        "translation_count",
         "updated_at",
         "created_at",
     ]
@@ -42,6 +40,8 @@ class ListCreatePhraseView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
+
+        # Annotate each phrase with vote count and translation count.
         queryset = queryset.annotate(
             vote_count=Coalesce(
                 Sum(
@@ -57,6 +57,7 @@ class ListCreatePhraseView(generics.ListCreateAPIView):
             ),
             translation_count=Count("translations"),
         )
+
         return queryset
 
     def perform_create(self, serializer):
@@ -94,6 +95,8 @@ class ListCreateTranslationsView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
+
+        # Annotate each translation with vote count.
         queryset = queryset.annotate(
             vote_count=Coalesce(
                 Sum(
@@ -108,6 +111,7 @@ class ListCreateTranslationsView(generics.ListCreateAPIView):
                 Value(0),
             ),
         )
+
         return queryset
 
     def perform_create(self, serializer):
@@ -155,10 +159,13 @@ class RetrieveUpdateDestroyCategoryView(generics.RetrieveUpdateDestroyAPIView):
 
 
 class GoogleTranslateView(generics.GenericAPIView):
+    """
+    View for translating text asynchronously between two languages using Google Translate.
+    """
     serializer_class = GoogleTranslateSerializer
 
     async def translate_text(self, text, source, target):
-        """Helper method to handle the async translation."""
+        """Helper method to use Google Translate asynchronously to translate text."""
         async with Translator() as translator:
             result = await translator.translate(text, src=source, dest=target)
             return result.text
