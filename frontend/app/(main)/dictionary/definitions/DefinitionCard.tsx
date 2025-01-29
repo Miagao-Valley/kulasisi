@@ -68,7 +68,7 @@ export default function DefinitionCard({
               </p>
             </Link>
             <div className="flex flex-col gap-1">
-              <div className="flex gap-0 items-center">
+              <div className="flex flex-wrap gap-0 items-center">
                 {definition.pos && <PosHoverCard abbr={definition.pos} />}
                 {(definition.source_title || definition.source_link) && (
                   <Source
@@ -81,7 +81,7 @@ export default function DefinitionCard({
                 )}
               </div>
               {definition.synonyms && definition.synonyms.length > 0 && (
-                <div className="flex gap-1 items-center me-1">
+                <div className="flex flex-wrap gap-1 items-center me-1">
                   <span className="text-sm text-muted-foreground">
                     Synonyms:{' '}
                   </span>
@@ -95,7 +95,7 @@ export default function DefinitionCard({
                 </div>
               )}
               {definition.antonyms && definition.antonyms.length > 0 && (
-                <div className="flex gap-1 items-center me-1">
+                <div className="flex flex-wrap gap-1 items-center me-1">
                   <span className="text-sm text-muted-foreground">
                     Antonyms:{' '}
                   </span>

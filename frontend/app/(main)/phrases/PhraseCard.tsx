@@ -68,8 +68,8 @@ export default function PhraseCard({
                 </p>
               </Link>
             }
-            <div className="flex gap-0 items-center">
-              <div className="flex gap-1 items-center me-1">
+            <div className="flex flex-wrap gap-0 items-center">
+              <div className="flex flex-wrap gap-1 items-center me-1">
                 {phrase.categories.map((category) => (
                   <CategoryHoverCard name={category} key={category} />
                 ))}

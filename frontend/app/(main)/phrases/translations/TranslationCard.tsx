@@ -63,7 +63,7 @@ export default function TranslationCard({
             >
               <p className="mb-2 whitespace-pre-line">{translation.content}</p>
             </Link>
-            <div className="flex gap-0 items-center">
+            <div className="flex flex-wrap gap-0 items-center">
               {(translation.source_title || translation.source_link) && (
                 <Source
                   source_title={translation.source_title}
