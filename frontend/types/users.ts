@@ -1,18 +1,30 @@
 import { JWTPayload } from 'jose';
 import { LangProficiencyLevel } from './languages';
 
+/**
+ * Represents the JWT payload structure.
+ */
 export interface Payload extends JWTPayload {
   username: string;
 }
 
+/**
+ * Represents the authentication status of a user.
+ */
 export interface AuthType {
   isAuthenticated: boolean;
   id: number | null;
   username: string;
 }
 
+/**
+ * Represents the possible gender values for a user.
+ */
 export type Gender = 'M' | 'F' | 'O' | 'N';
 
+/**
+ * Represents a user.
+ */
 export interface User {
   id: number;
   username: string;

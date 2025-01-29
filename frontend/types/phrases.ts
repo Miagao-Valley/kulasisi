@@ -1,3 +1,6 @@
+/**
+ * Represents a phrase entry.
+ */
 export interface Phrase {
   id: number;
   content: string;
@@ -11,10 +14,16 @@ export interface Phrase {
   created_at: Date;
   updated_at: Date;
   vote_count: number;
-  best_translations: { [key: string]: string }
+  best_translations: { [key: string]: string };
   translation_count: number;
 }
 
+/**
+ * Type guard to check if an object is a Phrase.
+ *
+ * @param obj - The object to check.
+ * @returns True if the object is a Phrase, false otherwise.
+ */
 export function isPhrase(obj: any): obj is Phrase {
   return (
     typeof obj.id === 'number' &&
@@ -29,6 +38,9 @@ export function isPhrase(obj: any): obj is Phrase {
   );
 }
 
+/**
+ * Represents a revision of a phrase entry.
+ */
 export interface PhraseRevision {
   history_id: number;
   content: string;
@@ -36,6 +48,9 @@ export interface PhraseRevision {
   history_date: Date;
 }
 
+/**
+ * Represents a translation of a phrase entry.
+ */
 export interface Translation {
   id: number;
   phrase: number;
@@ -50,6 +65,12 @@ export interface Translation {
   vote_count: number;
 }
 
+/**
+ * Type guard to check if an object is a Translation.
+ *
+ * @param obj - The object to check.
+ * @returns True if the object is a Translation, false otherwise.
+ */
 export function isTranslation(obj: any): obj is Translation {
   return (
     typeof obj.id === 'number' &&
@@ -64,6 +85,9 @@ export function isTranslation(obj: any): obj is Translation {
   );
 }
 
+/**
+ * Represents a revision of a translation entry.
+ */
 export interface TranslationRevision {
   history_id: number;
   content: string;
@@ -71,6 +95,9 @@ export interface TranslationRevision {
   history_date: Date;
 }
 
+/**
+ * Represents a category for phrases or translations.
+ */
 export interface Category {
   name: string;
   description: string;

@@ -1,3 +1,6 @@
+/**
+ * Represents a word entry.
+ */
 export interface Word {
   id: number;
   word: string;
@@ -6,7 +9,7 @@ export interface Word {
   contributor_reputation: number;
   parts_of_speech: string[];
   best_definition: string;
-  best_definitions: { [key: string]: string }
+  best_definitions: { [key: string]: string };
   source_title?: string;
   source_link?: string;
   created_at: Date;
@@ -14,6 +17,12 @@ export interface Word {
   vote_count: number;
 }
 
+/**
+ * Type guard to check if an object is a Word.
+ *
+ * @param obj - The object to check.
+ * @returns True if the object is a Word, false otherwise.
+ */
 export function isWord(obj: any): obj is Word {
   return (
     typeof obj.id === 'number' &&
@@ -27,6 +36,9 @@ export function isWord(obj: any): obj is Word {
   );
 }
 
+/**
+ * Represents a revision of a word entry.
+ */
 export interface WordRevision {
   history_id: number;
   word: string;
@@ -34,6 +46,9 @@ export interface WordRevision {
   history_date: Date;
 }
 
+/**
+ * Represents a definition of a word.
+ */
 export interface Definition {
   id: number;
   word: { word: string; lang: string };
@@ -52,6 +67,12 @@ export interface Definition {
   vote_count: number;
 }
 
+/**
+ * Type guard to check if an object is a Definition.
+ *
+ * @param obj - The object to check.
+ * @returns True if the object is a Definition, false otherwise.
+ */
 export function isDefinition(obj: any): obj is Definition {
   return (
     typeof obj.id === 'number' &&
@@ -65,6 +86,9 @@ export function isDefinition(obj: any): obj is Definition {
   );
 }
 
+/**
+ * Represents a revision of a definition entry.
+ */
 export interface DefinitionRevision {
   history_id: number;
   description: string;
@@ -72,6 +96,9 @@ export interface DefinitionRevision {
   history_date: Date;
 }
 
+/**
+ * Represents a part of speech for a word.
+ */
 export interface PartOfSpeech {
   abbr: string;
   name: string;
