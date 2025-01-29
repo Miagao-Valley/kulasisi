@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: Kulasisi API
   version: 1.0.0
-  description: Kulasisi description
+  description: This is the Kulasisi API.
 paths:
   /dictionary/:
     get:
@@ -10,6 +10,10 @@ paths:
       parameters:
       - in: query
         name: contributor__username
+        schema:
+          type: string
+      - in: query
+        name: definitions__pos__abbr
         schema:
           type: string
       - in: query
@@ -76,14 +80,19 @@ paths:
               schema:
                 $ref: '#/components/schemas/Word'
           description: ''
-  /dictionary/{word_pk}/:
+  /dictionary/{lang}/{word}/:
     get:
       operationId: dictionary_retrieve
       parameters:
       - in: path
-        name: word_pk
+        name: lang
         schema:
-          type: integer
+          type: string
+        required: true
+      - in: path
+        name: word
+        schema:
+          type: string
         required: true
       tags:
       - dictionary
@@ -101,9 +110,14 @@ paths:
       operationId: dictionary_update
       parameters:
       - in: path
-        name: word_pk
+        name: lang
         schema:
-          type: integer
+          type: string
+        required: true
+      - in: path
+        name: word
+        schema:
+          type: string
         required: true
       tags:
       - dictionary
@@ -131,9 +145,14 @@ paths:
       operationId: dictionary_partial_update
       parameters:
       - in: path
-        name: word_pk
+        name: lang
         schema:
-          type: integer
+          type: string
+        required: true
+      - in: path
+        name: word
+        schema:
+          type: string
         required: true
       tags:
       - dictionary
@@ -161,9 +180,14 @@ paths:
       operationId: dictionary_destroy
       parameters:
       - in: path
-        name: word_pk
+        name: lang
         schema:
-          type: integer
+          type: string
+        required: true
+      - in: path
+        name: word
+        schema:
+          type: string
         required: true
       tags:
       - dictionary
@@ -172,10 +196,15 @@ paths:
       responses:
         '204':
           description: No response body
-  /dictionary/{word_pk}/history/:
+  /dictionary/{lang}/{word}/history/:
     get:
       operationId: dictionary_history_list
       parameters:
+      - in: path
+        name: lang
+        schema:
+          type: string
+        required: true
       - name: limit
         required: false
         in: query
@@ -189,9 +218,9 @@ paths:
         schema:
           type: integer
       - in: path
-        name: word_pk
+        name: word
         schema:
-          type: integer
+          type: string
         required: true
       tags:
       - dictionary
@@ -205,14 +234,19 @@ paths:
               schema:
                 $ref: '#/components/schemas/PaginatedWordHistoryList'
           description: ''
-  /dictionary/{word_pk}/votes/:
+  /dictionary/{lang}/{word}/votes/:
     get:
       operationId: dictionary_votes_list
       parameters:
       - in: path
-        name: word_pk
+        name: lang
         schema:
-          type: integer
+          type: string
+        required: true
+      - in: path
+        name: word
+        schema:
+          type: string
         required: true
       tags:
       - dictionary
@@ -232,9 +266,14 @@ paths:
       operationId: dictionary_votes_create
       parameters:
       - in: path
-        name: word_pk
+        name: lang
         schema:
-          type: integer
+          type: string
+        required: true
+      - in: path
+        name: word
+        schema:
+          type: string
         required: true
       tags:
       - dictionary
@@ -300,9 +339,13 @@ paths:
         schema:
           type: string
       - in: query
-        name: word
+        name: word__lang__code
         schema:
-          type: integer
+          type: string
+      - in: query
+        name: word__word
+        schema:
+          type: string
       tags:
       - dictionary
       security:
@@ -742,6 +785,10 @@ paths:
       operationId: phrases_list
       parameters:
       - in: query
+        name: categories__name
+        schema:
+          type: string
+      - in: query
         name: contributor__username
         schema:
           type: string
@@ -1146,6 +1193,35 @@ paths:
       responses:
         '204':
           description: No response body
+  /phrases/google-translate/:
+    post:
+      operationId: phrases_google_translate_create
+      description: View for translating text asynchronously between two languages
+        using Google Translate.
+      tags:
+      - phrases
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GoogleTranslate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/GoogleTranslate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/GoogleTranslate'
+        required: true
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleTranslate'
+          description: ''
   /phrases/translations/:
     get:
       operationId: phrases_translations_list
@@ -1560,11 +1636,27 @@ paths:
         required: true
       tags:
       - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangeEmail'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ChangeEmail'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ChangeEmail'
+        required: true
       security:
       - jwtAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChangeEmail'
+          description: ''
   /users/{username}/change-password/:
     post:
       operationId: users_change_password_create
@@ -1576,11 +1668,27 @@ paths:
         required: true
       tags:
       - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangePassword'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ChangePassword'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ChangePassword'
+        required: true
       security:
       - jwtAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChangePassword'
+          description: ''
   /users/{username}/change-phone-number/:
     post:
       operationId: users_change_phone_number_create
@@ -1592,11 +1700,27 @@ paths:
         required: true
       tags:
       - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangePhoneNumber'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ChangePhoneNumber'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ChangePhoneNumber'
+        required: true
       security:
       - jwtAuth: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChangePhoneNumber'
+          description: ''
   /users/{username}/delete/:
     delete:
       operationId: users_delete_destroy
@@ -1685,13 +1809,57 @@ components:
       properties:
         name:
           type: string
+          description: The name of the category.
           maxLength: 64
         description:
           type: string
           nullable: true
+          description: A brief description of the category.
           maxLength: 255
       required:
       - name
+    ChangeEmail:
+      type: object
+      properties:
+        new_email:
+          type: string
+          format: email
+          description: The new email address to update to.
+        password:
+          type: string
+          writeOnly: true
+          description: The password to authenticate the email change.
+      required:
+      - new_email
+      - password
+    ChangePassword:
+      type: object
+      properties:
+        current_password:
+          type: string
+          writeOnly: true
+          description: The current password for authentication.
+        new_password:
+          type: string
+          writeOnly: true
+          description: The new password to set.
+      required:
+      - current_password
+      - new_password
+    ChangePhoneNumber:
+      type: object
+      properties:
+        new_phone_number:
+          type: string
+          description: The new phone number to update to.
+          maxLength: 15
+        password:
+          type: string
+          writeOnly: true
+          description: The password to authenticate the phone number change.
+      required:
+      - new_phone_number
+      - password
     CustomTokenObtainPair:
       type: object
       properties:
@@ -1711,32 +1879,52 @@ components:
           type: integer
           readOnly: true
         word:
-          type: integer
+          allOf:
+          - $ref: '#/components/schemas/Word'
+          description: The word being defined.
         lang:
           type: string
+          description: The language of the definition.
         description:
           type: string
+          description: The definition of the word.
           maxLength: 512
         contributor:
           type: string
-          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
-            only.
+          description: The username of the contributor.
         contributor_reputation:
-          type: string
+          type: integer
           readOnly: true
+          description: Reputation score of the contributor.
         pos:
           type: string
+          description: The part of speech for the definition.
+        synonyms:
+          type: array
+          items:
+            type: string
+          readOnly: true
+          description: Synonyms of the word.
+        antonyms:
+          type: array
+          items:
+            type: string
+          readOnly: true
+          description: Antonyms of the word.
         usage_note:
           type: string
           nullable: true
+          description: Additional notes on the usage of the word.
         source_title:
           type: string
           nullable: true
+          description: The title of the source.
           maxLength: 255
         source_link:
           type: string
           format: uri
           nullable: true
+          description: A link to the source of the definition.
           maxLength: 200
         created_at:
           type: string
@@ -1747,13 +1935,16 @@ components:
           format: date-time
           readOnly: true
         vote_count:
-          type: string
+          type: integer
           readOnly: true
+          description: Number of upvotes minus downvotes.
       required:
+      - antonyms
       - contributor_reputation
       - created_at
       - description
       - id
+      - synonyms
       - updated_at
       - vote_count
     DefinitionHistory:
@@ -1764,11 +1955,11 @@ components:
           readOnly: true
         description:
           type: string
+          description: The definition of the word.
           maxLength: 512
         history_user:
           type: string
-          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
-            only.
+          description: The username of the user who made the change.
         history_date:
           type: string
           format: date-time
@@ -1788,6 +1979,67 @@ components:
         * `F` - Female
         * `O` - Other
         * `N` - Prefer not to say
+    GoogleTranslate:
+      type: object
+      description: Serializer for Google Translate integration.
+      properties:
+        text:
+          type: string
+          description: Text to be translated.
+        source:
+          allOf:
+          - $ref: '#/components/schemas/SourceEnum'
+          writeOnly: true
+          default: auto
+          description: |-
+            The language of the input text.
+
+            * `auto` - auto
+            * `eng` - eng
+            * `tgl` - tgl
+            * `ceb` - ceb
+            * `ilo` - ilo
+            * `bik` - bik
+            * `hil` - hil
+            * `pam` - pam
+            * `pag` - pag
+            * `war` - war
+        target:
+          allOf:
+          - $ref: '#/components/schemas/TargetEnum'
+          writeOnly: true
+          default: eng
+          description: |-
+            The language to translate the text into.
+
+            * `auto` - auto
+            * `eng` - eng
+            * `tgl` - tgl
+            * `ceb` - ceb
+            * `ilo` - ilo
+            * `bik` - bik
+            * `hil` - hil
+            * `pam` - pam
+            * `pag` - pag
+            * `war` - war
+        original:
+          type: string
+          readOnly: true
+          description: The original text input.
+        translated:
+          type: string
+          readOnly: true
+          description: The translated text output.
+        google_translate_url:
+          type: string
+          format: uri
+          readOnly: true
+          description: URL of the Google Translate service for this translation.
+      required:
+      - google_translate_url
+      - original
+      - text
+      - translated
     Language:
       type: object
       properties:
@@ -1796,28 +2048,38 @@ components:
           readOnly: true
         code:
           type: string
+          description: The unique code for the language (e.g., 'eng' for English).
           maxLength: 3
         name:
           type: string
+          description: The full name of the language (e.g., 'English').
           maxLength: 32
         user_count:
-          type: string
+          type: integer
           readOnly: true
+          description: Number of users proficient in this language.
         phrase_count:
-          type: string
+          type: integer
           readOnly: true
+          description: Number of phrases available in this language.
         translation_count:
-          type: string
+          type: integer
           readOnly: true
+          description: Number of translations in this language.
         word_count:
-          type: string
+          type: integer
           readOnly: true
+          description: Number of words in this language.
         definition_count:
-          type: string
+          type: integer
           readOnly: true
+          description: Number of definitions in this language.
         users_by_proficiency:
-          type: string
+          type: object
+          additionalProperties:
+            type: integer
           readOnly: true
+          description: Number of users at each proficiency level.
       required:
       - code
       - definition_count
@@ -1833,9 +2095,18 @@ components:
       properties:
         lang:
           type: string
+          description: The language for which the proficiency is recorded.
         level:
           allOf:
           - $ref: '#/components/schemas/LevelEnum'
+          description: |-
+            The proficiency level of the user in this language.
+
+            * `1` - Elementary Proficiency
+            * `2` - Limited Working Proficiency
+            * `3` - Professional Working Proficiency
+            * `4` - Full Professional Proficiency
+            * `5` - Native / Bilingual Proficiency
           minimum: 0
           maximum: 9223372036854775807
       required:
@@ -2092,13 +2363,16 @@ components:
       properties:
         abbr:
           type: string
+          description: Abbreviation for the part of speech (e.g., 'adj' for Adjective).
           maxLength: 8
         name:
           type: string
+          description: Full name of the part of speech (e.g., 'Adjective').
           maxLength: 64
         description:
           type: string
           nullable: true
+          description: A brief description of the part of speech.
           maxLength: 255
       required:
       - abbr
@@ -2108,10 +2382,12 @@ components:
       properties:
         name:
           type: string
+          description: The name of the category.
           maxLength: 64
         description:
           type: string
           nullable: true
+          description: A brief description of the category.
           maxLength: 255
     PatchedDefinition:
       type: object
@@ -2120,32 +2396,52 @@ components:
           type: integer
           readOnly: true
         word:
-          type: integer
+          allOf:
+          - $ref: '#/components/schemas/Word'
+          description: The word being defined.
         lang:
           type: string
+          description: The language of the definition.
         description:
           type: string
+          description: The definition of the word.
           maxLength: 512
         contributor:
           type: string
-          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
-            only.
+          description: The username of the contributor.
         contributor_reputation:
-          type: string
+          type: integer
           readOnly: true
+          description: Reputation score of the contributor.
         pos:
           type: string
+          description: The part of speech for the definition.
+        synonyms:
+          type: array
+          items:
+            type: string
+          readOnly: true
+          description: Synonyms of the word.
+        antonyms:
+          type: array
+          items:
+            type: string
+          readOnly: true
+          description: Antonyms of the word.
         usage_note:
           type: string
           nullable: true
+          description: Additional notes on the usage of the word.
         source_title:
           type: string
           nullable: true
+          description: The title of the source.
           maxLength: 255
         source_link:
           type: string
           format: uri
           nullable: true
+          description: A link to the source of the definition.
           maxLength: 200
         created_at:
           type: string
@@ -2156,20 +2452,24 @@ components:
           format: date-time
           readOnly: true
         vote_count:
-          type: string
+          type: integer
           readOnly: true
+          description: Number of upvotes minus downvotes.
     PatchedPartOfSpeech:
       type: object
       properties:
         abbr:
           type: string
+          description: Abbreviation for the part of speech (e.g., 'adj' for Adjective).
           maxLength: 8
         name:
           type: string
+          description: Full name of the part of speech (e.g., 'Adjective').
           maxLength: 64
         description:
           type: string
           nullable: true
+          description: A brief description of the part of speech.
           maxLength: 255
     PatchedPhrase:
       type: object
@@ -2179,30 +2479,38 @@ components:
           readOnly: true
         content:
           type: string
+          description: The phrase content.
+          maxLength: 10000
         lang:
           type: string
+          description: The language code for the phrase.
         contributor:
           type: string
-          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
-            only.
+          description: The contributor's username.
         contributor_reputation:
-          type: string
+          type: integer
           readOnly: true
+          description: Reputation score of the contributor.
         categories:
           type: array
           items:
             type: string
+          description: Categories the phrase belongs to.
         usage_note:
           type: string
           nullable: true
+          description: Additional notes on the usage of the phrase.
+          maxLength: 1000
         source_title:
           type: string
           nullable: true
+          description: The title of the source.
           maxLength: 255
         source_link:
           type: string
           format: uri
           nullable: true
+          description: A link to the source of the phrase.
           maxLength: 200
         created_at:
           type: string
@@ -2213,11 +2521,19 @@ components:
           format: date-time
           readOnly: true
         vote_count:
-          type: string
+          type: integer
           readOnly: true
+          description: Number of upvotes minus downvotes.
+        best_translations:
+          type: object
+          additionalProperties:
+            type: string
+          readOnly: true
+          description: Best translations based on votes in different languages..
         translation_count:
-          type: string
+          type: integer
           readOnly: true
+          description: Total number of translations.
     PatchedTranslation:
       type: object
       properties:
@@ -2226,25 +2542,31 @@ components:
           readOnly: true
         phrase:
           type: integer
+          description: The phrase being translated.
         content:
           type: string
+          description: The translated phrase content.
+          maxLength: 10000
         lang:
           type: string
+          description: The language of the translation.
         contributor:
           type: string
-          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
-            only.
+          description: The contributor's username.
         contributor_reputation:
-          type: string
+          type: integer
           readOnly: true
+          description: Reputation score of the contributor.
         source_title:
           type: string
           nullable: true
+          description: The title of the source.
           maxLength: 255
         source_link:
           type: string
           format: uri
           nullable: true
+          description: A link to the source of the translation.
           maxLength: 200
         created_at:
           type: string
@@ -2255,8 +2577,9 @@ components:
           format: date-time
           readOnly: true
         vote_count:
-          type: string
+          type: integer
           readOnly: true
+          description: Number of upvotes minus downvotes.
     PatchedUser:
       type: object
       properties:
@@ -2276,29 +2599,42 @@ components:
         email:
           type: string
           format: email
+          description: The user's email address.
           maxLength: 254
         phone_number:
           type: string
           nullable: true
+          description: The user's phone number.
           maxLength: 15
         first_name:
           type: string
           nullable: true
+          description: The user's first name.
           maxLength: 30
         last_name:
           type: string
           nullable: true
+          description: The user's last name.
           maxLength: 30
         date_of_birth:
           type: string
           format: date
           nullable: true
+          description: The user's date of birth.
         location:
           type: string
           nullable: true
+          description: The user's location (e.g., city, country).
           maxLength: 255
         gender:
           nullable: true
+          description: |-
+            The user's gender.
+
+            * `M` - Male
+            * `F` - Female
+            * `O` - Other
+            * `N` - Prefer not to say
           oneOf:
           - $ref: '#/components/schemas/GenderEnum'
           - $ref: '#/components/schemas/BlankEnum'
@@ -2306,34 +2642,43 @@ components:
         bio:
           type: string
           nullable: true
+          description: A short biography about the user.
           maxLength: 200
         website:
           type: string
           format: uri
           nullable: true
+          description: The user's personal or professional website.
           maxLength: 200
         reputation:
-          type: string
+          type: integer
           readOnly: true
+          description: The user's reputation score.
         phrase_count:
-          type: string
+          type: integer
           readOnly: true
+          description: Number of phrases created by the user.
         translation_count:
-          type: string
+          type: integer
           readOnly: true
+          description: Number of translations created by the user.
         word_count:
-          type: string
+          type: integer
           readOnly: true
+          description: Number of words created by the user.
         definition_count:
-          type: string
+          type: integer
           readOnly: true
+          description: Number of definitions created by the user.
         vote_count:
-          type: string
+          type: integer
           readOnly: true
+          description: Number of votes cast by the user.
         language_proficiencies:
           type: array
           items:
             $ref: '#/components/schemas/LanguageProficiency'
+          description: Language proficiencies for the user.
         last_login:
           type: string
           format: date-time
@@ -2345,30 +2690,52 @@ components:
           readOnly: true
     PatchedWord:
       type: object
+      description: |-
+        A serializer that allows dynamic inclusion of fields.
+        Only fields listed in the 'fields' argument will be included.
       properties:
         id:
           type: integer
           readOnly: true
         word:
           type: string
+          description: The word being defined.
           maxLength: 64
         lang:
           type: string
+          description: The language code of the word.
         contributor:
           type: string
-          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
-            only.
+          description: The username of the contributor.
         contributor_reputation:
+          type: integer
+          readOnly: true
+          description: Reputation score of the contributor.
+        parts_of_speech:
+          type: array
+          items:
+            type: string
+          readOnly: true
+          description: Parts of speech for the word.
+        best_definition:
           type: string
           readOnly: true
+          description: The best definition for the word.
+        best_definitions:
+          type: object
+          additionalProperties: {}
+          readOnly: true
+          description: Best definitions based on votes in different languages.
         source_title:
           type: string
           nullable: true
+          description: The title of the source.
           maxLength: 255
         source_link:
           type: string
           format: uri
           nullable: true
+          description: A link to the source of the word.
           maxLength: 200
         created_at:
           type: string
@@ -2379,8 +2746,9 @@ components:
           format: date-time
           readOnly: true
         vote_count:
-          type: string
+          type: integer
           readOnly: true
+          description: Number of upvotes minus downvotes.
     Phrase:
       type: object
       properties:
@@ -2389,30 +2757,38 @@ components:
           readOnly: true
         content:
           type: string
+          description: The phrase content.
+          maxLength: 10000
         lang:
           type: string
+          description: The language code for the phrase.
         contributor:
           type: string
-          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
-            only.
+          description: The contributor's username.
         contributor_reputation:
-          type: string
+          type: integer
           readOnly: true
+          description: Reputation score of the contributor.
         categories:
           type: array
           items:
             type: string
+          description: Categories the phrase belongs to.
         usage_note:
           type: string
           nullable: true
+          description: Additional notes on the usage of the phrase.
+          maxLength: 1000
         source_title:
           type: string
           nullable: true
+          description: The title of the source.
           maxLength: 255
         source_link:
           type: string
           format: uri
           nullable: true
+          description: A link to the source of the phrase.
           maxLength: 200
         created_at:
           type: string
@@ -2423,12 +2799,21 @@ components:
           format: date-time
           readOnly: true
         vote_count:
-          type: string
+          type: integer
           readOnly: true
+          description: Number of upvotes minus downvotes.
+        best_translations:
+          type: object
+          additionalProperties:
+            type: string
+          readOnly: true
+          description: Best translations based on votes in different languages..
         translation_count:
-          type: string
+          type: integer
           readOnly: true
+          description: Total number of translations.
       required:
+      - best_translations
       - content
       - contributor_reputation
       - created_at
@@ -2444,10 +2829,11 @@ components:
           readOnly: true
         content:
           type: string
+          description: The phrase content.
+          maxLength: 10000
         history_user:
           type: string
-          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
-            only.
+          description: The username of the user who made the change.
         history_date:
           type: string
           format: date-time
@@ -2455,6 +2841,54 @@ components:
       - content
       - history_date
       - history_id
+    SourceEnum:
+      enum:
+      - auto
+      - eng
+      - tgl
+      - ceb
+      - ilo
+      - bik
+      - hil
+      - pam
+      - pag
+      - war
+      type: string
+      description: |-
+        * `auto` - auto
+        * `eng` - eng
+        * `tgl` - tgl
+        * `ceb` - ceb
+        * `ilo` - ilo
+        * `bik` - bik
+        * `hil` - hil
+        * `pam` - pam
+        * `pag` - pag
+        * `war` - war
+    TargetEnum:
+      enum:
+      - auto
+      - eng
+      - tgl
+      - ceb
+      - ilo
+      - bik
+      - hil
+      - pam
+      - pag
+      - war
+      type: string
+      description: |-
+        * `auto` - auto
+        * `eng` - eng
+        * `tgl` - tgl
+        * `ceb` - ceb
+        * `ilo` - ilo
+        * `bik` - bik
+        * `hil` - hil
+        * `pam` - pam
+        * `pag` - pag
+        * `war` - war
     TokenRefresh:
       type: object
       properties:
@@ -2475,25 +2909,31 @@ components:
           readOnly: true
         phrase:
           type: integer
+          description: The phrase being translated.
         content:
           type: string
+          description: The translated phrase content.
+          maxLength: 10000
         lang:
           type: string
+          description: The language of the translation.
         contributor:
           type: string
-          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
-            only.
+          description: The contributor's username.
         contributor_reputation:
-          type: string
+          type: integer
           readOnly: true
+          description: Reputation score of the contributor.
         source_title:
           type: string
           nullable: true
+          description: The title of the source.
           maxLength: 255
         source_link:
           type: string
           format: uri
           nullable: true
+          description: A link to the source of the translation.
           maxLength: 200
         created_at:
           type: string
@@ -2504,8 +2944,9 @@ components:
           format: date-time
           readOnly: true
         vote_count:
-          type: string
+          type: integer
           readOnly: true
+          description: Number of upvotes minus downvotes.
       required:
       - content
       - contributor_reputation
@@ -2521,10 +2962,11 @@ components:
           readOnly: true
         content:
           type: string
+          description: The translated phrase content.
+          maxLength: 10000
         history_user:
           type: string
-          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
-            only.
+          description: The username of the user who made the change.
         history_date:
           type: string
           format: date-time
@@ -2551,29 +2993,42 @@ components:
         email:
           type: string
           format: email
+          description: The user's email address.
           maxLength: 254
         phone_number:
           type: string
           nullable: true
+          description: The user's phone number.
           maxLength: 15
         first_name:
           type: string
           nullable: true
+          description: The user's first name.
           maxLength: 30
         last_name:
           type: string
           nullable: true
+          description: The user's last name.
           maxLength: 30
         date_of_birth:
           type: string
           format: date
           nullable: true
+          description: The user's date of birth.
         location:
           type: string
           nullable: true
+          description: The user's location (e.g., city, country).
           maxLength: 255
         gender:
           nullable: true
+          description: |-
+            The user's gender.
+
+            * `M` - Male
+            * `F` - Female
+            * `O` - Other
+            * `N` - Prefer not to say
           oneOf:
           - $ref: '#/components/schemas/GenderEnum'
           - $ref: '#/components/schemas/BlankEnum'
@@ -2581,34 +3036,43 @@ components:
         bio:
           type: string
           nullable: true
+          description: A short biography about the user.
           maxLength: 200
         website:
           type: string
           format: uri
           nullable: true
+          description: The user's personal or professional website.
           maxLength: 200
         reputation:
-          type: string
+          type: integer
           readOnly: true
+          description: The user's reputation score.
         phrase_count:
-          type: string
+          type: integer
           readOnly: true
+          description: Number of phrases created by the user.
         translation_count:
-          type: string
+          type: integer
           readOnly: true
+          description: Number of translations created by the user.
         word_count:
-          type: string
+          type: integer
           readOnly: true
+          description: Number of words created by the user.
         definition_count:
-          type: string
+          type: integer
           readOnly: true
+          description: Number of definitions created by the user.
         vote_count:
-          type: string
+          type: integer
           readOnly: true
+          description: Number of votes cast by the user.
         language_proficiencies:
           type: array
           items:
             $ref: '#/components/schemas/LanguageProficiency'
+          description: Language proficiencies for the user.
         last_login:
           type: string
           format: date-time
@@ -2647,6 +3111,8 @@ components:
         * `0` - Unvote
     Vote:
       type: object
+      description: Serializer for handling vote actions on different content types
+        (e.g., Phrase, Word).
       properties:
         user:
           type: string
@@ -2658,35 +3124,58 @@ components:
           type: string
           format: date-time
           readOnly: true
+          description: The timestamp when the vote was last modified.
       required:
       - value
       - voted_at
     Word:
       type: object
+      description: |-
+        A serializer that allows dynamic inclusion of fields.
+        Only fields listed in the 'fields' argument will be included.
       properties:
         id:
           type: integer
           readOnly: true
         word:
           type: string
+          description: The word being defined.
           maxLength: 64
         lang:
           type: string
+          description: The language code of the word.
         contributor:
           type: string
-          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
-            only.
+          description: The username of the contributor.
         contributor_reputation:
+          type: integer
+          readOnly: true
+          description: Reputation score of the contributor.
+        parts_of_speech:
+          type: array
+          items:
+            type: string
+          readOnly: true
+          description: Parts of speech for the word.
+        best_definition:
           type: string
           readOnly: true
+          description: The best definition for the word.
+        best_definitions:
+          type: object
+          additionalProperties: {}
+          readOnly: true
+          description: Best definitions based on votes in different languages.
         source_title:
           type: string
           nullable: true
+          description: The title of the source.
           maxLength: 255
         source_link:
           type: string
           format: uri
           nullable: true
+          description: A link to the source of the word.
           maxLength: 200
         created_at:
           type: string
@@ -2697,12 +3186,16 @@ components:
           format: date-time
           readOnly: true
         vote_count:
-          type: string
+          type: integer
           readOnly: true
+          description: Number of upvotes minus downvotes.
       required:
+      - best_definition
+      - best_definitions
       - contributor_reputation
       - created_at
       - id
+      - parts_of_speech
       - updated_at
       - vote_count
     WordHistory:
@@ -2713,11 +3206,13 @@ components:
           readOnly: true
         word:
           type: string
+          description: The word itself, containing only alphanumeric characters, dashes,
+            underscores, and spaces.
+          pattern: ^[a-zA-Z0-9\-_ ]+$
           maxLength: 64
         history_user:
           type: string
-          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
-            only.
+          description: The username of the user who made the change.
         history_date:
           type: string
           format: date-time
