@@ -1,23 +1,31 @@
+/**
+ * Sets form validation errors by calling the provided `setError` function for each error.
+ * Handles both field-specific errors and non-field (generic) errors.
+ *
+ * @param errors - An object containing error details, where keys are field names or special error keys (e.g., 'detail').
+ * @param setError - A function to set the error for a specific field or a special error (e.g., 'root.serverError').
+ */
 export default function setFormErrors<T>(
   errors: Record<string, any>,
   setError: (
-    field: keyof T | 'root.serverError',
+    field: keyof T | 'root.serverError', // Field or special error key
     error: { type?: string; message?: string },
   ) => void,
 ) {
+  // Iterate over each error in the errors object
   Object.entries(errors).forEach(([key, value]) => {
-    // Handle generic errors
+    // Handle generic errors (non-field errors)
     if (key === 'detail' || key === 'non_field_errors') {
       setError('root.serverError', {
-        message: Array.isArray(value) ? value[0] : value,
+        message: Array.isArray(value) ? value[0] : value, // Ensure the message is a string
       });
       return;
     }
 
-    // Handle field-specific errors
+    // Handle field-specific errors (map to respective field)
     setError(key as keyof T, {
       type: 'manual',
-      message: Array.isArray(value) ? value[0] : value,
+      message: Array.isArray(value) ? value[0] : value, // Ensure the message is a string
     });
   });
 }
