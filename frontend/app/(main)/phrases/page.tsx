@@ -51,7 +51,10 @@ export default async function PhrasesPage({ searchParams }: Props) {
     <>
       <PhraseSearch currentSearchTerm={searchTerm} />
       <div className="w-full flex justify-between">
-        <LangFilter currentSourceLang={sourceLang} currentTargetLang={targetLang} />
+        <LangFilter
+          currentSourceLang={sourceLang}
+          currentTargetLang={targetLang}
+        />
         <FilterControls
           sortOption={sortOption}
           sortingOptions={sortingOptions}
@@ -66,9 +69,14 @@ export default async function PhrasesPage({ searchParams }: Props) {
       <Separator className="my-2" />
 
       {filters.category && <CategoryCard name={category} className="my-2" />}
-      {(searchTerm && sourceLang && targetLang) &&
-        <GoogleTranslateCard text={searchTerm} source={sourceLang} target={targetLang} className="my-1" />
-      }
+      {searchTerm && sourceLang && targetLang && (
+        <GoogleTranslateCard
+          text={searchTerm}
+          source={sourceLang}
+          target={targetLang}
+          className="my-1"
+        />
+      )}
       <Suspense fallback={<PhrasesListSkeleton />}>
         <PhrasesList
           sourceLang={sourceLang}

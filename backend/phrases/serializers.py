@@ -19,18 +19,36 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class PhraseSerializer(serializers.ModelSerializer):
     lang = serializers.SlugRelatedField(
-        queryset=Language.objects.all(), slug_field="code", required=False, help_text="The language code for the phrase."
+        queryset=Language.objects.all(),
+        slug_field="code",
+        required=False,
+        help_text="The language code for the phrase.",
     )
     contributor = serializers.SlugRelatedField(
-        queryset=User.objects.all(), slug_field="username", required=False, help_text="The contributor's username."
+        queryset=User.objects.all(),
+        slug_field="username",
+        required=False,
+        help_text="The contributor's username.",
     )
-    contributor_reputation = serializers.SerializerMethodField(help_text="Reputation score of the contributor.")
+    contributor_reputation = serializers.SerializerMethodField(
+        help_text="Reputation score of the contributor."
+    )
     categories = serializers.SlugRelatedField(
-        queryset=Category.objects.all(), slug_field="name", many=True, required=False, help_text="Categories the phrase belongs to."
+        queryset=Category.objects.all(),
+        slug_field="name",
+        many=True,
+        required=False,
+        help_text="Categories the phrase belongs to.",
     )
-    best_translations = serializers.SerializerMethodField(help_text="Best translations based on votes in different languages..")
-    translation_count = serializers.SerializerMethodField(help_text="Total number of translations.")
-    vote_count = serializers.SerializerMethodField(help_text="Number of upvotes minus downvotes.")
+    best_translations = serializers.SerializerMethodField(
+        help_text="Best translations based on votes in different languages.."
+    )
+    translation_count = serializers.SerializerMethodField(
+        help_text="Total number of translations."
+    )
+    vote_count = serializers.SerializerMethodField(
+        help_text="Number of upvotes minus downvotes."
+    )
 
     class Meta:
         model = Phrase
@@ -61,7 +79,8 @@ class PhraseSerializer(serializers.ModelSerializer):
 
     def get_best_translations(self, obj: Phrase) -> dict[str, str]:
         translations = obj.translations.annotate(
-            vote_count=Count("votes", filter=Q(votes__value=1)) - Count("votes", filter=Q(votes__value=-1))
+            vote_count=Count("votes", filter=Q(votes__value=1))
+            - Count("votes", filter=Q(votes__value=-1))
         )
 
         best_translations = {}
@@ -75,7 +94,9 @@ class PhraseSerializer(serializers.ModelSerializer):
             except Language.DoesNotExist:
                 continue
 
-            best_translation = translations.filter(lang=lang).order_by("-vote_count").first()
+            best_translation = (
+                translations.filter(lang=lang).order_by("-vote_count").first()
+            )
 
             if best_translation:
                 best_translations[lang.code] = best_translation.content
@@ -90,7 +111,9 @@ class PhraseSerializer(serializers.ModelSerializer):
 
     def validate_categories(self, value):
         if len(value) > Phrase.CATEGORY_LIMIT:
-            raise serializers.ValidationError(f"A phrase can have at most {Phrase.CATEGORY_LIMIT} categories.")
+            raise serializers.ValidationError(
+                f"A phrase can have at most {Phrase.CATEGORY_LIMIT} categories."
+            )
         return value
 
     def update(self, instance, validated_data):
@@ -101,7 +124,10 @@ class PhraseSerializer(serializers.ModelSerializer):
 
 class PhraseHistorySerializer(serializers.ModelSerializer):
     history_user = serializers.SlugRelatedField(
-        queryset=User.objects.all(), slug_field="username", required=False, help_text="The username of the user who made the change."
+        queryset=User.objects.all(),
+        slug_field="username",
+        required=False,
+        help_text="The username of the user who made the change.",
     )
 
     class Meta:
@@ -111,16 +137,28 @@ class PhraseHistorySerializer(serializers.ModelSerializer):
 
 class TranslationSerializer(serializers.ModelSerializer):
     phrase = serializers.PrimaryKeyRelatedField(
-        queryset=Phrase.objects.all(), required=False, help_text="The phrase being translated."
+        queryset=Phrase.objects.all(),
+        required=False,
+        help_text="The phrase being translated.",
     )
     lang = serializers.SlugRelatedField(
-        queryset=Language.objects.all(), slug_field="code", required=False, help_text="The language of the translation."
+        queryset=Language.objects.all(),
+        slug_field="code",
+        required=False,
+        help_text="The language of the translation.",
     )
     contributor = serializers.SlugRelatedField(
-        queryset=User.objects.all(), slug_field="username", required=False, help_text="The contributor's username."
+        queryset=User.objects.all(),
+        slug_field="username",
+        required=False,
+        help_text="The contributor's username.",
     )
-    contributor_reputation = serializers.SerializerMethodField(help_text="Reputation score of the contributor.")
-    vote_count = serializers.SerializerMethodField(help_text="Number of upvotes minus downvotes.")
+    contributor_reputation = serializers.SerializerMethodField(
+        help_text="Reputation score of the contributor."
+    )
+    vote_count = serializers.SerializerMethodField(
+        help_text="Number of upvotes minus downvotes."
+    )
 
     class Meta:
         model = Translation
@@ -168,7 +206,10 @@ class TranslationSerializer(serializers.ModelSerializer):
 
 class TranslationHistorySerializer(serializers.ModelSerializer):
     history_user = serializers.SlugRelatedField(
-        queryset=User.objects.all(), slug_field="username", required=False, help_text="The username of the user who made the change."
+        queryset=User.objects.all(),
+        slug_field="username",
+        required=False,
+        help_text="The username of the user who made the change.",
     )
 
     class Meta:
@@ -180,9 +221,27 @@ class GoogleTranslateSerializer(serializers.Serializer):
     """
     Serializer for Google Translate integration.
     """
+
     text = serializers.CharField(required=True, help_text="Text to be translated.")
-    source = serializers.ChoiceField(choices=list(ISO639_3_to_GoogleTranslate.keys()), default="auto", write_only=True, help_text="The language of the input text.")
-    target = serializers.ChoiceField(choices=list(ISO639_3_to_GoogleTranslate.keys()), default="eng", write_only=True, help_text="The language to translate the text into.")
-    original = serializers.CharField(read_only=True, help_text="The original text input.")
-    translated = serializers.CharField(read_only=True, help_text="The translated text output.")
-    google_translate_url = serializers.URLField(read_only=True, help_text="URL of the Google Translate service for this translation.")
+    source = serializers.ChoiceField(
+        choices=list(ISO639_3_to_GoogleTranslate.keys()),
+        default="auto",
+        write_only=True,
+        help_text="The language of the input text.",
+    )
+    target = serializers.ChoiceField(
+        choices=list(ISO639_3_to_GoogleTranslate.keys()),
+        default="eng",
+        write_only=True,
+        help_text="The language to translate the text into.",
+    )
+    original = serializers.CharField(
+        read_only=True, help_text="The original text input."
+    )
+    translated = serializers.CharField(
+        read_only=True, help_text="The translated text output."
+    )
+    google_translate_url = serializers.URLField(
+        read_only=True,
+        help_text="URL of the Google Translate service for this translation.",
+    )

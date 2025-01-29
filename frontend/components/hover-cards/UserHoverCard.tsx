@@ -19,7 +19,11 @@ interface Props {
   showUsername?: boolean;
 }
 
-export default function UserHoverCard({ username, showAvatar = false, showUsername = true }: Props) {
+export default function UserHoverCard({
+  username,
+  showAvatar = false,
+  showUsername = true,
+}: Props) {
   const [user, setUser] = useState<User>();
   const [loading, setLoading] = useState(true);
 

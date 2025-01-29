@@ -28,18 +28,17 @@ from users.views import CreateUserView
 urlpatterns = [
     # Admin
     path("admin/", admin.site.urls),
-
     # Documentation
     path("", SpectacularRedocView.as_view(url_name="schema"), name="redoc"),
-    path("swagger/", SpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui"),
+    path(
+        "swagger/", SpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui"
+    ),
     path("schema/", SpectacularAPIView.as_view(), name="schema"),
-
     # Authentication
     path("register/", CreateUserView.as_view(), name="register"),
     path("token/", TokenObtainPairView.as_view(), name="get_token"),
     path("token/refresh/", TokenRefreshView.as_view(), name="refresh_token"),
     path("api-auth/", include("rest_framework.urls")),
-
     # App URLs
     path("users/", include("users.urls")),
     path("languages/", include("languages.urls")),

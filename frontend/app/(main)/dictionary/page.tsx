@@ -49,7 +49,10 @@ export default async function DictionaryPage({ searchParams }: Props) {
     <>
       <WordSearch currentSearchTerm={searchTerm} />
       <div className="w-full flex justify-between">
-        <LangFilter currentSourceLang={sourceLang} currentTargetLang={targetLang} />
+        <LangFilter
+          currentSourceLang={sourceLang}
+          currentTargetLang={targetLang}
+        />
         <FilterControls
           sortOption={sortOption}
           sortingOptions={sortingOptions}

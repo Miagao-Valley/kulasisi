@@ -57,7 +57,9 @@ def process_dictionary_json(data: str, contributor: User):
         # Process definitions
         for definition_entry in definition_entries:
             definition_text = definition_entry.get("description", "").strip()
-            definition_lang = Language.objects.filter(code=entry.get("lang", "").strip()).first()
+            definition_lang = Language.objects.filter(
+                code=entry.get("lang", "").strip()
+            ).first()
             pos_abbr = definition_entry.get("pos", "")
             synonyms = definition_entry.get("synonyms", [])
             antonyms = definition_entry.get("antonyms", [])

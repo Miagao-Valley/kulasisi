@@ -54,7 +54,7 @@ export default function LangSelect({
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
-          variant={(selectedLang || placeholder) ? null : 'ghost'}
+          variant={selectedLang || placeholder ? null : 'ghost'}
           size="sm"
           role="combobox"
           aria-expanded={open}
@@ -63,8 +63,10 @@ export default function LangSelect({
           {showChevrons && <ChevronsUpDown className="opacity-50" />}
           {selectedLang ? (
             <Badge variant="outline">{selectedLang}</Badge>
+          ) : placeholder ? (
+            <Badge variant="outline">{placeholder}</Badge>
           ) : (
-            placeholder ? <Badge variant="outline">{placeholder}</Badge> : <LanguagesIcon />
+            <LanguagesIcon />
           )}
         </Button>
       </PopoverTrigger>

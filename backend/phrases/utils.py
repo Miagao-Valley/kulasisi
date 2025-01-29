@@ -28,7 +28,9 @@ def process_phrasebook_json(data: str, contributor: User):
             skipped_entries += 1
             continue
 
-        phrase_lang = Language.objects.filter(code=entry.get("lang", "").strip()).first()
+        phrase_lang = Language.objects.filter(
+            code=entry.get("lang", "").strip()
+        ).first()
         if not phrase_lang:
             print("Error: Invalid language for phrase. Skipping phrase.")
             skipped_entries += 1
@@ -77,7 +79,9 @@ def process_phrasebook_json(data: str, contributor: User):
         # Process translations
         for translation_entry in translation_entries:
             translation_text = translation_entry.get("content", "").strip()
-            translation_lang = Language.objects.filter(code=entry.get("lang", "").strip()).first()
+            translation_lang = Language.objects.filter(
+                code=entry.get("lang", "").strip()
+            ).first()
             translation_source_title = translation_entry.get(
                 "source_title", source_title
             )

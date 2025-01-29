@@ -39,7 +39,7 @@ export default async function fetcher(
   token: string = '',
   baseUrl: string = API_BASE_URL,
 ): Promise<any> {
-  const url = new URL(endpoint, baseUrl);  // Construct the full URL
+  const url = new URL(endpoint, baseUrl); // Construct the full URL
 
   // Add Authorization header when token is provided
   if (token) {
@@ -72,5 +72,5 @@ export default async function fetcher(
     return await res.json();
   }
 
-  return res;  // Return the raw response if not JSON
+  return res; // Return the raw response if not JSON
 }

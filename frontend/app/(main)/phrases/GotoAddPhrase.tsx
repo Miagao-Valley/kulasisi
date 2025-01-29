@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React from 'react';
 import { useAuth } from '@/components/providers/AuthProvider';
@@ -11,7 +11,11 @@ export default function GotoAddPhrase() {
 
   return (
     <div className="flex gap-2 items-center">
-      <UserHoverCard username={auth.username} showAvatar={true} showUsername={false} />
+      <UserHoverCard
+        username={auth.username}
+        showAvatar={true}
+        showUsername={false}
+      />
       <Button variant="outline" className="w-full justify-start" asChild>
         <Link href="/phrases/submit/">Add a new phrase</Link>
       </Button>

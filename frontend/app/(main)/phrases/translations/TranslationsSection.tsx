@@ -59,9 +59,14 @@ export default async function TranslationsSection({
         filterOptions={filterOptions}
         className="my-1"
       />
-      {(phrase.content && phrase.lang && filters.lang) &&
-        <GoogleTranslateCard text={phrase.content} source={phrase.lang} target={filters.lang} className="my-1" />
-      }
+      {phrase.content && phrase.lang && filters.lang && (
+        <GoogleTranslateCard
+          text={phrase.content}
+          source={phrase.lang}
+          target={filters.lang}
+          className="my-1"
+        />
+      )}
       <Suspense fallback={<TranslationsListSkeleton />}>
         <TranslationsList
           phraseId={phrase.id}

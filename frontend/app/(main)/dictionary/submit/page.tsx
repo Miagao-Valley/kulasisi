@@ -11,7 +11,7 @@ import { H1 } from '@/components/ui/heading-with-anchor';
 export default function AddWordPage() {
   return (
     <>
-       <H1>Add Word</H1>
+      <H1>Add Word</H1>
 
       <Tabs defaultValue={'text'}>
         <TabsList>
@@ -23,5 +23,5 @@ export default function AddWordPage() {
         </TabsContent>
       </Tabs>
     </>
-  )
+  );
 }

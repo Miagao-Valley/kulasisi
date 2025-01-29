@@ -14,6 +14,7 @@ class DynamicFieldsSerializer(serializers.ModelSerializer):
     A serializer that allows dynamic inclusion of fields.
     Only fields listed in the 'fields' argument will be included.
     """
+
     def __init__(self, *args, **kwargs):
         # Remove the 'fields' argument before passing it to the superclass
         fields = kwargs.pop("fields", None)
@@ -33,6 +34,7 @@ class VoteSerializer(serializers.ModelSerializer):
     """
     Serializer for handling vote actions on different content types (e.g., Phrase, Word).
     """
+
     user = serializers.SlugRelatedField(
         queryset=User.objects.all(), slug_field="username", required=False
     )

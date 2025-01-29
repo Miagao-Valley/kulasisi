@@ -11,7 +11,7 @@ import { H1 } from '@/components/ui/heading-with-anchor';
 export default function AddPhrasePage() {
   return (
     <>
-       <H1>Add Phrase</H1>
+      <H1>Add Phrase</H1>
 
       <Tabs defaultValue={'text'}>
         <TabsList>
@@ -23,5 +23,5 @@ export default function AddPhrasePage() {
         </TabsContent>
       </Tabs>
     </>
-  )
+  );
 }

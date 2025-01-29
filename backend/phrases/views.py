@@ -162,6 +162,7 @@ class GoogleTranslateView(generics.GenericAPIView):
     """
     View for translating text asynchronously between two languages using Google Translate.
     """
+
     serializer_class = GoogleTranslateSerializer
 
     async def translate_text(self, text, source, target):
@@ -190,7 +191,9 @@ class GoogleTranslateView(generics.GenericAPIView):
             )
 
         encoded_text = quote(text)
-        google_translate_url = f"https://translate.google.com/?sl={source}&tl={target}&text={encoded_text}"
+        google_translate_url = (
+            f"https://translate.google.com/?sl={source}&tl={target}&text={encoded_text}"
+        )
 
         return Response(
             {

@@ -47,15 +47,25 @@ export default function LangFilter({
     const tmpLang = sourceLang;
     setSourceLang(targetLang);
     setTargetLang(tmpLang);
-  }
+  };
 
   return (
     <div className={cn('flex items-center gap-0', className)}>
-      <LangSelect selectedLang={sourceLang} setSelectedLang={setSourceLang} showChevrons={false} placeholder="any" />
+      <LangSelect
+        selectedLang={sourceLang}
+        setSelectedLang={setSourceLang}
+        showChevrons={false}
+        placeholder="any"
+      />
       <Button variant="ghost" className="p-1 h-fit" onClick={swapLangs}>
         <ArrowLeftRight />
       </Button>
-      <LangSelect selectedLang={targetLang} setSelectedLang={setTargetLang} showChevrons={false} placeholder="any" />
+      <LangSelect
+        selectedLang={targetLang}
+        setSelectedLang={setTargetLang}
+        showChevrons={false}
+        placeholder="any"
+      />
     </div>
   );
 }

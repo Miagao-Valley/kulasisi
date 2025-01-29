@@ -1,7 +1,9 @@
 import fetcher, { FetchError } from '@/utils/fetcher';
 
 export default async function googleTranslate(
-  text: string, source: string, target: string
+  text: string,
+  source: string,
+  target: string,
 ) {
   let res = null;
   try {

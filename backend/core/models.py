@@ -11,6 +11,7 @@ class Vote(models.Model):
     """
     Represents a vote by a user on an entry (Phrase, Word, Definition, etc.).
     """
+
     VOTE_CHOICES = [
         (1, "Upvote"),
         (-1, "Downvote"),
@@ -28,7 +29,7 @@ class Vote(models.Model):
         User,
         on_delete=models.CASCADE,
         related_name="votes",
-        help_text="The user who cast this vote."
+        help_text="The user who cast this vote.",
     )
     content_type = models.ForeignKey(
         ContentType,
@@ -42,17 +43,20 @@ class Vote(models.Model):
     content_object = GenericForeignKey("content_type", "object_id")
     value = models.SmallIntegerField(
         choices=VOTE_CHOICES,
-        help_text="The type of vote: Upvote (1), Downvote (-1), or Unvote (0)."
+        help_text="The type of vote: Upvote (1), Downvote (-1), or Unvote (0).",
     )
     voted_at = models.DateTimeField(
-        auto_now=True,
-        help_text="The timestamp when the vote was last modified."
+        auto_now=True, help_text="The timestamp when the vote was last modified."
     )
 
     class Meta:
         verbose_name = "Vote"
         verbose_name_plural = "Votes"
-        unique_together = ("user", "content_type", "object_id")  # Ensures a user can only vote once per object
+        unique_together = (
+            "user",
+            "content_type",
+            "object_id",
+        )  # Ensures a user can only vote once per object
 
     def __str__(self):
         return f"{self.get_value_display()} by {self.user.username} on {self.content_type.model} {self.object_id}"

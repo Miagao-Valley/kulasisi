@@ -58,15 +58,19 @@ export default function WordCard({
         ) : (
           <>
             <Link href={`/dictionary/${word.lang}/${word.word}/`}>
-              <p className="mb-1 hover:text-primary text-xl font-bold break-all">{word.word}</p>
+              <p className="mb-1 hover:text-primary text-xl font-bold break-all">
+                {word.word}
+              </p>
             </Link>
-            {(targetLang && word.best_definitions[targetLang]) &&
-              <Link href={`/dictionary/${word.lang}/${word.word}?tab=definitions`}>
+            {targetLang && word.best_definitions[targetLang] && (
+              <Link
+                href={`/dictionary/${word.lang}/${word.word}?tab=definitions`}
+              >
                 <p className="text-sm bg-accent/50 text-accent-foreground hover:text-primary rounded-sm p-2 mb-1 whitespace-pre-line">
                   {word.best_definitions[targetLang]}
                 </p>
               </Link>
-            }
+            )}
             <div className="flex flex-wrap gap-0 items-center">
               <div className="flex flex-wrap gap-1 items-center me-1">
                 {word.parts_of_speech.map((pos) => (

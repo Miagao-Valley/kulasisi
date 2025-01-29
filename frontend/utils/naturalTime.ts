@@ -18,7 +18,7 @@ export default function naturalTime(date: Date): string {
     month = day * 30,
     year = day * 365;
 
-  let fuzzy: string;  // The relative time string
+  let fuzzy: string; // The relative time string
 
   // Determine the relative time string based on the calculated delta
   if (delta < 30) {

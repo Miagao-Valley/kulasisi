@@ -59,15 +59,17 @@ export default function PhraseCard({
         ) : (
           <>
             <Link href={`/phrases/${phrase.id}/`}>
-              <p className="mb-1 whitespace-pre-line hover:text-primary">{phrase.content}</p>
+              <p className="mb-1 whitespace-pre-line hover:text-primary">
+                {phrase.content}
+              </p>
             </Link>
-            {(targetLang && phrase.best_translations[targetLang]) &&
+            {targetLang && phrase.best_translations[targetLang] && (
               <Link href={`/phrases/${phrase.id}?tab=translations`}>
                 <p className="text-sm bg-accent/50 text-accent-foreground hover:text-primary rounded-sm p-2 mb-1 whitespace-pre-line">
                   {phrase.best_translations[targetLang]}
                 </p>
               </Link>
-            }
+            )}
             <div className="flex flex-wrap gap-0 items-center">
               <div className="flex flex-wrap gap-1 items-center me-1">
                 {phrase.categories.map((category) => (
