@@ -1,109 +1,48 @@
-# Kulasisi
+<div align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="readme_preview/kulasisi-wordmark_dark.png" width="150">
+    <source media="(prefers-color-scheme: light)" srcset="readme_preview/kulasisi-wordmark_light.png" width="150">
+    <img alt="Kulasisi wordmark" src="readme_preview/kulasisi-wordmark_light.png" width="150">
+  </picture>
+</div>
 
-A web application that helps communities <ins>preserve</ins> and <ins>revitalize</ins> their languages by offering an interactive platform where they can easily <ins>contribute</ins> content in their native languages.
+<p align="center">
+  <b>Kulasisi</b> is a web application that helps communities preserve and revitalize their languages<br>
+  by offering an interactive platform where they can easily contribute content in their native languages.
+</p>
 
-## 💻 Technology stack
+<div align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="readme_preview/mockup_login-page_dark.png" width="500">
+    <source media="(prefers-color-scheme: light)" srcset="readme_preview/mockup_login-page_light.png" width="500">
+    <img alt="Kulasisi login page mockup" src="readme_preview/mockup_login-page_light.png" width="500">
+  </picture>
+</div>
 
-- Frontend
-  - Next.js
-- Backend
-  - Django REST Framework
+## About
 
-## 🔌 Installation
+The Kulasisi project is designed to make it simple for communities to contribute and share content in their native languages. Its goal is to help languages with low digital presence by allowing users to add phrases, vocabulary, literary works, and more. Whether it's contributing new words, translating phrases, or sharing stories, Kulasisi gives users a way to engage with their language digitally and help grow its presence on the web.
 
-1. Clone the repository
+## Tech Stack
 
-```
-git clone https://github.com/Miagao-Valley/kulasisi.git
-```
+- **Frontend**: [Next.js](https://nextjs.org/docs)
+- **Backend**: [Django REST Framework](https://www.django-rest-framework.org/)
 
-2. Set up backend
+## Installation
 
-Navigate to the backend directory:
+For installation details, please refer to [INSTALL.md](INSTALL.md).
 
-```
-cd backend
-```
+## Contributing
 
-Activate a virtual environment:
+For contributing details, please refer to [CONTRIBUTING.md](CONTRIBUTING.md).
 
-```
-python -m venv venv
-source venv/bin/activate
-```
+## Getting Involved
 
-Install the dependencies:
+This project belongs to the open-source community named [Miagao Valley](https://miagaovalley.site/). We have interesting projects you might want to check out. Visit our [community](https://discord.gg/kzAKWghs)!
 
-```
-pip install -r requirements.txt
-```
-
-Make database migrations:
-
-```
-python manage.py makemigrations
-python manage.py migrate
-```
-
-Create admin superuser:
-
-```
-python manage.py createsuperuser
-```
-
-Enter a username, email, and password.
-
-Create environment variables
-
-```
-echo "DEBUG=True" >> .env
-```
-
-3. Set up frontend
-
-Navigate to the frontend directory:
-
-```
-cd frontend
-```
-
-Install the dependencies:
-
-```
-npm install
-```
-
-Create environment variables:
-
-```
-echo "DJANGO_API=http://127.0.0.1:8000" >> .env.local
-```
-
-## 🧞 Usage
-
-| Current Working Directory | Command                      | Action                                           |
-| ------------------------- | :--------------------------- | ------------------------------------------------ |
-| `/backend`                | `python manage.py runserver` | Starts backend local server at `127.0.0.1:8000`  |
-| `/frontend`               | `npm run dev`                | Starts frontend local server at `localhost:3000` |
-
-## 💪🏼 Contributing
-
-**Using the issue tracker**
-
-Use the issue tracker to suggest feature requests, report bugs, and ask questions. This is also a great way to connect with the developers of the project as well as others who are interested in this solution.
-
-Use the issue tracker to find ways to contribute. Find a bug or a feature, mention in the issue that you will take on that effort, then follow the *Changing the code-base* guidance below.
-
-**Changing the codebase**
-
-1. Clone the repository.
-2. Create a new branch: `git checkout -b branch-name`.
-3. Make your changes.
-4. Push your branch: `git push origin branch-name`.
-5. Create a pull request.
-
-## 🤲 Getting involved
-
-This project belongs to the open-source community named Miagao Valley 🇵🇭. We have interesting projects you might want to check out 👀. Visit our community [here](https://discord.gg/kzAKWghs)!
-
-![Miagao Valley Logo-04](https://github.com/Miagao-Valley/mv-site/assets/113810517/d92a2263-b553-4939-b946-ac8997ca407b)
+<div align="center">
+  <img src="https://github.com/Miagao-Valley/mv-site/assets/113810517/d92a2263-b553-4939-b946-ac8997ca407b" height="30" />
+</div>
+<div align="center">
+  Miagao Valley 🇵🇭
+</div>
