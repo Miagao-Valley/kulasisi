@@ -10,15 +10,19 @@ from languages.models import Language
 
 
 class DynamicFieldsSerializer(serializers.ModelSerializer):
+    """
+    A serializer that allows dynamic inclusion of fields.
+    Only fields listed in the 'fields' argument will be included.
+    """
     def __init__(self, *args, **kwargs):
-        # Don't pass the 'fields' arg up to the superclass
+        # Remove the 'fields' argument before passing it to the superclass
         fields = kwargs.pop("fields", None)
 
-        # Instantiate the superclass normally
+        # Initialize the superclass with the remaining arguments
         super().__init__(*args, **kwargs)
 
         if fields is not None:
-            # Drop any fields that are not specified in the `fields` argument.
+            # Only include the specified fields
             allowed = set(fields)
             existing = set(self.fields)
             for field_name in existing - allowed:
@@ -26,6 +30,9 @@ class DynamicFieldsSerializer(serializers.ModelSerializer):
 
 
 class VoteSerializer(serializers.ModelSerializer):
+    """
+    Serializer for handling vote actions on different content types (e.g., Phrase, Word).
+    """
     user = serializers.SlugRelatedField(
         queryset=User.objects.all(), slug_field="username", required=False
     )
@@ -39,10 +46,14 @@ class VoteSerializer(serializers.ModelSerializer):
         }
 
     def create(self, validated_data):
+        """
+        Create or update a vote for a specific content object (Phrase, Word, Definition, etc.).
+        """
         user = self.context["request"].user
         value = validated_data.get("value")
         view_kwargs = self.context["view"].kwargs
 
+        # Determine the target model and object ID based on the view parameters
         if "phrase_pk" in view_kwargs:
             target_model = Phrase
             object_id = view_kwargs["phrase_pk"]
@@ -60,6 +71,7 @@ class VoteSerializer(serializers.ModelSerializer):
         else:
             raise serializers.ValidationError("Invalid target for voting.")
 
+        # Create or update the vote record
         vote, created = Vote.objects.get_or_create(
             user=user,
             content_type=ContentType.objects.get_for_model(target_model),
@@ -68,6 +80,7 @@ class VoteSerializer(serializers.ModelSerializer):
         )
 
         if not created:
+            # Update the vote value if it already exists
             vote.value = value
             vote.save()
 

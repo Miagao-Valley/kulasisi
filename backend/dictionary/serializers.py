@@ -24,19 +24,18 @@ class PartOfSpeechSerializer(serializers.ModelSerializer):
 
 
 class WordSerializer(DynamicFieldsSerializer):
-    word = serializers.CharField(max_length=64, required=False)
+    word = serializers.CharField(max_length=64, required=False, help_text="The word being defined.")
     lang = serializers.SlugRelatedField(
-        queryset=Language.objects.all(), slug_field="code", required=False
+        queryset=Language.objects.all(), slug_field="code", required=False, help_text="The language code of the word."
     )
     contributor = serializers.SlugRelatedField(
-        queryset=User.objects.all(), slug_field="username", required=False
+        queryset=User.objects.all(), slug_field="username", required=False, help_text="The username of the contributor."
     )
-    contributor_reputation = serializers.SerializerMethodField()
-    parts_of_speech = serializers.SerializerMethodField()
-    best_definition = serializers.SerializerMethodField()
-    best_definitions = serializers.SerializerMethodField()
-    vote_count = serializers.SerializerMethodField()
-
+    contributor_reputation = serializers.SerializerMethodField(help_text="Reputation score of the contributor.")
+    parts_of_speech = serializers.SerializerMethodField(help_text="Parts of speech for the word.")
+    best_definition = serializers.SerializerMethodField(help_text="The best definition for the word.")
+    best_definitions = serializers.SerializerMethodField(help_text="Best definitions based on votes in different languages.")
+    vote_count = serializers.SerializerMethodField(help_text="Number of upvotes minus downvotes.")
     class Meta:
         model = Word
         fields = [
@@ -84,7 +83,7 @@ class WordSerializer(DynamicFieldsSerializer):
         )
         return best_definition.description if best_definition else ""
 
-    def get_best_definitions(self, obj: Word) -> list[str]:
+    def get_best_definitions(self, obj: Word) -> dict:
         definitions = obj.definitions.annotate(
             vote_count=Count("votes", filter=Q(votes__value=1)) - Count("votes", filter=Q(votes__value=-1))
         )
@@ -111,6 +110,7 @@ class WordSerializer(DynamicFieldsSerializer):
         return obj.votes.filter(value=1).count() - obj.votes.filter(value=-1).count()
 
     def update(self, instance, validated_data):
+        # Make 'word' and 'lang' fields immutable
         validated_data.pop("word", None)
         validated_data.pop("lang", None)
         return super().update(instance, validated_data)
@@ -118,7 +118,7 @@ class WordSerializer(DynamicFieldsSerializer):
 
 class WordHistorySerializer(serializers.ModelSerializer):
     history_user = serializers.SlugRelatedField(
-        queryset=User.objects.all(), slug_field="username", required=False
+        queryset=User.objects.all(), slug_field="username", required=False, help_text="The username of the user who made the change."
     )
 
     class Meta:
@@ -127,24 +127,24 @@ class WordHistorySerializer(serializers.ModelSerializer):
 
 
 class DefinitionSerializer(serializers.ModelSerializer):
-    word = WordSerializer(required=False, fields=["word", "lang"])
+    word = WordSerializer(required=False, fields=["word", "lang"], help_text="The word being defined.")
     lang = serializers.SlugRelatedField(
-        queryset=Language.objects.all(), slug_field="code", required=False
+        queryset=Language.objects.all(), slug_field="code", required=False, help_text="The language of the definition."
     )
     contributor = serializers.SlugRelatedField(
-        queryset=User.objects.all(), slug_field="username", required=False
+        queryset=User.objects.all(), slug_field="username", required=False, help_text="The username of the contributor."
     )
-    contributor_reputation = serializers.SerializerMethodField()
+    contributor_reputation = serializers.SerializerMethodField(help_text="Reputation score of the contributor.")
     pos = serializers.SlugRelatedField(
-        queryset=PartOfSpeech.objects.all(), slug_field="abbr", required=False
+        queryset=PartOfSpeech.objects.all(), slug_field="abbr", required=False, help_text="The part of speech for the definition."
     )
     synonyms = serializers.SlugRelatedField(
-        slug_field="word", many=True, required=False, read_only=True
+        slug_field="word", many=True, required=False, read_only=True, help_text="Synonyms of the word."
     )
     antonyms = serializers.SlugRelatedField(
-        slug_field="word", many=True, required=False, read_only=True
+        slug_field="word", many=True, required=False, read_only=True, help_text="Antonyms of the word."
     )
-    vote_count = serializers.SerializerMethodField()
+    vote_count = serializers.SerializerMethodField(help_text="Number of upvotes minus downvotes.")
 
     class Meta:
         model = Definition
@@ -213,6 +213,7 @@ class DefinitionSerializer(serializers.ModelSerializer):
         return processed_data
 
     def update(self, instance, validated_data):
+        # Make 'lang' and 'word' fields immutable
         validated_data.pop("lang", None)
         validated_data.pop("word", None)
         return super().update(instance, validated_data)
@@ -220,7 +221,7 @@ class DefinitionSerializer(serializers.ModelSerializer):
 
 class DefinitionHistorySerializer(serializers.ModelSerializer):
     history_user = serializers.SlugRelatedField(
-        queryset=User.objects.all(), slug_field="username", required=False
+        queryset=User.objects.all(), slug_field="username", required=False, help_text="The username of the user who made the change."
     )
 
     class Meta:

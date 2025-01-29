@@ -4,12 +4,12 @@ from .models import Language, LanguageProficiency
 
 
 class LanguageSerializer(serializers.ModelSerializer):
-    user_count = serializers.SerializerMethodField()
-    phrase_count = serializers.SerializerMethodField()
-    translation_count = serializers.SerializerMethodField()
-    word_count = serializers.SerializerMethodField()
-    definition_count = serializers.SerializerMethodField()
-    users_by_proficiency = serializers.SerializerMethodField()
+    user_count = serializers.SerializerMethodField(help_text="Number of users proficient in this language.")
+    phrase_count = serializers.SerializerMethodField(help_text="Number of phrases available in this language.")
+    translation_count = serializers.SerializerMethodField(help_text="Number of translations in this language.")
+    word_count = serializers.SerializerMethodField(help_text="Number of words in this language.")
+    definition_count = serializers.SerializerMethodField(help_text="Number of definitions in this language.")
+    users_by_proficiency = serializers.SerializerMethodField(help_text="Number of users at each proficiency level.")
 
     class Meta:
         model = Language
@@ -50,9 +50,12 @@ class LanguageSerializer(serializers.ModelSerializer):
 
 class LanguageProficiencySerializer(serializers.ModelSerializer):
     lang = serializers.SlugRelatedField(
-        queryset=Language.objects.all(), slug_field="code", required=False
+        queryset=Language.objects.all(), slug_field="code", required=False, help_text="The language for which the proficiency is recorded."
     )
 
     class Meta:
         model = LanguageProficiency
         fields = ["lang", "level"]
+        extra_kwargs = {
+            "lang": {"required": False},
+        }
