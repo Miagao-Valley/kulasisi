@@ -16,22 +16,25 @@ import { Skeleton } from '@/components/ui/skeleton';
 interface Props {
   username: string;
   showAvatar?: boolean;
+  showUsername?: boolean;
 }
 
-export default function UserHoverCard({ username, showAvatar = false }: Props) {
+export default function UserHoverCard({ username, showAvatar = false, showUsername = true }: Props) {
   const [user, setUser] = useState<User>();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchUser = async () => {
-      setLoading(true);
-      const res = await getUser(username);
-      setUser(res);
-      setLoading(false);
-    };
+    if (username) {
+      const fetchUser = async () => {
+        setLoading(true);
+        const res = await getUser(username);
+        setUser(res);
+        setLoading(false);
+      };
 
-    fetchUser();
-  }, []);
+      fetchUser();
+    }
+  }, [username]);
 
   return (
     <HoverCard>
@@ -51,7 +54,7 @@ export default function UserHoverCard({ username, showAvatar = false }: Props) {
               )}
             </Avatar>
           )}
-          <span>@{username}</span>
+          {showUsername && <span>@{username}</span>}
         </Link>
       </HoverCardTrigger>
 

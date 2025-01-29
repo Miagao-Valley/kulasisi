@@ -51,17 +51,16 @@ export default async function WordsList({
               const revisions = await getWordRevisions(word.lang, word.word);
               return (
                 <li key={word.id}>
-                  <Separator className="my-2" />
                   <WordCard
                     word={word}
                     votes={votes}
                     revisions={revisions.results}
                     targetLang={targetLang}
                   />
+                  <Separator className="my-2" />
                 </li>
               );
             })}
-            <Separator className="my-2" />
           </>
         ) : (
           <li className="w-full col-span-full p-3 text-center">

@@ -51,17 +51,16 @@ export default async function PhrasesList({
               const revisions = await getPhraseRevisions(phrase.id);
               return (
                 <li key={phrase.id}>
-                  <Separator className="my-2" />
                   <PhraseCard
                     phrase={phrase}
                     votes={votes}
                     revisions={revisions.results}
                     targetLang={targetLang}
                   />
+                  <Separator className="my-2" />
                 </li>
               );
             })}
-            <Separator className="my-2" />
           </>
         ) : (
           <li className="w-full col-span-full p-3 text-center">

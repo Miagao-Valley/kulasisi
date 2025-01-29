@@ -8,6 +8,8 @@ import CategoryCard from './CategoryCard';
 import PhraseSearch from './PhraseSearch';
 import LangFilter from '@/components/filter/LangFilter';
 import GoogleTranslateCard from './GoogleTranslateCard';
+import GotoAddPhrase from './GotoAddPhrase';
+import { Separator } from '@/components/ui/separator';
 
 interface Props {
   searchParams: { [key: string]: string | undefined };
@@ -58,6 +60,11 @@ export default async function PhrasesPage({ searchParams }: Props) {
           className="!w-fit my-1"
         />
       </div>
+      <Separator className="my-2" />
+
+      <GotoAddPhrase />
+      <Separator className="my-2" />
+
       {filters.category && <CategoryCard name={category} className="my-2" />}
       {(searchTerm && sourceLang && targetLang) &&
         <GoogleTranslateCard text={searchTerm} source={sourceLang} target={targetLang} className="my-1" />

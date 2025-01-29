@@ -7,6 +7,8 @@ import FilterControls from '@/components/filter/FilterControls';
 import WordSearch from './WordSearch';
 import LangFilter from '@/components/filter/LangFilter';
 import PosCard from './PosCard';
+import GotoAddWord from './GotoAddWord';
+import { Separator } from '@/components/ui/separator';
 
 interface Props {
   searchParams: { [key: string]: string | undefined };
@@ -56,6 +58,11 @@ export default async function DictionaryPage({ searchParams }: Props) {
           className="!w-fit my-1"
         />
       </div>
+      <Separator className="my-2" />
+
+      <GotoAddWord />
+      <Separator className="my-2" />
+
       {filters.pos && <PosCard abbr={pos} className="my-2" />}
       <Suspense fallback={<WordsListSkeleton />}>
         <WordsList
