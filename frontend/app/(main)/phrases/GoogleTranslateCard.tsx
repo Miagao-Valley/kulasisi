@@ -2,7 +2,6 @@ import React from 'react';
 import googleTranslate from '@/lib/phrases/googleTranslate';
 import { cn } from '@/lib/utils';
 import { Card, CardContent } from '@/components/ui/card';
-import { SiGoogletranslate } from 'react-icons/si';
 
 interface Props {
   text: string;
@@ -36,7 +35,6 @@ export default async function GoogleTranslateCard({
           </a>
         </p>
         <div className="flex gap-2 items-center">
-          <SiGoogletranslate className="text-muted-foreground" />
           <span className="flex gap-1 text-xs text-muted-foreground">
             Translation from
             <a

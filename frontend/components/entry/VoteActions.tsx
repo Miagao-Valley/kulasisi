@@ -7,12 +7,7 @@ import { Entry, Vote } from '@/types/core';
 import vote from '@/lib/vote/vote';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
-import {
-  BiDownvote,
-  BiSolidDownvote,
-  BiSolidUpvote,
-  BiUpvote,
-} from 'react-icons/bi';
+import { ArrowBigUp, ArrowBigDown } from 'lucide-react';
 
 interface Props {
   entry: Entry;
@@ -27,7 +22,7 @@ export default function VoteActions({ entry, votes }: Props) {
   const [isLoading, setIsLoading] = useState(false);
 
   const [currentVote, setCurrentVote] = useState<Vote | undefined>(
-    votes.find((vote) => vote.user === auth.username),
+    votes.find((vote) => vote.user === auth.username)
   );
 
   const handleVote = async (value: -1 | 0 | 1) => {
@@ -83,7 +78,9 @@ export default function VoteActions({ entry, votes }: Props) {
         disabled={isLoading}
         onClick={() => handleVote(currentVote?.value === 1 ? 0 : 1)}
       >
-        {currentVote?.value === 1 ? <BiSolidUpvote /> : <BiUpvote />}
+        <ArrowBigUp
+          className={currentVote?.value === 1 ? 'fill-current' : ''}
+        />
       </Button>
 
       <span className="p-0 font-medium">{entry?.vote_count || 0}</span>
@@ -96,7 +93,9 @@ export default function VoteActions({ entry, votes }: Props) {
         disabled={isLoading}
         onClick={() => handleVote(currentVote?.value === -1 ? 0 : -1)}
       >
-        {currentVote?.value === -1 ? <BiSolidDownvote /> : <BiDownvote />}
+        <ArrowBigDown
+          className={currentVote?.value === -1 ? 'fill-current' : ''}
+        />
       </Button>
     </div>
   );
