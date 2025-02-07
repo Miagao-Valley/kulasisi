@@ -11,11 +11,13 @@ export default function GotoAddWord() {
 
   return (
     <div className="flex gap-2 items-center">
-      <UserHoverCard
-        username={auth.username}
-        showAvatar={true}
-        showUsername={false}
-      />
+      {auth.isAuthenticated && (
+        <UserHoverCard
+          username={auth.username}
+          showAvatar={true}
+          showUsername={false}
+        />
+      )}
       <Button variant="outline" className="w-full justify-start" asChild>
         <Link href="/dictionary/submit/">Add a new word</Link>
       </Button>
