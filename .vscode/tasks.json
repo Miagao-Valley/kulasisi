@@ -1,0 +1,60 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "run development",
+      "dependsOn": ["npm: dev - frontend", "python: runserver - backend"],
+      "dependsOrder": "parallel",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "npm: dev - frontend",
+      "type": "npm",
+      "path": "frontend",
+      "script": "dev",
+      "detail": "next dev --turbo",
+      "group": "build",
+      "presentation": {
+        "panel": "dedicated"
+      }
+    },
+    {
+      "label": "python: runserver - backend",
+      "type": "shell",
+      "command": "python",
+      "args": ["backend/manage.py", "runserver"],
+      "group": "build",
+      "presentation": {
+        "panel": "dedicated"
+      }
+    },
+    {
+      "label": "run tests",
+      "dependsOn": ["npm: lint - frontend", "python: check - backend"],
+      "dependsOrder": "parallel",
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      }
+    },
+    {
+      "type": "npm",
+      "script": "lint",
+      "path": "frontend",
+      "problemMatcher": [],
+      "label": "npm: lint - frontend",
+      "detail": "next lint",
+      "group": "test"
+    },
+    {
+      "label": "python: check - backend",
+      "type": "shell",
+      "command": "python",
+      "args": ["backend/manage.py", "check"],
+      "group": "test"
+    }
+  ]
+}
