@@ -13,6 +13,7 @@ import {
 import { NavMain } from './NavMain';
 import { NavUser } from './NavUser';
 import { NavLang } from './NavLang';
+import { NavTools } from './NavTools';
 import Wordmark from '../brand/wordmark';
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -33,6 +34,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarContent>
         <NavMain />
         <NavLang />
+        <NavTools />
       </SidebarContent>
       <SidebarFooter>
         <NavUser />
