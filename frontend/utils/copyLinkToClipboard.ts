@@ -1,4 +1,4 @@
-import { toast } from 'sonner';
+import copyToClipboard from './copyToClipboard';
 
 /**
  * Copies a generated URL to the clipboard and shows a success message.
@@ -8,11 +8,9 @@ import { toast } from 'sonner';
  */
 export default function copyLinkToClipboard(
   url: string,
-  base: string = window.location.origin,
+  base: string = window.location.origin
 ) {
   const link = `${base}/${url}`;
 
-  navigator.clipboard.writeText(link);
-
-  toast.success('Link copied to clipboard');
+  copyToClipboard(link, 'Link copied to clipboard.');
 }
