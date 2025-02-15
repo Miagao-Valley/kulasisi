@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     "languages",
     "phrases",
     "dictionary",
+    "proofreader",
     "drf_redesign",
     "drf_spectacular",
     "rest_framework",

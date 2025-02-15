@@ -44,4 +44,5 @@ urlpatterns = [
     path("languages/", include("languages.urls")),
     path("phrases/", include("phrases.urls")),
     path("dictionary/", include("dictionary.urls")),
+    path("proofreader/", include("proofreader.urls")),
 ]
