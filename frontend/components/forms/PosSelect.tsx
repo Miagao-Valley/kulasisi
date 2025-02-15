@@ -24,6 +24,7 @@ import { Badge } from '../ui/badge';
 interface Props {
   selectedPos: string;
   setSelectedPos: (value: string) => void;
+  include?: string[];
   exclude?: string[];
   className?: string;
 }
@@ -31,6 +32,7 @@ interface Props {
 export default function PosSelect({
   selectedPos,
   setSelectedPos,
+  include = [],
   exclude = [],
   className = '',
 }: Props) {
@@ -40,9 +42,15 @@ export default function PosSelect({
   useEffect(() => {
     const fetchPartsOfSpeech = async () => {
       const results = await getPartsOfSpeech();
-      setPartsOfSpeech(
-        results.filter((result) => !exclude.includes(result.abbr)),
-      );
+      const filteredPartsOfSpeech = results.filter((result) => {
+        if (include.length > 0) {
+          return include.includes(result.abbr);
+        } else if (exclude.length > 0) {
+          return !exclude.includes(result.abbr);
+        }
+        return true;
+      });
+      setPartsOfSpeech(filteredPartsOfSpeech);
     };
 
     fetchPartsOfSpeech();
@@ -92,7 +100,7 @@ export default function PosSelect({
                   value={pos.abbr}
                   onSelect={(currentLang: string) => {
                     setSelectedPos(
-                      currentLang === selectedPos ? '' : currentLang,
+                      currentLang === selectedPos ? '' : currentLang
                     );
                     setOpen(false);
                   }}
@@ -101,7 +109,7 @@ export default function PosSelect({
                   <Check
                     className={cn(
                       'ml-auto',
-                      selectedPos === pos.abbr ? 'opacity-100' : 'opacity-0',
+                      selectedPos === pos.abbr ? 'opacity-100' : 'opacity-0'
                     )}
                   />
                 </CommandItem>

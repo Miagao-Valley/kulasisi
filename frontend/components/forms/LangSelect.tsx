@@ -24,6 +24,7 @@ import { Badge } from '../ui/badge';
 interface Props {
   selectedLang: string;
   setSelectedLang: (value: string) => void;
+  include?: string[];
   exclude?: string[];
   showChevrons?: boolean;
   placeholder?: string;
@@ -33,6 +34,7 @@ interface Props {
 export default function LangSelect({
   selectedLang,
   setSelectedLang,
+  include = [],
   exclude = [],
   showChevrons = true,
   placeholder,
@@ -44,7 +46,15 @@ export default function LangSelect({
   useEffect(() => {
     const fetchLangs = async () => {
       const { results } = await getLangs();
-      setLangs(results.filter((result) => !exclude.includes(result.code)));
+      const filteredLangs = results.filter((result) => {
+        if (include.length > 0) {
+          return include.includes(result.code);
+        } else if (exclude.length > 0) {
+          return !exclude.includes(result.code);
+        }
+        return true;
+      });
+      setLangs(filteredLangs);
     };
 
     fetchLangs();
@@ -92,7 +102,7 @@ export default function LangSelect({
                   value={lang.code}
                   onSelect={(currentLang: string) => {
                     setSelectedLang(
-                      currentLang === selectedLang ? '' : currentLang,
+                      currentLang === selectedLang ? '' : currentLang
                     );
                     setOpen(false);
                   }}
@@ -101,7 +111,7 @@ export default function LangSelect({
                   <Check
                     className={cn(
                       'ml-auto',
-                      selectedLang === lang.code ? 'opacity-100' : 'opacity-0',
+                      selectedLang === lang.code ? 'opacity-100' : 'opacity-0'
                     )}
                   />
                 </CommandItem>

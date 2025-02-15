@@ -8,6 +8,7 @@ import ListSelector from '../ui/list-selector';
 interface Props {
   selectedWords: string[];
   setSelectedWords: (value: string[]) => void;
+  include?: string[];
   exclude?: string[];
   lang?: string;
   placeholder?: string;
@@ -19,6 +20,7 @@ interface Props {
 export default function WordsSelect({
   selectedWords,
   setSelectedWords,
+  include = [],
   exclude = [],
   lang,
   placeholder = 'words...',
@@ -31,19 +33,24 @@ export default function WordsSelect({
   useEffect(() => {
     const fetchWords = async () => {
       const { results } = await getWords();
-      const uniqueWords = new Set(
-        results
-          .filter(
-            (word) =>
-              !exclude.includes(word.word) && (!lang || word.lang === lang),
-          )
-          .map((word) => word.word),
-      );
+      const filteredWords = results.filter((result) => {
+        if (include.length > 0) {
+          return (
+            include.includes(result.word) && (!lang || result.lang === lang)
+          );
+        } else if (exclude.length > 0) {
+          return (
+            !exclude.includes(result.word) && (!lang || result.lang === lang)
+          );
+        }
+        return !lang || result.lang === lang;
+      });
+      const uniqueWords = new Set(filteredWords.map((word) => word.word));
       setWordOptions(Array.from(uniqueWords));
     };
 
     fetchWords();
-  }, [exclude, lang]);
+  }, []);
 
   return (
     <ListSelector

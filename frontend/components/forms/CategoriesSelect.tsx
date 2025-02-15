@@ -8,20 +8,32 @@ import ListSelector from '../ui/list-selector';
 interface Props {
   selectedCategories: string[];
   setSelectedCategories: (value: string[]) => void;
+  include?: string[];
+  exclude?: string[];
   className?: string;
 }
 
 export default function CategoriesSelect({
   selectedCategories,
   setSelectedCategories,
+  include = [],
+  exclude = [],
   className = '',
 }: Props) {
   const [categoryOptions, setCategoryOptions] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchCategories = async () => {
-      const res = await getCategories();
-      setCategoryOptions(res.map((category) => category.name));
+      const results = await getCategories();
+      const filteredCategories = results.filter((result) => {
+        if (include.length > 0) {
+          return include.includes(result.name);
+        } else if (exclude.length > 0) {
+          return !exclude.includes(result.name);
+        }
+        return true;
+      });
+      setCategoryOptions(filteredCategories.map((category) => category.name));
     };
 
     fetchCategories();
@@ -35,7 +47,7 @@ export default function CategoriesSelect({
       onSearch={async (q) => {
         q = q.toLowerCase();
         return categoryOptions.filter((option) =>
-          option.toLowerCase().includes(q),
+          option.toLowerCase().includes(q)
         );
       }}
       triggerSearchOnFocus
