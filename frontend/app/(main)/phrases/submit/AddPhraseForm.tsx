@@ -8,6 +8,8 @@ import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import setFormErrors from '@/utils/setFormErrors';
+import { EditorProvider } from '@/components/editor/EditorContext';
+import Editor from '@/components/editor/Editor';
 import {
   Form,
   FormControl,
@@ -15,7 +17,6 @@ import {
   FormItem,
   FormMessage,
 } from '@/components/ui/form';
-import { AutosizeTextarea } from '@/components/ui/autoresize-textarea';
 import { LoadingButton } from '@/components/ui/loading-button';
 import LangSelect from '@/components/forms/LangSelect';
 import UsageNoteForm from '@/components/forms/UsageNoteForm';
@@ -74,12 +75,14 @@ export default function AddPhraseForm({ className = '' }: Props) {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <AutosizeTextarea
-                  className="p-1 text-xl resize-none borderless-input"
-                  placeholder="Enter a phrase"
-                  autoFocus
-                  {...field}
-                />
+                <EditorProvider lang={form.watch('lang')}>
+                  <Editor
+                    placeholder="Enter a phrase"
+                    autoFocus
+                    value={field.value}
+                    onValueChange={(value) => form.setValue('content', value)}
+                  />
+                </EditorProvider>
               </FormControl>
               <FormMessage />
             </FormItem>

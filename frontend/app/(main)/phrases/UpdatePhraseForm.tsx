@@ -7,6 +7,8 @@ import { toast } from 'sonner';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import setFormErrors from '@/utils/setFormErrors';
 import { Phrase } from '@/types/phrases';
+import { EditorProvider } from '@/components/editor/EditorContext';
+import Editor from '@/components/editor/Editor';
 import {
   Form,
   FormControl,
@@ -14,7 +16,6 @@ import {
   FormItem,
   FormMessage,
 } from '@/components/ui/form';
-import { AutosizeTextarea } from '@/components/ui/autoresize-textarea';
 import { Button } from '@/components/ui/button';
 import { LoadingButton } from '@/components/ui/loading-button';
 import UsageNoteForm from '@/components/forms/UsageNoteForm';
@@ -69,12 +70,15 @@ export default function UpdatePhraseForm({
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <AutosizeTextarea
-                  className="p-1 text-base resize-none borderless-input bg-transparent"
-                  placeholder="Enter updated phrase"
-                  autoFocus
-                  {...field}
-                />
+                <EditorProvider lang={phrase.lang}>
+                  <Editor
+                    placeholder="Enter updated phrase"
+                    autoFocus
+                    value={field.value}
+                    onValueChange={(value) => form.setValue('content', value)}
+                    className="bg-transparent"
+                  />
+                </EditorProvider>
               </FormControl>
               <FormMessage />
             </FormItem>

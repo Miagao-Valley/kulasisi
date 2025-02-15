@@ -7,6 +7,8 @@ import { toast } from 'sonner';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import setFormErrors from '@/utils/setFormErrors';
 import { Translation } from '@/types/phrases';
+import { EditorProvider } from '@/components/editor/EditorContext';
+import Editor from '@/components/editor/Editor';
 import {
   Form,
   FormControl,
@@ -14,7 +16,6 @@ import {
   FormItem,
   FormMessage,
 } from '@/components/ui/form';
-import { AutosizeTextarea } from '@/components/ui/autoresize-textarea';
 import { Button } from '@/components/ui/button';
 import { LoadingButton } from '@/components/ui/loading-button';
 import SourceForm from '@/components/forms/SourceForm';
@@ -40,12 +41,12 @@ export default function UpdateTranslationForm({
 }: Props) {
   const form = useForm<TranslationInputs>();
   const onSubmit: SubmitHandler<TranslationInputs> = async (
-    data: TranslationInputs,
+    data: TranslationInputs
   ) => {
     const res = await updateTranslation(
       translation.phrase,
       translation.id,
-      data,
+      data
     );
     if (res?.error) {
       setFormErrors(res.error, form.setError);
@@ -73,12 +74,15 @@ export default function UpdateTranslationForm({
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <AutosizeTextarea
-                  className="p-1 text-base resize-none borderless-input bg-transparent"
-                  placeholder="Enter updated translation"
-                  autoFocus
-                  {...field}
-                />
+                <EditorProvider lang={translation.lang}>
+                  <Editor
+                    placeholder="Enter updated translation"
+                    autoFocus
+                    value={field.value}
+                    onValueChange={(value) => form.setValue('content', value)}
+                    className="bg-transparent"
+                  />
+                </EditorProvider>
               </FormControl>
               <FormMessage />
             </FormItem>
