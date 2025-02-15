@@ -102,7 +102,7 @@ export default function LangSelect({
                   value={lang.code}
                   onSelect={(currentLang: string) => {
                     setSelectedLang(
-                      currentLang === selectedLang ? '' : currentLang
+                      currentLang === selectedLang ? '' : currentLang,
                     );
                     setOpen(false);
                   }}
@@ -111,7 +111,7 @@ export default function LangSelect({
                   <Check
                     className={cn(
                       'ml-auto',
-                      selectedLang === lang.code ? 'opacity-100' : 'opacity-0'
+                      selectedLang === lang.code ? 'opacity-100' : 'opacity-0',
                     )}
                   />
                 </CommandItem>

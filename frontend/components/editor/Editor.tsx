@@ -59,12 +59,12 @@ const Editor: React.FC<EditorProps> = ({
         const levelOrder = { error: 1, warning: 2, info: 3 };
         const sortedTokens = [...data.flagged_tokens].sort(
           (a: FlaggedToken, b: FlaggedToken) =>
-            a.offset - b.offset || levelOrder[a.level] - levelOrder[b.level]
+            a.offset - b.offset || levelOrder[a.level] - levelOrder[b.level],
         );
         setFlaggedTokens(sortedTokens);
 
         setStats(
-          data?.stats || { token_count: 0, flagged_count: 0, correctness: 0 }
+          data?.stats || { token_count: 0, flagged_count: 0, correctness: 0 },
         );
       } catch (error) {
         console.error('Error fetching proofread data:', error);
@@ -72,7 +72,7 @@ const Editor: React.FC<EditorProps> = ({
         setLoading(false);
       }
     },
-    [lang, setFlaggedTokens, setStats, setLoading, setError]
+    [lang, setFlaggedTokens, setStats, setLoading, setError],
   );
 
   useEffect(() => {

@@ -41,12 +41,12 @@ export default function UpdateTranslationForm({
 }: Props) {
   const form = useForm<TranslationInputs>();
   const onSubmit: SubmitHandler<TranslationInputs> = async (
-    data: TranslationInputs
+    data: TranslationInputs,
   ) => {
     const res = await updateTranslation(
       translation.phrase,
       translation.id,
-      data
+      data,
     );
     if (res?.error) {
       setFormErrors(res.error, form.setError);

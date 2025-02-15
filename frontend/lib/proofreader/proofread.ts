@@ -6,7 +6,7 @@ import { FlaggedToken, ProofreaderStats } from '@/types/proofreader';
 
 export default async function proofread(
   text: string,
-  lang: string
+  lang: string,
 ): Promise<
   | { flagged_tokens: FlaggedToken[]; stats: ProofreaderStats }
   | { error: string }

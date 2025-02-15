@@ -47,7 +47,7 @@ export default function CategoriesSelect({
       onSearch={async (q) => {
         q = q.toLowerCase();
         return categoryOptions.filter((option) =>
-          option.toLowerCase().includes(q)
+          option.toLowerCase().includes(q),
         );
       }}
       triggerSearchOnFocus

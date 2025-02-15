@@ -22,7 +22,7 @@ export default function VoteActions({ entry, votes }: Props) {
   const [isLoading, setIsLoading] = useState(false);
 
   const [currentVote, setCurrentVote] = useState<Vote | undefined>(
-    votes.find((vote) => vote.user === auth.username)
+    votes.find((vote) => vote.user === auth.username),
   );
 
   const handleVote = async (value: -1 | 0 | 1) => {

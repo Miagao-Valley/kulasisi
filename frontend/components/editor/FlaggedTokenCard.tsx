@@ -74,7 +74,7 @@ export default function FlaggedTokenCard({
       className={cn(
         className,
         clickable && 'hover:bg-accent/40',
-        'flex flex-col gap-1 shadow-none'
+        'flex flex-col gap-1 shadow-none',
       )}
     >
       {/* Info */}
@@ -92,7 +92,7 @@ export default function FlaggedTokenCard({
                   className={cn(
                     'text-sm font-semibold',
                     hoverTextLevelVariants({ level: token.level }),
-                    token.token.trim() === '' && 'text-muted-foreground'
+                    token.token.trim() === '' && 'text-muted-foreground',
                   )}
                   onClick={() => setCurrentToken && setCurrentToken(token)}
                 >
@@ -104,7 +104,7 @@ export default function FlaggedTokenCard({
             <TooltipContent
               className={cn(
                 bgLevelVariants({ level: token.level }),
-                textLevelVariants({ level: token.level })
+                textLevelVariants({ level: token.level }),
               )}
             >
               <p>{token.message}</p>
@@ -117,7 +117,7 @@ export default function FlaggedTokenCard({
           <span
             className={cn(
               'text-xs font-semibold flex gap-1 items-center',
-              textLevelVariants({ level: token.level })
+              textLevelVariants({ level: token.level }),
             )}
           >
             <CircleAlert size={12} /> {token.message}
@@ -128,7 +128,7 @@ export default function FlaggedTokenCard({
             <span
               className={cn(
                 'font-bold',
-                hoverTextLevelVariants({ level: token.level })
+                hoverTextLevelVariants({ level: token.level }),
               )}
               onClick={() => setCurrentToken && setCurrentToken(token)}
             >

@@ -55,7 +55,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({ className }) => {
           className="rounded-full"
           onClick={() =>
             pasteFromClipboard((clipboardText) =>
-              setText((prevText) => prevText + clipboardText)
+              setText((prevText) => prevText + clipboardText),
             )
           }
           type="button"

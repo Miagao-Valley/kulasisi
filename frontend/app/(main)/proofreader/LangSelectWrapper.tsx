@@ -29,7 +29,7 @@ export default function LangSelectWrapper({
 
   useEffect(() => {
     const currentSearchParams = new URLSearchParams(
-      Array.from(searchParams.entries())
+      Array.from(searchParams.entries()),
     );
     if (selectedLang) {
       currentSearchParams.set('lang', selectedLang);

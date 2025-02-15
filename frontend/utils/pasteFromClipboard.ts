@@ -4,7 +4,7 @@
  * @param onPaste - The callback function that will be called with the clipboard text.
  */
 export default async function pasteFromClipboard(
-  onPaste: (clipboardText: string) => void
+  onPaste: (clipboardText: string) => void,
 ) {
   try {
     const clipboardText = await navigator.clipboard.readText();

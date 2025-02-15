@@ -100,7 +100,7 @@ export default function PosSelect({
                   value={pos.abbr}
                   onSelect={(currentLang: string) => {
                     setSelectedPos(
-                      currentLang === selectedPos ? '' : currentLang
+                      currentLang === selectedPos ? '' : currentLang,
                     );
                     setOpen(false);
                   }}
@@ -109,7 +109,7 @@ export default function PosSelect({
                   <Check
                     className={cn(
                       'ml-auto',
-                      selectedPos === pos.abbr ? 'opacity-100' : 'opacity-0'
+                      selectedPos === pos.abbr ? 'opacity-100' : 'opacity-0',
                     )}
                   />
                 </CommandItem>

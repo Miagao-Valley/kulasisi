@@ -8,7 +8,7 @@ import { toast } from 'sonner';
  */
 export default function copyToClipboard(
   text: string,
-  message: string = 'Text copied to clipboard.'
+  message: string = 'Text copied to clipboard.',
 ) {
   navigator.clipboard
     .writeText(text)

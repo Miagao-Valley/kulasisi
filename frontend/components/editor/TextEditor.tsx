@@ -40,8 +40,8 @@ const TextEditor: React.FC<TextEditorProps> = ({
     setCurrentToken(
       flaggedTokens?.find(
         ({ offset, token }) =>
-          cursorPosition >= offset && cursorPosition <= offset + token.length
-      ) || null
+          cursorPosition >= offset && cursorPosition <= offset + token.length,
+      ) || null,
     );
   };
 
@@ -79,7 +79,7 @@ const TextEditor: React.FC<TextEditorProps> = ({
           ref={highlightRef}
           className={cn(
             'borderless-input p-0 m-0 me-3 rounded-none text-base absolute top-0 left-0 w-full h-full text-transparent overflow-auto whitespace-pre-wrap break-words',
-            className
+            className,
           )}
         >
           <span>
@@ -97,7 +97,7 @@ const TextEditor: React.FC<TextEditorProps> = ({
         spellCheck={false}
         className={cn(
           'borderless-input p-0 m-0 me-3 rounded-none text-base relative z-10 w-full h-full bg-transparent',
-          className
+          className,
         )}
         minHeight={10}
         maxHeight={maxCharCount * 0.5}
