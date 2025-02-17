@@ -20,35 +20,19 @@ Go into the backend directory:
 cd backend
 ```
 
-### 2.2 Create and Activate a Virtual Environment
+### 2.2 Install Dependencies
 
-Create a virtual environment:
+[Poetry](https://python-poetry.org/) manages dependencies for the backend. To install Poetry, follow this [guide](https://python-poetry.org/docs/#installation).
 
-```
-python -m venv venv
-```
-
-Activate the virtual environment:
-
-- On macOS/Linux:
+Install the required backend dependencies:
 
 ```
-source venv/bin/activate
+poetry install
 ```
 
-- On Windows:
+Poetry will automatically create a virtual environment.
 
-```
-venv\Scripts\activate
-```
-
-### 2.3 Install Dependencies and Run Migrations
-
-Install the required dependencies:
-
-```
-pip install -r requirements.txt
-```
+### 2.3 Run Migrations
 
 Run database migrations:
 
@@ -137,7 +121,7 @@ The backend server will be available at `http://127.0.0.1:8000`.
 
 ### 4.2 Start the Frontend Server
 
-Run the frontend development server:
+Run the frontend server:
 
 ```
 npm run dev
