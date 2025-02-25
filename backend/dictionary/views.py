@@ -1,11 +1,11 @@
 from django.shortcuts import get_object_or_404
 from django.db.models import Sum, Case, When, Value, IntegerField
-from django.db.models.functions import Coalesce
+from django.db.models.functions import Coalesce, Length
+from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
-
 
 from .models import Word, Definition, PartOfSpeech
 from languages.models import Language
@@ -31,8 +31,9 @@ class ListCreateWordView(generics.ListCreateAPIView):
     def get_queryset(self):
         queryset = super().get_queryset()
 
-        # Annotate each word with vote count.
+        # Annotate word length and vote count
         queryset = queryset.annotate(
+            word_len=Length("word"),
             vote_count=Coalesce(
                 Sum(
                     Case(
@@ -47,7 +48,37 @@ class ListCreateWordView(generics.ListCreateAPIView):
             ),
         )
 
+        # Filter by word length
+        length = self.request.GET.get("len")
+        if length:
+            try:
+                queryset = queryset.filter(word_len=int(length))
+            except ValueError:
+                pass
+
         return queryset
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        wordlist_mode = request.GET.get("wordlist") == "true"
+        transform = request.GET.get("transform", "").lower()
+
+        if wordlist_mode:
+            words = list(queryset.values_list("word", flat=True))
+
+            match transform:
+                case "upper":
+                    words = [w.upper() for w in words]
+                case "lower":
+                    words = [w.lower() for w in words]
+                case "capitalize":
+                    words = [w.capitalize() for w in words]
+                case "title":
+                    words = [w.title() for w in words]
+
+            return Response(words, status=200)
+
+        return super().list(request, *args, **kwargs)
 
     def perform_create(self, serializer):
         if serializer.is_valid():
