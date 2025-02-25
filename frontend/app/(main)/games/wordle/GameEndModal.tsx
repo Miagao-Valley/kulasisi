@@ -35,11 +35,11 @@ export default function GameEndModal() {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            {gameStatus === 'won' ? 'Congratulations!' : 'Game Over'}
+            {gameStatus === 'win' ? 'Congratulations!' : 'Game Over'}
           </DialogTitle>
           <DialogDescription>
             <div>
-              {gameStatus === 'won'
+              {gameStatus === 'win'
                 ? 'You guessed the word correctly!'
                 : `The correct word was: "${solution}"`}
             </div>

@@ -52,7 +52,7 @@ export const EditorProvider = ({
   });
   const [currentToken, setCurrentToken] = useState<FlaggedToken | null>(null);
   const [showProofreader, setShowProofreader] = useState(
-    showProofreaderDefault,
+    showProofreaderDefault
   );
   const [maxCharCount, setMaxCharCount] = useState(initialMaxCharCount);
   const [loading, setLoading] = useState(false);
@@ -70,7 +70,7 @@ export const EditorProvider = ({
         return newText.slice(0, maxCharCount);
       });
     },
-    [maxCharCount],
+    [maxCharCount]
   );
 
   const applySuggestion = useCallback(
@@ -78,14 +78,14 @@ export const EditorProvider = ({
       setText(
         text.slice(0, token.offset) +
           suggestion +
-          text.slice(token.offset + token.token.length),
+          text.slice(token.offset + token.token.length)
       );
 
       setFlaggedTokens(
-        (prev) => prev?.filter((t) => t.offset !== token.offset) || [],
+        (prev) => prev?.filter((t) => t.offset !== token.offset) || []
       );
     },
-    [text, setText],
+    [text, setText]
   );
 
   return (

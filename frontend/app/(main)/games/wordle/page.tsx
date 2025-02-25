@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect } from 'react';
+import { useAuth } from '@/components/providers/AuthProvider';
 import { useSidebar } from '@/components/ui/sidebar';
 import { WordleProvider } from './WordleContext';
 import WordleGame from './WordleGame';
@@ -16,6 +17,7 @@ export default function WordlePage({ searchParams }: Props) {
   const lang = searchParams.lang || 'eng';
   const wordLength = parseInt(searchParams.len || '5');
 
+  const auth = useAuth();
   const { setOpen } = useSidebar();
 
   useEffect(() => {
@@ -31,9 +33,15 @@ export default function WordlePage({ searchParams }: Props) {
           <LangSelectWrapper currentSelectedLang={lang} />
         </div>
       </div>
-      <WordleProvider lang={lang} wordLength={wordLength}>
-        <WordleGame />
-      </WordleProvider>
+      {auth.isAuthenticated ? (
+        <WordleProvider lang={lang} wordLength={wordLength}>
+          <WordleGame />
+        </WordleProvider>
+      ) : (
+        <>
+          <div className="text-center">Please sign in to play Wordle.</div>
+        </>
+      )}
     </>
   );
 }

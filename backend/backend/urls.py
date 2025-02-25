@@ -45,4 +45,5 @@ urlpatterns = [
     path("phrases/", include("phrases.urls")),
     path("dictionary/", include("dictionary.urls")),
     path("proofreader/", include("proofreader.urls")),
+    path("games/", include("games.urls")),
 ]

@@ -6,20 +6,13 @@ import React, {
   useState,
   useEffect,
   useCallback,
+  useRef,
 } from 'react';
 import { toast } from 'sonner';
-import getWordlist from '@/lib/words/getWordlist';
+import { getWordleGame, submitWordleGuess } from '@/lib/games/wordle';
 
 const DEFAULT_WORD_LENGTH = 5;
 const DEFAULT_MAX_GUESSES = 6;
-
-const loadState = () => {
-  if (typeof window !== 'undefined') {
-    const savedState = localStorage.getItem('wordleGameState');
-    return savedState ? JSON.parse(savedState) : null;
-  }
-  return null;
-};
 
 export type GuessStatus = 'correct' | 'present' | 'absent' | 'empty';
 
@@ -27,7 +20,6 @@ interface WordleContextType {
   lang: string;
   wordLength: number;
   maxGuesses: number;
-  wordlist: string[];
   solution: string;
   guesses: string[];
   currentGuessIdx: number;
@@ -35,11 +27,12 @@ interface WordleContextType {
   addLetter: (letter: string) => void;
   removeLetter: () => void;
   submitGuess: () => void;
-  saveGame: () => void;
+  gameStatus: 'playing' | 'win' | 'lose';
   resetGame: () => void;
-  gameStatus: 'playing' | 'won' | 'lost';
   loading: boolean;
   setLoading: (loading: boolean) => void;
+  error: any;
+  setError: (error: any) => void;
 }
 
 const WordleContext = createContext<WordleContextType | undefined>(undefined);
@@ -54,55 +47,60 @@ export const WordleProvider = ({
   children: React.ReactNode;
 }) => {
   const maxGuesses = DEFAULT_MAX_GUESSES;
-  const [wordlist, setWordlist] = useState<string[]>([]);
-  const [solution, setSolution] = useState(loadState()?.solution || '');
-  const [guesses, setGuesses] = useState<string[]>(
-    loadState()?.guesses || Array(maxGuesses).fill('')
-  );
-  const [currentGuessIdx, setCurrentGuessIdx] = useState<number>(
-    loadState()?.currentGuessIdx || 0
-  );
+  const [solution, setSolution] = useState('');
+  const [guesses, setGuesses] = useState<string[]>(Array(maxGuesses).fill(''));
+  const [currentGuessIdx, setCurrentGuessIdx] = useState<number>(0);
   const [isLastGuessValid, setIsLastGuessValid] = useState(false);
-  const [gameStatus, setGameStatus] = useState<'playing' | 'won' | 'lost'>(
-    loadState()?.gameStatus || 'playing'
+  const [gameStatus, setGameStatus] = useState<'playing' | 'win' | 'lose'>(
+    'playing'
   );
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<any>(null);
 
-  const fetchWordlist = useCallback(async () => {
-    try {
-      setLoading(true);
-      const fetchedWordlist = await getWordlist({
-        lang__code: lang,
-        len: wordLength,
-        transform: 'upper',
-      });
-      setWordlist(fetchedWordlist);
-    } catch (error) {
-      console.error('Error fetching word list:', error);
-    } finally {
+  // Cache to store invalid words
+  const invalidWordsCache = useRef<Set<string>>(new Set());
+
+  const fetchGameState = useCallback(async () => {
+    setLoading(true);
+    const { result: fetchedGameState, error: err } = await getWordleGame(
+      lang,
+      wordLength
+    );
+    if (err) {
+      setError(err);
       setLoading(false);
+      return;
     }
-  }, [lang, wordLength]);
+    if (!fetchedGameState) {
+      setLoading(false);
+      return;
+    }
 
-  const saveGame = useCallback(() => {
-    if (typeof window === 'undefined') return;
-    const gameState = {
-      solution,
-      guesses,
-      currentGuessIdx,
-      gameStatus,
-    };
-    localStorage.setItem('wordleGameState', JSON.stringify(gameState));
-  }, [solution, guesses, currentGuessIdx, gameStatus]);
+    setSolution(fetchedGameState.solution);
+
+    const guesses = fetchedGameState.guesses;
+    const emptyGuesses = Array(maxGuesses - guesses.length).fill('');
+    setGuesses(guesses.concat(emptyGuesses));
+    setCurrentGuessIdx(guesses.length);
+
+    setGameStatus(fetchedGameState.game_status);
+    setLoading(false);
+  }, [lang, wordLength, maxGuesses]);
 
   const resetGame = useCallback(() => {
     setLoading(true);
+
     setSolution('');
     setGuesses(Array(maxGuesses).fill(''));
     setCurrentGuessIdx(0);
     setGameStatus('playing');
-    fetchWordlist();
+    setError(null);
+
+    fetchGameState();
+
     setLoading(false);
+
+    invalidWordsCache.current.clear();
   }, [maxGuesses, lang, wordLength]);
 
   const addLetter = useCallback(
@@ -132,7 +130,7 @@ export const WordleProvider = ({
     });
   }, [guesses, currentGuessIdx, gameStatus, loading]);
 
-  const submitGuess = useCallback(() => {
+  const submitGuess = useCallback(async () => {
     if (loading || gameStatus !== 'playing') return;
 
     const currentGuess = guesses[currentGuessIdx];
@@ -153,44 +151,53 @@ export const WordleProvider = ({
       return;
     }
 
-    if (!wordlist.includes(currentGuess)) {
-      toast.error('This word is not in the word list!');
+    if (invalidWordsCache.current.has(currentGuess)) {
+      toast.error('This word is not in the dictionary!');
       setIsLastGuessValid(false);
       return;
     }
 
     setIsLastGuessValid(true);
 
-    if (currentGuess === solution) {
-      setGameStatus('won');
-    } else if (currentGuessIdx === maxGuesses - 1) {
-      setGameStatus('lost');
+    const { result, error } = await submitWordleGuess(
+      lang,
+      wordLength,
+      currentGuess
+    );
+
+    if (error || result === null) {
+      setIsLastGuessValid(false);
+      toast.error(error.message);
+      invalidWordsCache.current.add(currentGuess);
+    } else {
+      setIsLastGuessValid(true);
+
+      const { game_status, guesses: updatedGuesses } = result;
+
+      const emptyGuesses = Array(maxGuesses - updatedGuesses.length).fill('');
+      setGuesses(updatedGuesses.concat(emptyGuesses));
+      setCurrentGuessIdx(updatedGuesses.length);
+
+      setGameStatus(game_status);
     }
-
-    setGuesses((prev) => {
-      const newGuesses = [...prev];
-      newGuesses[currentGuessIdx] = currentGuess;
-      return newGuesses;
-    });
-
-    setCurrentGuessIdx((prev) => prev + 1);
   }, [
-    wordlist,
-    currentGuessIdx,
     guesses,
-    maxGuesses,
-    solution,
+    currentGuessIdx,
+    lang,
     wordLength,
+    maxGuesses,
     gameStatus,
     loading,
   ]);
 
-  // Save game state on guess submit
+  // Get game state on mount
   useEffect(() => {
-    saveGame();
-  }, [currentGuessIdx, solution]);
+    if (solution.length === 0) {
+      fetchGameState();
+    }
+  }, []);
 
-  // Restart game on word length change
+  // Reset game on word length change
   useEffect(() => {
     const previousLength = parseInt(
       localStorage.getItem('wordleWordLength') || '-1'
@@ -202,7 +209,7 @@ export const WordleProvider = ({
     }
   }, [wordLength]);
 
-  // Restart game on language change
+  // Reset game on language change
   useEffect(() => {
     const previousLang = localStorage.getItem('wordleLang');
 
@@ -211,20 +218,6 @@ export const WordleProvider = ({
       localStorage.setItem('wordleLang', lang);
     }
   }, [lang]);
-
-  // Get word list
-  useEffect(() => {
-    fetchWordlist();
-  }, []);
-
-  // Generate a new solution on word list change
-  useEffect(() => {
-    if (wordlist.length > 0 && solution?.length !== wordLength) {
-      const newSolution =
-        wordlist[Math.floor(Math.random() * wordlist.length)].toUpperCase();
-      setSolution(newSolution);
-    }
-  }, [wordlist]);
 
   // Handle key presses
   useEffect(() => {
@@ -253,7 +246,6 @@ export const WordleProvider = ({
         lang,
         wordLength,
         maxGuesses,
-        wordlist,
         solution,
         guesses,
         currentGuessIdx,
@@ -261,11 +253,12 @@ export const WordleProvider = ({
         addLetter,
         removeLetter,
         submitGuess,
-        saveGame,
-        resetGame,
         gameStatus,
+        resetGame,
         loading,
         setLoading,
+        error,
+        setError,
       }}
     >
       {children}
