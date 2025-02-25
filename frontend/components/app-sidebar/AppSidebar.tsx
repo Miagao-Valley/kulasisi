@@ -15,6 +15,7 @@ import { NavUser } from './NavUser';
 import { NavLang } from './NavLang';
 import { NavTools } from './NavTools';
 import Wordmark from '../brand/wordmark';
+import { NavGames } from './NavGames';
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { open, isMobile } = useSidebar();
@@ -35,6 +36,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain />
         <NavLang />
         <NavTools />
+        <NavGames />
       </SidebarContent>
       <SidebarFooter>
         <NavUser />

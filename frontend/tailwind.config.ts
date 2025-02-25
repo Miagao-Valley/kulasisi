@@ -7,7 +7,7 @@ const config: Config = {
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
-  plugins: [require('tailwindcss-animate')],
+  plugins: [require('tailwindcss-animate'), require('tailwindcss-motion')],
   theme: {
     extend: {
       borderRadius: {
@@ -96,10 +96,29 @@ const config: Config = {
             height: '0',
           },
         },
+        'pop-subtle': {
+          '0%, 100%': { transform: 'scale(1)' },
+          '10%': { transform: 'scale(.9)' },
+          '80%': { transform: 'scale(1.05)' },
+        },
+        shakeX: {
+          '0%, 100%': { transform: 'translateX(0)' },
+          '20%': { transform: 'translateX(-2px)' },
+          '50%': { transform: 'translateX(4px)' },
+          '75%': { transform: 'translateX(-3px)' },
+        },
+        flipX: {
+          '0%': { transform: 'rotateX(0deg)' },
+          '50%': { transform: 'rotateX(90deg)' },
+          '100%': { transform: 'rotateX(0deg)' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+        'pop-subtle': 'pop-subtle 0.2s ease-in-out',
+        shakeX: 'shakeX 0.2s ease-in-out',
+        flipX: 'flipX 0.5s ease-in-out',
       },
     },
   },
