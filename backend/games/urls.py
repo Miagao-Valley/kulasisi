@@ -1,10 +1,13 @@
 from django.urls import path
-from .views import WordleGameView
+from . import views
 
 urlpatterns = [
     path(
+        "wordle/stats/", views.WordleGameStatsView.as_view(), name="wordle_game_stats"
+    ),
+    path(
         "wordle/<str:lang_code>/<int:word_length>/",
-        WordleGameView.as_view(),
+        views.WordleGameView.as_view(),
         name="wordle_game",
     ),
 ]

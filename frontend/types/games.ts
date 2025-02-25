@@ -10,3 +10,10 @@ export interface WordleGame {
   date_start: string;
   date_end: string;
 }
+
+export interface WordleGameStats {
+  total_games: number;
+  games_won: number;
+  games_lost: number;
+  win_rate: number;
+}

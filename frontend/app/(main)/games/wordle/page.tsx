@@ -5,6 +5,7 @@ import { useAuth } from '@/components/providers/AuthProvider';
 import { useSidebar } from '@/components/ui/sidebar';
 import { WordleProvider } from './WordleContext';
 import WordleGame from './WordleGame';
+import GameStats from './GameStats';
 import LangSelectWrapper from './LangSelectWrapper';
 import WordLengthSlider from './WordLengthSlider';
 import { H1 } from '@/components/ui/heading-with-anchor';
@@ -26,11 +27,16 @@ export default function WordlePage({ searchParams }: Props) {
 
   return (
     <>
-      <div className="flex justify-between items-center mb-5">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-5">
         <H1 className="mb-0">Wordle</H1>
-        <div className="flex items-center gap-1">
-          <WordLengthSlider currentLength={wordLength} />
-          <LangSelectWrapper currentSelectedLang={lang} />
+        <div className="flex justify-between items-center gap-1 sm:w-fit w-full">
+          <div className="flex gap-1">
+            <WordLengthSlider currentLength={wordLength} />
+            <LangSelectWrapper currentSelectedLang={lang} />
+          </div>
+          <div className="flex gap-1">
+            <GameStats />
+          </div>
         </div>
       </div>
       {auth.isAuthenticated ? (

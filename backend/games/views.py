@@ -96,3 +96,33 @@ class WordleGameView(APIView):
 
         serializer = WordleGameSerializer(game)
         return Response(serializer.data)
+
+
+class WordleGameStatsView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        lang_code = request.query_params.get("lang")
+        word_length = int(request.query_params.get("len", 0))
+
+        games = WordleGame.objects.filter(player=request.user)
+
+        if lang_code:
+            games = games.filter(lang__code=lang_code)
+
+        if word_length:
+            games = games.filter(word_length=word_length)
+
+        games_won = games.filter(game_status="win").count()
+        games_lost = games.filter(game_status="lose").count()
+        games_played = games_won + games_lost
+        win_rate = round(games_won / games_played, 2) if games_played else 0.0
+
+        stats = {
+            "total_games": games_played,
+            "games_won": games_won,
+            "games_lost": games_lost,
+            "win_rate": win_rate,
+        }
+
+        return Response(stats)

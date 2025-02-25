@@ -1,7 +1,7 @@
 'use server';
 
 import fetcher, { FetchError } from '@/utils/fetcher';
-import { WordleGame } from '@/types/games';
+import { WordleGame, WordleGameStats } from '@/types/games';
 import getToken from '../tokens/getToken';
 
 export async function getWordleGame(
@@ -38,6 +38,27 @@ export async function submitWordleGuess(
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ guess }),
+      },
+      getToken()
+    );
+    return { result: response, error: null };
+  } catch (error) {
+    const fetchError = error as FetchError;
+    return { result: null, error: fetchError.resBody };
+  }
+}
+
+export async function getWordleGameStats(
+  lang?: string,
+  wordLength?: number
+): Promise<{ result: WordleGameStats | null; error: any }> {
+  try {
+    const response = await fetcher(
+      `/games/wordle/stats/?${lang ? `lang=${lang}&` : ''}${
+        wordLength ? `len=${wordLength}` : ''
+      }`,
+      {
+        cache: 'no-store',
       },
       getToken()
     );
