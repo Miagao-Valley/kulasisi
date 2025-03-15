@@ -1,5 +1,4 @@
 import React from 'react';
-import getVotes from '@/lib/vote/getVotes';
 import getDefinitions from '@/lib/definitions/getDefinitions';
 import { cn } from '@/lib/utils';
 import DefinitionCard from './DefinitionCard';
@@ -52,12 +51,11 @@ export default async function DefinitionsList({
         definitions.results.length > 0 ? (
           <>
             {definitions.results.map(async (definition) => {
-              const votes = await getVotes(definition);
               return (
                 <li key={definition.id}>
                   <Separator className="my-2" />
                   <div id={`definition-${definition.id}`}>
-                    <DefinitionCard definition={definition} votes={votes} />
+                    <DefinitionCard definition={definition} />
                   </div>
                 </li>
               );

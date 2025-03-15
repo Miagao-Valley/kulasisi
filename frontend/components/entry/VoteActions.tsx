@@ -11,21 +11,20 @@ import { ArrowBigUp, ArrowBigDown } from 'lucide-react';
 
 interface Props {
   entry: Entry;
-  votes: Vote[];
 }
 
-export default function VoteActions({ entry, votes }: Props) {
+export default function VoteActions({ entry }: Props) {
   const auth = useAuth();
   const router = useRouter();
   const pathname = usePathname();
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const [currentVote, setCurrentVote] = useState<Vote | undefined>(
-    votes.find((vote) => vote.user === auth.username),
+  const [currentVote, setCurrentVote] = useState<Vote['value']>(
+    entry.user_vote
   );
 
-  const handleVote = async (value: -1 | 0 | 1) => {
+  const handleVote = async (value: Vote['value']) => {
     setIsLoading(true);
 
     if (!auth.isAuthenticated) {
@@ -42,13 +41,8 @@ export default function VoteActions({ entry, votes }: Props) {
     }
 
     const previousVote = currentVote;
-    const now = new Date();
 
-    setCurrentVote({
-      user: auth.username,
-      value: value,
-      voted_at: now,
-    });
+    setCurrentVote(value);
 
     try {
       const res = await vote(entry, value);
@@ -76,11 +70,9 @@ export default function VoteActions({ entry, votes }: Props) {
         className="p-0 text-lg"
         type="button"
         disabled={isLoading}
-        onClick={() => handleVote(currentVote?.value === 1 ? 0 : 1)}
+        onClick={() => handleVote(currentVote === 1 ? 0 : 1)}
       >
-        <ArrowBigUp
-          className={currentVote?.value === 1 ? 'fill-current' : ''}
-        />
+        <ArrowBigUp className={currentVote === 1 ? 'fill-current' : ''} />
       </Button>
 
       <span className="p-0 font-medium">{entry?.vote_count || 0}</span>
@@ -91,11 +83,9 @@ export default function VoteActions({ entry, votes }: Props) {
         className="p-0 text-lg"
         type="button"
         disabled={isLoading}
-        onClick={() => handleVote(currentVote?.value === -1 ? 0 : -1)}
+        onClick={() => handleVote(currentVote === -1 ? 0 : -1)}
       >
-        <ArrowBigDown
-          className={currentVote?.value === -1 ? 'fill-current' : ''}
-        />
+        <ArrowBigDown className={currentVote === -1 ? 'fill-current' : ''} />
       </Button>
     </div>
   );

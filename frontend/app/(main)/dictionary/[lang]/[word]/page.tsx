@@ -1,6 +1,5 @@
 import React from 'react';
 import getWord from '@/lib/words/getWord';
-import getVotes from '@/lib/vote/getVotes';
 import WordCard from '../../WordCard';
 import DefinitionsSection from '../../definitions/DefinitionsSection';
 import {
@@ -20,16 +19,10 @@ interface Props {
 
 export default async function PostPage({ params, searchParams }: Props) {
   const word = await getWord(params.lang, params.word);
-  const votes = await getVotes(word);
 
   return (
     <>
-      <WordCard
-        className="m-0 mb-3 p-0"
-        word={word}
-        votes={votes}
-        clickable={false}
-      />
+      <WordCard className="m-0 mb-3 p-0" word={word} clickable={false} />
 
       <Tabs defaultValue={'definitions'}>
         <TabsList>

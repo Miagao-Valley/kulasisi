@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Vote } from '@/types/core';
 import { Definition } from '@/types/dictionary';
 import { cn } from '@/lib/utils';
 import EntryHeader from '@/components/entry/EntryHeader';
@@ -22,14 +21,12 @@ import {
 
 interface Props {
   definition: Definition;
-  votes: Vote[];
   clickable?: boolean;
   className?: string;
 }
 
 export default function DefinitionCard({
   definition,
-  votes,
   clickable = true,
   className = '',
 }: Props) {
@@ -110,7 +107,7 @@ export default function DefinitionCard({
         )}
       </CardContent>
       <CardFooter>
-        <EntryFooter entry={definition} votes={votes} />
+        <EntryFooter entry={definition} />
       </CardFooter>
     </Card>
   );

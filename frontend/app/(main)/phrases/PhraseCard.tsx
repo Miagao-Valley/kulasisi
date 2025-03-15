@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Vote } from '@/types/core';
 import { Phrase } from '@/types/phrases';
 import { cn } from '@/lib/utils';
 import EntryHeader from '@/components/entry/EntryHeader';
@@ -21,7 +20,6 @@ import {
 
 interface Props {
   phrase: Phrase;
-  votes: Vote[];
   targetLang?: string;
   clickable?: boolean;
   className?: string;
@@ -29,7 +27,6 @@ interface Props {
 
 export default function PhraseCard({
   phrase,
-  votes,
   targetLang,
   clickable = true,
   className = '',
@@ -82,7 +79,7 @@ export default function PhraseCard({
         )}
       </CardContent>
       <CardFooter>
-        <EntryFooter entry={phrase} votes={votes} />
+        <EntryFooter entry={phrase} />
       </CardFooter>
     </Card>
   );

@@ -1,3 +1,5 @@
+import { Vote } from './core';
+
 /**
  * Represents a word entry.
  */
@@ -15,6 +17,7 @@ export interface Word {
   created_at: Date;
   updated_at: Date;
   vote_count: number;
+  user_vote: Vote['value'];
 }
 
 /**
@@ -65,6 +68,7 @@ export interface Definition {
   created_at: Date;
   updated_at: Date;
   vote_count: number;
+  user_vote: Vote['value'];
 }
 
 /**

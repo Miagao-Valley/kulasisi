@@ -1,6 +1,5 @@
 import React from 'react';
 import getPhrases from '@/lib/phrases/getPhrases';
-import getVotes from '@/lib/vote/getVotes';
 import { cn } from '@/lib/utils';
 import PhraseCard from './PhraseCard';
 import ListPagination from '@/components/pagination/ListPagination';
@@ -46,14 +45,9 @@ export default async function PhrasesList({
         {phrases && phrases.results && phrases.results.length > 0 ? (
           <>
             {phrases.results.map(async (phrase) => {
-              const votes = await getVotes(phrase);
               return (
                 <li key={phrase.id}>
-                  <PhraseCard
-                    phrase={phrase}
-                    votes={votes}
-                    targetLang={targetLang}
-                  />
+                  <PhraseCard phrase={phrase} targetLang={targetLang} />
                   <Separator className="my-2" />
                 </li>
               );

@@ -1,6 +1,5 @@
 import React from 'react';
 import getWords from '@/lib/words/getWords';
-import getVotes from '@/lib/vote/getVotes';
 import { cn } from '@/lib/utils';
 import WordCard from './WordCard';
 import ListPagination from '@/components/pagination/ListPagination';
@@ -46,10 +45,9 @@ export default async function WordsList({
         {words && words.results && words.results.length > 0 ? (
           <>
             {words.results.map(async (word) => {
-              const votes = await getVotes(word);
               return (
                 <li key={word.id}>
-                  <WordCard word={word} votes={votes} targetLang={targetLang} />
+                  <WordCard word={word} targetLang={targetLang} />
                   <Separator className="my-2" />
                 </li>
               );

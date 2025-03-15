@@ -1,3 +1,5 @@
+import { Vote } from './core';
+
 /**
  * Represents a phrase entry.
  */
@@ -14,6 +16,7 @@ export interface Phrase {
   created_at: Date;
   updated_at: Date;
   vote_count: number;
+  user_vote: Vote['value'];
   best_translations: { [key: string]: string };
   translation_count: number;
 }
@@ -63,6 +66,7 @@ export interface Translation {
   created_at: Date;
   updated_at: Date;
   vote_count: number;
+  user_vote: Vote['value'];
 }
 
 /**

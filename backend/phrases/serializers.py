@@ -49,6 +49,9 @@ class PhraseSerializer(serializers.ModelSerializer):
     vote_count = serializers.SerializerMethodField(
         help_text="Number of upvotes minus downvotes."
     )
+    user_vote = serializers.SerializerMethodField(
+        help_text="The user's vote for the phrase."
+    )
 
     class Meta:
         model = Phrase
@@ -65,17 +68,27 @@ class PhraseSerializer(serializers.ModelSerializer):
             "created_at",
             "updated_at",
             "vote_count",
+            "user_vote",
             "best_translations",
             "translation_count",
         ]
         extra_kwargs = {
             "contributor": {"read_only": True},
             "vote_count": {"read_only": True},
+            "user_vote": {"read_only": True},
             "translation_count": {"read_only": True},
         }
 
     def get_vote_count(self, obj: Phrase) -> int:
         return obj.votes.filter(value=1).count() - obj.votes.filter(value=-1).count()
+
+    def get_user_vote(self, obj: Phrase) -> int:
+        request = self.context.get("request")
+        if not request or not request.user.is_authenticated:
+            return 0
+
+        vote = obj.votes.filter(user=request.user).first()
+        return vote.value if vote else 0
 
     def get_best_translations(self, obj: Phrase) -> dict[str, str]:
         translations = obj.translations.annotate(
@@ -159,6 +172,9 @@ class TranslationSerializer(serializers.ModelSerializer):
     vote_count = serializers.SerializerMethodField(
         help_text="Number of upvotes minus downvotes."
     )
+    user_vote = serializers.SerializerMethodField(
+        help_text="The user's vote for the translation."
+    )
 
     class Meta:
         model = Translation
@@ -174,14 +190,24 @@ class TranslationSerializer(serializers.ModelSerializer):
             "created_at",
             "updated_at",
             "vote_count",
+            "user_vote",
         ]
         extra_kwargs = {
             "contributor": {"read_only": True},
             "vote_count": {"read_only": True},
+            "user_vote": {"read_only": True},
         }
 
     def get_vote_count(self, obj: Translation) -> int:
         return obj.votes.filter(value=1).count() - obj.votes.filter(value=-1).count()
+
+    def get_user_vote(self, obj: Phrase) -> int:
+        request = self.context.get("request")
+        if not request or not request.user.is_authenticated:
+            return 0
+
+        vote = obj.votes.filter(user=request.user).first()
+        return vote.value if vote else 0
 
     def get_contributor_reputation(self, obj: Translation) -> int:
         return obj.contributor.get_reputation()

@@ -54,6 +54,9 @@ class WordSerializer(DynamicFieldsSerializer):
     vote_count = serializers.SerializerMethodField(
         help_text="Number of upvotes minus downvotes."
     )
+    user_vote = serializers.SerializerMethodField(
+        help_text="The user's vote for the word."
+    )
 
     class Meta:
         model = Word
@@ -71,14 +74,24 @@ class WordSerializer(DynamicFieldsSerializer):
             "created_at",
             "updated_at",
             "vote_count",
+            "user_vote",
         ]
         extra_kwargs = {
             "contributor": {"read_only": True},
             "vote_count": {"read_only": True},
+            "user_vote": {"read_only": True},
         }
 
     def get_contributor_reputation(self, obj: Word) -> int:
         return obj.contributor.get_reputation()
+
+    def get_user_vote(self, obj: Word) -> int:
+        request = self.context.get("request")
+        if not request or not request.user.is_authenticated:
+            return 0
+
+        vote = obj.votes.filter(user=request.user).first()
+        return vote.value if vote else 0
 
     def get_parts_of_speech(self, obj: Word) -> list[str]:
         return [
@@ -193,6 +206,9 @@ class DefinitionSerializer(serializers.ModelSerializer):
     vote_count = serializers.SerializerMethodField(
         help_text="Number of upvotes minus downvotes."
     )
+    user_vote = serializers.SerializerMethodField(
+        help_text="The user's vote for the definition."
+    )
 
     class Meta:
         model = Definition
@@ -212,14 +228,24 @@ class DefinitionSerializer(serializers.ModelSerializer):
             "created_at",
             "updated_at",
             "vote_count",
+            "user_vote",
         ]
         extra_kwargs = {
             "contributor": {"read_only": True},
             "vote_count": {"read_only": True},
+            "user_vote": {"read_only": True},
         }
 
     def get_vote_count(self, obj: Definition) -> int:
         return obj.votes.filter(value=1).count() - obj.votes.filter(value=-1).count()
+
+    def get_user_vote(self, obj: Definition) -> int:
+        request = self.context.get("request")
+        if not request or not request.user.is_authenticated:
+            return 0
+
+        vote = obj.votes.filter(user=request.user).first()
+        return vote.value if vote else 0
 
     def get_contributor_reputation(self, obj: Definition) -> int:
         return obj.contributor.get_reputation()

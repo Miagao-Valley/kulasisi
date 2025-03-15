@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Vote } from '@/types/core';
 import { Translation } from '@/types/phrases';
 import { cn } from '@/lib/utils';
 import EntryHeader from '@/components/entry/EntryHeader';
@@ -19,14 +18,12 @@ import {
 
 interface Props {
   translation: Translation;
-  votes: Vote[];
   clickable?: boolean;
   className?: string;
 }
 
 export default function TranslationCard({
   translation,
-  votes,
   clickable = true,
   className = '',
 }: Props) {
@@ -72,7 +69,7 @@ export default function TranslationCard({
         )}
       </CardContent>
       <CardFooter>
-        <EntryFooter entry={translation} votes={votes} />
+        <EntryFooter entry={translation} />
       </CardFooter>
     </Card>
   );

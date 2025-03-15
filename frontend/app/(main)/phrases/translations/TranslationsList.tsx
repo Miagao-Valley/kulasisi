@@ -1,5 +1,4 @@
 import React from 'react';
-import getVotes from '@/lib/vote/getVotes';
 import getTranslations from '@/lib/translations/getTranslations';
 import { cn } from '@/lib/utils';
 import TranslationCard from './TranslationCard';
@@ -48,12 +47,11 @@ export default async function TranslationsList({
         translations.results.length > 0 ? (
           <>
             {translations.results.map(async (translation) => {
-              const votes = await getVotes(translation);
               return (
                 <li key={translation.id}>
                   <Separator className="my-2" />
                   <div id={`translation-${translation.id}`}>
-                    <TranslationCard translation={translation} votes={votes} />
+                    <TranslationCard translation={translation} />
                   </div>
                 </li>
               );

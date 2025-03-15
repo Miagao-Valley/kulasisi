@@ -1,12 +1,12 @@
 'use server';
 
 import fetcher, { FetchError } from '@/utils/fetcher';
-import { Entry } from '@/types/core';
+import { Entry, Vote } from '@/types/core';
 import getToken from '../tokens/getToken';
 import { revalidatePath } from 'next/cache';
 import entryToUrl from '../../utils/entryToUrl';
 
-export default async function vote(entry: Entry, value: -1 | 0 | 1) {
+export default async function vote(entry: Entry, value: Vote['value']) {
   const backendUrl = entryToUrl(entry);
   const frontendUrl = entryToUrl(entry, false);
   if (backendUrl === '' || frontendUrl === '') {
@@ -25,7 +25,7 @@ export default async function vote(entry: Entry, value: -1 | 0 | 1) {
         },
         body: JSON.stringify({ value: value }),
       },
-      getToken(),
+      getToken()
     );
   } catch (error) {
     revalidatePath(frontendUrl);

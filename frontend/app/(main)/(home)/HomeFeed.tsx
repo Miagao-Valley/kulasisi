@@ -4,7 +4,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { isPhrase } from '@/types/phrases';
 import { isWord } from '@/types/dictionary';
 import getHomeFeed from '@/lib/core/getHomeFeed';
-import getVotes from '@/lib/vote/getVotes';
 import { cn } from '@/lib/utils';
 import PhraseCard from '../phrases/PhraseCard';
 import WordCard from '../dictionary/WordCard';
@@ -42,10 +41,8 @@ export default function HomeFeed({ className = '' }: Props) {
       // Fetch additional data for each entry.
       const enriched = await Promise.all(
         result.results.map(async (entry: any) => {
-          const votes = await getVotes(entry);
           return {
             ...entry,
-            votes,
             type: isPhrase(entry) ? 'phrase' : isWord(entry) ? 'word' : '',
           };
         })
@@ -87,9 +84,9 @@ export default function HomeFeed({ className = '' }: Props) {
         feed.map((entry, idx) => (
           <li key={idx}>
             {entry.type === 'phrase' ? (
-              <PhraseCard phrase={entry} votes={entry.votes} />
+              <PhraseCard phrase={entry} />
             ) : (
-              <WordCard word={entry} votes={entry.votes} />
+              <WordCard word={entry} />
             )}
             <Separator className="my-2" />
           </li>

@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Vote } from '@/types/core';
 import { Word } from '@/types/dictionary';
 import { cn } from '@/lib/utils';
 import EntryHeader from '@/components/entry/EntryHeader';
@@ -20,7 +19,6 @@ import {
 
 interface Props {
   word: Word;
-  votes: Vote[];
   targetLang?: string;
   clickable?: boolean;
   className?: string;
@@ -28,7 +26,6 @@ interface Props {
 
 export default function WordCard({
   word,
-  votes,
   targetLang,
   clickable = true,
   className = '',
@@ -82,7 +79,7 @@ export default function WordCard({
         )}
       </CardContent>
       <CardFooter>
-        <EntryFooter entry={word} votes={votes} />
+        <EntryFooter entry={word} />
       </CardFooter>
     </Card>
   );
