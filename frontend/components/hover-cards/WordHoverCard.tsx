@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { Word } from '@/types/dictionary';
 import getWord from '@/lib/words/getWord';
@@ -18,22 +18,20 @@ interface Props {
 }
 
 export default function WordHoverCard({ lang, word }: Props) {
-  const [wordObj, setWordObj] = useState<Word>();
+  const [wordObj, setWordObj] = useState<Word | null>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchWord = async () => {
+  const handleHover = async (open: boolean) => {
+    if (open && !wordObj) {
       setLoading(true);
       const res = await getWord(lang, word);
       setWordObj(res);
       setLoading(false);
-    };
-
-    fetchWord();
-  }, [lang, word]);
+    }
+  };
 
   return (
-    <HoverCard>
+    <HoverCard onOpenChange={handleHover}>
       {word && (
         <>
           <HoverCardTrigger asChild>

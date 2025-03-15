@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { PartOfSpeech } from '@/types/dictionary';
 import getPartOfSpeech from '@/lib/definitions/getPartOfSpeech';
@@ -17,22 +17,20 @@ interface Props {
 }
 
 export default function PosHoverCard({ abbr }: Props) {
-  const [pos, setPos] = useState<PartOfSpeech>();
+  const [pos, setPos] = useState<PartOfSpeech | null>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchPos = async () => {
+  const handleHover = async (open: boolean) => {
+    if (open && !pos) {
       setLoading(true);
       const res = await getPartOfSpeech(abbr);
       setPos(res);
       setLoading(false);
-    };
-
-    fetchPos();
-  }, [abbr]);
+    }
+  };
 
   return (
-    <HoverCard>
+    <HoverCard onOpenChange={handleHover}>
       <HoverCardTrigger asChild>
         <Link
           href={`/dictionary?pos=${abbr}`}

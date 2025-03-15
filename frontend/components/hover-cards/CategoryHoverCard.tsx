@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { Category } from '@/types/phrases';
 import getCategory from '@/lib/phrases/getCategory';
@@ -17,22 +17,20 @@ interface Props {
 }
 
 export default function CategoryHoverCard({ name }: Props) {
-  const [category, setCategory] = useState<Category>();
+  const [category, setCategory] = useState<Category | null>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchCategory = async () => {
+  const handleHover = async (open: boolean) => {
+    if (open && !category) {
       setLoading(true);
       const res = await getCategory(name);
       setCategory(res);
       setLoading(false);
-    };
-
-    fetchCategory();
-  }, [name]);
+    }
+  };
 
   return (
-    <HoverCard>
+    <HoverCard onOpenChange={handleHover}>
       <HoverCardTrigger asChild>
         <Link
           href={`/phrases?category=${name}`}

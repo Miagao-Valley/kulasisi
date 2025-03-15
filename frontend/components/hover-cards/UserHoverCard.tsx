@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { User } from '@/types/users';
 import getUser from '@/lib/users/getUser';
@@ -24,24 +24,20 @@ export default function UserHoverCard({
   showAvatar = false,
   showUsername = true,
 }: Props) {
-  const [user, setUser] = useState<User>();
-  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    if (username) {
-      const fetchUser = async () => {
-        setLoading(true);
-        const res = await getUser(username);
-        setUser(res);
-        setLoading(false);
-      };
-
-      fetchUser();
+  const handleHover = async (open: boolean) => {
+    if (open && !user) {
+      setLoading(true);
+      const res = await getUser(username);
+      setUser(res);
+      setLoading(false);
     }
-  }, [username]);
+  };
 
   return (
-    <HoverCard>
+    <HoverCard onOpenChange={handleHover}>
       <HoverCardTrigger asChild>
         <Link href={`/users/${username}/`} className="flex gap-2 items-center">
           {showAvatar && (
@@ -80,7 +76,9 @@ export default function UserHoverCard({
             {loading ? (
               <Skeleton className="w-32 h-4" />
             ) : (
-              <h2 className="font-semibold truncate max-w-40">{`${user?.first_name || ''} ${user?.last_name || ''}`}</h2>
+              <h2 className="font-semibold truncate max-w-40">{`${
+                user?.first_name || ''
+              } ${user?.last_name || ''}`}</h2>
             )}
             {loading ? (
               <Skeleton className="w-20 h-4" />
