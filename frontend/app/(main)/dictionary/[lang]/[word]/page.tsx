@@ -1,7 +1,6 @@
 import React from 'react';
 import getWord from '@/lib/words/getWord';
 import getVotes from '@/lib/vote/getVotes';
-import getWordRevisions from '@/lib/words/getWordRevisions';
 import WordCard from '../../WordCard';
 import DefinitionsSection from '../../definitions/DefinitionsSection';
 import {
@@ -22,7 +21,6 @@ interface Props {
 export default async function PostPage({ params, searchParams }: Props) {
   const word = await getWord(params.lang, params.word);
   const votes = await getVotes(word);
-  const revisions = await getWordRevisions(params.lang, params.word);
 
   return (
     <>
@@ -30,7 +28,6 @@ export default async function PostPage({ params, searchParams }: Props) {
         className="m-0 mb-3 p-0"
         word={word}
         votes={votes}
-        revisions={revisions.results}
         clickable={false}
       />
 

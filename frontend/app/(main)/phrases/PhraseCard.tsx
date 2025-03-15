@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { Vote } from '@/types/core';
-import { Phrase, PhraseRevision } from '@/types/phrases';
+import { Phrase } from '@/types/phrases';
 import { cn } from '@/lib/utils';
 import EntryHeader from '@/components/entry/EntryHeader';
 import EntryFooter from '@/components/entry/EntryFooter';
@@ -22,7 +22,6 @@ import {
 interface Props {
   phrase: Phrase;
   votes: Vote[];
-  revisions: PhraseRevision[];
   targetLang?: string;
   clickable?: boolean;
   className?: string;
@@ -31,7 +30,6 @@ interface Props {
 export default function PhraseCard({
   phrase,
   votes,
-  revisions,
   targetLang,
   clickable = true,
   className = '',
@@ -42,16 +40,12 @@ export default function PhraseCard({
     <Card
       className={cn(
         className,
-        `border-transparent shadow-none ${clickable && 'hover:bg-accent/40'}`,
+        `border-transparent shadow-none ${clickable && 'hover:bg-accent/40'}`
       )}
     >
       <CardHeader className="flex flex-row">
         <EntryHeader className="me-auto" entry={phrase} />
-        <PhraseDropdownMenu
-          phrase={phrase}
-          revisions={revisions}
-          setIsEditing={setIsEditing}
-        />
+        <PhraseDropdownMenu phrase={phrase} setIsEditing={setIsEditing} />
       </CardHeader>
       <CardContent>
         {isEditing ? (

@@ -1,6 +1,5 @@
 import React from 'react';
 import getPhrases from '@/lib/phrases/getPhrases';
-import getPhraseRevisions from '@/lib/phrases/getPhraseRevisions';
 import getVotes from '@/lib/vote/getVotes';
 import { cn } from '@/lib/utils';
 import PhraseCard from './PhraseCard';
@@ -48,13 +47,11 @@ export default async function PhrasesList({
           <>
             {phrases.results.map(async (phrase) => {
               const votes = await getVotes(phrase);
-              const revisions = await getPhraseRevisions(phrase.id);
               return (
                 <li key={phrase.id}>
                   <PhraseCard
                     phrase={phrase}
                     votes={votes}
-                    revisions={revisions.results}
                     targetLang={targetLang}
                   />
                   <Separator className="my-2" />

@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { Vote } from '@/types/core';
-import { Definition, DefinitionRevision } from '@/types/dictionary';
+import { Definition } from '@/types/dictionary';
 import { cn } from '@/lib/utils';
 import EntryHeader from '@/components/entry/EntryHeader';
 import EntryFooter from '@/components/entry/EntryFooter';
@@ -23,7 +23,6 @@ import {
 interface Props {
   definition: Definition;
   votes: Vote[];
-  revisions: DefinitionRevision[];
   clickable?: boolean;
   className?: string;
 }
@@ -31,7 +30,6 @@ interface Props {
 export default function DefinitionCard({
   definition,
   votes,
-  revisions,
   clickable = true,
   className = '',
 }: Props) {
@@ -41,14 +39,13 @@ export default function DefinitionCard({
     <Card
       className={cn(
         className,
-        `border-transparent shadow-none ${clickable && 'hover:bg-accent/40'}`,
+        `border-transparent shadow-none ${clickable && 'hover:bg-accent/40'}`
       )}
     >
       <CardHeader className="flex flex-row">
         <EntryHeader className="me-auto" entry={definition} />
         <DefinitionDropdownMenu
           definition={definition}
-          revisions={revisions}
           setIsEditing={setIsEditing}
         />
       </CardHeader>

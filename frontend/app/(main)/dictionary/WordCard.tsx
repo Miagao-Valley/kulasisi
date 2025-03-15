@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { Vote } from '@/types/core';
-import { Word, WordRevision } from '@/types/dictionary';
+import { Word } from '@/types/dictionary';
 import { cn } from '@/lib/utils';
 import EntryHeader from '@/components/entry/EntryHeader';
 import EntryFooter from '@/components/entry/EntryFooter';
@@ -21,7 +21,6 @@ import {
 interface Props {
   word: Word;
   votes: Vote[];
-  revisions: WordRevision[];
   targetLang?: string;
   clickable?: boolean;
   className?: string;
@@ -30,7 +29,6 @@ interface Props {
 export default function WordCard({
   word,
   votes,
-  revisions,
   targetLang,
   clickable = true,
   className = '',
@@ -41,16 +39,12 @@ export default function WordCard({
     <Card
       className={cn(
         className,
-        `border-transparent shadow-none ${clickable && 'hover:bg-accent/40'}`,
+        `border-transparent shadow-none ${clickable && 'hover:bg-accent/40'}`
       )}
     >
       <CardHeader className="flex flex-row">
         <EntryHeader className="me-auto" entry={word} />
-        <WordDropdownMenu
-          word={word}
-          revisions={revisions}
-          setIsEditing={setIsEditing}
-        />
+        <WordDropdownMenu word={word} setIsEditing={setIsEditing} />
       </CardHeader>
       <CardContent>
         {isEditing ? (

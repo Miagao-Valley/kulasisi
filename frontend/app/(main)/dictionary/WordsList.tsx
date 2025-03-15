@@ -1,6 +1,5 @@
 import React from 'react';
 import getWords from '@/lib/words/getWords';
-import getWordRevisions from '@/lib/words/getWordRevisions';
 import getVotes from '@/lib/vote/getVotes';
 import { cn } from '@/lib/utils';
 import WordCard from './WordCard';
@@ -48,15 +47,9 @@ export default async function WordsList({
           <>
             {words.results.map(async (word) => {
               const votes = await getVotes(word);
-              const revisions = await getWordRevisions(word.lang, word.word);
               return (
                 <li key={word.id}>
-                  <WordCard
-                    word={word}
-                    votes={votes}
-                    revisions={revisions.results}
-                    targetLang={targetLang}
-                  />
+                  <WordCard word={word} votes={votes} targetLang={targetLang} />
                   <Separator className="my-2" />
                 </li>
               );

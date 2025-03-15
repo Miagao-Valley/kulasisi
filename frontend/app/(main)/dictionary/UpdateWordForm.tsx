@@ -54,7 +54,7 @@ export default function UpdateWordForm({
         <Input
           type="text"
           className="p-0 !text-xl font-bold borderless-input bg-transparent"
-          placeholder={word.word}
+          value={word.word}
           disabled
         />
 

@@ -1,6 +1,9 @@
-import React from 'react';
+'use client';
+
+import React, { useState, useEffect } from 'react';
 import naturalTime from '@/utils/naturalTime';
-import { PhraseRevision } from '@/types/phrases';
+import { Phrase, PhraseRevision } from '@/types/phrases';
+import getPhraseRevisions from '@/lib/phrases/getPhraseRevisions';
 import DiffText from '@/components/DiffText';
 import UserHoverCard from '@/components/hover-cards/UserHoverCard';
 import {
@@ -9,12 +12,58 @@ import {
   AccordionContent,
   AccordionTrigger,
 } from '@/components/ui/accordion';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
-interface Props {
+interface PhraseRevisionsModalProps {
+  phrase: Phrase;
+}
+
+export function PhraseRevisionsModal({ phrase }: PhraseRevisionsModalProps) {
+  const [revisions, setRevisions] = useState<PhraseRevision[]>([]);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  const handleOpen = async (open: boolean) => {
+    if (open && revisions.length === 0) {
+      const res = await getPhraseRevisions(phrase.id);
+      setRevisions(res.results);
+    }
+  };
+
+  if (!isMounted) {
+    return null;
+  }
+
+  return (
+    <Dialog onOpenChange={handleOpen}>
+      <DialogTrigger className="w-full text-left">Edits</DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Edits</DialogTitle>
+        </DialogHeader>
+        <ScrollArea className="max-h-96 pe-4">
+          <PhraseRevisionsList revisions={revisions} />
+        </ScrollArea>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+interface PhraseRevisionsListProps {
   revisions: PhraseRevision[];
 }
 
-export default function PhraseRevisionsList({ revisions }: Props) {
+export function PhraseRevisionsList({ revisions }: PhraseRevisionsListProps) {
   return (
     <Accordion type="single" collapsible>
       {revisions && revisions.length > 0 ? (
@@ -33,7 +82,9 @@ export default function PhraseRevisionsList({ revisions }: Props) {
                     <span className="font-medium">
                       #{revisions.length - index}
                     </span>
-                    <UserHoverCard username={revision.history_user} />
+                    {revision.history_user && (
+                      <UserHoverCard username={revision.history_user} />
+                    )}
                   </div>
                   <span className="truncate text-xs text-muted-foreground">
                     modified content {naturalTime(revision.history_date)}

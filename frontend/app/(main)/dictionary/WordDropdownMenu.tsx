@@ -2,9 +2,9 @@
 
 import React from 'react';
 import { useAuth } from '@/components/providers/AuthProvider';
-import { Word, WordRevision } from '@/types/dictionary';
+import { Word } from '@/types/dictionary';
 import copyLinkToClipboard from '@/utils/copyLinkToClipboard';
-import WordRevisionsList from './WordRevisionsList';
+import { WordRevisionsModal } from './WordRevisions';
 import DeleteWordModal from './DeleteWordModal';
 import { Button } from '@/components/ui/button';
 import {
@@ -14,28 +14,15 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
 import { AlertDialog, AlertDialogTrigger } from '@/components/ui/alert-dialog';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { Ellipsis } from 'lucide-react';
 
 interface Props {
   word: Word;
-  revisions: WordRevision[];
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function WordDropdownMenu({
-  word,
-  revisions,
-  setIsEditing,
-}: Props) {
+export default function WordDropdownMenu({ word, setIsEditing }: Props) {
   const auth = useAuth();
 
   return (
@@ -57,17 +44,7 @@ export default function WordDropdownMenu({
             Copy link
           </DropdownMenuItem>
           <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-            <Dialog>
-              <DialogTrigger className="w-full text-left">Edits</DialogTrigger>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Edits</DialogTitle>
-                </DialogHeader>
-                <ScrollArea className="max-h-96 pe-4">
-                  <WordRevisionsList revisions={revisions} />
-                </ScrollArea>
-              </DialogContent>
-            </Dialog>
+            <WordRevisionsModal word={word} />
           </DropdownMenuItem>
           {auth.username === word.contributor && (
             <>

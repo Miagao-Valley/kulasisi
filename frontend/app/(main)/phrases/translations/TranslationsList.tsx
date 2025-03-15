@@ -1,7 +1,6 @@
 import React from 'react';
 import getVotes from '@/lib/vote/getVotes';
 import getTranslations from '@/lib/translations/getTranslations';
-import getTranslationRevisions from '@/lib/translations/getTranslationRevisions';
 import { cn } from '@/lib/utils';
 import TranslationCard from './TranslationCard';
 import ListPagination from '@/components/pagination/ListPagination';
@@ -38,7 +37,7 @@ export default async function TranslationsList({
       limit: limit,
       offset: limit * (page - 1),
     },
-    phraseId,
+    phraseId
   );
 
   return (
@@ -50,16 +49,11 @@ export default async function TranslationsList({
           <>
             {translations.results.map(async (translation) => {
               const votes = await getVotes(translation);
-              const revisions = await getTranslationRevisions(translation.id);
               return (
                 <li key={translation.id}>
                   <Separator className="my-2" />
                   <div id={`translation-${translation.id}`}>
-                    <TranslationCard
-                      translation={translation}
-                      votes={votes}
-                      revisions={revisions.results}
-                    />
+                    <TranslationCard translation={translation} votes={votes} />
                   </div>
                 </li>
               );

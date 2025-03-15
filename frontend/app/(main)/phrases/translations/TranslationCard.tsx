@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { Vote } from '@/types/core';
-import { Translation, TranslationRevision } from '@/types/phrases';
+import { Translation } from '@/types/phrases';
 import { cn } from '@/lib/utils';
 import EntryHeader from '@/components/entry/EntryHeader';
 import EntryFooter from '@/components/entry/EntryFooter';
@@ -20,7 +20,6 @@ import {
 interface Props {
   translation: Translation;
   votes: Vote[];
-  revisions: TranslationRevision[];
   clickable?: boolean;
   className?: string;
 }
@@ -28,7 +27,6 @@ interface Props {
 export default function TranslationCard({
   translation,
   votes,
-  revisions,
   clickable = true,
   className = '',
 }: Props) {
@@ -38,14 +36,13 @@ export default function TranslationCard({
     <Card
       className={cn(
         className,
-        `border-transparent shadow-none ${clickable && 'hover:bg-accent/40'}`,
+        `border-transparent shadow-none ${clickable && 'hover:bg-accent/40'}`
       )}
     >
       <CardHeader className="flex flex-row">
         <EntryHeader className="me-auto" entry={translation} />
         <TranslationDropdownMenu
           translation={translation}
-          revisions={revisions}
           setIsEditing={setIsEditing}
         />
       </CardHeader>

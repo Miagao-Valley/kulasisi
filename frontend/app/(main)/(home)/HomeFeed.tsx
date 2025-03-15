@@ -4,8 +4,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { isPhrase } from '@/types/phrases';
 import { isWord } from '@/types/dictionary';
 import getHomeFeed from '@/lib/core/getHomeFeed';
-import getPhraseRevisions from '@/lib/phrases/getPhraseRevisions';
-import getWordRevisions from '@/lib/words/getWordRevisions';
 import getVotes from '@/lib/vote/getVotes';
 import { cn } from '@/lib/utils';
 import PhraseCard from '../phrases/PhraseCard';
@@ -45,15 +43,9 @@ export default function HomeFeed({ className = '' }: Props) {
       const enriched = await Promise.all(
         result.results.map(async (entry: any) => {
           const votes = await getVotes(entry);
-          const revisions = isPhrase(entry)
-            ? (await getPhraseRevisions(entry.id)).results
-            : isWord(entry)
-            ? (await getWordRevisions(entry.lang, entry.word)).results
-            : [];
           return {
             ...entry,
             votes,
-            revisions,
             type: isPhrase(entry) ? 'phrase' : isWord(entry) ? 'word' : '',
           };
         })
@@ -95,17 +87,9 @@ export default function HomeFeed({ className = '' }: Props) {
         feed.map((entry, idx) => (
           <li key={idx}>
             {entry.type === 'phrase' ? (
-              <PhraseCard
-                phrase={entry}
-                votes={entry.votes}
-                revisions={entry.revisions}
-              />
+              <PhraseCard phrase={entry} votes={entry.votes} />
             ) : (
-              <WordCard
-                word={entry}
-                votes={entry.votes}
-                revisions={entry.revisions}
-              />
+              <WordCard word={entry} votes={entry.votes} />
             )}
             <Separator className="my-2" />
           </li>

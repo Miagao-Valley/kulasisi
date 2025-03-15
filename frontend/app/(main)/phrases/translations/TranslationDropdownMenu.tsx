@@ -2,9 +2,9 @@
 
 import React from 'react';
 import { useAuth } from '@/components/providers/AuthProvider';
-import { Translation, TranslationRevision } from '@/types/phrases';
+import { Translation } from '@/types/phrases';
 import copyLinkToClipboard from '@/utils/copyLinkToClipboard';
-import TranslationRevisionsList from './TranslationRevisionsList';
+import { TranslationRevisionsModal } from './TranslationRevisions';
 import DeleteTranslationModal from './DeleteTranslationModal';
 import { Button } from '@/components/ui/button';
 import {
@@ -14,26 +14,16 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
 import { AlertDialog, AlertDialogTrigger } from '@/components/ui/alert-dialog';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { Ellipsis } from 'lucide-react';
 
 interface Props {
   translation: Translation;
-  revisions: TranslationRevision[];
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function TranslationDropdownMenu({
   translation,
-  revisions,
   setIsEditing,
 }: Props) {
   const auth = useAuth();
@@ -51,7 +41,7 @@ export default function TranslationDropdownMenu({
             className="hover:cursor-pointer"
             onClick={() =>
               copyLinkToClipboard(
-                `/phrases/${translation.phrase}?tab=translations#${translation.id}`,
+                `/phrases/${translation.phrase}?tab=translations#${translation.id}`
               )
             }
           >
@@ -59,17 +49,7 @@ export default function TranslationDropdownMenu({
           </DropdownMenuItem>
 
           <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-            <Dialog>
-              <DialogTrigger className="w-full text-left">Edits</DialogTrigger>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Edits</DialogTitle>
-                </DialogHeader>
-                <ScrollArea className="max-h-96 pe-4">
-                  <TranslationRevisionsList revisions={revisions} />
-                </ScrollArea>
-              </DialogContent>
-            </Dialog>
+            <TranslationRevisionsModal translation={translation} />
           </DropdownMenuItem>
 
           {auth.username === translation.contributor && (

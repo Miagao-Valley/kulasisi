@@ -1,7 +1,6 @@
 import React from 'react';
 import getVotes from '@/lib/vote/getVotes';
 import getDefinitions from '@/lib/definitions/getDefinitions';
-import getDefinitionRevisions from '@/lib/definitions/getDefinitionRevisions';
 import { cn } from '@/lib/utils';
 import DefinitionCard from './DefinitionCard';
 import ListPagination from '@/components/pagination/ListPagination';
@@ -42,7 +41,7 @@ export default async function DefinitionsList({
       offset: limit * (page - 1),
     },
     wordLang || '',
-    word || '',
+    word || ''
   );
 
   return (
@@ -54,16 +53,11 @@ export default async function DefinitionsList({
           <>
             {definitions.results.map(async (definition) => {
               const votes = await getVotes(definition);
-              const revisions = await getDefinitionRevisions(definition.id);
               return (
                 <li key={definition.id}>
                   <Separator className="my-2" />
                   <div id={`definition-${definition.id}`}>
-                    <DefinitionCard
-                      definition={definition}
-                      votes={votes}
-                      revisions={revisions.results}
-                    />
+                    <DefinitionCard definition={definition} votes={votes} />
                   </div>
                 </li>
               );
