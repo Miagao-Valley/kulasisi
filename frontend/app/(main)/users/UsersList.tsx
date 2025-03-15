@@ -2,7 +2,7 @@ import React from 'react';
 import getUsers from '@/lib/users/getUsers';
 import { cn } from '@/lib/utils';
 import ListPagination from '@/components/pagination/ListPagination';
-import UserHoverCard from '@/components/hover-cards/UserHoverCard';
+import UserCard from '@/components/cards/UserCard';
 import { Skeleton } from '@/components/ui/skeleton';
 
 interface Props {
@@ -31,13 +31,13 @@ export default async function UsersList({
       <ul
         className={cn(
           className,
-          'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4',
+          'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'
         )}
       >
         {users && users.results && users.results.length > 0 ? (
           users.results.map((user) => (
             <li key={user.id}>
-              <UserHoverCard username={user.username} showAvatar />
+              <UserCard user={user} className="w-full h-full" />
             </li>
           ))
         ) : (
@@ -66,11 +66,11 @@ export function UsersListSkeleton({ className = '' }: SkeletonProps) {
     <ul
       className={cn(
         className,
-        'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5',
+        'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5'
       )}
     >
-      {Array.from({ length: 40 }, (_, i) => (
-        <Skeleton key={i} className="h-12 rounded-xl"></Skeleton>
+      {Array.from({ length: 20 }, (_, i) => (
+        <Skeleton key={i} className="h-24 rounded-xl"></Skeleton>
       ))}
     </ul>
   );

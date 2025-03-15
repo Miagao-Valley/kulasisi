@@ -6,10 +6,10 @@ import { Definition } from '@/types/dictionary';
 import { cn } from '@/lib/utils';
 import EntryHeader from '@/components/entry/EntryHeader';
 import EntryFooter from '@/components/entry/EntryFooter';
-import Source from '@/components/hover-cards/Source';
-import UsageNote from '@/components/hover-cards/UsageNote';
-import PosHoverCard from '@/components/hover-cards/PosHoverCard';
-import WordHoverCard from '@/components/hover-cards/WordHoverCard';
+import Source from '@/components/cards/Source';
+import UsageNote from '@/components/cards/UsageNote';
+import { PosHoverCard } from '@/components/cards/PosCard';
+import WordHoverCard from '@/components/cards/WordHoverCard';
 import DefinitionDropdownMenu from './DefinitionDropdownMenu';
 import UpdateDefinitionForm from './UpdateDefinitionForm';
 import {

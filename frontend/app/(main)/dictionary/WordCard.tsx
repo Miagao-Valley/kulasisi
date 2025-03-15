@@ -6,8 +6,8 @@ import { Word } from '@/types/dictionary';
 import { cn } from '@/lib/utils';
 import EntryHeader from '@/components/entry/EntryHeader';
 import EntryFooter from '@/components/entry/EntryFooter';
-import Source from '@/components/hover-cards/Source';
-import PosHoverCard from '@/components/hover-cards/PosHoverCard';
+import Source from '@/components/cards/Source';
+import { PosHoverCard } from '@/components/cards/PosCard';
 import WordDropdownMenu from './WordDropdownMenu';
 import UpdateWordForm from './UpdateWordForm';
 import {

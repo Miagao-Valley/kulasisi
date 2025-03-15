@@ -5,7 +5,7 @@ import naturalTime from '@/utils/naturalTime';
 import { Definition, DefinitionRevision } from '@/types/dictionary';
 import getDefinitionRevisions from '@/lib/definitions/getDefinitionRevisions';
 import DiffText from '@/components/DiffText';
-import UserHoverCard from '@/components/hover-cards/UserHoverCard';
+import { UserHoverCard } from '@/components/cards/UserCard';
 import {
   Accordion,
   AccordionItem,

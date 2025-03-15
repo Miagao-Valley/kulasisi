@@ -19,7 +19,7 @@ import {
   SidebarMenuSubItem,
 } from '@/components/ui/sidebar';
 import { Skeleton } from '../ui/skeleton';
-import LangHoverCard from '../hover-cards/LangHoverCard';
+import { LangHoverCard } from '../cards/LangCard';
 import { ChevronRight, LanguagesIcon } from 'lucide-react';
 
 export function NavLang() {
@@ -78,7 +78,7 @@ export function NavLang() {
                   user?.language_proficiencies?.map((lang_prof) => (
                     <SidebarMenuSubItem key={lang_prof.lang}>
                       <SidebarMenuSubButton asChild>
-                        <LangHoverCard code={lang_prof.lang} showName />
+                        <LangHoverCard code={lang_prof.lang} />
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
                   ))

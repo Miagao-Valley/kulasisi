@@ -5,8 +5,8 @@ import naturalTime from '@/utils/naturalTime';
 import { Phrase, Translation } from '@/types/phrases';
 import { Word, Definition } from '@/types/dictionary';
 import { cn } from '@/lib/utils';
-import LangHoverCard from '../hover-cards/LangHoverCard';
-import UserHoverCard from '../hover-cards/UserHoverCard';
+import { LangHoverCard } from '../cards/LangCard';
+import { UserHoverCard } from '../cards/UserCard';
 
 interface Props {
   entry: Phrase | Translation | Word | Definition;

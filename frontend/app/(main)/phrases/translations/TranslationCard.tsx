@@ -6,7 +6,7 @@ import { Translation } from '@/types/phrases';
 import { cn } from '@/lib/utils';
 import EntryHeader from '@/components/entry/EntryHeader';
 import EntryFooter from '@/components/entry/EntryFooter';
-import Source from '@/components/hover-cards/Source';
+import Source from '@/components/cards/Source';
 import TranslationDropdownMenu from './TranslationDropdownMenu';
 import UpdateTranslationForm from './UpdateTranslationForm';
 import {

@@ -6,7 +6,7 @@ import displayLangProficiency from '@/utils/displayLangProficiency';
 import getLangs from '@/lib/langs/getLangs';
 import MultipleSelector, { Option } from '@/components/ui/multiple-selector';
 import { Slider } from '@/components/ui/slider';
-import LangHoverCard from '../hover-cards/LangHoverCard';
+import { LangHoverCard } from '../cards/LangCard';
 
 interface Props {
   selectedLangProficiencies: { lang: string; level: LangProficiencyLevel }[];
@@ -14,7 +14,7 @@ interface Props {
     values: {
       lang: string;
       level: LangProficiencyLevel;
-    }[],
+    }[]
   ) => void;
   disabled?: boolean;
 }
@@ -41,7 +41,7 @@ export default function LangProficienciesForm({
       langs.map((lang) => ({
         label: lang.name,
         value: lang.code,
-      })),
+      }))
     );
   }, [langs]);
 
@@ -49,7 +49,7 @@ export default function LangProficienciesForm({
     const selectedValues = selectedOptions.map((option) => option.value);
 
     const updatedLanguages = selectedLangProficiencies.filter((item) =>
-      selectedValues.includes(item.lang),
+      selectedValues.includes(item.lang)
     );
 
     selectedOptions.forEach((option) => {
@@ -69,8 +69,8 @@ export default function LangProficienciesForm({
   const handleRangeChange = (level: LangProficiencyLevel, lang: string) => {
     setSelectedLangProficiencies(
       selectedLangProficiencies.map((item) =>
-        item.lang === lang ? { ...item, level } : item,
-      ),
+        item.lang === lang ? { ...item, level } : item
+      )
     );
   };
 
@@ -90,7 +90,7 @@ export default function LangProficienciesForm({
               return options.filter(
                 (option) =>
                   option.value.toLowerCase().includes(q) ||
-                  option.label.toLowerCase().includes(q),
+                  option.label.toLowerCase().includes(q)
               );
             }}
             triggerSearchOnFocus
@@ -131,7 +131,7 @@ export default function LangProficienciesForm({
                   onValueChange={(value) =>
                     handleRangeChange(
                       value[0] as LangProficiencyLevel,
-                      langProf.lang,
+                      langProf.lang
                     )
                   }
                   disabled={disabled}

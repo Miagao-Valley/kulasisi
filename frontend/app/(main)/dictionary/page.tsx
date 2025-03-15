@@ -1,4 +1,5 @@
 import React, { Suspense } from 'react';
+import getPartOfSpeech from '@/lib/definitions/getPartOfSpeech';
 import getPartsOfSpeech from '@/lib/definitions/getPartsOfSpeech';
 import WordsList, { WordsListSkeleton } from './WordsList';
 import { SortOption } from '@/components/filter/SortDropdown';
@@ -6,7 +7,7 @@ import { FilterOption } from '@/components/filter/FilterMenu';
 import FilterControls from '@/components/filter/FilterControls';
 import WordSearch from './WordSearch';
 import LangFilter from '@/components/filter/LangFilter';
-import PosCard from './PosCard';
+import PosCard from '@/components/cards/PosCard';
 import GotoAddWord from './GotoAddWord';
 import { Separator } from '@/components/ui/separator';
 
@@ -19,11 +20,12 @@ export default async function DictionaryPage({ searchParams }: Props) {
   const sortOption = searchParams.sort || '-vote_count';
   const sourceLang = searchParams.sl || '';
   const targetLang = searchParams.tl || '';
-  const pos = searchParams.pos || '';
+  const posCode = searchParams.pos || '';
   const page = Number(searchParams.page || 1);
 
-  const filters = { pos: pos };
+  const filters = { pos: posCode };
 
+  const pos = posCode ? await getPartOfSpeech(posCode) : null;
   const partsOfSpeech = await getPartsOfSpeech();
 
   const sortingOptions: SortOption[] = [
@@ -66,7 +68,7 @@ export default async function DictionaryPage({ searchParams }: Props) {
       <GotoAddWord />
       <Separator className="my-2" />
 
-      {filters.pos && <PosCard abbr={pos} className="my-2" />}
+      {pos && <PosCard pos={pos} className="my-2" />}
       <Suspense fallback={<WordsListSkeleton />}>
         <WordsList
           sourceLang={sourceLang}

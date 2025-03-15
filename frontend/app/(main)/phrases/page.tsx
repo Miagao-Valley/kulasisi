@@ -1,12 +1,13 @@
 import React, { Suspense } from 'react';
+import getCategory from '@/lib/phrases/getCategory';
 import getCategories from '@/lib/phrases/getCategories';
 import PhrasesList, { PhrasesListSkeleton } from './PhrasesList';
 import { SortOption } from '@/components/filter/SortDropdown';
 import { FilterOption } from '@/components/filter/FilterMenu';
 import FilterControls from '@/components/filter/FilterControls';
-import CategoryCard from './CategoryCard';
 import PhraseSearch from './PhraseSearch';
 import LangFilter from '@/components/filter/LangFilter';
+import CategoryCard from '@/components/cards/CategoryCard';
 import GoogleTranslateCard from './GoogleTranslateCard';
 import GotoAddPhrase from './GotoAddPhrase';
 import { Separator } from '@/components/ui/separator';
@@ -20,12 +21,13 @@ export default async function PhrasesPage({ searchParams }: Props) {
   const sortOption = searchParams.sort || '-vote_count';
   const sourceLang = searchParams.sl || '';
   const targetLang = searchParams.tl || '';
-  const category = searchParams.category || '';
+  const categoryName = searchParams.category || '';
   const page = Number(searchParams.page || 1);
 
+  const category = categoryName ? await getCategory(categoryName) : null;
   const categories = await getCategories();
 
-  const filters = { category: category };
+  const filters = { category: categoryName };
 
   const sortingOptions: SortOption[] = [
     { label: 'Content', value: 'content' },
@@ -68,7 +70,7 @@ export default async function PhrasesPage({ searchParams }: Props) {
       <GotoAddPhrase />
       <Separator className="my-2" />
 
-      {filters.category && <CategoryCard name={category} className="my-2" />}
+      {category && <CategoryCard category={category} className="my-2" />}
       {searchTerm && sourceLang && targetLang && (
         <GoogleTranslateCard
           text={searchTerm}

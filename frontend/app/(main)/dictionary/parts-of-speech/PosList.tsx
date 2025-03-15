@@ -1,7 +1,7 @@
 import React from 'react';
 import getPartsOfSpeech from '@/lib/definitions/getPartsOfSpeech';
 import { cn } from '@/lib/utils';
-import PosHoverCard from '@/components/hover-cards/PosHoverCard';
+import PosCard from '@/components/cards/PosCard';
 import { Skeleton } from '@/components/ui/skeleton';
 
 interface Props {
@@ -24,13 +24,13 @@ export default async function PosList({
     <ul
       className={cn(
         className,
-        'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4',
+        'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'
       )}
     >
       {partsOfSpeech && partsOfSpeech.length > 0 ? (
         partsOfSpeech.map((pos) => (
           <li key={pos.abbr}>
-            <PosHoverCard abbr={pos.abbr} />
+            <PosCard pos={pos} className="w-full h-full" />
           </li>
         ))
       ) : (
@@ -51,11 +51,11 @@ export function PosListSkeleton({ className = '' }: SkeletonProps) {
     <ul
       className={cn(
         className,
-        'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5',
+        'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5'
       )}
     >
-      {Array.from({ length: 40 }, (_, i) => (
-        <Skeleton key={i} className="h-8 rounded-xl"></Skeleton>
+      {Array.from({ length: 24 }, (_, i) => (
+        <Skeleton key={i} className="h-20 rounded-xl"></Skeleton>
       ))}
     </ul>
   );

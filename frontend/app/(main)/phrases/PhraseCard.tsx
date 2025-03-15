@@ -6,9 +6,9 @@ import { Phrase } from '@/types/phrases';
 import { cn } from '@/lib/utils';
 import EntryHeader from '@/components/entry/EntryHeader';
 import EntryFooter from '@/components/entry/EntryFooter';
-import Source from '@/components/hover-cards/Source';
-import UsageNote from '@/components/hover-cards/UsageNote';
-import CategoryHoverCard from '@/components/hover-cards/CategoryHoverCard';
+import Source from '@/components/cards/Source';
+import UsageNote from '@/components/cards/UsageNote';
+import { CategoryHoverCard } from '@/components/cards/CategoryCard';
 import PhraseDropdownMenu from './PhraseDropdownMenu';
 import UpdatePhraseForm from './UpdatePhraseForm';
 import {
