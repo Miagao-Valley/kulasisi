@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '../providers/AuthProvider';
 import { Entry, Vote } from '@/types/core';
@@ -18,11 +18,15 @@ export default function VoteActions({ entry }: Props) {
   const router = useRouter();
   const pathname = usePathname();
 
-  const [isLoading, setIsLoading] = useState(false);
-
+  const [voteCount, setVoteCount] = useState(entry.vote_count);
   const [currentVote, setCurrentVote] = useState<Vote['value']>(
     entry.user_vote
   );
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setVoteCount(entry.vote_count);
+  }, []);
 
   const handleVote = async (value: Vote['value']) => {
     setIsLoading(true);
@@ -41,20 +45,27 @@ export default function VoteActions({ entry }: Props) {
     }
 
     const previousVote = currentVote;
+    // Calculate the intended new vote.
+    const newVote = previousVote === value ? 0 : value;
+    // Change in vote.
+    const delta = newVote - previousVote;
 
-    setCurrentVote(value);
+    // Optimistically update state using functional updates.
+    setVoteCount((prev) => prev + delta);
+    setCurrentVote(newVote);
 
     try {
-      const res = await vote(entry, value);
-      if (
-        (res && typeof res === 'object' && Object.keys(res).length === 0) ||
-        res?.error
-      ) {
+      const res = await vote(entry, newVote);
+      if (res?.error) {
+        // Revert state changes on error.
+        console.error(res?.error);
+        setVoteCount((prev) => prev - delta);
         setCurrentVote(previousVote);
         toast.error('Failed to vote.');
       }
     } catch (error) {
       console.error(error);
+      setVoteCount((prev) => prev - delta);
       setCurrentVote(previousVote);
       toast.error('Failed to vote.');
     } finally {
@@ -66,8 +77,7 @@ export default function VoteActions({ entry }: Props) {
     <div className="p-0 flex items-center rounded-md border">
       <Button
         variant="ghost"
-        size="icon"
-        className="p-0 text-lg"
+        className="p-1 w-fit h-fit"
         type="button"
         disabled={isLoading}
         onClick={() => handleVote(currentVote === 1 ? 0 : 1)}
@@ -75,12 +85,11 @@ export default function VoteActions({ entry }: Props) {
         <ArrowBigUp className={currentVote === 1 ? 'fill-current' : ''} />
       </Button>
 
-      <span className="p-0 font-medium">{entry?.vote_count || 0}</span>
+      <span className="p-0 font-medium">{voteCount || 0}</span>
 
       <Button
         variant="ghost"
-        size="icon"
-        className="p-0 text-lg"
+        className="p-1 w-fit h-fit"
         type="button"
         disabled={isLoading}
         onClick={() => handleVote(currentVote === -1 ? 0 : -1)}

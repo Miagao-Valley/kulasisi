@@ -1,3 +1,4 @@
+import path from 'path';
 import { Entry } from '@/types/core';
 import { isPhrase, isTranslation } from '@/types/phrases';
 import { isDefinition, isWord } from '@/types/dictionary';
@@ -11,32 +12,27 @@ import { isDefinition, isWord } from '@/types/dictionary';
  */
 export default function entryToUrl(
   entry: Entry,
-  backend: boolean = true,
+  backend: boolean = true
 ): string {
-  // URL for a phrase entry
   if (isPhrase(entry)) {
-    return `phrases/${entry.id}`;
+    return path.join('phrases', entry.id.toString());
   }
-  // URL for a translation entry
-  else if (isTranslation(entry)) {
+
+  if (isTranslation(entry)) {
     return backend
-      ? `phrases/translations/${entry.id}`
-      : `phrases/${entry.phrase}`;
+      ? path.join('phrases', 'translations', entry.id.toString())
+      : path.join('phrases', entry.phrase.toString());
   }
-  // URL for a word entry
-  else if (isWord(entry)) {
+
+  if (isWord(entry)) {
+    return path.join('dictionary', entry.lang, entry.word);
+  }
+
+  if (isDefinition(entry)) {
     return backend
-      ? `/dictionary/${entry.lang}/${entry.word}`
-      : `dictionary/${entry.lang}/${entry.word}`;
+      ? path.join('dictionary', 'definitions', entry.id.toString())
+      : path.join('dictionary', entry.word.lang, entry.word.word);
   }
-  // URL for a definition entry
-  else if (isDefinition(entry)) {
-    return backend
-      ? `dictionary/definitions/${entry.id}`
-      : `dictionary/${entry.word.lang}/${entry.word.word}`;
-  }
-  // Return an empty string if the entry type is unrecognized
-  else {
-    return '';
-  }
+
+  return '';
 }
