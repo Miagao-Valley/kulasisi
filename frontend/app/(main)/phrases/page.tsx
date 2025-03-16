@@ -1,4 +1,5 @@
 import React, { Suspense } from 'react';
+import Link from 'next/link';
 import getCategory from '@/lib/phrases/getCategory';
 import getCategories from '@/lib/phrases/getCategories';
 import PhrasesList, { PhrasesListSkeleton } from './PhrasesList';
@@ -9,8 +10,9 @@ import PhraseSearch from './PhraseSearch';
 import LangFilter from '@/components/filter/LangFilter';
 import CategoryCard from '@/components/cards/CategoryCard';
 import GoogleTranslateCard from './GoogleTranslateCard';
-import GotoAddPhrase from './GotoAddPhrase';
+import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { PlusIcon } from 'lucide-react';
 
 interface Props {
   searchParams: { [key: string]: string | undefined };
@@ -51,23 +53,29 @@ export default async function PhrasesPage({ searchParams }: Props) {
 
   return (
     <>
-      <PhraseSearch currentSearchTerm={searchTerm} />
-      <div className="w-full flex justify-between">
-        <LangFilter
-          currentSourceLang={sourceLang}
-          currentTargetLang={targetLang}
-        />
-        <FilterControls
-          sortOption={sortOption}
-          sortingOptions={sortingOptions}
-          filters={filters}
-          filterOptions={filterOptions}
-          className="!w-fit my-1"
-        />
+      <div className="p-2 rounded-lg border mb-2 focus-within:ring-1 focus-within:ring-primary">
+        <PhraseSearch currentSearchTerm={searchTerm} />
+        <div className="w-full flex gap-2 items-center">
+          <LangFilter
+            currentSourceLang={sourceLang}
+            currentTargetLang={targetLang}
+            className="me-auto"
+          />
+          <FilterControls
+            sortOption={sortOption}
+            sortingOptions={sortingOptions}
+            filters={filters}
+            filterOptions={filterOptions}
+            className="!w-fit my-1"
+          />
+          <Button size="icon" className="rounded-full p-2 w-fit h-fit" asChild>
+            <Link href="/phrases/submit/">
+              <PlusIcon />
+            </Link>
+          </Button>
+        </div>
       </div>
-      <Separator className="my-2" />
 
-      <GotoAddPhrase />
       <Separator className="my-2" />
 
       {category && <CategoryCard category={category} className="my-2" />}

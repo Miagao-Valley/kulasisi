@@ -20,7 +20,7 @@ export default function PhraseSearch({ currentSearchTerm, className }: Props) {
 
   useEffect(() => {
     const currentSearchParams = new URLSearchParams(
-      Array.from(searchParams.entries()),
+      Array.from(searchParams.entries())
     );
     if (query) {
       currentSearchParams.set('q', query);
@@ -32,9 +32,9 @@ export default function PhraseSearch({ currentSearchTerm, className }: Props) {
 
   return (
     <AutosizeTextarea
-      className={cn(className, 'p-1 text-xl resize-none borderless-input')}
+      className={cn(className, 'p-1 !text-lg resize-none borderless-input')}
       value={searchTerm}
-      placeholder="Search for a phrase to translate"
+      placeholder="Enter a phrase to translate"
       onChange={(e) => setSearchTerm(e.target.value)}
     />
   );

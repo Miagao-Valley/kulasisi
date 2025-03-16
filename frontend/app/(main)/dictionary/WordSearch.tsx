@@ -20,7 +20,7 @@ export default function WordSearch({ currentSearchTerm, className }: Props) {
 
   useEffect(() => {
     const currentSearchParams = new URLSearchParams(
-      Array.from(searchParams.entries()),
+      Array.from(searchParams.entries())
     );
     if (query) {
       currentSearchParams.set('q', query);
@@ -32,10 +32,10 @@ export default function WordSearch({ currentSearchTerm, className }: Props) {
 
   return (
     <Input
-      className={cn(className, 'p-1 !text-2xl font-bold borderless-input')}
+      className={cn(className, 'p-1 !text-xl font-semibold borderless-input')}
       type="text"
       value={searchTerm}
-      placeholder="Search for a word"
+      placeholder="Enter a word to define"
       onChange={(e) => setSearchTerm(e.target.value)}
     />
   );
