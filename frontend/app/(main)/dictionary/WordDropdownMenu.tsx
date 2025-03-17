@@ -3,7 +3,6 @@
 import React from 'react';
 import { useAuth } from '@/components/providers/AuthProvider';
 import { Word } from '@/types/dictionary';
-import copyLinkToClipboard from '@/utils/copyLinkToClipboard';
 import { WordRevisionsModal } from './WordRevisions';
 import DeleteWordModal from './DeleteWordModal';
 import { Button } from '@/components/ui/button';
@@ -28,24 +27,17 @@ export default function WordDropdownMenu({ word, setIsEditing }: Props) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon">
+        <Button variant="ghost" size="icon" className="w-fit h-fit p-1">
           <Ellipsis />
         </Button>
       </DropdownMenuTrigger>
 
       <DropdownMenuContent className="w-56">
         <DropdownMenuGroup>
-          <DropdownMenuItem
-            className="hover:cursor-pointer"
-            onClick={() =>
-              copyLinkToClipboard(`/dictionary/${word.lang}/${word.word}/`)
-            }
-          >
-            Copy link
-          </DropdownMenuItem>
           <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
             <WordRevisionsModal word={word} />
           </DropdownMenuItem>
+
           {auth.username === word.contributor && (
             <>
               <DropdownMenuItem
@@ -54,6 +46,7 @@ export default function WordDropdownMenu({ word, setIsEditing }: Props) {
               >
                 Edit
               </DropdownMenuItem>
+
               <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                 <AlertDialog>
                   <AlertDialogTrigger className="w-full text-left">

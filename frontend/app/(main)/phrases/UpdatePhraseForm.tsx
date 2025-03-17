@@ -119,13 +119,15 @@ export default function UpdatePhraseForm({
             <Button
               type="button"
               variant="outline"
-              className="w-full sm:w-fit"
+              size="sm"
+              className="w-full sm:w-fit bg-transparent"
               onClick={() => setIsEditing(false)}
             >
               Cancel
             </Button>
             <LoadingButton
               type="submit"
+              size="sm"
               className="w-full sm:w-fit"
               loading={form.formState.isSubmitting}
             >

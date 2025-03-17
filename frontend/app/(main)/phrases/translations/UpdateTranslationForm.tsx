@@ -41,12 +41,12 @@ export default function UpdateTranslationForm({
 }: Props) {
   const form = useForm<TranslationInputs>();
   const onSubmit: SubmitHandler<TranslationInputs> = async (
-    data: TranslationInputs,
+    data: TranslationInputs
   ) => {
     const res = await updateTranslation(
       translation.phrase,
       translation.id,
-      data,
+      data
     );
     if (res?.error) {
       setFormErrors(res.error, form.setError);
@@ -96,15 +96,22 @@ export default function UpdateTranslationForm({
             defaultSourceLink={translation.source_link}
           />
 
-          <div className="ms-auto flex justify-end gap-2">
+          <div className="ms-auto w-full sm:w-fit flex justify-end gap-2">
             <Button
               type="button"
               variant="outline"
+              size="sm"
+              className="w-full sm:w-fit bg-transparent"
               onClick={() => setIsEditing(false)}
             >
               Cancel
             </Button>
-            <LoadingButton type="submit" loading={form.formState.isSubmitting}>
+            <LoadingButton
+              type="submit"
+              size="sm"
+              className="w-full sm:w-fit"
+              loading={form.formState.isSubmitting}
+            >
               Save
             </LoadingButton>
           </div>

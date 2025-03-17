@@ -47,7 +47,12 @@ export default async function WordsList({
             {words.results.map(async (word) => {
               return (
                 <li key={word.id}>
-                  <WordCard word={word} targetLang={targetLang} />
+                  <WordCard
+                    word={word}
+                    targetLang={targetLang}
+                    clickable
+                    showDefinition
+                  />
                   <Separator className="my-2" />
                 </li>
               );

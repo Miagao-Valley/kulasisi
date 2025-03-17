@@ -3,7 +3,6 @@
 import React from 'react';
 import { useAuth } from '@/components/providers/AuthProvider';
 import { Phrase } from '@/types/phrases';
-import copyLinkToClipboard from '@/utils/copyLinkToClipboard';
 import { PhraseRevisionsModal } from './PhraseRevisions';
 import DeletePhraseModal from './DeletePhraseModal';
 import { Button } from '@/components/ui/button';
@@ -28,20 +27,13 @@ export default function PhraseDropdownMenu({ phrase, setIsEditing }: Props) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon">
+        <Button variant="ghost" size="icon" className="w-fit h-fit p-1">
           <Ellipsis />
         </Button>
       </DropdownMenuTrigger>
 
       <DropdownMenuContent className="w-56">
         <DropdownMenuGroup>
-          <DropdownMenuItem
-            className="hover:cursor-pointer"
-            onClick={() => copyLinkToClipboard(`/phrases/${phrase.id}/`)}
-          >
-            Copy link
-          </DropdownMenuItem>
-
           <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
             <PhraseRevisionsModal phrase={phrase} />
           </DropdownMenuItem>

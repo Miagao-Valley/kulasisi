@@ -84,9 +84,9 @@ export default function HomeFeed({ className = '' }: Props) {
         feed.map((entry, idx) => (
           <li key={idx}>
             {entry.type === 'phrase' ? (
-              <PhraseCard phrase={entry} />
+              <PhraseCard phrase={entry} clickable showTranslation />
             ) : (
-              <WordCard word={entry} />
+              <WordCard word={entry} clickable showDefinition />
             )}
             <Separator className="my-2" />
           </li>

@@ -10,14 +10,14 @@ export interface Word {
   contributor: string;
   contributor_reputation: number;
   parts_of_speech: string[];
-  best_definition: string;
-  best_definitions: { [key: string]: string };
   source_title?: string;
   source_link?: string;
   created_at: Date;
   updated_at: Date;
   vote_count: number;
   user_vote: Vote['value'];
+  best_definitions: { [key: string]: string };
+  definition_count: number;
 }
 
 /**

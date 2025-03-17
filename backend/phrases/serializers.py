@@ -1,3 +1,4 @@
+from collections import OrderedDict
 from django.db.models import Count, Q
 from rest_framework import serializers
 from .models import Phrase, Translation, Category
@@ -96,7 +97,7 @@ class PhraseSerializer(serializers.ModelSerializer):
             - Count("votes", filter=Q(votes__value=-1))
         )
 
-        best_translations = {}
+        best_translations = []
         langs = obj.translations.values("lang").distinct()
 
         for l in langs:
@@ -112,9 +113,17 @@ class PhraseSerializer(serializers.ModelSerializer):
             )
 
             if best_translation:
-                best_translations[lang.code] = best_translation.content
+                best_translations.append(
+                    (
+                        lang.code,
+                        best_translation.content,
+                        best_translation.vote_count,
+                    )
+                )
 
-        return best_translations
+        best_translations.sort(key=lambda x: x[2], reverse=True)
+
+        return OrderedDict((lang, desc) for lang, desc, _ in best_translations)
 
     def get_translation_count(self, obj: Phrase) -> int:
         return obj.translations.count()

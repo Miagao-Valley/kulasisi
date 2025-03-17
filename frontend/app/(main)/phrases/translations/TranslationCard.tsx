@@ -33,16 +33,21 @@ export default function TranslationCard({
     <Card
       className={cn(
         className,
-        `border-transparent shadow-none ${clickable && 'hover:bg-accent/40'}`
+        `flex flex-col gap-1 border-transparent shadow-none ${
+          clickable && 'hover:bg-accent/40'
+        }`
       )}
     >
-      <CardHeader className="flex flex-row">
-        <EntryHeader className="me-auto" entry={translation} />
+      <CardHeader className="flex flex-row items-center space-y-0 p-0 m-0">
+        <div className="flex items-center gap-2 me-auto">
+          <EntryHeader entry={translation} />
+        </div>
         <TranslationDropdownMenu
           translation={translation}
           setIsEditing={setIsEditing}
         />
       </CardHeader>
+
       <CardContent>
         {isEditing ? (
           <UpdateTranslationForm
@@ -55,9 +60,12 @@ export default function TranslationCard({
             <Link
               href={`/phrases/${translation.phrase}?tab=translations#${translation.id}`}
             >
-              <p className="mb-2 whitespace-pre-line">{translation.content}</p>
+              <p className="mb-1 text-wrap whitespace-pre-line text-lg hover:text-primary">
+                {translation.content}
+              </p>
             </Link>
-            <div className="flex flex-wrap gap-0 items-center">
+
+            <div className="flex flex-wrap gap-1 items-center">
               {(translation.source_title || translation.source_link) && (
                 <Source
                   source_title={translation.source_title}
@@ -68,6 +76,7 @@ export default function TranslationCard({
           </>
         )}
       </CardContent>
+
       <CardFooter>
         <EntryFooter entry={translation} />
       </CardFooter>

@@ -18,6 +18,7 @@ import {
   CardFooter,
   CardHeader,
 } from '@/components/ui/card';
+import { BookAIcon } from 'lucide-react';
 
 interface Props {
   definition: Definition;
@@ -36,16 +37,22 @@ export default function DefinitionCard({
     <Card
       className={cn(
         className,
-        `border-transparent shadow-none ${clickable && 'hover:bg-accent/40'}`
+        `flex flex-col gap-2 border-transparent shadow-none ${
+          clickable && 'hover:bg-accent/40'
+        }`
       )}
     >
-      <CardHeader className="flex flex-row">
-        <EntryHeader className="me-auto" entry={definition} />
+      <CardHeader className="flex flex-row items-center space-y-0 p-0 m-0">
+        <div className="flex items-center gap-2 me-auto">
+          <EntryHeader entry={definition} />
+          <BookAIcon className="w-4 h-4 text-muted-foreground" />
+        </div>
         <DefinitionDropdownMenu
           definition={definition}
           setIsEditing={setIsEditing}
         />
       </CardHeader>
+
       <CardContent>
         {isEditing ? (
           <UpdateDefinitionForm
@@ -57,23 +64,27 @@ export default function DefinitionCard({
             <Link
               href={`/dictionary/${definition.word.lang}/${definition.word.word}?tab=definitions#${definition.id}`}
             >
-              <p className="mb-2 whitespace-pre-line">
+              <p className="mb-1 text-wrap text-xl font-bold hover:text-primary">
                 {definition.description}
               </p>
             </Link>
+
             <div className="flex flex-col gap-1">
-              <div className="flex flex-wrap gap-0 items-center">
-                {definition.pos && <PosHoverCard abbr={definition.pos} />}
+              <div className="flex flex-wrap gap-1 items-center">
+                {definition.usage_note && (
+                  <UsageNote note={definition.usage_note} />
+                )}
+
                 {(definition.source_title || definition.source_link) && (
                   <Source
                     source_title={definition.source_title}
                     source_link={definition.source_link}
                   />
                 )}
-                {definition.usage_note && (
-                  <UsageNote note={definition.usage_note} />
-                )}
+
+                {definition.pos && <PosHoverCard abbr={definition.pos} />}
               </div>
+
               {definition.synonyms && definition.synonyms.length > 0 && (
                 <div className="flex flex-wrap gap-1 items-center me-1">
                   <span className="text-sm text-muted-foreground">
@@ -88,6 +99,7 @@ export default function DefinitionCard({
                   ))}
                 </div>
               )}
+
               {definition.antonyms && definition.antonyms.length > 0 && (
                 <div className="flex flex-wrap gap-1 items-center me-1">
                   <span className="text-sm text-muted-foreground">
@@ -106,6 +118,7 @@ export default function DefinitionCard({
           </>
         )}
       </CardContent>
+
       <CardFooter>
         <EntryFooter entry={definition} />
       </CardFooter>

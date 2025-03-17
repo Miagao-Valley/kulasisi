@@ -44,13 +44,13 @@ export default function UpdateDefinitionForm({
 }: Props) {
   const form = useForm<DefinitionInputs>();
   const onSubmit: SubmitHandler<DefinitionInputs> = async (
-    data: DefinitionInputs,
+    data: DefinitionInputs
   ) => {
     const res = await updateDefinition(
       definition.word.lang,
       definition.word.word,
       definition.id,
-      data,
+      data
     );
     if (res?.error) {
       setFormErrors(res.error, form.setError);
@@ -176,15 +176,22 @@ export default function UpdateDefinitionForm({
             />
           </div>
 
-          <div className="ms-auto flex justify-end gap-2">
+          <div className="ms-auto w-full sm:w-fit flex justify-end gap-2">
             <Button
-              variant="outline"
               type="button"
+              variant="outline"
+              size="sm"
+              className="w-full sm:w-fit bg-transparent"
               onClick={() => setIsEditing(false)}
             >
               Cancel
             </Button>
-            <LoadingButton type="submit" loading={form.formState.isSubmitting}>
+            <LoadingButton
+              type="submit"
+              size="sm"
+              className="w-full sm:w-fit"
+              loading={form.formState.isSubmitting}
+            >
               Save
             </LoadingButton>
           </div>

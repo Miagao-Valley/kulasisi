@@ -1,3 +1,4 @@
+from collections import OrderedDict
 from django.db.models import Count, Q
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
@@ -45,11 +46,11 @@ class WordSerializer(DynamicFieldsSerializer):
     parts_of_speech = serializers.SerializerMethodField(
         help_text="Parts of speech for the word."
     )
-    best_definition = serializers.SerializerMethodField(
-        help_text="The best definition for the word."
-    )
     best_definitions = serializers.SerializerMethodField(
         help_text="Best definitions based on votes in different languages."
+    )
+    definition_count = serializers.SerializerMethodField(
+        help_text="Total number of definitions."
     )
     vote_count = serializers.SerializerMethodField(
         help_text="Number of upvotes minus downvotes."
@@ -67,14 +68,14 @@ class WordSerializer(DynamicFieldsSerializer):
             "contributor",
             "contributor_reputation",
             "parts_of_speech",
-            "best_definition",
-            "best_definitions",
             "source_title",
             "source_link",
             "created_at",
             "updated_at",
             "vote_count",
             "user_vote",
+            "best_definitions",
+            "definition_count",
         ]
         extra_kwargs = {
             "contributor": {"read_only": True},
@@ -100,28 +101,13 @@ class WordSerializer(DynamicFieldsSerializer):
             if definition.pos
         ]
 
-    def get_best_definition(self, obj: Word) -> str:
-        definitions = obj.definitions.filter(lang=obj.lang)
-        if not definitions:
-            definitions = obj.definitions.filter(lang__code="eng")
-        if not definitions:
-            definitions = obj.definitions.all()
-
-        best_definition = max(
-            obj.definitions.all(),
-            key=lambda definition: definition.votes.filter(value=1).count()
-            - definition.votes.filter(value=-1).count(),
-            default=None,
-        )
-        return best_definition.description if best_definition else ""
-
     def get_best_definitions(self, obj: Word) -> dict:
         definitions = obj.definitions.annotate(
             vote_count=Count("votes", filter=Q(votes__value=1))
             - Count("votes", filter=Q(votes__value=-1))
         )
 
-        best_definitions = {}
+        best_definitions = []
         langs = obj.definitions.values("lang").distinct()
 
         for l in langs:
@@ -137,9 +123,16 @@ class WordSerializer(DynamicFieldsSerializer):
             )
 
             if best_definition:
-                best_definitions[lang.code] = best_definition.description
+                best_definitions.append(
+                    (lang.code, best_definition.description, best_definition.vote_count)
+                )
 
-        return best_definitions
+        best_definitions.sort(key=lambda x: x[2], reverse=True)
+
+        return OrderedDict((lang, desc) for lang, desc, _ in best_definitions)
+
+    def get_definition_count(self, obj: Word) -> int:
+        return obj.definitions.count()
 
     def get_vote_count(self, obj: Word) -> int:
         return obj.votes.filter(value=1).count() - obj.votes.filter(value=-1).count()

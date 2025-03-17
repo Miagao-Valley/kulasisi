@@ -47,7 +47,12 @@ export default async function PhrasesList({
             {phrases.results.map(async (phrase) => {
               return (
                 <li key={phrase.id}>
-                  <PhraseCard phrase={phrase} targetLang={targetLang} />
+                  <PhraseCard
+                    phrase={phrase}
+                    targetLang={targetLang}
+                    clickable
+                    showTranslation
+                  />
                   <Separator className="my-2" />
                 </li>
               );

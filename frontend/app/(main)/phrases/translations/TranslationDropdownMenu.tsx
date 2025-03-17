@@ -3,7 +3,6 @@
 import React from 'react';
 import { useAuth } from '@/components/providers/AuthProvider';
 import { Translation } from '@/types/phrases';
-import copyLinkToClipboard from '@/utils/copyLinkToClipboard';
 import { TranslationRevisionsModal } from './TranslationRevisions';
 import DeleteTranslationModal from './DeleteTranslationModal';
 import { Button } from '@/components/ui/button';
@@ -31,23 +30,13 @@ export default function TranslationDropdownMenu({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon">
+        <Button variant="ghost" size="icon" className="w-fit h-fit p-1">
           <Ellipsis />
         </Button>
       </DropdownMenuTrigger>
+
       <DropdownMenuContent className="w-56">
         <DropdownMenuGroup>
-          <DropdownMenuItem
-            className="hover:cursor-pointer"
-            onClick={() =>
-              copyLinkToClipboard(
-                `/phrases/${translation.phrase}?tab=translations#${translation.id}`
-              )
-            }
-          >
-            Copy link
-          </DropdownMenuItem>
-
           <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
             <TranslationRevisionsModal translation={translation} />
           </DropdownMenuItem>

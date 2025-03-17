@@ -45,36 +45,34 @@ export default function WordHoverCard({ lang, word }: Props) {
             </Link>
           </HoverCardTrigger>
 
-          <HoverCardContent className="max-w-80">
-            <div className="flex flex-col gap-1">
-              <div className="flex flex-col gap-1">
-                {loading ? (
-                  <Skeleton className="w-24 h-4" />
-                ) : (
-                  <h2 className="font-semibold truncate">{word}</h2>
-                )}
-                <div className="flex gap-1 items-center">
-                  {loading ? (
-                    <Skeleton className="w-8 h-4" />
-                  ) : (
-                    wordObj?.parts_of_speech.slice(0, 3).map((pos) => (
-                      <Badge variant="secondary" key={pos}>
-                        {pos}
-                      </Badge>
-                    ))
-                  )}
-                  {(wordObj?.parts_of_speech.length || 0) > 3 && !loading && (
-                    <span className="text-muted-foreground">...</span>
-                  )}
-                </div>
-              </div>
+          <HoverCardContent className="max-w-80 flex flex-col gap-1">
+            {loading ? (
+              <Skeleton className="w-24 h-4" />
+            ) : (
+              <h2 className="font-semibold truncate">{word}</h2>
+            )}
 
+            {loading ? (
+              <Skeleton className="w-32 h-2" />
+            ) : (
+              <p className="text-xs w-full">
+                {Object.values(wordObj?.best_definitions ?? {})[0] ||
+                  'This word has no definition'}
+              </p>
+            )}
+
+            <div className="flex gap-1 items-center">
               {loading ? (
-                <Skeleton className="w-32 h-2" />
+                <Skeleton className="w-8 h-4" />
               ) : (
-                <p className="text-xs w-full">
-                  {wordObj?.best_definition || 'This word has no definition'}
-                </p>
+                wordObj?.parts_of_speech.slice(0, 3).map((pos) => (
+                  <Badge variant="secondary" key={pos}>
+                    {pos}
+                  </Badge>
+                ))
+              )}
+              {(wordObj?.parts_of_speech.length || 0) > 3 && !loading && (
+                <span className="text-muted-foreground">...</span>
               )}
             </div>
           </HoverCardContent>

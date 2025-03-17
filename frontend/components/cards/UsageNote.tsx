@@ -28,7 +28,7 @@ export default function UsageNote({ note }: Props) {
         onMouseEnter={() => !isMobile && setOpen(true)}
         onMouseLeave={() => !isMobile && setOpen(false)}
       >
-        <Button variant="ghost" size="sm" className="p-2 h-fit">
+        <Button variant="ghost" size="sm" className="p-1 h-fit">
           <CircleHelp className="w-4" />
         </Button>
       </PopoverTrigger>
