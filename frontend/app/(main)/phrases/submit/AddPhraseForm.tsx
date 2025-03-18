@@ -72,14 +72,12 @@ export default function AddPhraseForm({ className = '' }: Props) {
         <FormField
           control={form.control}
           name="content"
-          render={({ field }) => (
+          render={() => (
             <FormItem>
               <FormControl>
                 <EditorProvider lang={form.watch('lang')}>
                   <Editor
                     placeholder="Enter a phrase"
-                    autoFocus
-                    value={field.value}
                     onValueChange={(value) => form.setValue('content', value)}
                   />
                 </EditorProvider>

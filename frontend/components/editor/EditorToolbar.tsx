@@ -12,6 +12,12 @@ import {
   SpellCheckIcon,
   ClipboardIcon,
 } from 'lucide-react';
+import {
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+  TooltipProvider,
+} from '@/components/ui/tooltip';
 
 interface EditorToolbarProps {
   className?: string;
@@ -29,61 +35,86 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({ className }) => {
   } = useEditorContext();
 
   return (
-    <div className={cn(className, 'flex items-center')}>
-      <CharCountProgress charCount={text.length} maxCharCount={maxCharCount} />
-      <div className="rounded-full border flex gap-0">
-        {/* Copy button */}
-        <Button
-          title="Copy"
-          aria-label="Copy"
-          variant="ghost"
-          size="icon"
-          className="rounded-full"
-          onClick={() => copyToClipboard(text)}
-          disabled={text.trim().length === 0}
-          type="button"
-        >
-          <CopyIcon />
-        </Button>
+    <TooltipProvider>
+      <div
+        className={cn(
+          className,
+          'flex items-center motion-preset-slide-down motion-duration-300'
+        )}
+        tabIndex={0}
+      >
+        <CharCountProgress
+          charCount={text.length}
+          maxCharCount={maxCharCount}
+        />
 
-        {/* Paste button */}
-        <Button
-          title="Paste"
-          aria-label="Paste"
-          variant="ghost"
-          size="icon"
-          className="rounded-full"
-          onClick={() =>
-            pasteFromClipboard((clipboardText) =>
-              setText((prevText) => prevText + clipboardText),
-            )
-          }
-          type="button"
-        >
-          <ClipboardIcon />
-        </Button>
+        <div className="rounded-full border flex gap-0">
+          {/* Copy button */}
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                aria-label="Copy"
+                variant="ghost"
+                size="icon"
+                className="w-fit h-fit p-1 rounded-full"
+                onClick={() => copyToClipboard(text)}
+                type="button"
+              >
+                <CopyIcon />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>Copy text</TooltipContent>
+          </Tooltip>
 
-        {/* Toggle proofreader */}
-        <Button
-          title="Toggle proofreader"
-          aria-label="Toggle proofreader"
-          variant="ghost"
-          size="icon"
-          className="rounded-full"
-          onClick={() => setShowProofreader(!showProofreader)}
-          disabled={loading}
-          type="button"
-        >
-          {loading ? (
-            <Spinner />
-          ) : stats.flagged_count === 0 ? (
-            <SpellCheckIcon />
-          ) : (
-            <SpellCheck2Icon />
-          )}
-        </Button>
+          {/* Paste button */}
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                aria-label="Paste"
+                variant="ghost"
+                size="icon"
+                className="w-fit h-fit p-1 rounded-full"
+                onClick={() =>
+                  pasteFromClipboard((clipboardText) =>
+                    setText((prevText) => prevText + clipboardText)
+                  )
+                }
+                type="button"
+              >
+                <ClipboardIcon />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>Paste text</TooltipContent>
+          </Tooltip>
+
+          {/* Toggle proofreader */}
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                aria-label="Toggle proofreader"
+                variant={showProofreader ? 'secondary' : 'ghost'}
+                size="icon"
+                className="w-fit h-fit p-1 rounded-full"
+                onClick={() => setShowProofreader(!showProofreader)}
+                disabled={loading}
+                type="button"
+              >
+                {loading ? (
+                  <Spinner />
+                ) : stats.flagged_count === 0 ? (
+                  <SpellCheckIcon />
+                ) : (
+                  <SpellCheck2Icon />
+                )}
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              {showProofreader ? 'Hide proofreader' : 'Show proofreader'}{' '}
+            </TooltipContent>
+          </Tooltip>
+        </div>
       </div>
-    </div>
+    </TooltipProvider>
   );
 };
 

@@ -22,7 +22,6 @@ interface EditorProps extends TextEditorProps {
 }
 
 const Editor: React.FC<EditorProps> = ({
-  value,
   onValueChange,
   className,
   ...props
@@ -32,6 +31,7 @@ const Editor: React.FC<EditorProps> = ({
     text,
     setFlaggedTokens,
     setStats,
+    showToolbar,
     showProofreader,
     setLoading,
     setError,
@@ -59,12 +59,12 @@ const Editor: React.FC<EditorProps> = ({
         const levelOrder = { error: 1, warning: 2, info: 3 };
         const sortedTokens = [...data.flagged_tokens].sort(
           (a: FlaggedToken, b: FlaggedToken) =>
-            a.offset - b.offset || levelOrder[a.level] - levelOrder[b.level],
+            a.offset - b.offset || levelOrder[a.level] - levelOrder[b.level]
         );
         setFlaggedTokens(sortedTokens);
 
         setStats(
-          data?.stats || { token_count: 0, flagged_count: 0, correctness: 0 },
+          data?.stats || { token_count: 0, flagged_count: 0, correctness: 0 }
         );
       } catch (error) {
         console.error('Error fetching proofread data:', error);
@@ -72,11 +72,11 @@ const Editor: React.FC<EditorProps> = ({
         setLoading(false);
       }
     },
-    [lang, setFlaggedTokens, setStats, setLoading, setError],
+    [lang, setFlaggedTokens, setStats, setLoading, setError]
   );
 
   useEffect(() => {
-    if (!text.trim()) {
+    if (!lang || !text.trim()) {
       setFlaggedTokens([]);
       setStats({ token_count: 0, flagged_count: 0, correctness: 0 });
       setLoading(false);
@@ -92,7 +92,7 @@ const Editor: React.FC<EditorProps> = ({
   }, [text, lang]);
 
   return (
-    <div className={cn(className, 'flex flex-col gap-2 my-2')}>
+    <div className={cn(className, 'flex flex-col gap-1 my-2')}>
       <ResizablePanelGroup
         autoSaveId="persistence"
         direction={isMobile ? 'vertical' : 'horizontal'}
@@ -103,10 +103,10 @@ const Editor: React.FC<EditorProps> = ({
           minSize={30}
           className="!basis-auto md:!basis-0"
         >
-          <TextEditor value={value} onValueChange={onValueChange} {...props} />
+          <TextEditor onValueChange={onValueChange} {...props} />
         </ResizablePanel>
 
-        {isMobile && <EditorToolbar />}
+        {showToolbar && isMobile && <EditorToolbar />}
 
         {showProofreader && (
           <>
@@ -122,7 +122,7 @@ const Editor: React.FC<EditorProps> = ({
         )}
       </ResizablePanelGroup>
 
-      {!isMobile && <EditorToolbar />}
+      {showToolbar && !isMobile && <EditorToolbar />}
     </div>
   );
 };

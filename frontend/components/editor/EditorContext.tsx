@@ -18,6 +18,8 @@ interface EditorContextType {
   setStats: React.Dispatch<React.SetStateAction<ProofreaderStats>>;
   currentToken: FlaggedToken | null;
   setCurrentToken: React.Dispatch<React.SetStateAction<FlaggedToken | null>>;
+  showToolbar: boolean;
+  setShowToolbar: React.Dispatch<React.SetStateAction<boolean>>;
   showProofreader: boolean;
   setShowProofreader: React.Dispatch<React.SetStateAction<boolean>>;
   applySuggestion: (suggestion: string, token: FlaggedToken) => void;
@@ -51,6 +53,7 @@ export const EditorProvider = ({
     correctness: 0,
   });
   const [currentToken, setCurrentToken] = useState<FlaggedToken | null>(null);
+  const [showToolbar, setShowToolbar] = useState(false);
   const [showProofreader, setShowProofreader] = useState(
     showProofreaderDefault
   );
@@ -101,6 +104,8 @@ export const EditorProvider = ({
         setStats,
         currentToken,
         setCurrentToken,
+        showToolbar,
+        setShowToolbar,
         showProofreader,
         setShowProofreader,
         applySuggestion,

@@ -57,7 +57,7 @@ export default function AddDefinitionForm({
   });
 
   const onSubmit: SubmitHandler<TranslationInputs> = async (
-    data: TranslationInputs,
+    data: TranslationInputs
   ) => {
     if (!auth.isAuthenticated) {
       toast.error('You need to sign in to post.');

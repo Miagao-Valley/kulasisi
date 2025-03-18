@@ -1,4 +1,4 @@
-import React, { useRef, ChangeEvent, useEffect } from 'react';
+import React, { useEffect, useRef, ChangeEvent } from 'react';
 import { cn } from '@/lib/utils';
 import { useEditorContext } from './EditorContext';
 import HighlightedText from './HighlightedText';
@@ -9,21 +9,26 @@ import {
 } from '@/components/ui/autoresize-textarea';
 
 export interface TextEditorProps extends AutosizeTextAreaProps {
-  value?: string;
   onValueChange?: (text: string) => void;
   onChange?: (e: ChangeEvent<HTMLTextAreaElement>) => void;
   className?: string;
 }
 
 const TextEditor: React.FC<TextEditorProps> = ({
-  value,
   onValueChange,
   onChange,
   className,
   ...props
 }) => {
-  const { text, setText, flaggedTokens, setCurrentToken, maxCharCount, error } =
-    useEditorContext();
+  const {
+    text,
+    setText,
+    flaggedTokens,
+    setCurrentToken,
+    setShowToolbar,
+    maxCharCount,
+    error,
+  } = useEditorContext();
 
   const textareaRef = useRef<AutosizeTextAreaRef>(null);
   const highlightRef = useRef<HTMLDivElement>(null);
@@ -32,6 +37,7 @@ const TextEditor: React.FC<TextEditorProps> = ({
     if (e.target.value.length > maxCharCount) return;
 
     setText(e.target.value);
+    setShowToolbar(true);
     onChange?.(e);
   };
 
@@ -40,14 +46,10 @@ const TextEditor: React.FC<TextEditorProps> = ({
     setCurrentToken(
       flaggedTokens?.find(
         ({ offset, token }) =>
-          cursorPosition >= offset && cursorPosition <= offset + token.length,
-      ) || null,
+          cursorPosition >= offset && cursorPosition <= offset + token.length
+      ) || null
     );
   };
-
-  useEffect(() => {
-    setText((prev) => value || prev);
-  }, [value]);
 
   useEffect(() => {
     if (onValueChange) {
@@ -72,14 +74,18 @@ const TextEditor: React.FC<TextEditorProps> = ({
   }, []);
 
   return (
-    <div className="relative">
+    <div
+      className="relative"
+      onFocus={() => setShowToolbar(true)}
+      onClick={() => setShowToolbar(true)}
+    >
       {/* Highlighted text overlay */}
       {!error && (
         <div
           ref={highlightRef}
           className={cn(
             'borderless-input p-0 m-0 me-3 rounded-none text-base absolute top-0 left-0 w-full h-full text-transparent overflow-auto whitespace-pre-wrap break-words',
-            className,
+            className
           )}
         >
           <span>
@@ -97,7 +103,7 @@ const TextEditor: React.FC<TextEditorProps> = ({
         spellCheck={false}
         className={cn(
           'borderless-input p-0 m-0 me-3 rounded-none text-base relative z-10 w-full h-full bg-transparent',
-          className,
+          className
         )}
         minHeight={10}
         maxHeight={maxCharCount * 0.5}

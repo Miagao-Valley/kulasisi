@@ -6,7 +6,8 @@ import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '../ui/skeleton';
 
 const ProofreaderPanel: React.FC = () => {
-  const { text, flaggedTokens, stats, loading, error } = useEditorContext();
+  const { text, flaggedTokens, stats, lang, loading, error } =
+    useEditorContext();
 
   if (error != null) {
     return (
@@ -36,6 +37,8 @@ const ProofreaderPanel: React.FC = () => {
           ))
         ) : !text.trim() ? (
           <span>Nothing to check yet!</span>
+        ) : !lang ? (
+          <span>Please select a language.</span>
         ) : flaggedTokens.length === 0 ? (
           <span>Looks good!</span>
         ) : (

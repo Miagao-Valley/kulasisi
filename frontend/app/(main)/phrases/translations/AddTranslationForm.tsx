@@ -51,7 +51,7 @@ export default function AddTranslationForm({
   });
 
   const onSubmit: SubmitHandler<TranslationInputs> = async (
-    data: TranslationInputs,
+    data: TranslationInputs
   ) => {
     if (!auth.isAuthenticated) {
       toast.error('You need to sign in to post.');
@@ -81,14 +81,12 @@ export default function AddTranslationForm({
         <FormField
           control={form.control}
           name="content"
-          render={({ field }) => (
+          render={() => (
             <FormItem>
               <FormControl>
                 <EditorProvider lang={form.watch('lang')}>
                   <Editor
                     placeholder="Enter your translation"
-                    autoFocus
-                    value={field.value}
                     onValueChange={(value) => form.setValue('content', value)}
                   />
                 </EditorProvider>
