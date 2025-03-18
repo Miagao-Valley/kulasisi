@@ -8,15 +8,17 @@ import { toast } from 'sonner';
  */
 export default function copyToClipboard(
   text: string,
-  message: string = 'Text copied to clipboard.',
+  message: string = 'Text copied to clipboard.'
 ) {
   navigator.clipboard
     .writeText(text)
     .then(() => {
-      toast.success(message);
+      if (message) {
+        toast.success(message);
+      }
     })
     .catch((err) => {
       console.error('Error copying text: ', err);
-      toast.success('Failed to copy text.');
+      toast.error('Failed to copy text.');
     });
 }
