@@ -2,7 +2,6 @@ import { LinkIcon } from 'lucide-react';
 import {
   Tooltip,
   TooltipContent,
-  TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { Button } from '../ui/button';
@@ -19,46 +18,44 @@ export default function Source({
   showTitle = false,
 }: Props) {
   return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Button
-            variant="ghost"
-            size="sm"
-            className={`p-1 h-fit ${source_link && 'text-primary'}`}
-            asChild={!!source_link}
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <Button
+          variant="ghost"
+          size="sm"
+          className={`p-1 h-fit ${source_link && 'text-primary'}`}
+          asChild={!!source_link}
+        >
+          <a
+            href={source_link || '#'}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex !gap-0 max-w-36 md:max-w-48"
           >
-            <a
-              href={source_link || '#'}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex !gap-0 max-w-36 md:max-w-48"
-            >
-              <LinkIcon className="w-3" />
-              {showTitle && (
-                <span className="ms-1 truncate w-fit">
-                  {source_title || source_link}
-                </span>
-              )}
-            </a>
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent side="bottom">
-          <p className="flex flex-wrap break-words gap-1">
-            Source: <b>{source_title || source_link}</b>
-          </p>
-          {source_title && source_link && (
-            <a
-              href={source_link || '#'}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-primary-foreground/50 text-xs underline underline-offset-4 break-all"
-            >
-              {source_link}
-            </a>
-          )}
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
+            <LinkIcon className="w-3" />
+            {showTitle && (
+              <span className="ms-1 truncate w-fit">
+                {source_title || source_link}
+              </span>
+            )}
+          </a>
+        </Button>
+      </TooltipTrigger>
+      <TooltipContent side="bottom">
+        <p className="flex flex-wrap break-words gap-1">
+          Source: <b>{source_title || source_link}</b>
+        </p>
+        {source_title && source_link && (
+          <a
+            href={source_link || '#'}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-primary-foreground/50 text-xs underline underline-offset-4 break-all"
+          >
+            {source_link}
+          </a>
+        )}
+      </TooltipContent>
+    </Tooltip>
   );
 }

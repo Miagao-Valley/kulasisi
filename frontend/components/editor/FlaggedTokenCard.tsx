@@ -7,7 +7,6 @@ import { Badge } from '../ui/badge';
 import {
   Tooltip,
   TooltipContent,
-  TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { CircleAlert } from 'lucide-react';
@@ -74,50 +73,48 @@ export default function FlaggedTokenCard({
       className={cn(
         className,
         clickable && 'hover:bg-accent/40',
-        'flex flex-col gap-1 shadow-none',
+        'flex flex-col gap-1 shadow-none'
       )}
     >
       {/* Info */}
       {concise ? (
         // Concise mode
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger className="w-fit" type="button">
-              <div className="flex gap-1 items-center">
-                <CircleAlert
-                  size={16}
-                  className={textLevelVariants({ level: token.level })}
-                />
-                <span
-                  className={cn(
-                    'text-sm font-semibold',
-                    hoverTextLevelVariants({ level: token.level }),
-                    token.token.trim() === '' && 'text-muted-foreground',
-                  )}
-                  onClick={() => setCurrentToken && setCurrentToken(token)}
-                >
-                  {showSpaces(token.token)}
-                </span>
-              </div>
-            </TooltipTrigger>
+        <Tooltip>
+          <TooltipTrigger className="w-fit" type="button">
+            <div className="flex gap-1 items-center">
+              <CircleAlert
+                size={16}
+                className={textLevelVariants({ level: token.level })}
+              />
+              <span
+                className={cn(
+                  'text-sm font-semibold',
+                  hoverTextLevelVariants({ level: token.level }),
+                  token.token.trim() === '' && 'text-muted-foreground'
+                )}
+                onClick={() => setCurrentToken && setCurrentToken(token)}
+              >
+                {showSpaces(token.token)}
+              </span>
+            </div>
+          </TooltipTrigger>
 
-            <TooltipContent
-              className={cn(
-                bgLevelVariants({ level: token.level }),
-                textLevelVariants({ level: token.level }),
-              )}
-            >
-              <p>{token.message}</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+          <TooltipContent
+            className={cn(
+              bgLevelVariants({ level: token.level }),
+              textLevelVariants({ level: token.level })
+            )}
+          >
+            <p>{token.message}</p>
+          </TooltipContent>
+        </Tooltip>
       ) : (
         // Full mode
         <div>
           <span
             className={cn(
               'text-xs font-semibold flex gap-1 items-center',
-              textLevelVariants({ level: token.level }),
+              textLevelVariants({ level: token.level })
             )}
           >
             <CircleAlert size={12} /> {token.message}
@@ -128,7 +125,7 @@ export default function FlaggedTokenCard({
             <span
               className={cn(
                 'font-bold',
-                hoverTextLevelVariants({ level: token.level }),
+                hoverTextLevelVariants({ level: token.level })
               )}
               onClick={() => setCurrentToken && setCurrentToken(token)}
             >

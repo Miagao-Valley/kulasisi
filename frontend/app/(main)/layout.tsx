@@ -8,6 +8,7 @@ import { AppSidebar } from '@/components/app-sidebar/AppSidebar';
 import AppHeader from '@/components/app-header/AppHeader';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';
 import { Bricolage_Grotesque } from 'next/font/google';
+import { TooltipProvider } from '@/components/ui/tooltip';
 
 export const font = Bricolage_Grotesque({ subsets: ['latin'] });
 
@@ -31,16 +32,18 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <Toaster />
-            <SidebarProvider>
-              <AppSidebar />
-              <SidebarInset>
-                <header className="h-12 flex gap-2 items-center shrink-0 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-16">
-                  <AppHeader />
-                </header>
-                <main className="p-4 pt-0">{children}</main>
-              </SidebarInset>
-            </SidebarProvider>
+            <TooltipProvider>
+              <Toaster />
+              <SidebarProvider>
+                <AppSidebar />
+                <SidebarInset>
+                  <header className="h-12 flex gap-2 items-center shrink-0 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-16">
+                    <AppHeader />
+                  </header>
+                  <main className="p-4 pt-0">{children}</main>
+                </SidebarInset>
+              </SidebarProvider>
+            </TooltipProvider>
           </ThemeProvider>
         </AuthProvider>
       </body>

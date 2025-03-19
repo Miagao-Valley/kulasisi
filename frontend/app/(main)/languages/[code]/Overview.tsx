@@ -7,7 +7,6 @@ import { cn } from '@/lib/utils';
 import {
   Tooltip,
   TooltipContent,
-  TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { Badge } from '@/components/ui/badge';
@@ -22,18 +21,14 @@ export default function Overview({ lang, className = '' }: Props) {
   return (
     <div className={cn(className, 'flex flex-col gap-1')}>
       <Link href={`https://iso639-3.sil.org/code/${lang.code}/`}>
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger disabled>
-              <Badge variant="outline" className="hover:cursor-pointer">
-                {lang.code}
-              </Badge>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>ISO 639-3</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger disabled>
+            <Badge variant="outline" className="hover:cursor-pointer">
+              {lang.code}
+            </Badge>
+          </TooltipTrigger>
+          <TooltipContent>ISO 639-3</TooltipContent>
+        </Tooltip>
       </Link>
 
       <H1 className="!text-3xl truncate m-0">{lang.name}</H1>

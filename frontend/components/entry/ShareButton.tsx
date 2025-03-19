@@ -11,12 +11,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '../ui/dialog';
-import {
-  Tooltip,
-  TooltipProvider,
-  TooltipTrigger,
-  TooltipContent,
-} from '../ui/tooltip';
+import { Tooltip, TooltipTrigger, TooltipContent } from '../ui/tooltip';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { Share2Icon } from 'lucide-react';
@@ -30,22 +25,20 @@ export default function ShareButton({ entry }: Props) {
 
   return (
     <Dialog>
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <DialogTrigger asChild>
-              <Button
-                variant="outline"
-                size="icon"
-                className="w-fit h-fit p-1 px-2 bg-transparent"
-              >
-                <Share2Icon className="w-4 h-4" />
-              </Button>
-            </DialogTrigger>
-          </TooltipTrigger>
-          <TooltipContent side="bottom">Share</TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <DialogTrigger asChild>
+            <Button
+              variant="outline"
+              size="icon"
+              className="w-fit h-fit p-1 px-2 bg-transparent"
+            >
+              <Share2Icon className="w-4 h-4" />
+            </Button>
+          </DialogTrigger>
+        </TooltipTrigger>
+        <TooltipContent side="bottom">Share</TooltipContent>
+      </Tooltip>
 
       <DialogContent>
         <DialogHeader>

@@ -3,12 +3,7 @@ import { Entry } from '@/types/core';
 import { isPhrase, isTranslation } from '@/types/phrases';
 import { isDefinition, isWord } from '@/types/dictionary';
 import copyToClipboard from '@/utils/copyToClipboard';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '../ui/tooltip';
+import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
 import { Button } from '../ui/button';
 import { CopyIcon, CheckIcon } from 'lucide-react';
 
@@ -40,27 +35,25 @@ export default function CopyEntry({ entry }: Props) {
   };
 
   return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Button
-            variant="outline"
-            size="icon"
-            className="w-fit h-fit p-1 px-2 bg-transparent"
-            onClick={handleCopy}
-            disabled={isCopied}
-          >
-            {isCopied ? (
-              <CheckIcon className="w-4 h-4" />
-            ) : (
-              <CopyIcon className="w-4 h-4" />
-            )}
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent side="bottom">
-          {isCopied ? 'Content copied!' : 'Copy content'}
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <Button
+          variant="outline"
+          size="icon"
+          className="w-fit h-fit p-1 px-2 bg-transparent"
+          onClick={handleCopy}
+          disabled={isCopied}
+        >
+          {isCopied ? (
+            <CheckIcon className="w-4 h-4" />
+          ) : (
+            <CopyIcon className="w-4 h-4" />
+          )}
+        </Button>
+      </TooltipTrigger>
+      <TooltipContent side="bottom">
+        {isCopied ? 'Content copied!' : 'Copy content'}
+      </TooltipContent>
+    </Tooltip>
   );
 }
