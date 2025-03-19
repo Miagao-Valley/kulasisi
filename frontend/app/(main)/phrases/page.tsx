@@ -10,9 +10,14 @@ import PhraseSearch from './PhraseSearch';
 import LangFilter from '@/components/filter/LangFilter';
 import CategoryCard from '@/components/cards/CategoryCard';
 import GoogleTranslateCard from './GoogleTranslateCard';
+import {
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+} from '@/components/ui/tooltip';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { PlusIcon } from 'lucide-react';
+import { FeatherIcon } from 'lucide-react';
 
 interface Props {
   searchParams: { [key: string]: string | undefined };
@@ -59,7 +64,7 @@ export default async function PhrasesPage({ searchParams }: Props) {
           <LangFilter
             currentSourceLang={sourceLang}
             currentTargetLang={targetLang}
-            className="me-auto"
+            className=""
           />
           <FilterControls
             sortOption={sortOption}
@@ -68,11 +73,20 @@ export default async function PhrasesPage({ searchParams }: Props) {
             filterOptions={filterOptions}
             className="!w-fit my-1"
           />
-          <Button size="icon" className="rounded-full p-2 w-fit h-fit" asChild>
-            <Link href="/phrases/submit/">
-              <PlusIcon />
-            </Link>
-          </Button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                size="icon"
+                className="ms-auto rounded-full p-2 w-fit h-fit"
+                asChild
+              >
+                <Link href="/contribute?tab=phrase">
+                  <FeatherIcon />
+                </Link>
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>Add phrase</TooltipContent>
+          </Tooltip>
         </div>
       </div>
 

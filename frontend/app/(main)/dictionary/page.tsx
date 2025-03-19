@@ -9,9 +9,14 @@ import FilterControls from '@/components/filter/FilterControls';
 import WordSearch from './WordSearch';
 import LangFilter from '@/components/filter/LangFilter';
 import PosCard from '@/components/cards/PosCard';
+import {
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+} from '@/components/ui/tooltip';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { PlusIcon } from 'lucide-react';
+import { FeatherIcon } from 'lucide-react';
 
 interface Props {
   searchParams: { [key: string]: string | undefined };
@@ -57,7 +62,6 @@ export default async function DictionaryPage({ searchParams }: Props) {
           <LangFilter
             currentSourceLang={sourceLang}
             currentTargetLang={targetLang}
-            className="me-auto"
           />
           <FilterControls
             sortOption={sortOption}
@@ -66,11 +70,20 @@ export default async function DictionaryPage({ searchParams }: Props) {
             filterOptions={filterOptions}
             className="!w-fit my-1"
           />
-          <Button size="icon" className="rounded-full p-2 w-fit h-fit" asChild>
-            <Link href="/dictionary/submit/">
-              <PlusIcon />
-            </Link>
-          </Button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                size="icon"
+                className="ms-auto rounded-full p-2 w-fit h-fit"
+                asChild
+              >
+                <Link href="/contribute?tab=word">
+                  <FeatherIcon />
+                </Link>
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>Add word</TooltipContent>
+          </Tooltip>
         </div>
       </div>
 
