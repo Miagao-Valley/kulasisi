@@ -4,6 +4,9 @@ import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { buttonVariants } from '@/components/ui/button';
 import { useSidebar } from '@/components/ui/sidebar';
+import GlobalSearch, {
+  GlobalSearchProvider,
+} from '../global-search/GlobalSearch';
 import CustomSidebarTrigger from './CustomSidebarTrigger';
 import ThemeToggle from './ThemeToggle';
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
@@ -31,7 +34,11 @@ export function SiteHeader() {
             </Link>
           </div>
 
-          <div className="flex gap-0">
+          <div className="flex items-center gap-0">
+            <GlobalSearchProvider>
+              <GlobalSearch />
+            </GlobalSearchProvider>
+
             <Tooltip>
               <TooltipTrigger asChild>
                 <Link
