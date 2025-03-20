@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { useAuth } from '@/components/providers/AuthProvider';
 import addDefinition from '@/lib/definitions/addDefinition';
@@ -23,7 +23,9 @@ import UsageNoteForm from '@/components/forms/UsageNoteForm';
 import SourceForm from '@/components/forms/SourceForm';
 import WordsSelect from '@/components/forms/WordsSelect';
 
-export interface TranslationInputs {
+const FORM_DATA_KEY = 'add-definition-forms';
+
+export interface DefinitionInputs {
   word: { word: string; lang: string };
   description: string;
   lang: string;
@@ -50,15 +52,23 @@ export default function AddDefinitionForm({
   const router = useRouter();
   const pathname = usePathname();
 
-  const form = useForm<TranslationInputs>({
+  const form = useForm<DefinitionInputs>({
     defaultValues: {
       word: { word: word, lang: wordLang },
     },
   });
 
-  const onSubmit: SubmitHandler<TranslationInputs> = async (
-    data: TranslationInputs
-  ) => {
+  useEffect(() => {
+    const savedData = localStorage.getItem(FORM_DATA_KEY);
+    if (savedData) {
+      const parsedData = JSON.parse(savedData);
+      if (parsedData[word]?.[wordLang]) {
+        form.reset(parsedData[word][wordLang]);
+      }
+    }
+  }, [form, word, wordLang]);
+
+  const onSubmit: SubmitHandler<DefinitionInputs> = async (data) => {
     if (!auth.isAuthenticated) {
       toast.error('You need to sign in to post.');
       router.push(`/login?next=${pathname}`);
@@ -70,9 +80,30 @@ export default function AddDefinitionForm({
       setFormErrors(res.error, form.setError);
     } else {
       toast.success('Definition added');
+      const savedData = JSON.parse(localStorage.getItem(FORM_DATA_KEY) || '{}');
+      if (savedData[word]) {
+        delete savedData[word][wordLang];
+        if (Object.keys(savedData[word]).length === 0) {
+          delete savedData[word];
+        }
+      }
+      localStorage.setItem(FORM_DATA_KEY, JSON.stringify(savedData));
     }
     return res;
   };
+
+  useEffect(() => {
+    const subscription = form.watch((value) => {
+      const savedData = JSON.parse(localStorage.getItem(FORM_DATA_KEY) || '{}');
+      if (!savedData[word]) {
+        savedData[word] = {};
+      }
+      savedData[word][wordLang] = value;
+      localStorage.setItem(FORM_DATA_KEY, JSON.stringify(savedData));
+    });
+
+    return () => subscription.unsubscribe();
+  }, [form, word, wordLang]);
 
   return (
     <Form {...form}>

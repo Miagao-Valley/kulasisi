@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '@/components/providers/AuthProvider';
 import addTranslation from '@/lib/translations/addTranslation';
@@ -20,6 +20,8 @@ import {
 import { LoadingButton } from '@/components/ui/loading-button';
 import LangSelect from '@/components/forms/LangSelect';
 import SourceForm from '@/components/forms/SourceForm';
+
+const FORM_DATA_KEY = 'add-translation-forms';
 
 export interface TranslationInputs {
   phrase: number;
@@ -50,9 +52,17 @@ export default function AddTranslationForm({
     },
   });
 
-  const onSubmit: SubmitHandler<TranslationInputs> = async (
-    data: TranslationInputs
-  ) => {
+  useEffect(() => {
+    const savedData = localStorage.getItem(FORM_DATA_KEY);
+    if (savedData) {
+      const parsedData = JSON.parse(savedData);
+      if (parsedData[phraseId]) {
+        form.reset(parsedData[phraseId]);
+      }
+    }
+  }, [form, phraseId]);
+
+  const onSubmit: SubmitHandler<TranslationInputs> = async (data) => {
     if (!auth.isAuthenticated) {
       toast.error('You need to sign in to post.');
       router.push(`/login?next=${pathname}`);
@@ -64,9 +74,22 @@ export default function AddTranslationForm({
       setFormErrors(res.error, form.setError);
     } else {
       toast.success('Translation added');
+      const savedData = JSON.parse(localStorage.getItem(FORM_DATA_KEY) || '{}');
+      delete savedData[phraseId];
+      localStorage.setItem(FORM_DATA_KEY, JSON.stringify(savedData));
     }
     return res;
   };
+
+  useEffect(() => {
+    const subscription = form.watch((value) => {
+      const savedData = JSON.parse(localStorage.getItem(FORM_DATA_KEY) || '{}');
+      savedData[phraseId] = value;
+      localStorage.setItem(FORM_DATA_KEY, JSON.stringify(savedData));
+    });
+
+    return () => subscription.unsubscribe();
+  }, [form, phraseId]);
 
   return (
     <Form {...form}>
@@ -75,18 +98,19 @@ export default function AddTranslationForm({
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <FormMessage>
-          {form.formState.errors.root?.serverError.message}
+          {form.formState.errors.root?.serverError?.message}
         </FormMessage>
 
         <FormField
           control={form.control}
           name="content"
-          render={() => (
+          render={({ field }) => (
             <FormItem>
               <FormControl>
                 <EditorProvider lang={form.watch('lang')}>
                   <Editor
                     placeholder="Enter your translation"
+                    value={field.value}
                     onValueChange={(value) => form.setValue('content', value)}
                   />
                 </EditorProvider>

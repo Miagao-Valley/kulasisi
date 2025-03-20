@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { useAuth } from '@/components/providers/AuthProvider';
 import Link from 'next/link';
 import { LangProficiencyLevel } from '@/types/languages';
@@ -18,6 +18,8 @@ import setFormErrors from '@/utils/setFormErrors';
 import { H1 } from '@/components/ui/heading-with-anchor';
 import Logo from '@/components/brand/logo';
 
+const FORM_DATA_KEY = 'register-form';
+
 export interface RegisterInputs {
   username: string;
   password: string;
@@ -32,60 +34,76 @@ export interface RegisterInputs {
 }
 
 const steps = [
-  {
-    name: 'Get Started',
-    fields: ['username', 'password'],
-  },
-  {
-    name: 'Contact',
-    fields: ['email', 'phone_number'],
-  },
+  { name: 'Get Started', fields: ['username'] },
+  { name: 'Contact', fields: ['email', 'phone_number'] },
   {
     name: 'Personal',
     fields: ['first_name', 'last_name', 'date_of_birth', 'location', 'gender'],
   },
-  {
-    name: 'Experience',
-    fields: ['language_proficiencies'],
-  },
+  { name: 'Experience', fields: ['language_proficiencies'] },
 ];
 
 export default function RegisterForm() {
   const router = useRouter();
   const auth = useAuth();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
 
-  const [step, setStep] = useState(0);
+  const initialStep = Math.max(Number(searchParams.get('step')) || 1, 1) - 1;
+  const [step, setStep] = useState(initialStep);
   const [reachedEnd, setReachedEnd] = useState(false);
 
   useEffect(() => {
-    if (step >= steps.length - 1) {
-      setReachedEnd(true);
-    }
+    if (step >= steps.length - 1) setReachedEnd(true);
   }, [step]);
 
   const form = useForm<RegisterInputs>();
-  const onSubmit: SubmitHandler<RegisterInputs> = async (
-    data: RegisterInputs,
-  ) => {
+
+  useEffect(() => {
+    const savedData = localStorage.getItem(FORM_DATA_KEY);
+    if (savedData) {
+      const parsedData = JSON.parse(savedData);
+      delete parsedData.password;
+      if (parsedData.date_of_birth) {
+        parsedData.date_of_birth = new Date(parsedData.date_of_birth);
+      }
+      form.reset(parsedData);
+    }
+  }, [form]);
+
+  const onSubmit: SubmitHandler<RegisterInputs> = async (data) => {
     const res = await register(data);
     if (res?.error) {
       setFormErrors(res.error, form.setError);
-
-      // Goto step with error
-      const errorKeys = Object.keys(res?.error);
-      errorKeys.reverse().map((key) => {
-        steps.map((step, idx) => {
+      const errorKeys = Object.keys(res.error);
+      errorKeys.reverse().forEach((key) => {
+        steps.forEach((step, idx) => {
           if (step.fields.includes(key)) {
             setStep(idx);
+            router.push(`${pathname}?step=${idx + 1}`, { scroll: false });
           }
         });
       });
     } else {
       auth.updateAuth();
       router.push('/');
+      localStorage.removeItem(FORM_DATA_KEY);
     }
     return res;
   };
+
+  useEffect(() => {
+    const subscription = form.watch((value) => {
+      const data = { ...value };
+      delete data.password;
+      localStorage.setItem(FORM_DATA_KEY, JSON.stringify(data));
+    });
+    return () => subscription.unsubscribe();
+  }, [form]);
+
+  useEffect(() => {
+    router.push(`${pathname}?step=${step + 1}`, { scroll: false });
+  }, [step, pathname, router]);
 
   return (
     <div className="flex flex-col gap-6">
@@ -104,7 +122,6 @@ export default function RegisterForm() {
       </div>
 
       <StepperIndicator numSteps={steps.length} step={step} setStep={setStep} />
-
       <H1 className="m-0">{steps[step].name}</H1>
 
       <Form {...form}>
@@ -113,7 +130,7 @@ export default function RegisterForm() {
           onSubmit={form.handleSubmit(onSubmit)}
         >
           <FormMessage>
-            {form.formState.errors.root?.serverError.message}
+            {form.formState.errors.root?.serverError?.message}
           </FormMessage>
 
           <GetStarted form={form} className={step !== 0 ? '!hidden' : ''} />

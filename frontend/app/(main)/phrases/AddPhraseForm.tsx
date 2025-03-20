@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '@/components/providers/AuthProvider';
 import addPhrase from '@/lib/phrases/addPhrase';
@@ -23,6 +23,8 @@ import UsageNoteForm from '@/components/forms/UsageNoteForm';
 import SourceForm from '@/components/forms/SourceForm';
 import CategoriesSelect from '@/components/forms/CategoriesSelect';
 
+const FORM_DATA_KEY = 'add-phrase-form';
+
 export interface PhraseInputs {
   content: string;
   lang: string;
@@ -42,6 +44,14 @@ export default function AddPhraseForm({ className = '' }: Props) {
   const pathname = usePathname();
 
   const form = useForm<PhraseInputs>();
+
+  useEffect(() => {
+    const savedData = localStorage.getItem(FORM_DATA_KEY);
+    if (savedData) {
+      form.reset(JSON.parse(savedData));
+    }
+  }, [form]);
+
   const onSubmit: SubmitHandler<PhraseInputs> = async (data: PhraseInputs) => {
     if (!auth.isAuthenticated) {
       toast.error('You need to sign in to post.');
@@ -56,8 +66,18 @@ export default function AddPhraseForm({ className = '' }: Props) {
       router.push(`/phrases/${res.id}/`);
       toast.success('Posted');
     }
+
+    localStorage.removeItem(FORM_DATA_KEY);
+
     return res;
   };
+
+  useEffect(() => {
+    const subscription = form.watch((value) => {
+      localStorage.setItem(FORM_DATA_KEY, JSON.stringify(value));
+    });
+    return () => subscription.unsubscribe();
+  }, [form]);
 
   return (
     <Form {...form}>
@@ -72,12 +92,13 @@ export default function AddPhraseForm({ className = '' }: Props) {
         <FormField
           control={form.control}
           name="content"
-          render={() => (
+          render={({ field }) => (
             <FormItem>
               <FormControl>
                 <EditorProvider lang={form.watch('lang')}>
                   <Editor
                     placeholder="Enter a phrase"
+                    value={field.value}
                     onValueChange={(value) => form.setValue('content', value)}
                   />
                 </EditorProvider>
