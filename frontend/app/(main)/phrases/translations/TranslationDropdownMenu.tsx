@@ -41,7 +41,7 @@ export default function TranslationDropdownMenu({
             <TranslationRevisionsModal translation={translation} />
           </DropdownMenuItem>
 
-          {auth.username === translation.contributor && (
+          {auth.user?.username === translation.contributor && (
             <>
               <DropdownMenuItem
                 className="hover:cursor-pointer"

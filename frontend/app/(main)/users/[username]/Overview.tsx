@@ -42,7 +42,7 @@ export default function Overview({ user, className = '' }: Props) {
             <span>@{user.username}</span>
           </div>
         </div>
-        {auth.isAuthenticated && auth.username === user.username && (
+        {auth.isAuthenticated && auth.user?.username === user.username && (
           <Button variant="outline" className="ms-auto" asChild>
             <Link href={`/settings/?tab=profile`}>
               <Pen />

@@ -1,11 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { useAuth } from '../providers/AuthProvider';
 import logout from '@/lib/auth/logout';
-import { User } from '@/types/users';
-import getUser from '@/lib/users/getUser';
 import Link from 'next/link';
 import {
   SidebarMenu,
@@ -41,8 +39,6 @@ export function NavUser() {
   const pathname = usePathname();
   const { isMobile, open } = useSidebar();
 
-  const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
   const [loggingOut, setLoggingOut] = useState(false);
 
   const handleLogout = async () => {
@@ -50,6 +46,7 @@ export function NavUser() {
     try {
       await logout();
       auth.updateAuth();
+      auth.updateUser();
       router.push('/login/');
     } catch (error) {
       console.error('Error logging out:', error);
@@ -58,26 +55,7 @@ export function NavUser() {
     }
   };
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const res = await getUser(auth.username);
-        setUser(res);
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    if (auth.isAuthenticated) {
-      fetchUser();
-    } else {
-      setIsLoading(false);
-    }
-  }, [auth]);
-
-  if (isLoading) {
+  if (auth.isLoading) {
     return (
       <div className="m-2 flex gap-2">
         <Skeleton className="h-8 w-9 rounded-lg" />
@@ -89,7 +67,7 @@ export function NavUser() {
     );
   }
 
-  return auth.isAuthenticated && !isLoading ? (
+  return auth.isAuthenticated && !auth.isLoading ? (
     <SidebarMenu>
       <SidebarMenuItem>
         <DropdownMenu>
@@ -99,16 +77,16 @@ export function NavUser() {
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src={''} alt={user?.username} />
+                <AvatarImage src={''} alt={auth.user?.username} />
                 <AvatarFallback>
-                  {user?.username.slice(0, 1).toUpperCase()}
+                  {auth.user?.username.slice(0, 1).toUpperCase()}
                 </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm">
                 <span className="truncate font-semibold">
-                  {user?.first_name} {user?.last_name}
+                  {auth.user?.first_name} {auth.user?.last_name}
                 </span>
-                <span className="truncate text-xs">@{user?.username}</span>
+                <span className="truncate text-xs">@{auth.user?.username}</span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
@@ -123,16 +101,18 @@ export function NavUser() {
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={''} alt={user?.username} />
+                  <AvatarImage src={''} alt={auth.user?.username} />
                   <AvatarFallback>
-                    {user?.username.slice(0, 1).toUpperCase()}
+                    {auth.user?.username.slice(0, 1).toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm">
                   <span className="truncate font-semibold">
-                    {user?.first_name} {user?.last_name}
+                    {auth.user?.first_name} {auth.user?.last_name}
                   </span>
-                  <span className="truncate text-xs">@{user?.username}</span>
+                  <span className="truncate text-xs">
+                    @{auth.user?.username}
+                  </span>
                 </div>
               </div>
             </DropdownMenuLabel>
@@ -142,7 +122,7 @@ export function NavUser() {
             <DropdownMenuGroup>
               <DropdownMenuItem>
                 <UserRoundIcon />
-                <Link href={`/users/${user?.username}`} className="w-full">
+                <Link href={`/users/${auth.user?.username}`} className="w-full">
                   View Profile
                 </Link>
               </DropdownMenuItem>

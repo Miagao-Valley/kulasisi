@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '@/components/providers/AuthProvider';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import changePassword from '@/lib/users/changePassword';
 import setFormErrors from '@/utils/setFormErrors';
@@ -34,19 +33,17 @@ interface Props {
 }
 
 export function ChangePasswordModal({ username }: Props) {
-  const auth = useAuth();
   const router = useRouter();
 
   const form = useForm<ChangePasswordInputs>();
 
   const onSubmit: SubmitHandler<ChangePasswordInputs> = async (
-    data: ChangePasswordInputs,
+    data: ChangePasswordInputs
   ) => {
     const res = await changePassword(username, data);
     if (res?.error) {
       setFormErrors(res.error, form.setError);
     } else {
-      auth.updateAuth();
       router.refresh();
     }
     return res;

@@ -30,12 +30,13 @@ export default function StatsTab({ user }: Props) {
 
   const form = useForm<LangProficienciesInputs>();
   const onSubmit: SubmitHandler<LangProficienciesInputs> = async (
-    data: LangProficienciesInputs,
+    data: LangProficienciesInputs
   ) => {
     const res = await updateUser(user.username, data);
     if (res?.error) {
       setFormErrors(res.error, form.setError);
     }
+    auth.updateUser();
     return res;
   };
 
@@ -66,7 +67,8 @@ export default function StatsTab({ user }: Props) {
                         form.setValue('language_proficiencies', value)
                       }
                       disabled={
-                        !auth.isAuthenticated || auth.username !== user.username
+                        !auth.isAuthenticated ||
+                        auth.user?.username !== user.username
                       }
                     />
                   </FormControl>
@@ -74,7 +76,7 @@ export default function StatsTab({ user }: Props) {
                 </FormItem>
               )}
             />
-            {auth.isAuthenticated && auth.username === user.username && (
+            {auth.isAuthenticated && auth.user?.username === user.username && (
               <div className="flex">
                 <LoadingButton
                   type="submit"

@@ -1,10 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { useAuth } from '../providers/AuthProvider';
 import Link from 'next/link';
-import { User } from '@/types/users';
-import getUser from '@/lib/users/getUser';
 import {
   Collapsible,
   CollapsibleContent,
@@ -36,27 +33,6 @@ import { ChevronRight, LanguagesIcon } from 'lucide-react';
 export function NavLang() {
   const { state, isMobile } = useSidebar();
   const auth = useAuth();
-  const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const res = await getUser(auth.username);
-        setUser(res);
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    if (auth.isAuthenticated) {
-      fetchUser();
-    } else {
-      setIsLoading(false);
-    }
-  }, [auth]);
 
   return (
     <SidebarGroup>
@@ -80,7 +56,7 @@ export function NavLang() {
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                  {user?.language_proficiencies?.map((lang_prof) => (
+                  {auth.user?.language_proficiencies?.map((lang_prof) => (
                     <DropdownMenuItem key={lang_prof.lang}>
                       <Link href={`/lang/${lang_prof.lang}`} className="w-full">
                         {lang_prof.lang}
@@ -113,7 +89,7 @@ export function NavLang() {
 
               <CollapsibleContent>
                 <SidebarMenuSub>
-                  {!auth.isAuthenticated && isLoading ? (
+                  {!auth.isAuthenticated && auth.isLoading ? (
                     Array.from({ length: 3 }).map((_, index) => (
                       <SidebarMenuSubItem key={index}>
                         <SidebarMenuSubButton asChild>
@@ -121,8 +97,8 @@ export function NavLang() {
                         </SidebarMenuSubButton>
                       </SidebarMenuSubItem>
                     ))
-                  ) : user?.language_proficiencies?.length ? (
-                    user?.language_proficiencies?.map((lang_prof) => (
+                  ) : auth.user?.language_proficiencies?.length ? (
+                    auth.user?.language_proficiencies?.map((lang_prof) => (
                       <SidebarMenuSubItem key={lang_prof.lang}>
                         <SidebarMenuSubButton asChild>
                           <LangHoverCard code={lang_prof.lang} />

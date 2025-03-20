@@ -38,6 +38,7 @@ export default function LoginForm() {
       setFormErrors(res.error, form.setError);
     } else {
       auth.updateAuth();
+      auth.updateUser();
       router.push(next || '/');
     }
     return res;

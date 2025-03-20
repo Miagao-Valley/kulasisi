@@ -1,9 +1,7 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useAuth } from '@/components/providers/AuthProvider';
-import { User } from '@/types/users';
-import getUser from '@/lib/users/getUser';
 import Loading from '../loading';
 import AccountTab from './AccountTab';
 import ProfileTab from './ProfileTab';
@@ -18,20 +16,7 @@ import { H1 } from '@/components/ui/heading-with-anchor';
 export default function SettingsPage() {
   const auth = useAuth();
 
-  const [user, setUser] = useState<User | null>(null);
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      if (auth.isAuthenticated) {
-        const res = await getUser(auth.username);
-        setUser(res);
-      }
-    };
-
-    fetchUser();
-  }, [auth.username, auth.isAuthenticated]);
-
-  if (!user) {
+  if (!auth.user) {
     return <Loading />;
   }
 
@@ -46,10 +31,10 @@ export default function SettingsPage() {
         </TabsList>
 
         <TabsContent value="account">
-          <AccountTab user={user} />
+          <AccountTab user={auth.user} />
         </TabsContent>
         <TabsContent value="profile">
-          <ProfileTab user={user} />
+          <ProfileTab user={auth.user} />
         </TabsContent>
       </Tabs>
     </>

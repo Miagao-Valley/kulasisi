@@ -2,7 +2,8 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { useAuth } from '@/components/providers/AuthProvider';
 import changePhoneNumber from '@/lib/users/changePhoneNumber';
 import setFormErrors from '@/utils/setFormErrors';
 import { Button } from '@/components/ui/button';
@@ -34,17 +35,19 @@ interface Props {
 }
 
 export function ChangePhoneNumberModal({ username }: Props) {
+  const auth = useAuth();
   const router = useRouter();
 
   const form = useForm<ChangePhoneNumberInputs>();
 
   const onSubmit: SubmitHandler<ChangePhoneNumberInputs> = async (
-    data: ChangePhoneNumberInputs,
+    data: ChangePhoneNumberInputs
   ) => {
     const res = await changePhoneNumber(username, data);
     if (res?.error) {
       setFormErrors(res.error, form.setError);
     } else {
+      auth.updateUser();
       router.refresh();
     }
     return res;

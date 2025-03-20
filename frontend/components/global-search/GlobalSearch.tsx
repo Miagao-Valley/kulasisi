@@ -351,6 +351,7 @@ function Home({ searchLangs }: { searchLangs: () => void }) {
         try {
           await logout();
           auth.updateAuth();
+          auth.updateUser();
           router.push('/login/');
         } catch (error) {
           console.error('Error logging out:', error);

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { useAuth } from '@/components/providers/AuthProvider';
 import Link from 'next/link';
 import { User } from '@/types/users';
 import updateUser from '@/lib/users/updateUser';
@@ -46,14 +47,17 @@ interface Props {
 }
 
 export default function ProfileTab({ user }: Props) {
+  const auth = useAuth();
+
   const form = useForm<ProfileInputs>();
   const onSubmit: SubmitHandler<ProfileInputs> = async (
-    data: ProfileInputs,
+    data: ProfileInputs
   ) => {
     const res = await updateUser(user.username, data);
     if (res?.error) {
       setFormErrors(res.error, form.setError);
     }
+    auth.updateUser();
     return res;
   };
 

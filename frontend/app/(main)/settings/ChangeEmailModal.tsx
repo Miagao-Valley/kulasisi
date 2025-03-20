@@ -3,6 +3,7 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { useAuth } from '@/components/providers/AuthProvider';
 import changeEmail from '@/lib/users/changeEmail';
 import setFormErrors from '@/utils/setFormErrors';
 import { Button } from '@/components/ui/button';
@@ -34,17 +35,19 @@ interface Props {
 }
 
 export function ChangeEmailModal({ username }: Props) {
+  const auth = useAuth();
   const router = useRouter();
 
   const form = useForm<ChangeEmailInputs>();
 
   const onSubmit: SubmitHandler<ChangeEmailInputs> = async (
-    data: ChangeEmailInputs,
+    data: ChangeEmailInputs
   ) => {
     const res = await changeEmail(username, data);
     if (res?.error) {
       setFormErrors(res.error, form.setError);
     } else {
+      auth.updateUser();
       router.refresh();
     }
     return res;

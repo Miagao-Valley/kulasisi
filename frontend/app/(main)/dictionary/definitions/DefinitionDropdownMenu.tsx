@@ -41,7 +41,7 @@ export default function DefinitionDropdownMenu({
             <DefinitionRevisionsModal definition={definition} />
           </DropdownMenuItem>
 
-          {auth.username === definition.contributor && (
+          {auth.user?.username === definition.contributor && (
             <>
               <DropdownMenuItem
                 className="hover:cursor-pointer"

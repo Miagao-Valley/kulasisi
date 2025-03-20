@@ -8,109 +8,91 @@ import {
   useCallback,
   ReactNode,
 } from 'react';
-import { AuthType } from '@/types/users';
+import { User } from '@/types/users';
 import fetchAuth from '@/lib/auth/fetchAuth';
+import getUser from '@/lib/users/getUser';
 
-/**
- * The shape of the context value provided by the AuthContext.
- */
-export interface AuthContextType extends AuthType {
-  isLoading: boolean;
-  setAuth: (auth: AuthType) => void;
+export interface AuthContextType {
+  isAuthenticated: boolean;
+  user: User | null;
   updateAuth: () => void;
+  updateUser: () => void;
+  isLoading: boolean;
 }
 
-// Create an AuthContext to share authentication state across the app
+const AUTH_DATA_KEY = 'auth-data';
+
 const AuthContext = createContext<AuthContextType | null>(null);
 
 /**
- * AuthProvider component that manages and provides authentication context.
- * It fetches the authentication status from the server and stores it in state.
- *
- * @param {ReactNode} children - The child components to render inside the provider.
+ * Provider that manages and provides authentication context.
  */
 export function AuthProvider({ children }: { children: ReactNode }) {
-  // Local state for managing authentication information
+  const [user, setUser] = useState<User | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [id, setId] = useState<number | null>(null);
-  const [username, setUsername] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   /**
-   * Sets authentication state with the provided AuthType.
-   * @param {AuthType} auth - The authentication data to set.
+   * Fetches the authentication data from the server and updates the context.
    */
-  const setAuth = useCallback(({ isAuthenticated, id, username }: AuthType) => {
-    setIsAuthenticated(isAuthenticated);
-    setId(id);
-    setUsername(username);
+  const updateAuth = useCallback(async () => {
+    const authData = await fetchAuth();
+    if (authData) {
+      setIsAuthenticated(authData.isAuthenticated);
+    } else {
+      setIsAuthenticated(false);
+      setUser(null);
+    }
   }, []);
 
-  /**
-   * Fetches the authentication data from the server and updates the context.
-   * If no data is found, it sets the context to unauthenticated.
-   */
-  const fetchAuthWrapper = useCallback(async () => {
-    const fetchedAuth = await fetchAuth();
-    if (fetchedAuth) {
-      setAuth({
-        isAuthenticated: fetchedAuth.isAuthenticated,
-        id: Number(fetchedAuth?.id),
-        username: fetchedAuth?.username,
-      });
+  const updateUser = useCallback(async () => {
+    const authData = await fetchAuth();
+    if (authData) {
+      const userData = await getUser(authData?.username);
+      setUser(userData);
     } else {
-      setAuth({
-        isAuthenticated: false,
-        id: null,
-        username: '',
-      });
+      setIsAuthenticated(false);
+      setUser(null);
     }
-  }, [setAuth]);
-
-  /**
-   * Updates the authentication context by re-fetching auth data from the server.
-   */
-  const updateAuth = async () => {
-    await fetchAuthWrapper();
-  };
+  }, []);
 
   // Initialize the auth state from localStorage if available, otherwise fetch it
   useEffect(() => {
-    const storedIsAuthenticated =
-      localStorage.getItem('isAuthenticated') === 'true';
-    const storedId = parseInt(localStorage.getItem('id') || '');
-    const storedUsername = localStorage.getItem('username') || '';
-
-    if (storedIsAuthenticated && !isNaN(storedId) && storedUsername) {
-      setAuth({
-        isAuthenticated: storedIsAuthenticated,
-        id: storedId,
-        username: storedUsername,
-      });
-    } else {
-      fetchAuthWrapper();
+    const storedAuth = localStorage.getItem(AUTH_DATA_KEY);
+    if (storedAuth) {
+      try {
+        const parsedAuth = JSON.parse(storedAuth);
+        if (parsedAuth.isAuthenticated) {
+          setIsAuthenticated(parsedAuth.isAuthenticated);
+          setUser(parsedAuth.user);
+          setIsLoading(false);
+          return;
+        }
+      } catch (error) {
+        console.error('Error parsing stored auth data:', error);
+      }
     }
 
+    updateAuth();
     setIsLoading(false);
-  }, [fetchAuthWrapper, setAuth]);
+  }, [updateAuth, updateUser]);
 
-  // Store authentication state in localStorage whenever it changes
+  // Persist the auth state to localStorage whenever it changes
   useEffect(() => {
-    localStorage.setItem('isAuthenticated', JSON.stringify(isAuthenticated));
-    localStorage.setItem('id', JSON.stringify(id));
-    localStorage.setItem('username', username);
-  }, [isAuthenticated, id, username]);
+    localStorage.setItem(
+      AUTH_DATA_KEY,
+      JSON.stringify({ isAuthenticated, user })
+    );
+  }, [isAuthenticated, user]);
 
-  // Provide authentication state and functions to the rest of the app
   return (
     <AuthContext.Provider
       value={{
         isAuthenticated,
-        id,
-        username,
-        isLoading,
-        setAuth,
+        user,
         updateAuth,
+        updateUser,
+        isLoading,
       }}
     >
       {children}
@@ -120,12 +102,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 /**
  * Custom hook to access authentication context.
- * Throws an error if used outside of the AuthProvider.
- *
- * @returns {AuthContextType} - The authentication context values.
- * @throws {Error} - Throws an error if used outside the provider.
  */
-export function useAuth() {
+export function useAuth(): AuthContextType {
   const context = useContext(AuthContext);
 
   if (!context) {

@@ -42,7 +42,7 @@ export function DeleteAccountModal({ username }: Props) {
   const form = useForm<DeleteAccountInputs>();
 
   const onSubmit: SubmitHandler<DeleteAccountInputs> = async (
-    data: DeleteAccountInputs,
+    data: DeleteAccountInputs
   ) => {
     const res = await deleteUser(username, data);
     if (res?.error) {
@@ -50,6 +50,7 @@ export function DeleteAccountModal({ username }: Props) {
     } else {
       await logout();
       auth.updateAuth();
+      auth.updateUser();
       router.push('/register/');
     }
     return res;

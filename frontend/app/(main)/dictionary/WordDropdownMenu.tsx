@@ -38,7 +38,7 @@ export default function WordDropdownMenu({ word, setIsEditing }: Props) {
             <WordRevisionsModal word={word} />
           </DropdownMenuItem>
 
-          {auth.username === word.contributor && (
+          {auth.user?.username === word.contributor && (
             <>
               <DropdownMenuItem
                 className="hover:cursor-pointer"

@@ -38,7 +38,7 @@ export default function VoteActions({ entry }: Props) {
       return;
     }
 
-    if (auth.username === entry.contributor) {
+    if (auth.user?.username === entry.contributor) {
       toast.error('You cannot vote your entries.');
       setIsLoading(false);
       return;
