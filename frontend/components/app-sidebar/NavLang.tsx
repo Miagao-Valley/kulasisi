@@ -104,10 +104,7 @@ export function NavLang() {
               <CollapsibleTrigger asChild>
                 <SidebarMenuButton tooltip="Languages">
                   <LanguagesIcon />
-                  <Link
-                    href="/languages/"
-                    className="w-full hover:text-primary"
-                  >
+                  <Link href="/languages/" className="w-full">
                     Languages
                   </Link>
                   <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />

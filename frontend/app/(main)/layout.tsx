@@ -1,14 +1,15 @@
 import React from 'react';
+import { cookies } from 'next/headers';
 import type { Metadata } from 'next';
 import '../globals.css';
 import { AuthProvider } from '../../components/providers/AuthProvider';
-import { Toaster } from '@/components/ui/sonner';
 import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/app-sidebar/AppSidebar';
-import AppHeader from '@/components/app-header/AppHeader';
+import { SiteHeader } from '@/components/app-sidebar/SiteHeader';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';
-import { Bricolage_Grotesque } from 'next/font/google';
 import { TooltipProvider } from '@/components/ui/tooltip';
+import { Toaster } from '@/components/ui/sonner';
+import { Bricolage_Grotesque } from 'next/font/google';
 
 export const font = Bricolage_Grotesque({ subsets: ['latin'] });
 
@@ -22,30 +23,40 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = cookies();
+  const defaultOpen = cookieStore.get('sidebar_state')
+    ? cookieStore.get('sidebar_state')?.value === 'true'
+    : true;
+
   return (
     <html lang="en">
       <body className={font.className}>
-        <AuthProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <TooltipProvider>
-              <Toaster />
-              <SidebarProvider>
-                <AppSidebar />
-                <SidebarInset>
-                  <header className="h-12 flex gap-2 items-center shrink-0 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-16">
-                    <AppHeader />
-                  </header>
-                  <main className="p-4 pt-0">{children}</main>
-                </SidebarInset>
-              </SidebarProvider>
-            </TooltipProvider>
-          </ThemeProvider>
-        </AuthProvider>
+        <div className="[--header-height:calc(theme(spacing.14))]">
+          <AuthProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <TooltipProvider>
+                <Toaster />
+                <SidebarProvider
+                  defaultOpen={defaultOpen}
+                  className="flex flex-col"
+                >
+                  <SiteHeader />
+                  <div className="flex flex-1">
+                    <AppSidebar />
+                    <SidebarInset>
+                      <main className="p-4">{children}</main>
+                    </SidebarInset>
+                  </div>
+                </SidebarProvider>
+              </TooltipProvider>
+            </ThemeProvider>
+          </AuthProvider>
+        </div>
       </body>
     </html>
   );

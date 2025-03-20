@@ -80,7 +80,7 @@ export function NavGames() {
               <CollapsibleTrigger asChild>
                 <SidebarMenuButton tooltip="Games">
                   <Gamepad2Icon />
-                  <Link href="/games/" className="w-full hover:text-primary">
+                  <Link href="/games/" className="w-full">
                     Games
                   </Link>
                   <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />

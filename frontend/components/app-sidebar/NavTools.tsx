@@ -80,7 +80,7 @@ export function NavTools() {
               <CollapsibleTrigger asChild>
                 <SidebarMenuButton tooltip="Tools">
                   <WrenchIcon />
-                  <Link href="/tools/" className="w-full hover:text-primary">
+                  <Link href="/tools/" className="w-full">
                     Tools
                   </Link>
                   <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />

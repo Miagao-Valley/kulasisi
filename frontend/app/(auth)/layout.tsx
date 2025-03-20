@@ -5,7 +5,7 @@ import '../globals.css';
 import { AuthProvider } from '../../components/providers/AuthProvider';
 import { Toaster } from '@/components/ui/sonner';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';
-import { ThemeToggle } from '@/components/app-header/ThemeToggle';
+import ThemeToggle from '@/components/app-sidebar/ThemeToggle';
 import Link from 'next/link';
 import Wordmark from '@/components/brand/wordmark';
 import { TooltipProvider } from '@/components/ui/tooltip';
