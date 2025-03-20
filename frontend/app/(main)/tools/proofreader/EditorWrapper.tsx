@@ -7,10 +7,7 @@ import Editor from '@/components/editor/Editor';
 export default function EditorWrapper({ lang }: { lang: string }) {
   return (
     <EditorProvider lang={lang} showProofreader>
-      <Editor
-        placeholder="Start by writing or pasting (ctrl+v) text."
-        autoFocus
-      />
+      <Editor placeholder="Start by writing or pasting text." autoFocus />
     </EditorProvider>
   );
 }

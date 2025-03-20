@@ -1,10 +1,12 @@
 import { useSidebar, SIDEBAR_KEYBOARD_SHORTCUT } from '../ui/sidebar';
+import { Kbd, Keys, useKbd } from '../ui/kbd';
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
 import { Button } from '../ui/button';
 import { PanelRightClose, PanelRightOpen } from 'lucide-react';
 
 export default function CustomSidebarTrigger() {
   const { isMobile, open, toggleSidebar } = useSidebar();
+  const { os } = useKbd();
 
   return (
     <Tooltip>
@@ -19,9 +21,12 @@ export default function CustomSidebarTrigger() {
           <span className="sr-only">Toggle Sidebar</span>
         </Button>
       </TooltipTrigger>
-      <TooltipContent>
-        {isMobile || !open ? 'Open sidebar' : 'Close sidebar'} (<kbd>Ctrl</kbd>{' '}
-        + <kbd>{SIDEBAR_KEYBOARD_SHORTCUT.toUpperCase()}</kbd>)
+      <TooltipContent className="flex items-center gap-1">
+        {isMobile || !open ? 'Open sidebar' : 'Close sidebar'}
+        <div className="flex items-center gap-[2px]">
+          <Kbd keyName={os === 'mac' ? Keys.Command : Keys.Control} />
+          <Kbd keyName={SIDEBAR_KEYBOARD_SHORTCUT.toUpperCase()} />
+        </div>
       </TooltipContent>
     </Tooltip>
   );
