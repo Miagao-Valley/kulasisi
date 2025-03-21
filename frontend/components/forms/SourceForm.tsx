@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Path, PathValue, UseFormReturn } from 'react-hook-form';
+import { Path, UseFormReturn } from 'react-hook-form';
 import { cn } from '@/lib/utils';
 import {
   FormControl,
@@ -19,43 +19,31 @@ import {
 import { FloatingLabelInput } from '@/components/ui/floating-label-input';
 import { LinkIcon } from 'lucide-react';
 
-export interface Inputs {
-  source_title: string;
-  source_link: string;
-}
+type SourceSchema = {
+  source_title?: string;
+  source_link?: string;
+};
 
-interface Props<T extends Inputs> {
+interface Props<T extends SourceSchema> {
   form: UseFormReturn<T, any, undefined>;
-  defaultSourceTitle?: string;
-  defaultSourceLink?: string;
 }
 
-export default function SourceForm<T extends Inputs>({
-  form,
-  defaultSourceTitle,
-  defaultSourceLink,
-}: Props<T>) {
+export default function SourceForm<T extends SourceSchema>({ form }: Props<T>) {
   const [sourceLabel, setSourceLabel] = useState<string>(
     form.watch('source_title' as Path<T>)?.trim() ||
       form.watch('source_link' as Path<T>)?.trim() ||
-      defaultSourceTitle ||
-      defaultSourceLink ||
-      '',
+      ''
   );
 
   useEffect(() => {
     const subscription = form.watch((values) => {
       setSourceLabel(
-        values.source_title?.trim() ||
-          values.source_link?.trim() ||
-          defaultSourceTitle ||
-          defaultSourceLink ||
-          '',
+        values.source_title?.trim() || values.source_link?.trim() || ''
       );
     });
 
     return () => subscription.unsubscribe();
-  }, [form, defaultSourceTitle, defaultSourceLink]);
+  }, [form]);
 
   const handleButtonDoubleClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -72,10 +60,12 @@ export default function SourceForm<T extends Inputs>({
           variant={'ghost'}
           size="sm"
           className={cn(
-            `max-w-24 md:max-w-32 flex gap-1 p-2 h-fit ${form.watch('source_link' as Path<T>)?.trim() && 'text-primary'}`,
+            `max-w-24 md:max-w-32 flex gap-1 p-2 h-fit ${
+              form.watch('source_link' as Path<T>)?.trim() && 'text-primary'
+            }`,
             (form.formState.errors.source_title ||
               form.formState.errors.source_link) &&
-              'text-destructive',
+              'text-destructive'
           )}
         >
           <LinkIcon />
@@ -90,7 +80,6 @@ export default function SourceForm<T extends Inputs>({
           <FormField
             control={form.control}
             name={'source_title' as Path<T>}
-            defaultValue={defaultSourceTitle as PathValue<T, Path<T>>}
             render={({ field }) => (
               <FormItem>
                 <FormControl>
@@ -104,7 +93,6 @@ export default function SourceForm<T extends Inputs>({
           <FormField
             control={form.control}
             name={'source_link' as Path<T>}
-            defaultValue={defaultSourceLink as PathValue<T, Path<T>>}
             render={({ field }) => (
               <FormItem>
                 <FormControl>

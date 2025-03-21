@@ -2,7 +2,7 @@ import React from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { Gender } from '@/types/users';
 import displayGender from '@/utils/displayGender';
-import { RegisterInputs } from '../RegisterForm';
+import { RegisterSchema } from '../RegisterForm';
 import { cn } from '@/lib/utils';
 import {
   FormControl,
@@ -21,7 +21,7 @@ import {
 import { DateTimePicker } from '@/components/ui/datetime-picker';
 
 interface Props {
-  form: UseFormReturn<RegisterInputs, any, undefined>;
+  form: UseFormReturn<RegisterSchema, any, undefined>;
   className?: string;
 }
 
@@ -35,7 +35,7 @@ export default function Personal({ form, className }: Props) {
           render={({ field }) => (
             <FormItem className="w-full">
               <FormControl>
-                <FloatingLabelInput label="First Name" autoFocus {...field} />
+                <FloatingLabelInput label="First Name" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

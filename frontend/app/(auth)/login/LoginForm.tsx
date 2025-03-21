@@ -5,8 +5,10 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/components/providers/AuthProvider';
 import login from '@/lib/auth/login';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import setFormErrors from '@/utils/setFormErrors';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Form,
   FormControl,
@@ -19,10 +21,22 @@ import { PasswordInput } from '@/components/ui/password-input';
 import { LoadingButton } from '@/components/ui/loading-button';
 import Logo from '@/components/brand/logo';
 
-export interface LoginInputs {
-  username: string;
-  password: string;
-}
+const loginSchema = z.object({
+  username: z
+    .string()
+    .min(1, 'Username is required')
+    .max(150, 'Username must be 150 characters or fewer')
+    .regex(
+      /^[\w.@+-]+$/,
+      'Username can only contain letters, digits, and @/./+/-/_'
+    ),
+  password: z
+    .string()
+    .min(1, 'Password is required')
+    .max(128, 'Password must be 128 characters or fewer'),
+});
+
+type LoginSchema = z.infer<typeof loginSchema>;
 
 export default function LoginForm() {
   const router = useRouter();
@@ -31,8 +45,11 @@ export default function LoginForm() {
 
   const next = searchParams.get('next');
 
-  const form = useForm<LoginInputs>();
-  const onSubmit: SubmitHandler<LoginInputs> = async (data: LoginInputs) => {
+  const form = useForm<LoginSchema>({
+    resolver: zodResolver(loginSchema),
+  });
+
+  async function onSubmit(data: LoginSchema) {
     const res = await login(data);
     if (res?.error) {
       setFormErrors(res.error, form.setError);
@@ -42,7 +59,7 @@ export default function LoginForm() {
       router.push(next || '/');
     }
     return res;
-  };
+  }
 
   return (
     <div className="flex flex-col gap-6">

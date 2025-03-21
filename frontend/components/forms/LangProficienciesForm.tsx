@@ -106,9 +106,11 @@ export default function LangProficienciesForm({
       {!!selectedLangProficiencies.length ? (
         <div>
           <div className="w-full px-2 mb-2 flex justify-between text-xs">
-            {Object.values(LangProficiencyLevel).map((level) => (
-              <span key={level}>{level}</span>
-            ))}
+            {Object.values(LangProficiencyLevel)
+              .filter((value) => typeof value === 'number')
+              .map((value) => (
+                <span key={value}>{value}</span>
+              ))}
           </div>
 
           <div className="mb-3 flex flex-col items-center gap-4">

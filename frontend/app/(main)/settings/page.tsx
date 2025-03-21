@@ -4,7 +4,7 @@ import React from 'react';
 import { useAuth } from '@/components/providers/AuthProvider';
 import Loading from '../loading';
 import AccountTab from './AccountTab';
-import ProfileTab from './ProfileTab';
+import UpdateUserForm from './UpdateUserForm';
 import {
   Tabs,
   TabsContent,
@@ -34,7 +34,7 @@ export default function SettingsPage() {
           <AccountTab user={auth.user} />
         </TabsContent>
         <TabsContent value="profile">
-          <ProfileTab user={auth.user} />
+          <UpdateUserForm user={auth.user} />
         </TabsContent>
       </Tabs>
     </>

@@ -2,11 +2,13 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import { useForm, SubmitHandler } from 'react-hook-form';
 import { useAuth } from '@/components/providers/AuthProvider';
+import { useForm } from 'react-hook-form';
+import setFormErrors from '@/utils/setFormErrors';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import logout from '@/lib/auth/logout';
 import deleteUser from '@/lib/users/deleteUser';
-import setFormErrors from '@/utils/setFormErrors';
 import { Button } from '@/components/ui/button';
 import {
   DialogContent,
@@ -26,10 +28,18 @@ import { FloatingLabelInput } from '@/components/ui/floating-label-input';
 import { PasswordInput } from '@/components/ui/password-input';
 import { LoadingButton } from '@/components/ui/loading-button';
 
-export interface DeleteAccountInputs {
-  username: string;
-  password: string;
-}
+export const deleteAccountSchema = z.object({
+  username: z
+    .string()
+    .min(1, 'Username is required')
+    .regex(
+      /^[\w.@+-]+$/,
+      'Username can only contain letters, digits, and @/./+/-/_'
+    ),
+  password: z.string().min(1, 'Password is required'),
+});
+
+export type DeleteAccountSchema = z.infer<typeof deleteAccountSchema>;
 
 interface Props {
   username: string;
@@ -39,11 +49,15 @@ export function DeleteAccountModal({ username }: Props) {
   const router = useRouter();
   const auth = useAuth();
 
-  const form = useForm<DeleteAccountInputs>();
+  const form = useForm<DeleteAccountSchema>({
+    resolver: zodResolver(deleteAccountSchema),
+    defaultValues: {
+      username: '',
+      password: '',
+    },
+  });
 
-  const onSubmit: SubmitHandler<DeleteAccountInputs> = async (
-    data: DeleteAccountInputs
-  ) => {
+  async function onSubmit(data: DeleteAccountSchema) {
     const res = await deleteUser(username, data);
     if (res?.error) {
       setFormErrors(res.error, form.setError);
@@ -54,7 +68,7 @@ export function DeleteAccountModal({ username }: Props) {
       router.push('/register/');
     }
     return res;
-  };
+  }
 
   return (
     <DialogContent>

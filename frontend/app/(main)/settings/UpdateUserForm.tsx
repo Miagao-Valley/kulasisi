@@ -1,11 +1,13 @@
 import React from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
 import { useAuth } from '@/components/providers/AuthProvider';
+import { useForm } from 'react-hook-form';
+import setFormErrors from '@/utils/setFormErrors';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import { User, Gender } from '@/types/users';
 import displayGender from '@/utils/displayGender';
 import updateUser from '@/lib/users/updateUser';
-import setFormErrors from '@/utils/setFormErrors';
 import {
   Form,
   FormControl,
@@ -29,38 +31,48 @@ import { LoadingButton } from '@/components/ui/loading-button';
 import { Button } from '@/components/ui/button';
 import { UserRoundIcon } from 'lucide-react';
 
-export interface ProfileInputs {
-  username: string;
-  password: string;
-  email: string;
-  phone_number: number;
-  first_name: string;
-  last_name: string;
-  date_of_birth: Date;
-  location: string;
-  gender: string;
-  bio: string;
-  website: string;
-}
+const updateUserSchema = z.object({
+  first_name: z.string().min(1, 'First name is required'),
+  last_name: z.string().min(1, 'Last name is required'),
+  date_of_birth: z.date(),
+  location: z.string().min(1, 'Location name is required'),
+  gender: z.nativeEnum(Gender, {
+    errorMap: () => ({ message: 'Invalid gender selection' }),
+  }),
+  bio: z.string().optional(),
+  website: z.string().url().optional().or(z.literal('')),
+});
+
+type UpdateUserSchema = z.infer<typeof updateUserSchema>;
 
 interface Props {
   user: User;
 }
 
-export default function ProfileTab({ user }: Props) {
+export default function UpdateUserForm({ user }: Props) {
   const auth = useAuth();
 
-  const form = useForm<ProfileInputs>();
-  const onSubmit: SubmitHandler<ProfileInputs> = async (
-    data: ProfileInputs
-  ) => {
+  const form = useForm<UpdateUserSchema>({
+    resolver: zodResolver(updateUserSchema),
+    defaultValues: {
+      first_name: user.first_name || '',
+      last_name: user.last_name || '',
+      // date_of_birth: user.date_of_birth,
+      location: user.location || '',
+      // gender: user.gender || '',
+      bio: user.bio || '',
+      website: user.website || '',
+    },
+  });
+
+  async function onSubmit(data: UpdateUserSchema) {
     const res = await updateUser(user.username, data);
     if (res?.error) {
       setFormErrors(res.error, form.setError);
     }
     auth.updateUser();
     return res;
-  };
+  }
 
   return (
     <div className="flex flex-col gap-4">
@@ -90,7 +102,6 @@ export default function ProfileTab({ user }: Props) {
               <FormField
                 control={form.control}
                 name="first_name"
-                defaultValue={user.first_name}
                 render={({ field }) => (
                   <FormItem className="w-full">
                     <FormControl>
@@ -107,7 +118,6 @@ export default function ProfileTab({ user }: Props) {
               <FormField
                 control={form.control}
                 name="last_name"
-                defaultValue={user.last_name}
                 render={({ field }) => (
                   <FormItem className="w-full">
                     <FormControl>
@@ -127,7 +137,6 @@ export default function ProfileTab({ user }: Props) {
             <FormField
               control={form.control}
               name="date_of_birth"
-              defaultValue={user.date_of_birth}
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
@@ -152,7 +161,6 @@ export default function ProfileTab({ user }: Props) {
             <FormField
               control={form.control}
               name="location"
-              defaultValue={user.location}
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
@@ -173,10 +181,7 @@ export default function ProfileTab({ user }: Props) {
               name="gender"
               render={({ field }) => (
                 <FormItem>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
+                  <Select onValueChange={field.onChange}>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select gender" />
@@ -203,7 +208,6 @@ export default function ProfileTab({ user }: Props) {
             <FormField
               control={form.control}
               name="bio"
-              defaultValue={user.bio}
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
@@ -222,7 +226,6 @@ export default function ProfileTab({ user }: Props) {
             <FormField
               control={form.control}
               name="website"
-              defaultValue={user.website}
               render={({ field }) => (
                 <FormItem>
                   <FormControl>

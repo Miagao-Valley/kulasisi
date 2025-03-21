@@ -4,8 +4,10 @@ import React from 'react';
 import updateTranslation from '@/lib/translations/updateTranslation';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import setFormErrors from '@/utils/setFormErrors';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Translation } from '@/types/phrases';
 import { EditorProvider } from '@/components/editor/EditorContext';
 import Editor from '@/components/editor/Editor';
@@ -20,11 +22,13 @@ import { Button } from '@/components/ui/button';
 import { LoadingButton } from '@/components/ui/loading-button';
 import SourceForm from '@/components/forms/SourceForm';
 
-export interface TranslationInputs {
-  content: string;
-  source_title: string;
-  source_link: string;
-}
+export const updateTranslationSchema = z.object({
+  content: z.string().min(1, 'Content is required'),
+  source_title: z.string().optional(),
+  source_link: z.string().url().optional().or(z.literal('')),
+});
+
+export type UpdateTranslationSchema = z.infer<typeof updateTranslationSchema>;
 
 interface Props {
   translation: Translation;
@@ -35,14 +39,19 @@ interface Props {
 
 export default function UpdateTranslationForm({
   translation,
-  initialContent = '',
   setIsEditing,
   className = '',
 }: Props) {
-  const form = useForm<TranslationInputs>();
-  const onSubmit: SubmitHandler<TranslationInputs> = async (
-    data: TranslationInputs
-  ) => {
+  const form = useForm<UpdateTranslationSchema>({
+    resolver: zodResolver(updateTranslationSchema),
+    defaultValues: {
+      content: translation.content || '',
+      source_title: translation.source_title || '',
+      source_link: translation.source_link || '',
+    },
+  });
+
+  async function onSubmit(data: UpdateTranslationSchema) {
     const res = await updateTranslation(
       translation.phrase,
       translation.id,
@@ -55,7 +64,7 @@ export default function UpdateTranslationForm({
       toast.success('Entry updated');
     }
     return res;
-  };
+  }
 
   return (
     <Form {...form}>
@@ -70,7 +79,6 @@ export default function UpdateTranslationForm({
         <FormField
           control={form.control}
           name="content"
-          defaultValue={initialContent}
           render={({ field }) => (
             <FormItem>
               <FormControl>
@@ -90,11 +98,7 @@ export default function UpdateTranslationForm({
         />
 
         <div className="flex gap-0 items-center">
-          <SourceForm
-            form={form}
-            defaultSourceTitle={translation.source_title}
-            defaultSourceLink={translation.source_link}
-          />
+          <SourceForm form={form} />
 
           <div className="ms-auto w-full sm:w-fit flex justify-end gap-2">
             <Button

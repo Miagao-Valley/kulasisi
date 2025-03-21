@@ -4,8 +4,10 @@ import React from 'react';
 import updatePhrase from '@/lib/phrases/updatePhrase';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import setFormErrors from '@/utils/setFormErrors';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Phrase } from '@/types/phrases';
 import { EditorProvider } from '@/components/editor/EditorContext';
 import Editor from '@/components/editor/Editor';
@@ -22,13 +24,15 @@ import UsageNoteForm from '@/components/forms/UsageNoteForm';
 import SourceForm from '@/components/forms/SourceForm';
 import CategoriesSelect from '@/components/forms/CategoriesSelect';
 
-export interface PhraseInputs {
-  content: string;
-  categories: string[];
-  usage_note: string;
-  source_title: string;
-  source_link: string;
-}
+export const updatePhraseSchema = z.object({
+  content: z.string().min(1, 'Content is required'),
+  categories: z.array(z.string()).optional(),
+  usage_note: z.string().optional(),
+  source_title: z.string().optional(),
+  source_link: z.string().url().optional().or(z.literal('')),
+});
+
+export type UpdatePhraseSchema = z.infer<typeof updatePhraseSchema>;
 
 interface Props {
   phrase: Phrase;
@@ -41,8 +45,18 @@ export default function UpdatePhraseForm({
   setIsEditing,
   className = '',
 }: Props) {
-  const form = useForm<PhraseInputs>();
-  const onSubmit: SubmitHandler<PhraseInputs> = async (data: PhraseInputs) => {
+  const form = useForm<UpdatePhraseSchema>({
+    resolver: zodResolver(updatePhraseSchema),
+    defaultValues: {
+      content: phrase.content || '',
+      categories: phrase.categories || [],
+      usage_note: phrase.usage_note || '',
+      source_title: phrase.source_title || '',
+      source_link: phrase.source_link || '',
+    },
+  });
+
+  async function onSubmit(data: UpdatePhraseSchema) {
     const res = await updatePhrase(phrase.id, data);
     if (res?.error) {
       setFormErrors(res.error, form.setError);
@@ -51,7 +65,7 @@ export default function UpdatePhraseForm({
       toast.success('Entry updated');
     }
     return res;
-  };
+  }
 
   return (
     <Form {...form}>
@@ -66,7 +80,6 @@ export default function UpdatePhraseForm({
         <FormField
           control={form.control}
           name="content"
-          defaultValue={phrase.content}
           render={({ field }) => (
             <FormItem>
               <FormControl>
@@ -88,17 +101,12 @@ export default function UpdatePhraseForm({
         <div className="flex flex-col sm:flex-row gap-1 items-center">
           <div className="w-full sm:w-fit flex gap-0 justify-between items-center">
             <div className="flex gap-0 items-center">
-              <UsageNoteForm form={form} defaultUsageNote={phrase.usage_note} />
-              <SourceForm
-                form={form}
-                defaultSourceTitle={phrase.source_title}
-                defaultSourceLink={phrase.source_link}
-              />
+              <UsageNoteForm form={form} />
+              <SourceForm form={form} />
             </div>
             <FormField
               control={form.control}
               name="categories"
-              defaultValue={phrase.categories}
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
@@ -107,9 +115,9 @@ export default function UpdatePhraseForm({
                       setSelectedCategories={(value) =>
                         form.setValue('categories', value)
                       }
+                      error={form.formState.errors?.categories?.message}
                     />
                   </FormControl>
-                  <FormMessage />
                 </FormItem>
               )}
             />

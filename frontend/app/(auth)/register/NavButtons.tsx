@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { UseFormReturn } from 'react-hook-form';
-import { RegisterInputs } from './RegisterForm';
+import { RegisterSchema } from './RegisterForm';
 import { Button } from '@/components/ui/button';
 import { LoadingButton } from '@/components/ui/loading-button';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
@@ -12,7 +12,7 @@ interface Props {
   step: number;
   setStep: React.Dispatch<React.SetStateAction<number>>;
   reachedEnd: boolean;
-  form: UseFormReturn<RegisterInputs, any, undefined>;
+  form: UseFormReturn<RegisterSchema, any, undefined>;
 }
 
 export default function NavButtons({

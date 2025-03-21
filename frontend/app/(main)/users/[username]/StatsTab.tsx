@@ -2,6 +2,10 @@
 
 import React from 'react';
 import { useAuth } from '@/components/providers/AuthProvider';
+import { useForm } from 'react-hook-form';
+import setFormErrors from '@/utils/setFormErrors';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { LangProficiencyLevel } from '@/types/languages';
 import { User } from '@/types/users';
 import updateUser from '@/lib/users/updateUser';
@@ -13,14 +17,21 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import LangProficienciesForm from '@/components/forms/LangProficienciesForm';
-import { LoadingButton } from '@/components/ui/loading-button';
-import setFormErrors from '@/utils/setFormErrors';
-import { SubmitHandler, useForm } from 'react-hook-form';
 import { H3 } from '@/components/ui/heading-with-anchor';
+import { LoadingButton } from '@/components/ui/loading-button';
 
-interface LangProficienciesInputs {
-  language_proficiencies: { lang: string; level: LangProficiencyLevel }[];
-}
+const langProficienciesSchema = z.object({
+  language_proficiencies: z.array(
+    z.object({
+      lang: z.string(),
+      level: z.nativeEnum(LangProficiencyLevel, {
+        errorMap: () => ({ message: 'Invalid level' }),
+      }),
+    })
+  ),
+});
+
+type LangProficienciesSchema = z.infer<typeof langProficienciesSchema>;
 interface Props {
   user: User;
 }
@@ -28,17 +39,21 @@ interface Props {
 export default function StatsTab({ user }: Props) {
   const auth = useAuth();
 
-  const form = useForm<LangProficienciesInputs>();
-  const onSubmit: SubmitHandler<LangProficienciesInputs> = async (
-    data: LangProficienciesInputs
-  ) => {
+  const form = useForm<LangProficienciesSchema>({
+    resolver: zodResolver(langProficienciesSchema),
+    defaultValues: {
+      language_proficiencies: user.language_proficiencies,
+    },
+  });
+
+  async function onSubmit(data: LangProficienciesSchema) {
     const res = await updateUser(user.username, data);
     if (res?.error) {
       setFormErrors(res.error, form.setError);
     }
     auth.updateUser();
     return res;
-  };
+  }
 
   return (
     <div className="flex flex-col gap-3">
@@ -57,7 +72,6 @@ export default function StatsTab({ user }: Props) {
             <FormField
               control={form.control}
               name="language_proficiencies"
-              defaultValue={user.language_proficiencies}
               render={({ field }) => (
                 <FormItem>
                   <FormControl>

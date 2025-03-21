@@ -52,7 +52,6 @@ export default function TranslationCard({
         {isEditing ? (
           <UpdateTranslationForm
             translation={translation}
-            initialContent={translation.content}
             setIsEditing={setIsEditing}
           />
         ) : (

@@ -13,26 +13,54 @@ import Personal from './steps/Personal';
 import Experience from './steps/Experience';
 import NavButtons from './NavButtons';
 import StepperIndicator from '@/components/pagination/StepperIndicator';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { Form, FormMessage } from '@/components/ui/form';
+import { useForm } from 'react-hook-form';
 import setFormErrors from '@/utils/setFormErrors';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Form, FormMessage } from '@/components/ui/form';
 import { H1 } from '@/components/ui/heading-with-anchor';
 import Logo from '@/components/brand/logo';
 
 const FORM_DATA_KEY = 'register-form';
 
-export interface RegisterInputs {
-  username: string;
-  password: string;
-  email: string;
-  phone_number: number;
-  first_name: string;
-  last_name: string;
-  date_of_birth: Date;
-  location: string;
-  gender: Gender;
-  language_proficiencies: { lang: string; level: LangProficiencyLevel }[];
-}
+const registerSchema = z.object({
+  username: z
+    .string()
+    .min(1, 'Username is required')
+    .max(150, 'Username must be 150 characters or fewer')
+    .regex(
+      /^[\w.@+-]+$/,
+      'Username can only contain letters, digits, and @/./+/-/_'
+    ),
+  password: z
+    .string()
+    .min(8, 'Password must be at least 8 characters.')
+    .max(128, 'Password must be 128 characters or fewer'),
+  email: z.string().min(1, 'Email is required').email('Invalid email address'),
+  phone_number: z
+    .string()
+    .min(10, 'Phone number must be at least 10 digits')
+    .max(15, 'Phone number must be at most 15 digits')
+    .regex(/^\d+$/, 'Phone number must contain only digits')
+    .optional(),
+  first_name: z.string().min(1, 'First name is required'),
+  last_name: z.string().min(1, 'Last name is required'),
+  date_of_birth: z.date(),
+  location: z.string().min(1, 'Location is required'),
+  gender: z.nativeEnum(Gender, {
+    errorMap: () => ({ message: 'Invalid gender selection' }),
+  }),
+  language_proficiencies: z.array(
+    z.object({
+      lang: z.string(),
+      level: z.nativeEnum(LangProficiencyLevel, {
+        errorMap: () => ({ message: 'Invalid level' }),
+      }),
+    })
+  ),
+});
+
+export type RegisterSchema = z.infer<typeof registerSchema>;
 
 const steps = [
   { name: 'Get Started', fields: ['username'] },
@@ -58,7 +86,14 @@ export default function RegisterForm() {
     if (step >= steps.length - 1) setReachedEnd(true);
   }, [step]);
 
-  const form = useForm<RegisterInputs>();
+  const form = useForm<RegisterSchema>({
+    resolver: zodResolver(registerSchema),
+    defaultValues: {
+      language_proficiencies: [
+        { lang: 'tgl', level: LangProficiencyLevel.LimitedWorking },
+      ],
+    },
+  });
 
   useEffect(() => {
     const savedData = localStorage.getItem(FORM_DATA_KEY);
@@ -72,11 +107,13 @@ export default function RegisterForm() {
     }
   }, [form]);
 
-  const onSubmit: SubmitHandler<RegisterInputs> = async (data) => {
+  async function onSubmit(data: RegisterSchema) {
     const res = await register(data);
+
     if (res?.error) {
       setFormErrors(res.error, form.setError);
       const errorKeys = Object.keys(res.error);
+
       errorKeys.reverse().forEach((key) => {
         steps.forEach((step, idx) => {
           if (step.fields.includes(key)) {
@@ -91,8 +128,7 @@ export default function RegisterForm() {
       router.push('/');
       localStorage.removeItem(FORM_DATA_KEY);
     }
-    return res;
-  };
+  }
 
   useEffect(() => {
     const subscription = form.watch((value) => {

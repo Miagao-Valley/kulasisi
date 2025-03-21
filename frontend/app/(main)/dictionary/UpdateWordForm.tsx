@@ -5,18 +5,22 @@ import updateWord from '@/lib/words/updateWord';
 import { Word } from '@/types/dictionary';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import setFormErrors from '@/utils/setFormErrors';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormMessage } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
 import { LoadingButton } from '@/components/ui/loading-button';
 import SourceForm from '@/components/forms/SourceForm';
 import { Input } from '@/components/ui/input';
 
-export interface WordInputs {
-  source_title: string;
-  source_link: string;
-}
+export const updateWordSchema = z.object({
+  source_title: z.string().optional(),
+  source_link: z.string().url().optional().or(z.literal('')),
+});
+
+export type UpdateWordSchema = z.infer<typeof updateWordSchema>;
 
 interface Props {
   word: Word;
@@ -29,8 +33,15 @@ export default function UpdateWordForm({
   setIsEditing,
   className = '',
 }: Props) {
-  const form = useForm<WordInputs>();
-  const onSubmit: SubmitHandler<WordInputs> = async (data: WordInputs) => {
+  const form = useForm<UpdateWordSchema>({
+    resolver: zodResolver(updateWordSchema),
+    defaultValues: {
+      source_title: word.source_title || '',
+      source_link: word.source_link || '',
+    },
+  });
+
+  async function onSubmit(data: UpdateWordSchema) {
     const res = await updateWord(word.lang, word.word, data);
     if (res?.error) {
       setFormErrors(res.error, form.setError);
@@ -39,7 +50,7 @@ export default function UpdateWordForm({
       toast.success('Entry updated');
     }
     return res;
-  };
+  }
 
   return (
     <Form {...form}>
@@ -59,11 +70,7 @@ export default function UpdateWordForm({
         />
 
         <div className="flex gap-0 items-center">
-          <SourceForm
-            form={form}
-            defaultSourceTitle={word.source_title}
-            defaultSourceLink={word.source_link}
-          />
+          <SourceForm form={form} />
 
           <div className="ms-auto w-full sm:w-fit flex justify-end gap-2">
             <Button

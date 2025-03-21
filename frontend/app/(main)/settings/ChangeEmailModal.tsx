@@ -2,10 +2,12 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import { useForm, SubmitHandler } from 'react-hook-form';
 import { useAuth } from '@/components/providers/AuthProvider';
-import changeEmail from '@/lib/users/changeEmail';
+import { useForm } from 'react-hook-form';
 import setFormErrors from '@/utils/setFormErrors';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import changeEmail from '@/lib/users/changeEmail';
 import { Button } from '@/components/ui/button';
 import {
   DialogContent,
@@ -25,10 +27,12 @@ import { FloatingLabelInput } from '@/components/ui/floating-label-input';
 import { PasswordInput } from '@/components/ui/password-input';
 import { LoadingButton } from '@/components/ui/loading-button';
 
-export interface ChangeEmailInputs {
-  new_email: string;
-  password: string;
-}
+export const changeEmailSchema = z.object({
+  new_email: z.string().min(1, 'Email is required').email(),
+  password: z.string().min(1, 'Password is required'),
+});
+
+export type ChangeEmailSchema = z.infer<typeof changeEmailSchema>;
 
 interface Props {
   username: string;
@@ -38,11 +42,15 @@ export function ChangeEmailModal({ username }: Props) {
   const auth = useAuth();
   const router = useRouter();
 
-  const form = useForm<ChangeEmailInputs>();
+  const form = useForm<ChangeEmailSchema>({
+    resolver: zodResolver(changeEmailSchema),
+    defaultValues: {
+      new_email: auth.user?.email || '',
+      password: '',
+    },
+  });
 
-  const onSubmit: SubmitHandler<ChangeEmailInputs> = async (
-    data: ChangeEmailInputs
-  ) => {
+  async function onSubmit(data: ChangeEmailSchema) {
     const res = await changeEmail(username, data);
     if (res?.error) {
       setFormErrors(res.error, form.setError);
@@ -51,7 +59,7 @@ export function ChangeEmailModal({ username }: Props) {
       router.refresh();
     }
     return res;
-  };
+  }
 
   return (
     <DialogContent>

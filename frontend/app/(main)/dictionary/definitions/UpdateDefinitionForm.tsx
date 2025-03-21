@@ -5,8 +5,10 @@ import updateDefinition from '@/lib/definitions/updateDefinition';
 import { Definition } from '@/types/dictionary';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import setFormErrors from '@/utils/setFormErrors';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Form,
   FormControl,
@@ -22,15 +24,17 @@ import UsageNoteForm from '@/components/forms/UsageNoteForm';
 import SourceForm from '@/components/forms/SourceForm';
 import WordsSelect from '@/components/forms/WordsSelect';
 
-export interface DefinitionInputs {
-  description: string;
-  pos: string;
-  synonyms: string[];
-  antonyms: string[];
-  usage_note: string;
-  source_title: string;
-  source_link: string;
-}
+export const updateDefinitionSchema = z.object({
+  description: z.string().min(1, 'Descriptoin is required'),
+  pos: z.string().optional(),
+  synonyms: z.array(z.string()).optional(),
+  antonyms: z.array(z.string()).optional(),
+  usage_note: z.string().optional(),
+  source_title: z.string().optional(),
+  source_link: z.string().url().optional().or(z.literal('')),
+});
+
+export type UpdateDefinitionSchema = z.infer<typeof updateDefinitionSchema>;
 interface Props {
   definition: Definition;
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
@@ -42,10 +46,20 @@ export default function UpdateDefinitionForm({
   setIsEditing,
   className = '',
 }: Props) {
-  const form = useForm<DefinitionInputs>();
-  const onSubmit: SubmitHandler<DefinitionInputs> = async (
-    data: DefinitionInputs
-  ) => {
+  const form = useForm<UpdateDefinitionSchema>({
+    resolver: zodResolver(updateDefinitionSchema),
+    defaultValues: {
+      description: definition.description || '',
+      pos: definition.pos || '',
+      synonyms: definition.synonyms || [],
+      antonyms: definition.antonyms || [],
+      usage_note: definition.usage_note || '',
+      source_title: definition.source_title || '',
+      source_link: definition.source_link || '',
+    },
+  });
+
+  async function onSubmit(data: UpdateDefinitionSchema) {
     const res = await updateDefinition(
       definition.word.lang,
       definition.word.word,
@@ -59,7 +73,7 @@ export default function UpdateDefinitionForm({
       toast.success('Entry updated');
     }
     return res;
-  };
+  }
 
   return (
     <Form {...form}>
@@ -74,7 +88,6 @@ export default function UpdateDefinitionForm({
         <FormField
           control={form.control}
           name="description"
-          defaultValue={definition.description}
           render={({ field }) => (
             <FormItem>
               <FormControl>
@@ -93,29 +106,21 @@ export default function UpdateDefinitionForm({
         <div className="flex flex-col sm:flex-row gap-1 items-center">
           <div className="w-full sm:w-fit flex gap-0 justify-between items-center">
             <div className="flex gap-0 items-center">
-              <UsageNoteForm
-                form={form}
-                defaultUsageNote={definition.usage_note}
-              />
-              <SourceForm
-                form={form}
-                defaultSourceTitle={definition.source_title}
-                defaultSourceLink={definition.source_link}
-              />
+              <UsageNoteForm form={form} />
+              <SourceForm form={form} />
             </div>
             <FormField
               control={form.control}
               name="pos"
-              defaultValue={definition.pos}
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
                     <PosSelect
                       selectedPos={field.value}
                       setSelectedPos={(value) => form.setValue('pos', value)}
+                      error={form.formState.errors?.pos?.message}
                     />
                   </FormControl>
-                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -125,7 +130,6 @@ export default function UpdateDefinitionForm({
             <FormField
               control={form.control}
               name="synonyms"
-              defaultValue={definition.synonyms}
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
@@ -142,16 +146,15 @@ export default function UpdateDefinitionForm({
                       ]}
                       lang={definition.lang}
                       placeholder="synonyms..."
+                      error={form.formState.errors?.synonyms?.message}
                     />
                   </FormControl>
-                  <FormMessage />
                 </FormItem>
               )}
             />
             <FormField
               control={form.control}
               name="antonyms"
-              defaultValue={definition.antonyms}
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
@@ -168,9 +171,9 @@ export default function UpdateDefinitionForm({
                       ]}
                       lang={definition.lang}
                       placeholder="antonyms..."
+                      error={form.formState.errors?.antonyms?.message}
                     />
                   </FormControl>
-                  <FormMessage />
                 </FormItem>
               )}
             />

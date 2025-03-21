@@ -6,25 +6,27 @@ import { cn } from '@/lib/utils';
 import ListSelector from '../ui/list-selector';
 
 interface Props {
-  selectedWords: string[];
+  selectedWords?: string[];
   setSelectedWords: (value: string[]) => void;
   include?: string[];
   exclude?: string[];
   lang?: string;
   placeholder?: string;
   hidePlaceholderWhenSelected?: boolean;
+  error?: React.ReactNode;
   disabled?: boolean;
   className?: string;
 }
 
 export default function WordsSelect({
-  selectedWords,
+  selectedWords = [],
   setSelectedWords,
   include = [],
   exclude = [],
   lang,
   placeholder = 'words...',
   hidePlaceholderWhenSelected = false,
+  error,
   disabled = false,
   className = '',
 }: Props) {
@@ -65,8 +67,13 @@ export default function WordsSelect({
       placeholder={placeholder}
       hidePlaceholderWhenSelected={hidePlaceholderWhenSelected}
       emptyIndicator={<p className="text-center">No results found</p>}
+      message={error && <p className="text-center text-destructive">{error}</p>}
       disabled={disabled}
-      className={cn('!text-xs border-0 bg-accent/20', className)}
+      className={cn(
+        '!text-xs border-0 bg-accent/20',
+        error && 'border border-destructive',
+        className
+      )}
     />
   );
 }

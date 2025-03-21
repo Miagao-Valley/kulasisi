@@ -6,8 +6,10 @@ import { useAuth } from '@/components/providers/AuthProvider';
 import addDefinition from '@/lib/definitions/addDefinition';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import setFormErrors from '@/utils/setFormErrors';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Form,
   FormControl,
@@ -25,17 +27,22 @@ import WordsSelect from '@/components/forms/WordsSelect';
 
 const FORM_DATA_KEY = 'add-definition-forms';
 
-export interface DefinitionInputs {
-  word: { word: string; lang: string };
-  description: string;
-  lang: string;
-  pos: string;
-  synonyms: string[];
-  antonyms: string[];
-  usage_note: string;
-  source_title: string;
-  source_link: string;
-}
+export const addDefinitionSchema = z.object({
+  word: z.object({
+    word: z.string(),
+    lang: z.string(),
+  }),
+  description: z.string().min(1, 'Description is required'),
+  lang: z.string().min(1, 'Language is required'),
+  pos: z.string().optional(),
+  synonyms: z.array(z.string()).optional(),
+  antonyms: z.array(z.string()).optional(),
+  usage_note: z.string().optional(),
+  source_title: z.string().optional(),
+  source_link: z.string().url().optional().or(z.literal('')),
+});
+
+export type AddDefinitionSchema = z.infer<typeof addDefinitionSchema>;
 
 interface Props {
   wordLang: string;
@@ -52,7 +59,8 @@ export default function AddDefinitionForm({
   const router = useRouter();
   const pathname = usePathname();
 
-  const form = useForm<DefinitionInputs>({
+  const form = useForm<AddDefinitionSchema>({
+    resolver: zodResolver(addDefinitionSchema),
     defaultValues: {
       word: { word: word, lang: wordLang },
     },
@@ -68,7 +76,7 @@ export default function AddDefinitionForm({
     }
   }, [form, word, wordLang]);
 
-  const onSubmit: SubmitHandler<DefinitionInputs> = async (data) => {
+  async function onSubmit(data: AddDefinitionSchema) {
     if (!auth.isAuthenticated) {
       toast.error('You need to sign in to post.');
       router.push(`/login?next=${pathname}`);
@@ -90,7 +98,7 @@ export default function AddDefinitionForm({
       localStorage.setItem(FORM_DATA_KEY, JSON.stringify(savedData));
     }
     return res;
-  };
+  }
 
   useEffect(() => {
     const subscription = form.watch((value) => {
@@ -146,9 +154,9 @@ export default function AddDefinitionForm({
                         setSelectedLang={(value) =>
                           form.setValue('lang', value)
                         }
+                        error={form.formState.errors?.lang?.message}
                       />
                     </FormControl>
-                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -189,9 +197,9 @@ export default function AddDefinitionForm({
                       lang={form.watch('lang')}
                       placeholder="synonyms..."
                       disabled={!form.watch('lang')}
+                      error={form.formState.errors?.synonyms?.message}
                     />
                   </FormControl>
-                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -210,9 +218,9 @@ export default function AddDefinitionForm({
                       lang={form.watch('lang')}
                       placeholder="antonyms..."
                       disabled={!form.watch('lang')}
+                      error={form.formState.errors?.antonyms?.message}
                     />
                   </FormControl>
-                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -222,9 +230,6 @@ export default function AddDefinitionForm({
             className="ms-auto w-full sm:w-fit"
             type="submit"
             loading={form.formState.isSubmitting}
-            disabled={
-              !(form.watch('description')?.trim() && form.watch('lang'))
-            }
           >
             Add
           </LoadingButton>

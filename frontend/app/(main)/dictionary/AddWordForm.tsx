@@ -6,8 +6,10 @@ import { useAuth } from '@/components/providers/AuthProvider';
 import addWord from '@/lib/words/addWord';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import setFormErrors from '@/utils/setFormErrors';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Form,
   FormControl,
@@ -22,12 +24,14 @@ import SourceForm from '@/components/forms/SourceForm';
 
 const FORM_DATA_KEY = 'add-word-form';
 
-export interface WordInputs {
-  word: string;
-  lang: string;
-  source_title: string;
-  source_link: string;
-}
+const addWordSchema = z.object({
+  word: z.string().min(1, 'Word is required'),
+  lang: z.string().min(1, 'Language is required'),
+  source_title: z.string().optional(),
+  source_link: z.string().url().optional().or(z.literal('')),
+});
+
+type AddWordSchema = z.infer<typeof addWordSchema>;
 
 interface Props {
   className?: string;
@@ -38,7 +42,9 @@ export default function AddWordForm({ className = '' }: Props) {
   const router = useRouter();
   const pathname = usePathname();
 
-  const form = useForm<WordInputs>();
+  const form = useForm<AddWordSchema>({
+    resolver: zodResolver(addWordSchema),
+  });
 
   useEffect(() => {
     const savedData = localStorage.getItem(FORM_DATA_KEY);
@@ -47,7 +53,7 @@ export default function AddWordForm({ className = '' }: Props) {
     }
   }, [form]);
 
-  const onSubmit: SubmitHandler<WordInputs> = async (data: WordInputs) => {
+  async function onSubmit(data: AddWordSchema) {
     if (!auth.isAuthenticated) {
       toast.error('You need to sign in to post.');
       router.push(`/login?next=${pathname}`);
@@ -65,7 +71,7 @@ export default function AddWordForm({ className = '' }: Props) {
     localStorage.removeItem(FORM_DATA_KEY);
 
     return res;
-  };
+  }
 
   useEffect(() => {
     const subscription = form.watch((value) => {
@@ -112,9 +118,9 @@ export default function AddWordForm({ className = '' }: Props) {
                   <LangSelect
                     selectedLang={field.value}
                     setSelectedLang={(value) => form.setValue('lang', value)}
+                    error={form.formState.errors?.lang?.message}
                   />
                 </FormControl>
-                <FormMessage />
               </FormItem>
             )}
           />
@@ -125,7 +131,6 @@ export default function AddWordForm({ className = '' }: Props) {
             className="ms-auto"
             type="submit"
             loading={form.formState.isSubmitting}
-            disabled={!(form.watch('word')?.trim() && form.watch('lang'))}
           >
             Post
           </LoadingButton>

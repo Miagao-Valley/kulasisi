@@ -1,6 +1,6 @@
 import React from 'react';
 import { UseFormReturn } from 'react-hook-form';
-import { RegisterInputs } from '../RegisterForm';
+import { RegisterSchema } from '../RegisterForm';
 import { cn } from '@/lib/utils';
 import {
   FormControl,
@@ -11,7 +11,7 @@ import {
 import { FloatingLabelInput } from '@/components/ui/floating-label-input';
 
 interface Props {
-  form: UseFormReturn<RegisterInputs, any, undefined>;
+  form: UseFormReturn<RegisterSchema, any, undefined>;
   className?: string;
 }
 
@@ -24,7 +24,7 @@ export default function Contact({ form, className }: Props) {
         render={({ field }) => (
           <FormItem>
             <FormControl>
-              <FloatingLabelInput label="Email" autoFocus {...field} />
+              <FloatingLabelInput label="Email" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>

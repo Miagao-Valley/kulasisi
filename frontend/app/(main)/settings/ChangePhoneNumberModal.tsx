@@ -2,10 +2,12 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import { useForm, SubmitHandler } from 'react-hook-form';
 import { useAuth } from '@/components/providers/AuthProvider';
-import changePhoneNumber from '@/lib/users/changePhoneNumber';
+import { useForm } from 'react-hook-form';
 import setFormErrors from '@/utils/setFormErrors';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import changePhoneNumber from '@/lib/users/changePhoneNumber';
 import { Button } from '@/components/ui/button';
 import {
   DialogContent,
@@ -25,10 +27,16 @@ import { FloatingLabelInput } from '@/components/ui/floating-label-input';
 import { PasswordInput } from '@/components/ui/password-input';
 import { LoadingButton } from '@/components/ui/loading-button';
 
-export interface ChangePhoneNumberInputs {
-  new_phone_number: string;
-  password: string;
-}
+export const changePhoneNumberSchema = z.object({
+  new_phone_number: z
+    .string()
+    .min(10, 'Phone number must be at least 10 digits')
+    .max(15, 'Phone number must be at most 15 digits')
+    .regex(/^\d+$/, 'Phone number must contain only digits'),
+  password: z.string().min(1, 'Password is required'),
+});
+
+export type ChangePhoneNumberSchema = z.infer<typeof changePhoneNumberSchema>;
 
 interface Props {
   username: string;
@@ -38,11 +46,15 @@ export function ChangePhoneNumberModal({ username }: Props) {
   const auth = useAuth();
   const router = useRouter();
 
-  const form = useForm<ChangePhoneNumberInputs>();
+  const form = useForm<ChangePhoneNumberSchema>({
+    resolver: zodResolver(changePhoneNumberSchema),
+    defaultValues: {
+      new_phone_number: auth.user?.phone_number || '',
+      password: '',
+    },
+  });
 
-  const onSubmit: SubmitHandler<ChangePhoneNumberInputs> = async (
-    data: ChangePhoneNumberInputs
-  ) => {
+  async function onSubmit(data: ChangePhoneNumberSchema) {
     const res = await changePhoneNumber(username, data);
     if (res?.error) {
       setFormErrors(res.error, form.setError);
@@ -51,7 +63,7 @@ export function ChangePhoneNumberModal({ username }: Props) {
       router.refresh();
     }
     return res;
-  };
+  }
 
   return (
     <DialogContent>

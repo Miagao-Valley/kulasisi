@@ -22,10 +22,11 @@ import { ChevronsUpDown, Check } from 'lucide-react';
 import { Badge } from '../ui/badge';
 
 interface Props {
-  selectedPos: string;
+  selectedPos?: string;
   setSelectedPos: (value: string) => void;
   include?: string[];
   exclude?: string[];
+  error?: React.ReactNode;
   className?: string;
 }
 
@@ -34,6 +35,7 @@ export default function PosSelect({
   setSelectedPos,
   include = [],
   exclude = [],
+  error,
   className = '',
 }: Props) {
   const [partsOfSpeech, setPartsOfSpeech] = useState<PartOfSpeech[]>([]);
@@ -89,9 +91,14 @@ export default function PosSelect({
         >
           <CommandInput
             placeholder={`Search part of speech...`}
-            className="h-9"
+            className={cn('h-9', error && 'border border-destructive')}
           />
           <CommandList>
+            {error && (
+              <div className="py-2 text-center text-sm text-destructive border-b">
+                {error}
+              </div>
+            )}
             <CommandEmpty>No part of speech found.</CommandEmpty>
             <CommandGroup>
               {partsOfSpeech.map((pos) => (
@@ -100,7 +107,7 @@ export default function PosSelect({
                   value={pos.abbr}
                   onSelect={(currentLang: string) => {
                     setSelectedPos(
-                      currentLang === selectedPos ? '' : currentLang,
+                      currentLang === selectedPos ? '' : currentLang
                     );
                     setOpen(false);
                   }}
@@ -109,7 +116,7 @@ export default function PosSelect({
                   <Check
                     className={cn(
                       'ml-auto',
-                      selectedPos === pos.abbr ? 'opacity-100' : 'opacity-0',
+                      selectedPos === pos.abbr ? 'opacity-100' : 'opacity-0'
                     )}
                   />
                 </CommandItem>

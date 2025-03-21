@@ -28,6 +28,7 @@ interface Props {
   exclude?: string[];
   showChevrons?: boolean;
   placeholder?: string;
+  error?: string;
   className?: string;
 }
 
@@ -38,6 +39,7 @@ export default function LangSelect({
   exclude = [],
   showChevrons = true,
   placeholder,
+  error,
   className = '',
 }: Props) {
   const [langs, setLangs] = useState<Lang[]>([]);
@@ -68,7 +70,11 @@ export default function LangSelect({
           size="sm"
           role="combobox"
           aria-expanded={open}
-          className={cn('justify-between gap-1 px-1', className)}
+          className={cn(
+            'justify-between gap-1 px-1',
+            error && 'text-destructive',
+            className
+          )}
         >
           {showChevrons && <ChevronsUpDown className="opacity-50" />}
           {selectedLang ? (
@@ -94,6 +100,11 @@ export default function LangSelect({
         >
           <CommandInput placeholder={`Search language...`} className="h-9" />
           <CommandList>
+            {error && (
+              <div className="py-2 text-center text-sm text-destructive border-b">
+                {error}
+              </div>
+            )}
             <CommandEmpty>No language found.</CommandEmpty>
             <CommandGroup>
               {langs.map((lang) => (
@@ -102,7 +113,7 @@ export default function LangSelect({
                   value={lang.code}
                   onSelect={(currentLang: string) => {
                     setSelectedLang(
-                      currentLang === selectedLang ? '' : currentLang,
+                      currentLang === selectedLang ? '' : currentLang
                     );
                     setOpen(false);
                   }}
@@ -111,7 +122,7 @@ export default function LangSelect({
                   <Check
                     className={cn(
                       'ml-auto',
-                      selectedLang === lang.code ? 'opacity-100' : 'opacity-0',
+                      selectedLang === lang.code ? 'opacity-100' : 'opacity-0'
                     )}
                   />
                 </CommandItem>

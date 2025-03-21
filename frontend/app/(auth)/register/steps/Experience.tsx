@@ -1,6 +1,6 @@
 import React from 'react';
 import { UseFormReturn } from 'react-hook-form';
-import { RegisterInputs } from '../RegisterForm';
+import { RegisterSchema } from '../RegisterForm';
 import { cn } from '@/lib/utils';
 import {
   FormControl,
@@ -12,7 +12,7 @@ import LanguageProficienciesForm from '@/components/forms/LangProficienciesForm'
 import { H3 } from '@/components/ui/heading-with-anchor';
 
 interface Props {
-  form: UseFormReturn<RegisterInputs, any, undefined>;
+  form: UseFormReturn<RegisterSchema, any, undefined>;
   className?: string;
 }
 
@@ -23,7 +23,6 @@ export default function Experience({ form, className }: Props) {
       <FormField
         control={form.control}
         name="language_proficiencies"
-        defaultValue={[{ lang: 'tgl', level: 2 }]}
         render={({ field }) => (
           <FormItem>
             <FormControl>

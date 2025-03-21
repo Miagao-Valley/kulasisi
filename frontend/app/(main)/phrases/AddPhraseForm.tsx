@@ -6,8 +6,10 @@ import { useAuth } from '@/components/providers/AuthProvider';
 import addPhrase from '@/lib/phrases/addPhrase';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import setFormErrors from '@/utils/setFormErrors';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { EditorProvider } from '@/components/editor/EditorContext';
 import Editor from '@/components/editor/Editor';
 import {
@@ -25,14 +27,16 @@ import CategoriesSelect from '@/components/forms/CategoriesSelect';
 
 const FORM_DATA_KEY = 'add-phrase-form';
 
-export interface PhraseInputs {
-  content: string;
-  lang: string;
-  categories: string[];
-  usage_note: string;
-  source_title: string;
-  source_link: string;
-}
+export const addPhraseSchema = z.object({
+  content: z.string().min(1, 'Content is required'),
+  lang: z.string().min(1, 'Language is required'),
+  categories: z.array(z.string()).optional(),
+  usage_note: z.string().optional(),
+  source_title: z.string().optional(),
+  source_link: z.string().url().optional().or(z.literal('')),
+});
+
+export type AddPhraseSchema = z.infer<typeof addPhraseSchema>;
 
 interface Props {
   className?: string;
@@ -43,7 +47,10 @@ export default function AddPhraseForm({ className = '' }: Props) {
   const router = useRouter();
   const pathname = usePathname();
 
-  const form = useForm<PhraseInputs>();
+  const form = useForm<AddPhraseSchema>({
+    mode: 'onTouched',
+    resolver: zodResolver(addPhraseSchema),
+  });
 
   useEffect(() => {
     const savedData = localStorage.getItem(FORM_DATA_KEY);
@@ -52,7 +59,7 @@ export default function AddPhraseForm({ className = '' }: Props) {
     }
   }, [form]);
 
-  const onSubmit: SubmitHandler<PhraseInputs> = async (data: PhraseInputs) => {
+  async function onSubmit(data: AddPhraseSchema) {
     if (!auth.isAuthenticated) {
       toast.error('You need to sign in to post.');
       router.push(`/login?next=${pathname}`);
@@ -70,7 +77,7 @@ export default function AddPhraseForm({ className = '' }: Props) {
     localStorage.removeItem(FORM_DATA_KEY);
 
     return res;
-  };
+  }
 
   useEffect(() => {
     const subscription = form.watch((value) => {
@@ -122,10 +129,10 @@ export default function AddPhraseForm({ className = '' }: Props) {
                         setSelectedLang={(value) =>
                           form.setValue('lang', value)
                         }
+                        error={form.formState.errors.lang?.message}
                         className="w-full"
                       />
                     </FormControl>
-                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -143,9 +150,9 @@ export default function AddPhraseForm({ className = '' }: Props) {
                       setSelectedCategories={(value) =>
                         form.setValue('categories', value)
                       }
+                      error={form.formState.errors.categories?.message}
                     />
                   </FormControl>
-                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -155,7 +162,6 @@ export default function AddPhraseForm({ className = '' }: Props) {
             className="ms-auto w-full sm:w-fit"
             type="submit"
             loading={form.formState.isSubmitting}
-            disabled={!(form.watch('content')?.trim() && form.watch('lang'))}
           >
             Post
           </LoadingButton>

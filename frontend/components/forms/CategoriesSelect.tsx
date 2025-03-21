@@ -6,18 +6,20 @@ import { cn } from '@/lib/utils';
 import ListSelector from '../ui/list-selector';
 
 interface Props {
-  selectedCategories: string[];
+  selectedCategories?: string[];
   setSelectedCategories: (value: string[]) => void;
   include?: string[];
   exclude?: string[];
+  error?: string;
   className?: string;
 }
 
 export default function CategoriesSelect({
-  selectedCategories,
+  selectedCategories = [],
   setSelectedCategories,
   include = [],
   exclude = [],
+  error,
   className = '',
 }: Props) {
   const [categoryOptions, setCategoryOptions] = useState<string[]>([]);
@@ -47,14 +49,19 @@ export default function CategoriesSelect({
       onSearch={async (q) => {
         q = q.toLowerCase();
         return categoryOptions.filter((option) =>
-          option.toLowerCase().includes(q),
+          option.toLowerCase().includes(q)
         );
       }}
       triggerSearchOnFocus
       placeholder="categories..."
       hidePlaceholderWhenSelected
       emptyIndicator={<p className="text-center">No results found</p>}
-      className={cn('!text-xs border-0 bg-accent/20', className)}
+      message={error && <p className="text-center text-destructive">{error}</p>}
+      className={cn(
+        '!text-xs border-0 bg-accent/20',
+        error && 'border border-destructive',
+        className
+      )}
     />
   );
 }

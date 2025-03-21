@@ -1,6 +1,6 @@
 import React from 'react';
 import { UseFormReturn } from 'react-hook-form';
-import { RegisterInputs } from '../RegisterForm';
+import { RegisterSchema } from '../RegisterForm';
 import { cn } from '@/lib/utils';
 import {
   FormControl,
@@ -12,7 +12,7 @@ import { FloatingLabelInput } from '@/components/ui/floating-label-input';
 import { PasswordInput } from '@/components/ui/password-input';
 
 interface Props {
-  form: UseFormReturn<RegisterInputs, any, undefined>;
+  form: UseFormReturn<RegisterSchema, any, undefined>;
   className?: string;
 }
 

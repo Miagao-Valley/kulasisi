@@ -6,8 +6,10 @@ import { useAuth } from '@/components/providers/AuthProvider';
 import addTranslation from '@/lib/translations/addTranslation';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import setFormErrors from '@/utils/setFormErrors';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { EditorProvider } from '@/components/editor/EditorContext';
 import Editor from '@/components/editor/Editor';
 import {
@@ -23,13 +25,15 @@ import SourceForm from '@/components/forms/SourceForm';
 
 const FORM_DATA_KEY = 'add-translation-forms';
 
-export interface TranslationInputs {
-  phrase: number;
-  content: string;
-  lang: string;
-  source_title: string;
-  source_link: string;
-}
+export const addTranslationSchema = z.object({
+  phrase: z.number(),
+  content: z.string().min(1, 'Content is required'),
+  lang: z.string().min(1, 'Language is required'),
+  source_title: z.string().optional(),
+  source_link: z.string().url().optional().or(z.literal('')),
+});
+
+export type AddTranslationSchema = z.infer<typeof addTranslationSchema>;
 
 interface Props {
   phraseId: number;
@@ -46,7 +50,8 @@ export default function AddTranslationForm({
   const router = useRouter();
   const pathname = usePathname();
 
-  const form = useForm<TranslationInputs>({
+  const form = useForm<AddTranslationSchema>({
+    resolver: zodResolver(addTranslationSchema),
     defaultValues: {
       phrase: phraseId,
     },
@@ -62,7 +67,7 @@ export default function AddTranslationForm({
     }
   }, [form, phraseId]);
 
-  const onSubmit: SubmitHandler<TranslationInputs> = async (data) => {
+  async function onSubmit(data: AddTranslationSchema) {
     if (!auth.isAuthenticated) {
       toast.error('You need to sign in to post.');
       router.push(`/login?next=${pathname}`);
@@ -79,7 +84,7 @@ export default function AddTranslationForm({
       localStorage.setItem(FORM_DATA_KEY, JSON.stringify(savedData));
     }
     return res;
-  };
+  }
 
   useEffect(() => {
     const subscription = form.watch((value) => {
@@ -131,9 +136,9 @@ export default function AddTranslationForm({
                     selectedLang={field.value}
                     setSelectedLang={(value) => form.setValue('lang', value)}
                     exclude={[originalLang]}
+                    error={form.formState.errors?.lang?.message}
                   />
                 </FormControl>
-                <FormMessage />
               </FormItem>
             )}
           />
@@ -144,7 +149,6 @@ export default function AddTranslationForm({
             className="ms-auto"
             type="submit"
             loading={form.formState.isSubmitting}
-            disabled={!(form.watch('content')?.trim() && form.watch('lang'))}
           >
             Add
           </LoadingButton>

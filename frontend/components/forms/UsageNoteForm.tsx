@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Path, PathValue, UseFormReturn } from 'react-hook-form';
+import { Path, UseFormReturn } from 'react-hook-form';
 import { cn } from '@/lib/utils';
 import {
   FormControl,
@@ -19,18 +19,16 @@ import {
 import { Textarea } from '../ui/textarea';
 import { CircleHelp } from 'lucide-react';
 
-export interface Inputs {
-  usage_note: string;
+export interface UsageNoteSchema {
+  usage_note?: string;
 }
 
-interface Props<T extends Inputs> {
+interface Props<T extends UsageNoteSchema> {
   form: UseFormReturn<T, any, undefined>;
-  defaultUsageNote?: string;
 }
 
-export default function UsageNoteForm<T extends Inputs>({
+export default function UsageNoteForm<T extends UsageNoteSchema>({
   form,
-  defaultUsageNote,
 }: Props<T>) {
   return (
     <Popover>
@@ -40,7 +38,7 @@ export default function UsageNoteForm<T extends Inputs>({
           size="sm"
           className={cn(
             'max-w-32 p-2 h-fit',
-            form.formState.errors.usage_note && 'text-destructive',
+            form.formState.errors.usage_note && 'text-destructive'
           )}
         >
           <CircleHelp />
@@ -53,7 +51,6 @@ export default function UsageNoteForm<T extends Inputs>({
           <FormField
             control={form.control}
             name={'usage_note' as Path<T>}
-            defaultValue={defaultUsageNote as PathValue<T, Path<T>>}
             render={({ field }) => (
               <FormItem>
                 <FormControl>
