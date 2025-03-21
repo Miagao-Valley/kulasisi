@@ -3,9 +3,15 @@ import { Word, Definition } from './dictionary';
 
 export type Entry = Phrase | Translation | Word | Definition;
 
+export enum VoteValue {
+  Upvote = 1,
+  Unvote = 0,
+  Downvote = -1,
+}
+
 export interface Vote {
   user: string;
-  value: -1 | 0 | 1;
+  value: VoteValue;
   voted_at: Date;
 }
 

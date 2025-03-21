@@ -80,6 +80,9 @@ class PhraseSerializer(serializers.ModelSerializer):
             "translation_count": {"read_only": True},
         }
 
+    def get_contributor_reputation(self, obj: Phrase) -> int:
+        return obj.contributor.get_reputation()
+
     def get_vote_count(self, obj: Phrase) -> int:
         return obj.votes.filter(value=1).count() - obj.votes.filter(value=-1).count()
 
@@ -127,9 +130,6 @@ class PhraseSerializer(serializers.ModelSerializer):
 
     def get_translation_count(self, obj: Phrase) -> int:
         return obj.translations.count()
-
-    def get_contributor_reputation(self, obj: Phrase) -> int:
-        return obj.contributor.get_reputation()
 
     def validate_categories(self, value):
         if len(value) > Phrase.CATEGORY_LIMIT:
@@ -207,6 +207,9 @@ class TranslationSerializer(serializers.ModelSerializer):
             "user_vote": {"read_only": True},
         }
 
+    def get_contributor_reputation(self, obj: Translation) -> int:
+        return obj.contributor.get_reputation()
+
     def get_vote_count(self, obj: Translation) -> int:
         return obj.votes.filter(value=1).count() - obj.votes.filter(value=-1).count()
 
@@ -217,9 +220,6 @@ class TranslationSerializer(serializers.ModelSerializer):
 
         vote = obj.votes.filter(user=request.user).first()
         return vote.value if vote else 0
-
-    def get_contributor_reputation(self, obj: Translation) -> int:
-        return obj.contributor.get_reputation()
 
     def validate(self, attrs):
         phrase = attrs.get("phrase")

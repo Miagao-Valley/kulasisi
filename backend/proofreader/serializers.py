@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .proofreader import SUPPORTED_LANGUAGES
+from languages.models import Language
 
 
 class FlaggedTokenSerializer(serializers.Serializer):
@@ -43,3 +44,10 @@ class ProofreaderSerializer(serializers.Serializer):
         read_only=True,
         help_text="Statistics for token count, flagged count, and correctness.",
     )
+
+
+class ProofreaderLanguagesSerializer(serializers.Serializer):
+
+    class Meta:
+        model = Language
+        fields = ["code"]

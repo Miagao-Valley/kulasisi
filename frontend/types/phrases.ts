@@ -1,4 +1,4 @@
-import { Vote } from './core';
+import { VoteValue } from './core';
 
 /**
  * Represents a phrase entry.
@@ -16,7 +16,7 @@ export interface Phrase {
   created_at: Date;
   updated_at: Date;
   vote_count: number;
-  user_vote: Vote['value'];
+  user_vote: VoteValue;
   best_translations: { [key: string]: string };
   translation_count: number;
 }
@@ -33,11 +33,9 @@ export function isPhrase(obj: any): obj is Phrase {
     typeof obj.content === 'string' &&
     typeof obj.lang === 'string' &&
     typeof obj.contributor === 'string' &&
-    typeof obj.contributor_reputation === 'number' &&
     obj.created_at instanceof Date &&
     obj.updated_at instanceof Date &&
-    typeof obj.vote_count === 'number' &&
-    typeof obj.translation_count === 'number'
+    typeof obj.vote_count === 'number'
   );
 }
 
@@ -66,7 +64,7 @@ export interface Translation {
   created_at: Date;
   updated_at: Date;
   vote_count: number;
-  user_vote: Vote['value'];
+  user_vote: VoteValue;
 }
 
 /**
@@ -82,10 +80,8 @@ export function isTranslation(obj: any): obj is Translation {
     typeof obj.content === 'string' &&
     typeof obj.lang === 'string' &&
     typeof obj.contributor === 'string' &&
-    typeof obj.contributor_reputation === 'number' &&
     obj.created_at instanceof Date &&
-    obj.updated_at instanceof Date &&
-    typeof obj.vote_count === 'number'
+    obj.updated_at instanceof Date
   );
 }
 

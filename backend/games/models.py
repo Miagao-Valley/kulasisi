@@ -1,4 +1,6 @@
 from django.db import models
+from django.core.exceptions import ValidationError
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth import get_user_model
 from languages.models import Language
 from dictionary.models import Word
@@ -19,9 +21,13 @@ class WordleGame(models.Model):
     lang = models.ForeignKey(
         Language, on_delete=models.CASCADE, related_name="wordle_games"
     )
-    word_length = models.IntegerField(default=5)
-    max_guesses = models.IntegerField(default=6)
-    solution = models.CharField(max_length=5)
+    word_length = models.IntegerField(
+        default=5, validators=[MinValueValidator(3), MaxValueValidator(7)]
+    )
+    max_guesses = models.IntegerField(
+        default=6, validators=[MinValueValidator(1), MaxValueValidator(10)]
+    )
+    solution = models.CharField(max_length=7)
     guesses = models.JSONField(default=list)
     game_status = models.CharField(
         max_length=7, choices=GAME_STATUS_CHOICES, default="playing"

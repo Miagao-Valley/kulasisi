@@ -27,7 +27,7 @@ export async function submitWordleGuess(
   lang: string,
   wordLength: number,
   guess: string
-): Promise<{ result: WordleGame | null; error: any }> {
+): Promise<{ result: { game: WordleGame } | null; error: any }> {
   try {
     const response = await fetcher(
       `/games/wordle/${lang}/${wordLength}/`,

@@ -1,4 +1,5 @@
 from collections import OrderedDict
+from typing import TypedDict, Optional
 from django.db.models import Count, Q
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
@@ -6,7 +7,6 @@ from rest_framework import serializers
 from .models import Word, Definition, PartOfSpeech
 from users.models import User
 from languages.models import Language
-from core.serializers import DynamicFieldsSerializer
 
 
 class PartOfSpeechSerializer(serializers.ModelSerializer):
@@ -24,7 +24,7 @@ class PartOfSpeechSerializer(serializers.ModelSerializer):
         return super().update(instance, validated_data)
 
 
-class WordSerializer(DynamicFieldsSerializer):
+class WordSerializer(serializers.ModelSerializer):
     word = serializers.CharField(
         max_length=64, required=False, help_text="The word being defined."
     )
@@ -46,17 +46,17 @@ class WordSerializer(DynamicFieldsSerializer):
     parts_of_speech = serializers.SerializerMethodField(
         help_text="Parts of speech for the word."
     )
-    best_definitions = serializers.SerializerMethodField(
-        help_text="Best definitions based on votes in different languages."
-    )
-    definition_count = serializers.SerializerMethodField(
-        help_text="Total number of definitions."
-    )
     vote_count = serializers.SerializerMethodField(
         help_text="Number of upvotes minus downvotes."
     )
     user_vote = serializers.SerializerMethodField(
         help_text="The user's vote for the word."
+    )
+    best_definitions = serializers.SerializerMethodField(
+        help_text="Best definitions based on votes in different languages."
+    )
+    definition_count = serializers.SerializerMethodField(
+        help_text="Total number of definitions."
     )
 
     class Meta:
@@ -86,6 +86,16 @@ class WordSerializer(DynamicFieldsSerializer):
     def get_contributor_reputation(self, obj: Word) -> int:
         return obj.contributor.get_reputation()
 
+    def get_parts_of_speech(self, obj: Word) -> list[str]:
+        return [
+            definition.pos.abbr
+            for definition in obj.definitions.all()
+            if definition.pos
+        ]
+
+    def get_vote_count(self, obj: Word) -> int:
+        return obj.votes.filter(value=1).count() - obj.votes.filter(value=-1).count()
+
     def get_user_vote(self, obj: Word) -> int:
         request = self.context.get("request")
         if not request or not request.user.is_authenticated:
@@ -94,14 +104,7 @@ class WordSerializer(DynamicFieldsSerializer):
         vote = obj.votes.filter(user=request.user).first()
         return vote.value if vote else 0
 
-    def get_parts_of_speech(self, obj: Word) -> list[str]:
-        return [
-            definition.pos.abbr
-            for definition in obj.definitions.all()
-            if definition.pos
-        ]
-
-    def get_best_definitions(self, obj: Word) -> dict:
+    def get_best_definitions(self, obj: Word) -> dict[str, str]:
         definitions = obj.definitions.annotate(
             vote_count=Count("votes", filter=Q(votes__value=1))
             - Count("votes", filter=Q(votes__value=-1))
@@ -134,9 +137,6 @@ class WordSerializer(DynamicFieldsSerializer):
     def get_definition_count(self, obj: Word) -> int:
         return obj.definitions.count()
 
-    def get_vote_count(self, obj: Word) -> int:
-        return obj.votes.filter(value=1).count() - obj.votes.filter(value=-1).count()
-
     def update(self, instance, validated_data):
         # Make 'word' and 'lang' fields immutable
         validated_data.pop("word", None)
@@ -158,8 +158,8 @@ class WordHistorySerializer(serializers.ModelSerializer):
 
 
 class DefinitionSerializer(serializers.ModelSerializer):
-    word = WordSerializer(
-        required=False, fields=["word", "lang"], help_text="The word being defined."
+    word = serializers.SerializerMethodField(
+        required=False, help_text="The word being defined."
     )
     lang = serializers.SlugRelatedField(
         queryset=Language.objects.all(),
@@ -229,6 +229,16 @@ class DefinitionSerializer(serializers.ModelSerializer):
             "user_vote": {"read_only": True},
         }
 
+    class WordData(TypedDict):
+        word: str
+        lang: str
+
+    def get_word(self, obj: Definition) -> Optional[WordData]:
+        return {"word": obj.word.word, "lang": obj.word.lang.code} if obj.word else None
+
+    def get_contributor_reputation(self, obj: Definition) -> int:
+        return obj.contributor.get_reputation()
+
     def get_vote_count(self, obj: Definition) -> int:
         return obj.votes.filter(value=1).count() - obj.votes.filter(value=-1).count()
 
@@ -239,9 +249,6 @@ class DefinitionSerializer(serializers.ModelSerializer):
 
         vote = obj.votes.filter(user=request.user).first()
         return vote.value if vote else 0
-
-    def get_contributor_reputation(self, obj: Definition) -> int:
-        return obj.contributor.get_reputation()
 
     def to_internal_value(self, data):
         lang_code = data.get("lang", self.instance.lang.code if self.instance else None)

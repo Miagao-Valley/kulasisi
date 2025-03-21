@@ -7,14 +7,14 @@ import { Gender } from '@/types/users';
  * @returns The human-readable gender string, or 'Unknown' if the code is not recognized.
  */
 const displayGender = (gender: Gender): string => {
-  const genderLookup: Record<Gender, string> = {
-    M: 'Male',
-    F: 'Female',
-    O: 'Other',
-    N: 'Prefer not to say',
+  const genderLookup = {
+    [Gender.Male]: 'Male',
+    [Gender.Female]: 'Female',
+    [Gender.Other]: 'Other',
+    [Gender.NotSpecified]: 'Prefer not to say',
   };
 
-  return genderLookup[gender] || 'Unknown';
+  return genderLookup[gender] ?? 'Unknown';
 };
 
 export default displayGender;

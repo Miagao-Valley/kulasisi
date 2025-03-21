@@ -3,11 +3,11 @@
 import path from 'path';
 import { revalidatePath } from 'next/cache';
 import fetcher, { FetchError } from '@/utils/fetcher';
-import { Entry, Vote } from '@/types/core';
+import { Entry, VoteValue } from '@/types/core';
 import getToken from '../tokens/getToken';
 import entryToUrl from '../../utils/entryToUrl';
 
-export default async function vote(entry: Entry, value: Vote['value']) {
+export default async function vote(entry: Entry, value: VoteValue) {
   const backendUrl = entryToUrl(entry);
   const frontendUrl = entryToUrl(entry, false);
 

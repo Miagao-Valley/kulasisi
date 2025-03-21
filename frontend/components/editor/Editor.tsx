@@ -5,7 +5,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 import proofread from '@/lib/proofreader/proofread';
 import { useEditorContext } from './EditorContext';
-import { FlaggedToken } from '@/types/proofreader';
+import { FlaggedToken, flaggedTokenLevelValue } from '@/types/proofreader';
 import TextEditor, { TextEditorProps } from './TextEditor';
 import ProofreaderPanel from './ProofreaderPanel';
 import EditorToolbar from './EditorToolbar';
@@ -56,10 +56,10 @@ const Editor: React.FC<EditorProps> = ({
         }
         setError(null);
 
-        const levelOrder = { error: 1, warning: 2, info: 3 };
         const sortedTokens = [...data.flagged_tokens].sort(
           (a: FlaggedToken, b: FlaggedToken) =>
-            a.offset - b.offset || levelOrder[a.level] - levelOrder[b.level]
+            a.offset - b.offset ||
+            flaggedTokenLevelValue[a.level] - flaggedTokenLevelValue[b.level]
         );
         setFlaggedTokens(sortedTokens);
 

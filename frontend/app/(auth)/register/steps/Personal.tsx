@@ -1,5 +1,7 @@
 import React from 'react';
 import { UseFormReturn } from 'react-hook-form';
+import { Gender } from '@/types/users';
+import displayGender from '@/utils/displayGender';
 import { RegisterInputs } from '../RegisterForm';
 import { cn } from '@/lib/utils';
 import {
@@ -97,10 +99,11 @@ export default function Personal({ form, className }: Props) {
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
-                <SelectItem value="M">Male</SelectItem>
-                <SelectItem value="F">Female</SelectItem>
-                <SelectItem value="O">Other</SelectItem>
-                <SelectItem value="N">Prefer not to say</SelectItem>
+                {Object.values(Gender).map((value) => (
+                  <SelectItem key={value} value={value}>
+                    {displayGender(value)}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
             <FormMessage />

@@ -9,27 +9,6 @@ from dictionary.models import Word, Definition
 from languages.models import Language
 
 
-class DynamicFieldsSerializer(serializers.ModelSerializer):
-    """
-    A serializer that allows dynamic inclusion of fields.
-    Only fields listed in the 'fields' argument will be included.
-    """
-
-    def __init__(self, *args, **kwargs):
-        # Remove the 'fields' argument before passing it to the superclass
-        fields = kwargs.pop("fields", None)
-
-        # Initialize the superclass with the remaining arguments
-        super().__init__(*args, **kwargs)
-
-        if fields is not None:
-            # Only include the specified fields
-            allowed = set(fields)
-            existing = set(self.fields)
-            for field_name in existing - allowed:
-                self.fields.pop(field_name)
-
-
 class VoteSerializer(serializers.ModelSerializer):
     """
     Serializer for handling vote actions on different content types (e.g., Phrase, Word).
@@ -87,3 +66,24 @@ class VoteSerializer(serializers.ModelSerializer):
             vote.save()
 
         return vote
+
+
+class DynamicFieldsSerializer(serializers.ModelSerializer):
+    """
+    A serializer that allows dynamic inclusion of fields.
+    Only fields listed in the 'fields' argument will be included.
+    """
+
+    def __init__(self, *args, **kwargs):
+        # Remove the 'fields' argument before passing it to the superclass
+        fields = kwargs.pop("fields", None)
+
+        # Initialize the superclass with the remaining arguments
+        super().__init__(*args, **kwargs)
+
+        if fields is not None:
+            # Only include the specified fields
+            allowed = set(fields)
+            existing = set(self.fields)
+            for field_name in existing - allowed:
+                self.fields.pop(field_name)

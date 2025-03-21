@@ -1,13 +1,13 @@
 from rest_framework.views import APIView
-from rest_framework import generics
+from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from .serializers import ProofreaderSerializer
+from .serializers import ProofreaderSerializer, ProofreaderLanguagesSerializer
 from .proofreader import proofread_text, SUPPORTED_LANGUAGES
 
 
-class ProofreaderView(generics.GenericAPIView):
+class ProofreaderView(GenericAPIView):
     """
     View for proofreading text.
     """
@@ -39,10 +39,12 @@ class ProofreaderView(generics.GenericAPIView):
             )
 
 
-class ProofreaderLanguagesView(APIView):
+class ProofreaderLanguagesView(GenericAPIView):
     """
     View for listing supported languages in the proofreader.
     """
+
+    serializer_class = ProofreaderLanguagesSerializer
 
     def get(self, request, *args, **kwargs):
         return Response(

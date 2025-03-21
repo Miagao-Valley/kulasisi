@@ -2,7 +2,8 @@ import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useAuth } from '@/components/providers/AuthProvider';
 import Link from 'next/link';
-import { User } from '@/types/users';
+import { User, Gender } from '@/types/users';
+import displayGender from '@/utils/displayGender';
 import updateUser from '@/lib/users/updateUser';
 import setFormErrors from '@/utils/setFormErrors';
 import {
@@ -170,7 +171,6 @@ export default function ProfileTab({ user }: Props) {
             <FormField
               control={form.control}
               name="gender"
-              defaultValue={user.gender}
               render={({ field }) => (
                 <FormItem>
                   <Select
@@ -183,10 +183,11 @@ export default function ProfileTab({ user }: Props) {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="M">Male</SelectItem>
-                      <SelectItem value="F">Female</SelectItem>
-                      <SelectItem value="O">Other</SelectItem>
-                      <SelectItem value="N">Prefer not to say</SelectItem>
+                      {Object.values(Gender).map((value) => (
+                        <SelectItem key={value} value={value}>
+                          {displayGender(value)}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                   <FormMessage />

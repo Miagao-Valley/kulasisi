@@ -58,7 +58,7 @@ export default function LangProficienciesForm({
       ) {
         updatedLanguages.push({
           lang: option.value,
-          level: 1 as LangProficiencyLevel,
+          level: LangProficiencyLevel.Elementary,
         });
       }
     });
@@ -106,11 +106,9 @@ export default function LangProficienciesForm({
       {!!selectedLangProficiencies.length ? (
         <div>
           <div className="w-full px-2 mb-2 flex justify-between text-xs">
-            <span>1</span>
-            <span>2</span>
-            <span>3</span>
-            <span>4</span>
-            <span>5</span>
+            {Object.values(LangProficiencyLevel).map((level) => (
+              <span key={level}>{level}</span>
+            ))}
           </div>
 
           <div className="mb-3 flex flex-col items-center gap-4">
@@ -119,13 +117,13 @@ export default function LangProficienciesForm({
                 <div className="flex items-center gap-2 mb-2">
                   <LangHoverCard code={langProf.lang} />
                   <div className="text-sm ">
-                    {displayLangProficiency(langProf.level)}
+                    {displayLangProficiency(langProf.level)} Proficiency
                   </div>
                 </div>
 
                 <Slider
-                  min={1}
-                  max={5}
+                  min={LangProficiencyLevel.Elementary}
+                  max={LangProficiencyLevel.NativeBilingual}
                   value={[langProf.level]}
                   step={1}
                   onValueChange={(value) =>

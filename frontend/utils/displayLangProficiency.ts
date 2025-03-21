@@ -1,21 +1,21 @@
 import { LangProficiencyLevel } from '@/types/languages';
 
 /**
- * Returns a human-readable language proficiency level based on the provided level code.
+ * Converts a proficiency level code to a human-readable string.
  *
- * @param level - The proficiency level code (1 to 5) to convert to a readable string.
- * @returns The human-readable proficiency level string, or 'Unknown' if the level code is not recognized.
+ * @param level - The proficiency level code (1 to 5).
+ * @returns The corresponding proficiency level as a string, or 'Unknown' if the code is invalid.
  */
 const displayLangProficiency = (level: LangProficiencyLevel): string => {
-  const proficiencyLookup: Record<LangProficiencyLevel, string> = {
-    1: 'Elementary Proficiency',
-    2: 'Limited Working Proficiency',
-    3: 'Professional Working Proficiency',
-    4: 'Full Professional Proficiency',
-    5: 'Native / Bilingual Proficiency',
+  const proficiencyLookup = {
+    [LangProficiencyLevel.Elementary]: 'Elementary',
+    [LangProficiencyLevel.LimitedWorking]: 'Limited Working',
+    [LangProficiencyLevel.ProfessionalWorking]: 'Professional Working',
+    [LangProficiencyLevel.FullProfessional]: 'Full Professional',
+    [LangProficiencyLevel.NativeBilingual]: 'Native / Bilingual',
   };
 
-  return proficiencyLookup[level] || 'Unknown';
+  return proficiencyLookup[level] ?? 'Unknown';
 };
 
 export default displayLangProficiency;

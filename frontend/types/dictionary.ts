@@ -1,4 +1,4 @@
-import { Vote } from './core';
+import { VoteValue } from './core';
 
 /**
  * Represents a word entry.
@@ -15,7 +15,7 @@ export interface Word {
   created_at: Date;
   updated_at: Date;
   vote_count: number;
-  user_vote: Vote['value'];
+  user_vote: VoteValue;
   best_definitions: { [key: string]: string };
   definition_count: number;
 }
@@ -32,10 +32,8 @@ export function isWord(obj: any): obj is Word {
     typeof obj.word === 'string' &&
     typeof obj.lang === 'string' &&
     typeof obj.contributor === 'string' &&
-    typeof obj.contributor_reputation === 'number' &&
     obj.created_at instanceof Date &&
-    obj.updated_at instanceof Date &&
-    typeof obj.vote_count === 'number'
+    obj.updated_at instanceof Date
   );
 }
 
@@ -68,7 +66,7 @@ export interface Definition {
   created_at: Date;
   updated_at: Date;
   vote_count: number;
-  user_vote: Vote['value'];
+  user_vote: VoteValue;
 }
 
 /**
@@ -83,10 +81,8 @@ export function isDefinition(obj: any): obj is Definition {
     typeof obj.description === 'string' &&
     typeof obj.lang === 'string' &&
     typeof obj.contributor === 'string' &&
-    typeof obj.contributor_reputation === 'number' &&
     obj.created_at instanceof Date &&
-    obj.updated_at instanceof Date &&
-    typeof obj.vote_count === 'number'
+    obj.updated_at instanceof Date
   );
 }
 

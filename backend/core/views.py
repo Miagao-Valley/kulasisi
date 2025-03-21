@@ -1,9 +1,9 @@
+from drf_spectacular.utils import extend_schema, PolymorphicProxySerializer
 from django.shortcuts import get_object_or_404
 from django.db.models import Q, Value, Sum
 from django.db.models.functions import Coalesce
-from rest_framework import generics
+from rest_framework.generics import GenericAPIView, ListCreateAPIView
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
-from rest_framework.views import APIView
 
 from phrases.models import Phrase, Translation
 from dictionary.models import Word, Definition
@@ -15,8 +15,21 @@ from core.pagination import CustomPagination
 from utils.ranking import hot_score
 
 
-class HomeFeedView(APIView):
+@extend_schema(
+    responses=PolymorphicProxySerializer(
+        component_name="HomeFeed",
+        serializers=[
+            PhraseSerializer,
+            WordSerializer,
+        ],
+        resource_type_field_name="entry_type",
+    )
+)
+class HomeFeedView(GenericAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
+
+    # Override to prevent queryset requirement.
+    queryset = Phrase.objects.none()
 
     def get(self, request):
         user = request.user
@@ -99,7 +112,7 @@ class HomeFeedView(APIView):
         return paginator.get_paginated_response(serialized_data)
 
 
-class ListCreateVoteView(generics.ListCreateAPIView):
+class ListCreateVoteView(ListCreateAPIView):
     serializer_class = VoteSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     pagination_class = None

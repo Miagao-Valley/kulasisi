@@ -9,6 +9,7 @@ import React, {
   useRef,
 } from 'react';
 import { toast } from 'sonner';
+import { WordleGameStatus } from '@/types/games';
 import { getWordleGame, submitWordleGuess } from '@/lib/games/wordle';
 
 const DEFAULT_WORD_LENGTH = 5;
@@ -27,7 +28,7 @@ interface WordleContextType {
   addLetter: (letter: string) => void;
   removeLetter: () => void;
   submitGuess: () => void;
-  gameStatus: 'playing' | 'win' | 'lose';
+  gameStatus: WordleGameStatus;
   resetGame: () => void;
   loading: boolean;
   setLoading: (loading: boolean) => void;
@@ -51,8 +52,8 @@ export const WordleProvider = ({
   const [guesses, setGuesses] = useState<string[]>(Array(maxGuesses).fill(''));
   const [currentGuessIdx, setCurrentGuessIdx] = useState<number>(0);
   const [isLastGuessValid, setIsLastGuessValid] = useState(false);
-  const [gameStatus, setGameStatus] = useState<'playing' | 'win' | 'lose'>(
-    'playing'
+  const [gameStatus, setGameStatus] = useState<WordleGameStatus>(
+    WordleGameStatus.Playing
   );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<any>(null);
@@ -93,7 +94,7 @@ export const WordleProvider = ({
     setSolution('');
     setGuesses(Array(maxGuesses).fill(''));
     setCurrentGuessIdx(0);
-    setGameStatus('playing');
+    setGameStatus(WordleGameStatus.Playing);
     setError(null);
 
     fetchGameState();
@@ -105,7 +106,7 @@ export const WordleProvider = ({
 
   const addLetter = useCallback(
     (letter: string) => {
-      if (loading || gameStatus !== 'playing') return;
+      if (loading || gameStatus !== WordleGameStatus.Playing) return;
       if (guesses[currentGuessIdx]?.length >= wordLength) return;
       if (letter.length !== 1) return;
 
@@ -120,7 +121,7 @@ export const WordleProvider = ({
   );
 
   const removeLetter = useCallback(() => {
-    if (loading || gameStatus !== 'playing') return;
+    if (loading || gameStatus !== WordleGameStatus.Playing) return;
     if (guesses[currentGuessIdx]?.length === 0) return;
     setGuesses((prev) => {
       const newGuesses = [...prev];
@@ -131,7 +132,7 @@ export const WordleProvider = ({
   }, [guesses, currentGuessIdx, gameStatus, loading]);
 
   const submitGuess = useCallback(async () => {
-    if (loading || gameStatus !== 'playing') return;
+    if (loading || gameStatus !== WordleGameStatus.Playing) return;
 
     const currentGuess = guesses[currentGuessIdx];
 
@@ -172,7 +173,7 @@ export const WordleProvider = ({
     } else {
       setIsLastGuessValid(true);
 
-      const { game_status, guesses: updatedGuesses } = result;
+      const { game_status, guesses: updatedGuesses } = result.game;
 
       const emptyGuesses = Array(maxGuesses - updatedGuesses.length).fill('');
       setGuesses(updatedGuesses.concat(emptyGuesses));

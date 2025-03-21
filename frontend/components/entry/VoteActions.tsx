@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '../providers/AuthProvider';
-import { Entry, Vote } from '@/types/core';
+import { Entry, VoteValue } from '@/types/core';
 import vote from '@/lib/vote/vote';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
@@ -19,16 +19,14 @@ export default function VoteActions({ entry }: Props) {
   const pathname = usePathname();
 
   const [voteCount, setVoteCount] = useState(entry.vote_count);
-  const [currentVote, setCurrentVote] = useState<Vote['value']>(
-    entry.user_vote
-  );
+  const [currentVote, setCurrentVote] = useState<VoteValue>(entry.user_vote);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setVoteCount(entry.vote_count);
   }, []);
 
-  const handleVote = async (value: Vote['value']) => {
+  const handleVote = async (value: VoteValue) => {
     setIsLoading(true);
 
     if (!auth.isAuthenticated) {
@@ -46,7 +44,7 @@ export default function VoteActions({ entry }: Props) {
 
     const previousVote = currentVote;
     // Calculate the intended new vote.
-    const newVote = previousVote === value ? 0 : value;
+    const newVote = previousVote === value ? VoteValue.Unvote : value;
     // Change in vote.
     const delta = newVote - previousVote;
 
@@ -80,21 +78,37 @@ export default function VoteActions({ entry }: Props) {
         className="p-1 w-fit h-fit"
         type="button"
         disabled={isLoading}
-        onClick={() => handleVote(currentVote === 1 ? 0 : 1)}
+        onClick={() =>
+          handleVote(
+            currentVote === VoteValue.Upvote
+              ? VoteValue.Unvote
+              : VoteValue.Upvote
+          )
+        }
       >
-        <ArrowBigUp className={currentVote === 1 ? 'fill-current' : ''} />
+        <ArrowBigUp
+          className={currentVote === VoteValue.Upvote ? 'fill-current' : ''}
+        />
       </Button>
 
-      <span className="p-0 font-medium">{voteCount || 0}</span>
+      <span className="p-0 font-medium">{voteCount || VoteValue.Unvote}</span>
 
       <Button
         variant="ghost"
         className="p-1 w-fit h-fit"
         type="button"
         disabled={isLoading}
-        onClick={() => handleVote(currentVote === -1 ? 0 : -1)}
+        onClick={() =>
+          handleVote(
+            currentVote === VoteValue.Downvote
+              ? VoteValue.Unvote
+              : VoteValue.Downvote
+          )
+        }
       >
-        <ArrowBigDown className={currentVote === -1 ? 'fill-current' : ''} />
+        <ArrowBigDown
+          className={currentVote === VoteValue.Downvote ? 'fill-current' : ''}
+        />
       </Button>
     </div>
   );

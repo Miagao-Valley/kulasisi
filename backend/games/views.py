@@ -1,7 +1,7 @@
 from django.db.models.functions import Length
 from django.shortcuts import get_object_or_404
 from rest_framework import status
-from rest_framework.views import APIView
+from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from dictionary.models import Word
@@ -10,7 +10,11 @@ from django.contrib.auth import get_user_model
 import random
 
 from .models import WordleGame
-from .serializers import WordleGameSerializer
+from .serializers import (
+    WordleGameSerializer,
+    WordleGuessSerializer,
+    WordleGameStatsSerializer,
+)
 
 User = get_user_model()
 
@@ -29,77 +33,58 @@ def get_random_solution(lang, word_length):
     return solution.upper()
 
 
-class WordleGameView(APIView):
+class WordleGameView(GenericAPIView):
     permission_classes = [IsAuthenticated]
 
+    def get_serializer_class(self):
+        if self.request.method == "POST":
+            return WordleGuessSerializer
+        return WordleGameSerializer
+
     def get(self, request, lang_code, word_length):
-        if word_length < 3 or word_length > 7:
-            return Response(
-                {"message": "Invalid word length. Must be between 3 and 7."},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
         lang = get_object_or_404(Language, code=lang_code)
 
-        game = WordleGame.objects.filter(
+        game, created = WordleGame.objects.get_or_create(
             player=request.user,
             lang=lang,
             word_length=word_length,
             game_status="playing",
-        ).first()
+            defaults={},
+        )
 
-        if not game:
-            try:
-                solution = get_random_solution(lang, word_length)
-            except ValueError as e:
-                return Response({"message": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        if created:
+            game.solution = get_random_solution(lang, word_length)
+            game.save()
 
-            game = WordleGame.objects.create(
-                solution=solution,
-                player=request.user,
-                lang=lang,
-                word_length=word_length,
-                game_status="playing",
-            )
-
-        serializer = WordleGameSerializer(game)
+        serializer = self.get_serializer(game)
         return Response(serializer.data)
 
     def post(self, request, lang_code, word_length):
-        if word_length < 3 or word_length > 7:
-            return Response(
-                {"message": "Invalid word length. Must be between 3 and 7."},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
         lang = get_object_or_404(Language, code=lang_code)
-
-        game = WordleGame.objects.filter(
+        game = get_object_or_404(
+            WordleGame,
             player=request.user,
             lang=lang,
             word_length=word_length,
             game_status="playing",
-        ).first()
-        if not game:
-            return Response(
-                {"message": "Game not found."}, status=status.HTTP_404_NOT_FOUND
-            )
+        )
 
-        guess = request.data.get("guess")
-        if not guess:
-            return Response(
-                {"message": "Guess is required."}, status=status.HTTP_400_BAD_REQUEST
-            )
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
 
         try:
-            game.make_guess(guess)
+            game.make_guess(serializer.validated_data["guess"])
         except ValueError as e:
             return Response({"message": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
-        serializer = WordleGameSerializer(game)
-        return Response(serializer.data)
+        return Response(
+            {"game": WordleGameSerializer(game).data}, status=status.HTTP_200_OK
+        )
 
 
-class WordleGameStatsView(APIView):
+class WordleGameStatsView(GenericAPIView):
     permission_classes = [IsAuthenticated]
+    serializer_class = WordleGameStatsSerializer
 
     def get(self, request):
         lang_code = request.query_params.get("lang")
@@ -108,6 +93,7 @@ class WordleGameStatsView(APIView):
         games = WordleGame.objects.filter(player=request.user)
 
         if lang_code:
+
             games = games.filter(lang__code=lang_code)
 
         if word_length:
@@ -125,4 +111,5 @@ class WordleGameStatsView(APIView):
             "win_rate": win_rate,
         }
 
-        return Response(stats)
+        serializer = self.serializer_class(stats)
+        return Response(serializer.data)

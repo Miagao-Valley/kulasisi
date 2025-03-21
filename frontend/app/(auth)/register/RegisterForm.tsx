@@ -5,6 +5,7 @@ import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { useAuth } from '@/components/providers/AuthProvider';
 import Link from 'next/link';
 import { LangProficiencyLevel } from '@/types/languages';
+import { Gender } from '@/types/users';
 import register from '@/lib/auth/register';
 import GetStarted from './steps/GetStarted';
 import Contact from './steps/Contact';
@@ -29,7 +30,7 @@ export interface RegisterInputs {
   last_name: string;
   date_of_birth: Date;
   location: string;
-  gender: string;
+  gender: Gender;
   language_proficiencies: { lang: string; level: LangProficiencyLevel }[];
 }
 

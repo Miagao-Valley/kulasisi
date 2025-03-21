@@ -20,7 +20,12 @@ export interface AuthType {
 /**
  * Represents the possible gender values for a user.
  */
-export type Gender = 'M' | 'F' | 'O' | 'N';
+export enum Gender {
+  Male = 'M',
+  Female = 'F',
+  Other = 'O',
+  NotSpecified = 'N',
+}
 
 /**
  * Represents a user.
@@ -28,10 +33,10 @@ export type Gender = 'M' | 'F' | 'O' | 'N';
 export interface User {
   id: number;
   username: string;
-  first_name: string;
-  last_name: string;
   email: string;
   phone_number?: string;
+  first_name: string;
+  last_name: string;
   date_of_birth?: Date;
   location?: string;
   gender?: Gender;
