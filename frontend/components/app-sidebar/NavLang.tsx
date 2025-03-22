@@ -1,6 +1,7 @@
 'use client';
 
 import { useAuth } from '../providers/AuthProvider';
+import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import {
   Collapsible,
@@ -27,7 +28,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Skeleton } from '../ui/skeleton';
-import { LangHoverCard } from '../cards/LangCard';
+import { badgeVariants } from '../ui/badge';
 import { ChevronRight, LanguagesIcon } from 'lucide-react';
 
 export function NavLang() {
@@ -58,7 +59,10 @@ export function NavLang() {
                 <DropdownMenuGroup>
                   {auth.user?.language_proficiencies?.map((lang_prof) => (
                     <DropdownMenuItem key={lang_prof.lang}>
-                      <Link href={`/lang/${lang_prof.lang}`} className="w-full">
+                      <Link
+                        href={`/languages/${lang_prof.lang}`}
+                        className="w-full"
+                      >
                         {lang_prof.lang}
                       </Link>
                     </DropdownMenuItem>
@@ -98,10 +102,18 @@ export function NavLang() {
                       </SidebarMenuSubItem>
                     ))
                   ) : auth.user?.language_proficiencies?.length ? (
-                    auth.user?.language_proficiencies?.map((lang_prof) => (
-                      <SidebarMenuSubItem key={lang_prof.lang}>
+                    auth.user?.language_proficiencies?.map((langProf) => (
+                      <SidebarMenuSubItem key={langProf.lang}>
                         <SidebarMenuSubButton asChild>
-                          <LangHoverCard code={lang_prof.lang} />
+                          <Link
+                            href={`/languages/${langProf.lang}`}
+                            className={cn(
+                              'w-10 truncate flex justify-center',
+                              badgeVariants({ variant: 'outline' })
+                            )}
+                          >
+                            {langProf.lang}
+                          </Link>
                         </SidebarMenuSubButton>
                       </SidebarMenuSubItem>
                     ))

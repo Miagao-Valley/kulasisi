@@ -2,6 +2,8 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { cn } from '@/lib/utils';
+import shortenNum from '@/utils/shortenNum';
 import { Lang } from '@/types/languages';
 import getLang from '@/lib/langs/getLang';
 import {
@@ -9,11 +11,9 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from '@/components/ui/hover-card';
-import { Badge } from '@/components/ui/badge';
-import shortenNum from '@/utils/shortenNum';
-import { Skeleton } from '../ui/skeleton';
+import { Badge, badgeVariants } from '@/components/ui/badge';
 import { Card } from '../ui/card';
-import { cn } from '@/lib/utils';
+import { Skeleton } from '../ui/skeleton';
 
 interface LangCardProps {
   lang: Lang;
@@ -72,13 +72,14 @@ export function LangHoverCard({ code }: LangHoverCardProps) {
   return (
     <HoverCard onOpenChange={handleHover}>
       <HoverCardTrigger asChild>
-        <Link href={`/languages/${code}/`} className="flex gap-2 items-center">
-          <Badge
-            variant="outline"
-            className="w-10 truncate flex justify-center"
-          >
-            {code}
-          </Badge>
+        <Link
+          href={`/languages/${code}`}
+          className={cn(
+            'w-10 truncate flex justify-center',
+            badgeVariants({ variant: 'outline' })
+          )}
+        >
+          {code}
         </Link>
       </HoverCardTrigger>
 

@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { cn } from '@/lib/utils';
 import { PartOfSpeech } from '@/types/dictionary';
 import getPartOfSpeech from '@/lib/definitions/getPartOfSpeech';
 import {
@@ -9,10 +10,9 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from '@/components/ui/hover-card';
-import { Badge } from '@/components/ui/badge';
-import { Skeleton } from '@/components/ui/skeleton';
+import { Badge, badgeVariants } from '@/components/ui/badge';
 import { Card } from '../ui/card';
-import { cn } from '@/lib/utils';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface PosCardProps {
   pos: PartOfSpeech;
@@ -67,11 +67,12 @@ export function PosHoverCard({ abbr }: PosHoverCard) {
       <HoverCardTrigger asChild>
         <Link
           href={`/dictionary?pos=${abbr}`}
-          className="flex gap-2 items-center"
+          className={cn(
+            'truncate flex justify-center',
+            badgeVariants({ variant: 'secondary' })
+          )}
         >
-          <Badge variant="secondary" className="truncate flex justify-center">
-            {abbr}
-          </Badge>
+          {abbr}
         </Link>
       </HoverCardTrigger>
 

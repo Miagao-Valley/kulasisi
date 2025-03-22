@@ -9,8 +9,9 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from '@/components/ui/hover-card';
-import { Badge } from '@/components/ui/badge';
+import { Badge, badgeVariants } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
+import { cn } from '@/lib/utils';
 
 interface Props {
   lang: string;
@@ -37,11 +38,12 @@ export default function WordHoverCard({ lang, word }: Props) {
           <HoverCardTrigger asChild>
             <Link
               href={`/dictionary/${lang}/${word}/`}
-              className="flex gap-2 items-center"
+              className={cn(
+                'truncate flex justify-center',
+                badgeVariants({ variant: 'outline' })
+              )}
             >
-              <Badge variant="outline" className="truncate flex justify-center">
-                {word}
-              </Badge>
+              {word}
             </Link>
           </HoverCardTrigger>
 

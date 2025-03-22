@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { cn } from '@/lib/utils';
 import { Category } from '@/types/phrases';
 import getCategory from '@/lib/phrases/getCategory';
 import {
@@ -9,10 +10,9 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from '@/components/ui/hover-card';
-import { Badge } from '@/components/ui/badge';
-import { Skeleton } from '@/components/ui/skeleton';
+import { badgeVariants } from '@/components/ui/badge';
 import { Card } from '../ui/card';
-import { cn } from '@/lib/utils';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface CategoryCardProps {
   category: Category;
@@ -62,11 +62,12 @@ export function CategoryHoverCard({ name }: CategoryHoverCard) {
       <HoverCardTrigger asChild>
         <Link
           href={`/phrases?category=${name}`}
-          className="flex gap-2 items-center"
+          className={cn(
+            'truncate flex justify-center',
+            badgeVariants({ variant: 'secondary' })
+          )}
         >
-          <Badge variant="secondary" className="truncate flex justify-center">
-            #{name}
-          </Badge>
+          #{name}
         </Link>
       </HoverCardTrigger>
 
