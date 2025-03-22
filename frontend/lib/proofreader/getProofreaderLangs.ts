@@ -1,6 +1,6 @@
 'use server';
 
-import { fetchAPI } from '@/utils/fetchAPI';
+import { fetchAPI } from '@/lib/utils/fetchAPI';
 
 export default async function getProofreaderLangs(
   params: Record<string, any> = {}

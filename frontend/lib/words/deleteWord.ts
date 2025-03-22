@@ -1,7 +1,7 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { fetchAPI } from '@/utils/fetchAPI';
+import { fetchAPI } from '@/lib/utils/fetchAPI';
 import { redirect } from 'next/navigation';
 
 export default async function deleteWord(lang: string, word: string) {

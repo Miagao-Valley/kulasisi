@@ -7,7 +7,7 @@ import addTranslation from '@/lib/translations/addTranslation';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { useForm } from 'react-hook-form';
-import setFormErrors from '@/utils/setFormErrors';
+import setFormErrors from '@/lib/utils/setFormErrors';
 import {
   addTranslationSchema,
   AddTranslationSchema,

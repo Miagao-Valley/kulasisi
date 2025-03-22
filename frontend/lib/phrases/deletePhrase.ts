@@ -2,7 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-import { fetchAPI } from '@/utils/fetchAPI';
+import { fetchAPI } from '@/lib/utils/fetchAPI';
 
 export default async function deletePhrase(id: number) {
   await fetchAPI(`/phrases/${id}/`, {

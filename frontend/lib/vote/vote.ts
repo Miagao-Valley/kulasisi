@@ -1,9 +1,9 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { fetchAPI } from '@/utils/fetchAPI';
+import { fetchAPI } from '@/lib/utils/fetchAPI';
 import { Entry, VoteValue } from '@/types/core';
-import entryToPath from '@/utils/entryToPath';
+import entryToPath from '@/lib/utils/entryToPath';
 
 export default async function vote(entry: Entry, value: VoteValue) {
   const backendPath = entryToPath(entry);

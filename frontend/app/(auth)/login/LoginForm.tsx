@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useAuth } from '@/components/providers/AuthProvider';
 import login from '@/lib/auth/login';
 import { useForm } from 'react-hook-form';
-import setFormErrors from '@/utils/setFormErrors';
+import setFormErrors from '@/lib/utils/setFormErrors';
 import { loginSchema, LoginSchema } from '@/lib/schemas/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {

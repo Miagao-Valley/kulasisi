@@ -6,7 +6,7 @@ import { Word } from '@/types/dictionary';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { useForm } from 'react-hook-form';
-import setFormErrors from '@/utils/setFormErrors';
+import setFormErrors from '@/lib/utils/setFormErrors';
 import { updateWordSchema, UpdateWordSchema } from '@/lib/schemas/words';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormMessage } from '@/components/ui/form';

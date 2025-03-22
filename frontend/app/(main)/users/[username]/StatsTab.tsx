@@ -3,7 +3,7 @@
 import React from 'react';
 import { useAuth } from '@/components/providers/AuthProvider';
 import { useForm } from 'react-hook-form';
-import setFormErrors from '@/utils/setFormErrors';
+import setFormErrors from '@/lib/utils/setFormErrors';
 import {
   langProficienciesSchema,
   LangProficienciesSchema,

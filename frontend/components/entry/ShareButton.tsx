@@ -1,7 +1,7 @@
 import React from 'react';
 import { Entry } from '@/types/core';
-import entryToPath from '@/utils/entryToPath';
-import copyToClipboard from '@/utils/copyToClipboard';
+import entryToPath from '@/lib/utils/entryToPath';
+import copyToClipboard from '@/lib/utils/copyToClipboard';
 import {
   Dialog,
   DialogHeader,

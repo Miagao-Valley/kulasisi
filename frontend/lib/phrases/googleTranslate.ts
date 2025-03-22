@@ -1,5 +1,5 @@
-import { fetchAPI } from '@/utils/fetchAPI';
-import { Result } from '@/utils/try-catch';
+import { fetchAPI } from '@/lib/utils/fetchAPI';
+import { Result } from '@/lib/utils/try-catch';
 
 export default async function googleTranslate(
   text: string,

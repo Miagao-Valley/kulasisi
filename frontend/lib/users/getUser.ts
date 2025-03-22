@@ -1,4 +1,4 @@
-import { fetchAPI } from '@/utils/fetchAPI';
+import { fetchAPI } from '@/lib/utils/fetchAPI';
 import { User } from '@/types/users';
 
 export default async function getUser(username: string): Promise<User> {

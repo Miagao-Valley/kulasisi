@@ -5,7 +5,7 @@ import updatePhrase from '@/lib/phrases/updatePhrase';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { useForm } from 'react-hook-form';
-import setFormErrors from '@/utils/setFormErrors';
+import setFormErrors from '@/lib/utils/setFormErrors';
 import { updatePhraseSchema, UpdatePhraseSchema } from '@/lib/schemas/phrases';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Phrase } from '@/types/phrases';

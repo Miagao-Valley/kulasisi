@@ -1,6 +1,6 @@
 'use server';
 
-import { fetchAPI } from '@/utils/fetchAPI';
+import { fetchAPI } from '@/lib/utils/fetchAPI';
 import { Paginated } from '@/types/core';
 import { Phrase } from '@/types/phrases';
 import { Word } from '@/types/dictionary';

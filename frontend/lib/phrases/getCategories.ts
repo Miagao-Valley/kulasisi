@@ -1,4 +1,4 @@
-import { fetchAPI } from '@/utils/fetchAPI';
+import { fetchAPI } from '@/lib/utils/fetchAPI';
 import { Category } from '@/types/phrases';
 
 export default async function getCategories(

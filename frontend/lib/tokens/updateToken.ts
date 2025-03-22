@@ -2,7 +2,7 @@
 
 import 'server-only';
 
-import { fetchAPI } from '@/utils/fetchAPI';
+import { fetchAPI } from '@/lib/utils/fetchAPI';
 import getToken from './getToken';
 import getPayload from './getPayload';
 

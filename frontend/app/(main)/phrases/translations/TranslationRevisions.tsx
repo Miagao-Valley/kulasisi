@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import naturalTime from '@/utils/naturalTime';
+import naturalTime from '@/lib/utils/naturalTime';
 import { Translation, TranslationRevision } from '@/types/phrases';
 import getTranslationRevisions from '@/lib/translations/getTranslationRevisions';
 import DiffText from '@/components/DiffText';

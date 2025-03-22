@@ -1,4 +1,4 @@
-import { fetchAPI } from '@/utils/fetchAPI';
+import { fetchAPI } from '@/lib/utils/fetchAPI';
 import { Phrase } from '@/types/phrases';
 
 export default async function getPhrase(id: number): Promise<Phrase> {

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Entry } from '@/types/core';
 import { isPhrase, isTranslation } from '@/types/phrases';
 import { isDefinition, isWord } from '@/types/dictionary';
-import copyToClipboard from '@/utils/copyToClipboard';
+import copyToClipboard from '@/lib/utils/copyToClipboard';
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
 import { Button } from '../ui/button';
 import { CopyIcon, CheckIcon } from 'lucide-react';

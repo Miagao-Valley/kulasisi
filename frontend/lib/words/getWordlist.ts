@@ -1,4 +1,4 @@
-import { fetchAPI } from '@/utils/fetchAPI';
+import { fetchAPI } from '@/lib/utils/fetchAPI';
 
 export default async function getWordlist(
   params: Record<string, any> = {}

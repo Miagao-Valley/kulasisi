@@ -1,12 +1,12 @@
 import React from 'react';
 import { useAuth } from '@/components/providers/AuthProvider';
 import { useForm } from 'react-hook-form';
-import setFormErrors from '@/utils/setFormErrors';
+import setFormErrors from '@/lib/utils/setFormErrors';
 import { updateUserSchema, UpdateUserSchema } from '@/lib/schemas/users';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import { User, Gender } from '@/types/users';
-import displayGender from '@/utils/displayGender';
+import displayGender from '@/lib/utils/displayGender';
 import updateUser from '@/lib/users/updateUser';
 import {
   Form,

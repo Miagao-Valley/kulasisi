@@ -1,8 +1,8 @@
 'use server';
 
-import { fetchAPI } from '@/utils/fetchAPI';
+import { fetchAPI } from '@/lib/utils/fetchAPI';
 import { WordleGame, WordleGameStats } from '@/types/games';
-import { Result } from '@/utils/try-catch';
+import { Result } from '@/lib/utils/try-catch';
 
 export async function getWordleGame(
   lang: string,

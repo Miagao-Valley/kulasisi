@@ -13,7 +13,7 @@ import Experience from './steps/Experience';
 import NavButtons from './NavButtons';
 import StepperIndicator from '@/components/pagination/StepperIndicator';
 import { useForm } from 'react-hook-form';
-import setFormErrors from '@/utils/setFormErrors';
+import setFormErrors from '@/lib/utils/setFormErrors';
 import { registerSchema, RegisterSchema } from '@/lib/schemas/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormMessage } from '@/components/ui/form';

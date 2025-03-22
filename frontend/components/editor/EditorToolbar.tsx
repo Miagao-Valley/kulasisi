@@ -1,7 +1,7 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
-import copyToClipboard from '@/utils/copyToClipboard';
-import pasteFromClipboard from '@/utils/pasteFromClipboard';
+import copyToClipboard from '@/lib/utils/copyToClipboard';
+import pasteFromClipboard from '@/lib/utils/pasteFromClipboard';
 import { useEditorContext } from './EditorContext';
 import CharCountProgress from './CharCountProgress';
 import { Button } from '@/components/ui/button';

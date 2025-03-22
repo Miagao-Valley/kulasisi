@@ -1,6 +1,6 @@
 import { FetchError } from './fetchError';
 import getToken from '@/lib/tokens/getToken';
-import { tryCatch, Result } from '@/utils/try-catch';
+import { tryCatch, Result } from '@/lib/utils/try-catch';
 
 interface FetchAPIOptions extends RequestInit {
   authorized?: boolean;

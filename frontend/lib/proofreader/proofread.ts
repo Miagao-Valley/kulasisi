@@ -1,9 +1,9 @@
 'use server';
 
-import { fetchAPI } from '@/utils/fetchAPI';
+import { fetchAPI } from '@/lib/utils/fetchAPI';
 import { revalidatePath } from 'next/cache';
 import { FlaggedToken, ProofreaderStats } from '@/types/proofreader';
-import { Result } from '@/utils/try-catch';
+import { Result } from '@/lib/utils/try-catch';
 
 export default async function proofread(
   text: string,

@@ -1,4 +1,4 @@
-import { fetchAPI } from '@/utils/fetchAPI';
+import { fetchAPI } from '@/lib/utils/fetchAPI';
 import { PartOfSpeech } from '@/types/dictionary';
 
 export default async function getPartsOfSpeech(

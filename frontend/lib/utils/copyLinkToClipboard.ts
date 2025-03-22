@@ -8,7 +8,7 @@ import copyToClipboard from './copyToClipboard';
  */
 export default function copyLinkToClipboard(
   url: string,
-  base: string = window.location.origin,
+  base: string = window.location.origin
 ) {
   const link = `${base}/${url}`;
 

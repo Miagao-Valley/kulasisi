@@ -1,6 +1,6 @@
 import { Entry, Vote } from '@/types/core';
-import { fetchAPI } from '@/utils/fetchAPI';
-import entryToPath from '@/utils/entryToPath';
+import { fetchAPI } from '@/lib/utils/fetchAPI';
+import entryToPath from '@/lib/utils/entryToPath';
 
 export default async function getVotes(entry: Entry): Promise<Vote[]> {
   const entryPath = entryToPath(entry, false);

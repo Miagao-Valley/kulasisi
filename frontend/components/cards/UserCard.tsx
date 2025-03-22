@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { User } from '@/types/users';
 import getUser from '@/lib/users/getUser';
-import shortenNum from '@/utils/shortenNum';
+import shortenNum from '@/lib/utils/shortenNum';
 import {
   HoverCard,
   HoverCardContent,

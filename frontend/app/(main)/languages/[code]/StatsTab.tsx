@@ -1,6 +1,6 @@
 import React from 'react';
 import { Lang, LangProficiencyLevel } from '@/types/languages';
-import displayLangProficiency from '@/utils/displayLangProficiency';
+import displayLangProficiency from '@/lib/utils/displayLangProficiency';
 import { Progress } from '@/components/ui/progress';
 import { H3 } from '@/components/ui/heading-with-anchor';
 

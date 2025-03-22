@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import shortenNum from '@/utils/shortenNum';
+import shortenNum from '@/lib/utils/shortenNum';
 import { Lang } from '@/types/languages';
 import getLang from '@/lib/langs/getLang';
 import {

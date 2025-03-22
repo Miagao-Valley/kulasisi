@@ -1,10 +1,10 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { fetchAPI } from '@/utils/fetchAPI';
+import { fetchAPI } from '@/lib/utils/fetchAPI';
 import { User } from '@/types/users';
 import { ChangePhoneNumberSchema } from '../schemas/users';
-import { Result } from '@/utils/try-catch';
+import { Result } from '@/lib/utils/try-catch';
 
 export default async function changePhoneNumber(
   username: string,
