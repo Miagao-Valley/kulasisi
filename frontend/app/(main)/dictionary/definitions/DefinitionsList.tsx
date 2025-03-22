@@ -29,19 +29,15 @@ export default async function DefinitionsList({
 }: Props) {
   const limit = 15;
 
-  const definitions = await getDefinitions(
-    {
-      search: searchTerm,
-      ordering: sortOption,
-      lang__code: filters?.lang || '',
-      contributor__username: filters?.contributor || '',
-      pos__abbr: filters?.pos || '',
-      limit: limit,
-      offset: limit * (page - 1),
-    },
-    wordLang || '',
-    word || ''
-  );
+  const definitions = await getDefinitions(wordLang, word, {
+    search: searchTerm,
+    ordering: sortOption,
+    lang__code: filters?.lang,
+    contributor__username: filters?.contributor,
+    pos__abbr: filters?.pos,
+    limit: limit,
+    offset: limit * (page - 1),
+  });
 
   return (
     <>

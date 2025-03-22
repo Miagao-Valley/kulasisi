@@ -1,29 +1,21 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import fetcher, { FetchError } from '@/utils/fetcher';
-import getToken from '../tokens/getToken';
+import { fetchAPI } from '@/utils/fetchAPI';
+import { Word } from '@/types/dictionary';
+import { AddWordSchema } from '@/lib/schemas/words';
+import { Result } from '@/utils/try-catch';
 
-export default async function addWord(data: object) {
-  let res = null;
-  try {
-    res = await fetcher(
-      `/dictionary/`,
-      {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      },
-      getToken(),
-    );
-  } catch (error) {
-    const fetchError = error as FetchError;
-    return { error: fetchError.resBody };
-  }
+export default async function addWord(
+  data: AddWordSchema
+): Promise<Result<Word, any>> {
+  const result = await fetchAPI(`/dictionary/`, {
+    method: 'POST',
+    body: JSON.stringify(data),
+    authorized: true,
+  });
 
-  revalidatePath(`/dictionary`);
-  return res;
+  revalidatePath(`/dictionary/`);
+
+  return result;
 }

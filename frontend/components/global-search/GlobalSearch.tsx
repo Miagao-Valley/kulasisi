@@ -478,8 +478,8 @@ function Langs() {
     const fetchLangs = async () => {
       setLoading(true);
       try {
-        const res = await getLangs();
-        setLangs(res.results);
+        const { results } = await getLangs();
+        setLangs(results);
       } catch (error) {
         console.error('Failed to fetch languages:', error);
       } finally {

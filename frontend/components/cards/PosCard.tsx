@@ -61,8 +61,8 @@ export function PosHoverCard({ abbr }: PosHoverCard) {
   const handleHover = async (open: boolean) => {
     if (open && !pos) {
       setLoading(true);
-      const res = await getPartOfSpeech(abbr);
-      setPos(res);
+      const data = await getPartOfSpeech(abbr);
+      setPos(data);
       setLoading(false);
     }
   };

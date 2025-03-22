@@ -16,9 +16,9 @@ export default async function GoogleTranslateCard({
   target,
   className = '',
 }: Props) {
-  const data = await googleTranslate(text, source, target);
+  const { data, error } = await googleTranslate(text, source, target);
 
-  if (data.error) {
+  if (error || !data) {
     return;
   }
 

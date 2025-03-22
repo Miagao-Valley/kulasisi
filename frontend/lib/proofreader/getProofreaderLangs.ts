@@ -1,12 +1,14 @@
-import fetcher from '@/utils/fetcher';
+'use server';
 
-export default async function getLangs(
-  queryParams: Record<string, any> = {},
+import { fetchAPI } from '@/utils/fetchAPI';
+
+export default async function getProofreaderLangs(
+  params: Record<string, any> = {}
 ): Promise<string[]> {
-  const queryString = new URLSearchParams(queryParams).toString();
-  const url = `/proofreader/languages/${queryString ? `?${queryString}` : ''}`;
-
-  return await fetcher(url, {
+  const { data: fetchedData } = await fetchAPI(`/proofreader/languages/`, {
+    params: params,
     cache: 'no-store',
   });
+
+  return fetchedData;
 }

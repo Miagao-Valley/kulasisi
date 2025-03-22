@@ -2,7 +2,7 @@ import React from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { Gender } from '@/types/users';
 import displayGender from '@/utils/displayGender';
-import { RegisterSchema } from '../RegisterForm';
+import { RegisterSchema } from '@/lib/schemas/auth';
 import { cn } from '@/lib/utils';
 import {
   FormControl,

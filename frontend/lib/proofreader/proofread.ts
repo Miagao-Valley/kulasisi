@@ -1,33 +1,22 @@
 'use server';
 
-import fetcher, { FetchError } from '@/utils/fetcher';
+import { fetchAPI } from '@/utils/fetchAPI';
 import { revalidatePath } from 'next/cache';
 import { FlaggedToken, ProofreaderStats } from '@/types/proofreader';
+import { Result } from '@/utils/try-catch';
 
 export default async function proofread(
   text: string,
-  lang: string,
+  lang: string
 ): Promise<
-  | { flagged_tokens: FlaggedToken[]; stats: ProofreaderStats }
-  | { error: string }
+  Result<{ flagged_tokens: FlaggedToken[]; stats: ProofreaderStats }, any>
 > {
-  let res = null;
-  try {
-    res = await fetcher(`/proofreader/`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ text: text, lang: lang }),
-    });
-  } catch (error) {
-    revalidatePath('/proofreader/');
-    const fetchError = error as FetchError;
-    return { error: fetchError.resBody };
-  }
+  const result = await fetchAPI(`/proofreader/`, {
+    method: 'POST',
+    body: JSON.stringify({ text: text, lang: lang }),
+  });
 
-  revalidatePath('/proofreader/');
+  revalidatePath(`/proofreader/`);
 
-  return res;
+  return result;
 }

@@ -1,16 +1,12 @@
-import fetcher from '@/utils/fetcher';
+import { fetchAPI } from '@/utils/fetchAPI';
 
 export default async function getWordlist(
-  queryParams: Record<string, any> = {}
+  params: Record<string, any> = {}
 ): Promise<string[]> {
-  const finalParams = { ...queryParams, wordlist: 'true' };
-
-  const queryString = new URLSearchParams(finalParams).toString();
-  const url = `/dictionary/${queryString ? `?${queryString}` : ''}`;
-
-  const res = await fetcher(url, {
+  const { data: fetchedData } = await fetchAPI(`/dictionary/`, {
+    params: { ...params, wordlist: true },
     cache: 'no-store',
   });
 
-  return res;
+  return fetchedData;
 }

@@ -22,3 +22,5 @@ export interface PaginationDetails {
   next: string;
   previous: string;
 }
+
+export type Paginated<T> = PaginationDetails & { results: T };

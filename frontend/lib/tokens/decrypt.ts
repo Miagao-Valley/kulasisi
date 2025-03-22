@@ -4,13 +4,12 @@ import 'server-only';
 
 import { jwtVerify } from 'jose';
 import { Payload } from '@/types/users';
-import { secretKey } from '@/constants';
 
-const key = new TextEncoder().encode(secretKey);
+const key = new TextEncoder().encode(process.env.SECRET_KEY || '');
 const algorithm = 'HS256';
 
 export default async function decrypt(
-  authToken?: string,
+  authToken?: string
 ): Promise<Payload | null> {
   if (!authToken) {
     return null;
@@ -23,7 +22,7 @@ export default async function decrypt(
 
     return payload;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return null;
   }
 }

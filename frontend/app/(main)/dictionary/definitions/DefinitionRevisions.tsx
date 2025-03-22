@@ -37,8 +37,8 @@ export function DefinitionRevisionsModal({
 
   const handleOpen = async (open: boolean) => {
     if (open && revisions.length === 0) {
-      const res = await getDefinitionRevisions(definition.id);
-      setRevisions(res.results);
+      const { results } = await getDefinitionRevisions(definition.id);
+      setRevisions(results);
     }
   };
 

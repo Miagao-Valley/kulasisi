@@ -9,15 +9,14 @@ export default function setFormErrors<T>(
   errors: Record<string, any>,
   setError: (
     field: keyof T | 'root.serverError', // Field or special error key
-    error: { type?: string; message?: string },
-  ) => void,
+    error: { type?: string; message?: string }
+  ) => void
 ) {
-  // Iterate over each error in the errors object
   Object.entries(errors).forEach(([key, value]) => {
     // Handle generic errors (non-field errors)
     if (key === 'detail' || key === 'non_field_errors') {
       setError('root.serverError', {
-        message: Array.isArray(value) ? value[0] : value, // Ensure the message is a string
+        message: Array.isArray(value) ? value[0] : value,
       });
       return;
     }
@@ -25,7 +24,7 @@ export default function setFormErrors<T>(
     // Handle field-specific errors (map to respective field)
     setError(key as keyof T, {
       type: 'manual',
-      message: Array.isArray(value) ? value[0] : value, // Ensure the message is a string
+      message: Array.isArray(value) ? value[0] : value,
     });
   });
 }

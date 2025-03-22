@@ -4,7 +4,10 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import setFormErrors from '@/utils/setFormErrors';
-import { z } from 'zod';
+import {
+  changePasswordSchema,
+  ChangePasswordSchema,
+} from '@/lib/schemas/users';
 import { zodResolver } from '@hookform/resolvers/zod';
 import changePassword from '@/lib/users/changePassword';
 import { Button } from '@/components/ui/button';
@@ -25,16 +28,6 @@ import {
 import { PasswordInput } from '@/components/ui/password-input';
 import { LoadingButton } from '@/components/ui/loading-button';
 
-export const changePasswordSchema = z.object({
-  current_password: z.string().min(1, 'Current password is required'),
-  new_password: z
-    .string()
-    .min(8, 'Password must be at least 8 characters.')
-    .max(128, 'Password must be 128 characters or fewer'),
-});
-
-export type ChangePasswordSchema = z.infer<typeof changePasswordSchema>;
-
 interface Props {
   username: string;
 }
@@ -50,14 +43,14 @@ export function ChangePasswordModal({ username }: Props) {
     },
   });
 
-  async function onSubmit(data: ChangePasswordSchema) {
-    const res = await changePassword(username, data);
-    if (res?.error) {
-      setFormErrors(res.error, form.setError);
+  async function onSubmit(formData: ChangePasswordSchema) {
+    const { data, error } = await changePassword(username, formData);
+    if (error) {
+      setFormErrors(error, form.setError);
     } else {
       router.refresh();
     }
-    return res;
+    return { data, error };
   }
 
   return (

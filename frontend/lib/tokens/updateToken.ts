@@ -2,20 +2,20 @@
 
 import 'server-only';
 
-import fetcher from '@/utils/fetcher';
+import { fetchAPI } from '@/utils/fetchAPI';
 import getToken from './getToken';
 import getPayload from './getPayload';
 
 export default async function updateToken() {
   const payload = await getPayload();
-  const refreshToken = getToken('refresh');
+  const refreshToken = await getToken('refresh');
   const payloadRefresh = await getPayload('refresh');
 
   if (payload || !payloadRefresh) {
     return null;
   }
 
-  const { access } = await fetcher(`/token/refresh/`, {
+  const { data } = await fetchAPI(`/token/refresh/`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -23,5 +23,5 @@ export default async function updateToken() {
     body: JSON.stringify({ refresh: refreshToken }),
   });
 
-  return access;
+  return data.access;
 }

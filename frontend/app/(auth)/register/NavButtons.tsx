@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { UseFormReturn } from 'react-hook-form';
-import { RegisterSchema } from './RegisterForm';
+import { RegisterSchema } from '@/lib/schemas/auth';
 import { Button } from '@/components/ui/button';
 import { LoadingButton } from '@/components/ui/loading-button';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';

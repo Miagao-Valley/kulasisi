@@ -27,17 +27,14 @@ export default async function TranslationsList({
 }: Props) {
   const limit = 15;
 
-  const translations = await getTranslations(
-    {
-      search: searchTerm,
-      ordering: sortOption,
-      lang__code: filters?.lang || '',
-      contributor__username: filters?.contributor || '',
-      limit: limit,
-      offset: limit * (page - 1),
-    },
-    phraseId
-  );
+  const translations = await getTranslations(phraseId, {
+    search: searchTerm,
+    ordering: sortOption,
+    lang__code: filters?.lang,
+    contributor__username: filters?.contributor,
+    limit: limit,
+    offset: limit * (page - 1),
+  });
 
   return (
     <>

@@ -56,8 +56,8 @@ export function CategoryHoverCard({ name }: CategoryHoverCard) {
   const handleHover = async (open: boolean) => {
     if (open && !category) {
       setLoading(true);
-      const res = await getCategory(name);
-      setCategory(res);
+      const data = await getCategory(name);
+      setCategory(data);
       setLoading(false);
     }
   };

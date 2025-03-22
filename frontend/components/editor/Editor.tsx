@@ -43,11 +43,11 @@ const Editor: React.FC<EditorProps> = ({
       setLoading(true);
 
       try {
-        const data = await proofread(text, lang);
+        const { data, error } = await proofread(text, lang);
 
-        if ('error' in data) {
-          console.error('Error in proofread data: ', data.error);
-          setError(data.error);
+        if (error) {
+          console.error('Error in proofread data: ', error);
+          setError(error);
 
           setFlaggedTokens([]);
           setStats({ token_count: 0, flagged_count: 0, correctness: 0 });
@@ -55,6 +55,13 @@ const Editor: React.FC<EditorProps> = ({
           return;
         }
         setError(null);
+
+        if (!data) {
+          setFlaggedTokens([]);
+          setStats({ token_count: 0, flagged_count: 0, correctness: 0 });
+          setLoading(false);
+          return;
+        }
 
         const sortedTokens = [...data.flagged_tokens].sort(
           (a: FlaggedToken, b: FlaggedToken) =>

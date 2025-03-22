@@ -63,7 +63,7 @@ export const WordleProvider = ({
 
   const fetchGameState = useCallback(async () => {
     setLoading(true);
-    const { result: fetchedGameState, error: err } = await getWordleGame(
+    const { data: fetchedGameState, error: err } = await getWordleGame(
       lang,
       wordLength
     );
@@ -160,20 +160,20 @@ export const WordleProvider = ({
 
     setIsLastGuessValid(true);
 
-    const { result, error } = await submitWordleGuess(
+    const { data, error } = await submitWordleGuess(
       lang,
       wordLength,
       currentGuess
     );
 
-    if (error || result === null) {
+    if (error) {
       setIsLastGuessValid(false);
       toast.error(error.message);
       invalidWordsCache.current.add(currentGuess);
-    } else {
+    } else if (data) {
       setIsLastGuessValid(true);
 
-      const { game_status, guesses: updatedGuesses } = result.game;
+      const { game_status, guesses: updatedGuesses } = data.game;
 
       const emptyGuesses = Array(maxGuesses - updatedGuesses.length).fill('');
       setGuesses(updatedGuesses.concat(emptyGuesses));

@@ -26,7 +26,7 @@ export default function DeleteWordModal({ lang, word }: Props) {
       <AlertDialogHeader>
         <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
         <AlertDialogDescription>
-          This action cannot be undone. This will permanently delete this entry.
+          This action cannot be undone. This will permanently delete this word.
         </AlertDialogDescription>
       </AlertDialogHeader>
 
@@ -39,10 +39,10 @@ export default function DeleteWordModal({ lang, word }: Props) {
             setIsLoading(true);
             try {
               await deleteWord(lang, word);
-              toast.success('Entry deleted');
+              toast.success('Word deleted');
             } catch (error) {
               console.error(error);
-              toast.error('Failed to delete the entry');
+              toast.error('Failed to delete the word');
             } finally {
               setIsLoading(false);
             }

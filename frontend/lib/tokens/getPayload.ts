@@ -7,7 +7,7 @@ import getToken from './getToken';
 import updateToken from './updateToken';
 
 export default async function getPayload(type: string = 'access') {
-  const authToken = getToken(type);
+  const authToken = await getToken(type);
   const payload = await decrypt(authToken);
 
   if (!payload?.exp) {

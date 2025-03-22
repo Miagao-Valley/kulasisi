@@ -7,7 +7,10 @@ import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { useForm } from 'react-hook-form';
 import setFormErrors from '@/utils/setFormErrors';
-import { z } from 'zod';
+import {
+  updateDefinitionSchema,
+  UpdateDefinitionSchema,
+} from '@/lib/schemas/definitions';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Form,
@@ -24,17 +27,6 @@ import UsageNoteForm from '@/components/forms/UsageNoteForm';
 import SourceForm from '@/components/forms/SourceForm';
 import WordsSelect from '@/components/forms/WordsSelect';
 
-export const updateDefinitionSchema = z.object({
-  description: z.string().min(1, 'Descriptoin is required'),
-  pos: z.string().optional(),
-  synonyms: z.array(z.string()).optional(),
-  antonyms: z.array(z.string()).optional(),
-  usage_note: z.string().optional(),
-  source_title: z.string().optional(),
-  source_link: z.string().url().optional().or(z.literal('')),
-});
-
-export type UpdateDefinitionSchema = z.infer<typeof updateDefinitionSchema>;
 interface Props {
   definition: Definition;
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
@@ -59,20 +51,20 @@ export default function UpdateDefinitionForm({
     },
   });
 
-  async function onSubmit(data: UpdateDefinitionSchema) {
-    const res = await updateDefinition(
+  async function onSubmit(formData: UpdateDefinitionSchema) {
+    const { data, error } = await updateDefinition(
       definition.word.lang,
       definition.word.word,
       definition.id,
-      data
+      formData
     );
-    if (res?.error) {
-      setFormErrors(res.error, form.setError);
+    if (error) {
+      setFormErrors(error, form.setError);
     } else {
       setIsEditing(false);
-      toast.success('Entry updated');
+      toast.success('Definition updated');
     }
-    return res;
+    return { data, error };
   }
 
   return (

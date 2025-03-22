@@ -8,7 +8,10 @@ import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { useForm } from 'react-hook-form';
 import setFormErrors from '@/utils/setFormErrors';
-import { z } from 'zod';
+import {
+  addTranslationSchema,
+  AddTranslationSchema,
+} from '@/lib/schemas/translations';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { EditorProvider } from '@/components/editor/EditorContext';
 import Editor from '@/components/editor/Editor';
@@ -24,16 +27,6 @@ import LangSelect from '@/components/forms/LangSelect';
 import SourceForm from '@/components/forms/SourceForm';
 
 const FORM_DATA_KEY = 'add-translation-forms';
-
-export const addTranslationSchema = z.object({
-  phrase: z.number(),
-  content: z.string().min(1, 'Content is required'),
-  lang: z.string().min(1, 'Language is required'),
-  source_title: z.string().optional(),
-  source_link: z.string().url().optional().or(z.literal('')),
-});
-
-export type AddTranslationSchema = z.infer<typeof addTranslationSchema>;
 
 interface Props {
   phraseId: number;
@@ -67,23 +60,23 @@ export default function AddTranslationForm({
     }
   }, [form, phraseId]);
 
-  async function onSubmit(data: AddTranslationSchema) {
+  async function onSubmit(formData: AddTranslationSchema) {
     if (!auth.isAuthenticated) {
       toast.error('You need to sign in to post.');
       router.push(`/login?next=${pathname}`);
       return;
     }
 
-    const res = await addTranslation(phraseId, data);
-    if (res?.error) {
-      setFormErrors(res.error, form.setError);
+    const { data, error } = await addTranslation(formData);
+    if (error) {
+      setFormErrors(error, form.setError);
     } else {
       toast.success('Translation added');
       const savedData = JSON.parse(localStorage.getItem(FORM_DATA_KEY) || '{}');
       delete savedData[phraseId];
       localStorage.setItem(FORM_DATA_KEY, JSON.stringify(savedData));
     }
-    return res;
+    return { data, error };
   }
 
   useEffect(() => {

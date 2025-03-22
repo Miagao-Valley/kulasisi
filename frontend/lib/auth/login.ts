@@ -1,26 +1,27 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import fetcher, { FetchError } from '@/utils/fetcher';
+import { fetchAPI } from '@/utils/fetchAPI';
 import setToken from '../tokens/setToken';
+import { LoginSchema } from '@/lib/schemas/auth';
+import { Result } from '@/utils/try-catch';
 
-export default async function login(data: object) {
-  try {
-    const { access, refresh } = await fetcher(`/token/`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
+export default async function login(
+  credentials: LoginSchema
+): Promise<Result<{ access: string; refresh: string }, any>> {
+  const result = await fetchAPI(`/token/`, {
+    method: 'POST',
+    body: JSON.stringify(credentials),
+  });
 
-    setToken(access);
-    setToken(refresh, 'refresh');
-  } catch (error) {
-    const fetchError = error as FetchError;
-    return { error: fetchError.resBody };
+  if (result.error) {
+    return result;
   }
 
-  revalidatePath('/');
+  setToken(result.data.access);
+  setToken(result.data.refresh, 'refresh');
+
+  revalidatePath(`/`);
+
+  return result;
 }

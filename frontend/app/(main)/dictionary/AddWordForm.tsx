@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { useForm } from 'react-hook-form';
 import setFormErrors from '@/utils/setFormErrors';
-import { z } from 'zod';
+import { addWordSchema, AddWordSchema } from '@/lib/schemas/words';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Form,
@@ -23,15 +23,6 @@ import LangSelect from '@/components/forms/LangSelect';
 import SourceForm from '@/components/forms/SourceForm';
 
 const FORM_DATA_KEY = 'add-word-form';
-
-const addWordSchema = z.object({
-  word: z.string().min(1, 'Word is required'),
-  lang: z.string().min(1, 'Language is required'),
-  source_title: z.string().optional(),
-  source_link: z.string().url().optional().or(z.literal('')),
-});
-
-type AddWordSchema = z.infer<typeof addWordSchema>;
 
 interface Props {
   className?: string;
@@ -53,24 +44,24 @@ export default function AddWordForm({ className = '' }: Props) {
     }
   }, [form]);
 
-  async function onSubmit(data: AddWordSchema) {
+  async function onSubmit(formData: AddWordSchema) {
     if (!auth.isAuthenticated) {
       toast.error('You need to sign in to post.');
       router.push(`/login?next=${pathname}`);
       return;
     }
 
-    const res = await addWord(data);
-    if (res?.error) {
-      setFormErrors(res.error, form.setError);
-    } else {
-      router.push(`/dictionary/${res.lang}/${res.word}/`);
-      toast.success('Posted');
+    const { data, error } = await addWord(formData);
+    if (error) {
+      setFormErrors(error, form.setError);
+    } else if (data) {
+      router.push(`/dictionary/${data.lang}/${data.word}/`);
+      toast.success('Word added');
     }
 
     localStorage.removeItem(FORM_DATA_KEY);
 
-    return res;
+    return { data, error };
   }
 
   useEffect(() => {

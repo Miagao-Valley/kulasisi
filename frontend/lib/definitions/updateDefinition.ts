@@ -1,35 +1,24 @@
 'use server';
 
-import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
-import fetcher, { FetchError } from '@/utils/fetcher';
-import getToken from '../tokens/getToken';
+import { fetchAPI } from '@/utils/fetchAPI';
+import { Definition } from '@/types/dictionary';
+import { UpdateDefinitionSchema } from '../schemas/definitions';
+import { Result } from '@/utils/try-catch';
 
 export default async function updateDefinition(
   wordLang: string,
   word: string,
   id: number,
-  data: object,
-) {
-  try {
-    const promise = fetcher(
-      `/dictionary/definitions/${id}/`,
-      {
-        method: 'PUT',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      },
-      getToken(),
-    );
-    await promise;
-  } catch (error) {
-    const fetchError = error as FetchError;
-    return { error: fetchError.resBody };
-  }
+  data: UpdateDefinitionSchema
+): Promise<Result<Definition, any>> {
+  const result = await fetchAPI(`/dictionary/definitions/${id}/`, {
+    method: 'PUT',
+    body: JSON.stringify(data),
+    authorized: true,
+  });
 
-  revalidatePath(`/dictionary/${wordLang}/${word}`);
-  redirect(`/dictionary/${wordLang}/${word}`);
+  revalidatePath(`/dictionary/${wordLang}/${word}/`);
+
+  return result;
 }

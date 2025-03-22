@@ -1,18 +1,23 @@
-import fetcher from '@/utils/fetcher';
-import { PaginationDetails } from '@/types/core';
+import { fetchAPI } from '@/utils/fetchAPI';
+import { Paginated } from '@/types/core';
 import { WordRevision } from '@/types/dictionary';
 
 export default async function getWordRevisions(
   lang: string,
-  word: string,
-): Promise<PaginationDetails & { results: WordRevision[] }> {
-  const res = await fetcher(`/dictionary/${lang}/${word}/history/`, {
-    cache: 'no-store',
-  });
-  for (const entry of res.results) {
-    if ('history_date' in entry) {
+  word: string
+): Promise<Paginated<WordRevision[]>> {
+  const { data: fetchedData } = await fetchAPI(
+    `/dictionary/${lang}/${word}/history/`,
+    {
+      cache: 'no-store',
+    }
+  );
+
+  for (const entry of fetchedData.results) {
+    if (entry?.history_date) {
       entry.history_date = new Date(entry.history_date);
     }
   }
-  return res;
+
+  return fetchedData;
 }

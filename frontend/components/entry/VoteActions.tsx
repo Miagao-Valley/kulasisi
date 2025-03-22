@@ -52,23 +52,16 @@ export default function VoteActions({ entry }: Props) {
     setVoteCount((prev) => prev + delta);
     setCurrentVote(newVote);
 
-    try {
-      const res = await vote(entry, newVote);
-      if (res?.error) {
-        // Revert state changes on error.
-        console.error(res?.error);
-        setVoteCount((prev) => prev - delta);
-        setCurrentVote(previousVote);
-        toast.error('Failed to vote.');
-      }
-    } catch (error) {
+    const { error } = await vote(entry, newVote);
+    if (error) {
+      // Revert state changes on error.
       console.error(error);
       setVoteCount((prev) => prev - delta);
       setCurrentVote(previousVote);
       toast.error('Failed to vote.');
-    } finally {
-      setIsLoading(false);
     }
+
+    setIsLoading(false);
   };
 
   return (

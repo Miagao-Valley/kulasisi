@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { useForm } from 'react-hook-form';
 import setFormErrors from '@/utils/setFormErrors';
-import { z } from 'zod';
+import { updatePhraseSchema, UpdatePhraseSchema } from '@/lib/schemas/phrases';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Phrase } from '@/types/phrases';
 import { EditorProvider } from '@/components/editor/EditorContext';
@@ -23,16 +23,6 @@ import { LoadingButton } from '@/components/ui/loading-button';
 import UsageNoteForm from '@/components/forms/UsageNoteForm';
 import SourceForm from '@/components/forms/SourceForm';
 import CategoriesSelect from '@/components/forms/CategoriesSelect';
-
-export const updatePhraseSchema = z.object({
-  content: z.string().min(1, 'Content is required'),
-  categories: z.array(z.string()).optional(),
-  usage_note: z.string().optional(),
-  source_title: z.string().optional(),
-  source_link: z.string().url().optional().or(z.literal('')),
-});
-
-export type UpdatePhraseSchema = z.infer<typeof updatePhraseSchema>;
 
 interface Props {
   phrase: Phrase;
@@ -56,15 +46,16 @@ export default function UpdatePhraseForm({
     },
   });
 
-  async function onSubmit(data: UpdatePhraseSchema) {
-    const res = await updatePhrase(phrase.id, data);
-    if (res?.error) {
-      setFormErrors(res.error, form.setError);
+  async function onSubmit(formData: UpdatePhraseSchema) {
+    const { data, error } = await updatePhrase(phrase.id, formData);
+    if (error) {
+      setFormErrors(error, form.setError);
     } else {
       setIsEditing(false);
-      toast.success('Entry updated');
+      toast.success('Phrase updated');
     }
-    return res;
+
+    return { data, error };
   }
 
   return (

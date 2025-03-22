@@ -1,14 +1,14 @@
-import fetcher from '@/utils/fetcher';
-import { PaginationDetails } from '@/types/core';
+import { fetchAPI } from '@/utils/fetchAPI';
+import { Paginated } from '@/types/core';
 import { Lang } from '@/types/languages';
 
 export default async function getLangs(
-  queryParams: Record<string, any> = {},
-): Promise<PaginationDetails & { results: Lang[] }> {
-  const queryString = new URLSearchParams(queryParams).toString();
-  const url = `/languages/${queryString ? `?${queryString}` : ''}`;
-
-  return await fetcher(url, {
+  params: Record<string, any> = {}
+): Promise<Paginated<Lang[]>> {
+  const { data: fetchedData } = await fetchAPI(`/languages/`, {
+    params: params,
     cache: 'no-store',
   });
+
+  return fetchedData;
 }

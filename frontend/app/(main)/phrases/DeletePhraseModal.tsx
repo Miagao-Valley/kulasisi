@@ -25,7 +25,8 @@ export default function DeletePhraseModal({ id }: Props) {
       <AlertDialogHeader>
         <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
         <AlertDialogDescription>
-          This action cannot be undone. This will permanently delete this entry.
+          This action cannot be undone. This will permanently delete this
+          phrase.
         </AlertDialogDescription>
       </AlertDialogHeader>
 
@@ -38,10 +39,10 @@ export default function DeletePhraseModal({ id }: Props) {
             setIsLoading(true);
             try {
               await deletePhrase(id);
-              toast.success('Entry deleted');
+              toast.success('Phrase deleted');
             } catch (error) {
               console.error(error);
-              toast.error('Failed to delete the entry');
+              toast.error('Failed to delete the phrase');
             } finally {
               setIsLoading(false);
             }

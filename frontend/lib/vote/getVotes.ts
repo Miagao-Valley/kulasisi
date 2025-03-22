@@ -1,15 +1,13 @@
 import { Entry, Vote } from '@/types/core';
-import fetcher from '@/utils/fetcher';
-import entryToUrl from '../../utils/entryToUrl';
+import { fetchAPI } from '@/utils/fetchAPI';
+import entryToPath from '@/utils/entryToPath';
 
 export default async function getVotes(entry: Entry): Promise<Vote[]> {
-  const entryUrl = entryToUrl(entry, false);
-  if (entryUrl === '') {
-    console.error('Failed to get entry URL');
-  }
+  const entryPath = entryToPath(entry, false);
 
-  const url = `/${entryUrl}/votes/`;
-  return await fetcher(url, {
+  const { data: fetchedData } = await fetchAPI(`/${entryPath}/votes/`, {
     cache: 'no-store',
   });
+
+  return fetchedData;
 }

@@ -1,27 +1,22 @@
 'use server';
 
-import fetcher, { FetchError } from '@/utils/fetcher';
-import getToken from '../tokens/getToken';
+import { revalidatePath } from 'next/cache';
+import { fetchAPI } from '@/utils/fetchAPI';
+import { User } from '@/types/users';
+import { ChangePasswordSchema } from '../schemas/users';
+import { Result } from '@/utils/try-catch';
 
-export default async function changePassword(username: string, data: object) {
-  try {
-    const promise = fetcher(
-      `/users/${username}/change-password/`,
-      {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      },
-      getToken(),
-    );
-    await promise;
-  } catch (error) {
-    const fetchError = error as FetchError;
-    return { error: fetchError.resBody };
-  }
+export default async function changePassword(
+  username: string,
+  data: ChangePasswordSchema
+): Promise<Result<User, any>> {
+  const result = await fetchAPI(`/users/${username}/change-password/`, {
+    method: 'POST',
+    body: JSON.stringify(data),
+    authorized: true,
+  });
 
-  return null;
+  revalidatePath(`/users/${username}/`);
+
+  return result;
 }

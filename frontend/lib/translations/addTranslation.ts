@@ -1,29 +1,21 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import fetcher, { FetchError } from '@/utils/fetcher';
-import getToken from '../tokens/getToken';
+import { fetchAPI } from '@/utils/fetchAPI';
+import { Translation } from '@/types/phrases';
+import { AddTranslationSchema } from '@/lib/schemas/translations';
+import { Result } from '@/utils/try-catch';
 
-export default async function addTranslation(phraseId: number, data: object) {
-  let res = null;
-  try {
-    res = await fetcher(
-      `/phrases/translations/`,
-      {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      },
-      getToken(),
-    );
-  } catch (error) {
-    const fetchError = error as FetchError;
-    return { error: fetchError.resBody };
-  }
+export default async function addTranslation(
+  data: AddTranslationSchema
+): Promise<Result<Translation, any>> {
+  const result = await fetchAPI(`/phrases/translations/`, {
+    method: 'POST',
+    authorized: true,
+    body: JSON.stringify(data),
+  });
 
-  revalidatePath(`/phrases/${phraseId}/`);
-  return res;
+  revalidatePath(`/phrases/${data.phrase}/`);
+
+  return result;
 }

@@ -2,22 +2,18 @@
 
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
-import fetcher from '@/utils/fetcher';
-import getToken from '../tokens/getToken';
+import { fetchAPI } from '@/utils/fetchAPI';
 
 export default async function deleteDefinition(
   wordLang: string,
   word: string,
-  id: number,
+  id: number
 ) {
-  await fetcher(
-    `/dictionary/definitions/${id}/`,
-    {
-      method: 'DELETE',
-    },
-    getToken(),
-  );
+  await fetchAPI(`/dictionary/definitions/${id}/`, {
+    method: 'DELETE',
+    authorized: true,
+  });
 
-  revalidatePath(`/dictionary/${wordLang}/${word}`);
-  redirect(`/dictionary/${wordLang}/${word}`);
+  revalidatePath(`/dictionary/${wordLang}/${word}/`);
+  redirect(`/dictionary/${wordLang}/${word}/`);
 }

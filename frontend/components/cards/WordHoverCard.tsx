@@ -24,8 +24,8 @@ export default function WordHoverCard({ lang, word }: Props) {
   const handleHover = async (open: boolean) => {
     if (open && !wordObj) {
       setLoading(true);
-      const res = await getWord(lang, word);
-      setWordObj(res);
+      const data = await getWord(lang, word);
+      setWordObj(data);
       setLoading(false);
     }
   };

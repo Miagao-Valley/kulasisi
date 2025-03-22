@@ -1,14 +1,13 @@
-import fetcher from '@/utils/fetcher';
+import { fetchAPI } from '@/utils/fetchAPI';
 import { PartOfSpeech } from '@/types/dictionary';
 
 export default async function getPartsOfSpeech(
-  queryParams: Record<string, any> = {},
+  params: Record<string, any> = {}
 ): Promise<PartOfSpeech[]> {
-  const queryString = new URLSearchParams(queryParams).toString();
-  const url = `/dictionary/parts-of-speech/${queryString ? `?${queryString}` : ''}`;
-
-  const res = await fetcher(url, {
+  const { data: fetchedData } = await fetchAPI(`/dictionary/parts-of-speech/`, {
+    params: params,
     cache: 'no-store',
   });
-  return res;
+
+  return fetchedData;
 }

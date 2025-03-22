@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/components/providers/AuthProvider';
 import { useForm } from 'react-hook-form';
 import setFormErrors from '@/utils/setFormErrors';
-import { z } from 'zod';
+import { deleteUserSchema, DeleteUserSchema } from '@/lib/schemas/users';
 import { zodResolver } from '@hookform/resolvers/zod';
 import logout from '@/lib/auth/logout';
 import deleteUser from '@/lib/users/deleteUser';
@@ -28,19 +28,6 @@ import { FloatingLabelInput } from '@/components/ui/floating-label-input';
 import { PasswordInput } from '@/components/ui/password-input';
 import { LoadingButton } from '@/components/ui/loading-button';
 
-export const deleteAccountSchema = z.object({
-  username: z
-    .string()
-    .min(1, 'Username is required')
-    .regex(
-      /^[\w.@+-]+$/,
-      'Username can only contain letters, digits, and @/./+/-/_'
-    ),
-  password: z.string().min(1, 'Password is required'),
-});
-
-export type DeleteAccountSchema = z.infer<typeof deleteAccountSchema>;
-
 interface Props {
   username: string;
 }
@@ -49,25 +36,25 @@ export function DeleteAccountModal({ username }: Props) {
   const router = useRouter();
   const auth = useAuth();
 
-  const form = useForm<DeleteAccountSchema>({
-    resolver: zodResolver(deleteAccountSchema),
+  const form = useForm<DeleteUserSchema>({
+    resolver: zodResolver(deleteUserSchema),
     defaultValues: {
       username: '',
       password: '',
     },
   });
 
-  async function onSubmit(data: DeleteAccountSchema) {
-    const res = await deleteUser(username, data);
-    if (res?.error) {
-      setFormErrors(res.error, form.setError);
+  async function onSubmit(formData: DeleteUserSchema) {
+    const { data, error } = await deleteUser(username, formData);
+    if (error) {
+      setFormErrors(error, form.setError);
     } else {
       await logout();
       auth.updateAuth();
       auth.updateUser();
       router.push('/register/');
     }
-    return res;
+    return { data, error };
   }
 
   return (

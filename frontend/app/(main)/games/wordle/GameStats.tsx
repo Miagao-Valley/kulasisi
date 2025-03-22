@@ -26,12 +26,12 @@ export default function GameStats({ className = '' }: GameStatsProps) {
   useEffect(() => {
     const fetchGameStats = async () => {
       setLoading(true);
-      const { result, error } = await getWordleGameStats();
+      const { data, error } = await getWordleGameStats();
       if (error) {
         setGameStats(null);
         return;
       }
-      setGameStats(result);
+      setGameStats(data || null);
       setLoading(false);
     };
 

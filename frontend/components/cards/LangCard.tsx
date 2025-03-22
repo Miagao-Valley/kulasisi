@@ -68,8 +68,8 @@ export function LangHoverCard({ code }: LangHoverCardProps) {
   const handleHover = async (open: boolean) => {
     if (open && !lang) {
       setLoading(true);
-      const res = await getLang(code);
-      setLang(res);
+      const data = await getLang(code);
+      setLang(data);
       setLoading(false);
     }
   };

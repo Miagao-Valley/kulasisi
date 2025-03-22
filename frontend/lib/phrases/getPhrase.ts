@@ -1,20 +1,18 @@
-'use server';
-
-import fetcher from '@/utils/fetcher';
-import getToken from '../tokens/getToken';
+import { fetchAPI } from '@/utils/fetchAPI';
 import { Phrase } from '@/types/phrases';
 
 export default async function getPhrase(id: number): Promise<Phrase> {
-  const res = await fetcher(
-    `/phrases/${id}/`,
-    {
-      cache: 'no-store',
-    },
-    getToken()
-  );
-  if ('created_at' in res && 'updated_at' in res) {
-    res.created_at = new Date(res.created_at);
-    res.updated_at = new Date(res.updated_at);
+  const { data: fetchedData } = await fetchAPI(`/phrases/${id}/`, {
+    authorized: true,
+    cache: 'no-store',
+  });
+
+  if (fetchedData?.created_at) {
+    fetchedData.created_at = new Date(fetchedData.created_at);
   }
-  return res;
+  if (fetchedData?.updated_at) {
+    fetchedData.updated_at = new Date(fetchedData.updated_at);
+  }
+
+  return fetchedData;
 }

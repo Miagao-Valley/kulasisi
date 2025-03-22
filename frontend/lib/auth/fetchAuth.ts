@@ -1,13 +1,15 @@
-import { BASE_URL } from '@/constants';
+import { AuthType } from '@/types/users';
 
-export default async function fetchAuth() {
-  const res = await fetch(`${BASE_URL}/api/me/`, {
+export default async function fetchAuth(): Promise<AuthType | null> {
+  const url = new URL('/api/me/', process.env.NEXT_PUBLIC_BASE_URL);
+
+  const response = await fetch(url, {
     cache: 'no-store',
   });
 
-  if (!res.ok) {
+  if (!response.ok) {
     return null;
   }
 
-  return await res.json();
+  return await response.json();
 }

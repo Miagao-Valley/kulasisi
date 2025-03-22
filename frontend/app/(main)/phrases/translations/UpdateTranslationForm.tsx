@@ -6,7 +6,10 @@ import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { useForm } from 'react-hook-form';
 import setFormErrors from '@/utils/setFormErrors';
-import { z } from 'zod';
+import {
+  updateTranslationSchema,
+  UpdateTranslationSchema,
+} from '@/lib/schemas/translations';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Translation } from '@/types/phrases';
 import { EditorProvider } from '@/components/editor/EditorContext';
@@ -21,14 +24,6 @@ import {
 import { Button } from '@/components/ui/button';
 import { LoadingButton } from '@/components/ui/loading-button';
 import SourceForm from '@/components/forms/SourceForm';
-
-export const updateTranslationSchema = z.object({
-  content: z.string().min(1, 'Content is required'),
-  source_title: z.string().optional(),
-  source_link: z.string().url().optional().or(z.literal('')),
-});
-
-export type UpdateTranslationSchema = z.infer<typeof updateTranslationSchema>;
 
 interface Props {
   translation: Translation;
@@ -51,19 +46,19 @@ export default function UpdateTranslationForm({
     },
   });
 
-  async function onSubmit(data: UpdateTranslationSchema) {
-    const res = await updateTranslation(
+  async function onSubmit(formData: UpdateTranslationSchema) {
+    const { data, error } = await updateTranslation(
       translation.phrase,
       translation.id,
-      data
+      formData
     );
-    if (res?.error) {
-      setFormErrors(res.error, form.setError);
+    if (error) {
+      setFormErrors(error, form.setError);
     } else {
       setIsEditing(false);
-      toast.success('Entry updated');
+      toast.success('Translation updated');
     }
-    return res;
+    return { data, error };
   }
 
   return (

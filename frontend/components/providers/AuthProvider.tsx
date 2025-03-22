@@ -37,7 +37,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
    */
   const updateAuth = useCallback(async () => {
     const authData = await fetchAuth();
-    if (authData) {
+    if (typeof authData?.isAuthenticated === 'boolean') {
       setIsAuthenticated(authData.isAuthenticated);
     } else {
       setIsAuthenticated(false);
@@ -47,7 +47,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const updateUser = useCallback(async () => {
     const authData = await fetchAuth();
-    if (authData) {
+    if (authData?.username) {
       const userData = await getUser(authData?.username);
       setUser(userData);
     } else {

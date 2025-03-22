@@ -1,29 +1,21 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import fetcher, { FetchError } from '@/utils/fetcher';
-import getToken from '../tokens/getToken';
+import { fetchAPI } from '@/utils/fetchAPI';
+import { Phrase } from '@/types/phrases';
+import { AddPhraseSchema } from '@/lib/schemas/phrases';
+import { Result } from '@/utils/try-catch';
 
-export default async function addPhrase(data: object) {
-  let res = null;
-  try {
-    res = await fetcher(
-      `/phrases/`,
-      {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      },
-      getToken(),
-    );
-  } catch (error) {
-    const fetchError = error as FetchError;
-    return { error: fetchError.resBody };
-  }
+export default async function addPhrase(
+  data: AddPhraseSchema
+): Promise<Result<Phrase, any>> {
+  const result = await fetchAPI(`/phrases/`, {
+    method: 'POST',
+    body: JSON.stringify(data),
+    authorized: true,
+  });
 
-  revalidatePath(`/phrases`);
-  return res;
+  revalidatePath(`/phrases/`);
+
+  return result;
 }

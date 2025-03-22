@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { useForm } from 'react-hook-form';
 import setFormErrors from '@/utils/setFormErrors';
-import { z } from 'zod';
+import { addPhraseSchema, AddPhraseSchema } from '@/lib/schemas/phrases';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { EditorProvider } from '@/components/editor/EditorContext';
 import Editor from '@/components/editor/Editor';
@@ -26,17 +26,6 @@ import SourceForm from '@/components/forms/SourceForm';
 import CategoriesSelect from '@/components/forms/CategoriesSelect';
 
 const FORM_DATA_KEY = 'add-phrase-form';
-
-export const addPhraseSchema = z.object({
-  content: z.string().min(1, 'Content is required'),
-  lang: z.string().min(1, 'Language is required'),
-  categories: z.array(z.string()).optional(),
-  usage_note: z.string().optional(),
-  source_title: z.string().optional(),
-  source_link: z.string().url().optional().or(z.literal('')),
-});
-
-export type AddPhraseSchema = z.infer<typeof addPhraseSchema>;
 
 interface Props {
   className?: string;
@@ -59,24 +48,24 @@ export default function AddPhraseForm({ className = '' }: Props) {
     }
   }, [form]);
 
-  async function onSubmit(data: AddPhraseSchema) {
+  async function onSubmit(formData: AddPhraseSchema) {
     if (!auth.isAuthenticated) {
       toast.error('You need to sign in to post.');
       router.push(`/login?next=${pathname}`);
       return;
     }
 
-    const res = await addPhrase(data);
-    if (res?.error) {
-      setFormErrors(res.error, form.setError);
-    } else {
-      router.push(`/phrases/${res.id}/`);
-      toast.success('Posted');
+    const { data, error } = await addPhrase(formData);
+    if (error) {
+      setFormErrors(error, form.setError);
+    } else if (data) {
+      router.push(`/phrases/${data.id}/`);
+      toast.success('Phrase added');
     }
 
     localStorage.removeItem(FORM_DATA_KEY);
 
-    return res;
+    return { data, error };
   }
 
   useEffect(() => {

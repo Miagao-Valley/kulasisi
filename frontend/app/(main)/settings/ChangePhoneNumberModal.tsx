@@ -5,7 +5,10 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/components/providers/AuthProvider';
 import { useForm } from 'react-hook-form';
 import setFormErrors from '@/utils/setFormErrors';
-import { z } from 'zod';
+import {
+  changePhoneNumberSchema,
+  ChangePhoneNumberSchema,
+} from '@/lib/schemas/users';
 import { zodResolver } from '@hookform/resolvers/zod';
 import changePhoneNumber from '@/lib/users/changePhoneNumber';
 import { Button } from '@/components/ui/button';
@@ -27,17 +30,6 @@ import { FloatingLabelInput } from '@/components/ui/floating-label-input';
 import { PasswordInput } from '@/components/ui/password-input';
 import { LoadingButton } from '@/components/ui/loading-button';
 
-export const changePhoneNumberSchema = z.object({
-  new_phone_number: z
-    .string()
-    .min(10, 'Phone number must be at least 10 digits')
-    .max(15, 'Phone number must be at most 15 digits')
-    .regex(/^\d+$/, 'Phone number must contain only digits'),
-  password: z.string().min(1, 'Password is required'),
-});
-
-export type ChangePhoneNumberSchema = z.infer<typeof changePhoneNumberSchema>;
-
 interface Props {
   username: string;
 }
@@ -54,15 +46,15 @@ export function ChangePhoneNumberModal({ username }: Props) {
     },
   });
 
-  async function onSubmit(data: ChangePhoneNumberSchema) {
-    const res = await changePhoneNumber(username, data);
-    if (res?.error) {
-      setFormErrors(res.error, form.setError);
+  async function onSubmit(formData: ChangePhoneNumberSchema) {
+    const { data, error } = await changePhoneNumber(username, formData);
+    if (error) {
+      setFormErrors(error, form.setError);
     } else {
       auth.updateUser();
       router.refresh();
     }
-    return res;
+    return { data, error };
   }
 
   return (

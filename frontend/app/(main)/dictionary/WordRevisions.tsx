@@ -35,8 +35,8 @@ export function WordRevisionsModal({ word }: WordRevisionsModalProps) {
 
   const handleOpen = async (open: boolean) => {
     if (open && revisions.length === 0) {
-      const res = await getWordRevisions(word.lang, word.word);
-      setRevisions(res.results);
+      const { results } = await getWordRevisions(word.lang, word.word);
+      setRevisions(results);
     }
   };
 

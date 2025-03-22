@@ -1,27 +1,22 @@
 'use server';
 
-import fetcher, { FetchError } from '@/utils/fetcher';
-import getToken from '../tokens/getToken';
+import { revalidatePath } from 'next/cache';
+import { fetchAPI } from '@/utils/fetchAPI';
+import { User } from '@/types/users';
+import { ChangeEmailSchema } from '../schemas/users';
+import { Result } from '@/utils/try-catch';
 
-export default async function changeEmail(username: string, data: object) {
-  try {
-    const promise = fetcher(
-      `/users/${username}/change-email/`,
-      {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      },
-      getToken(),
-    );
-    await promise;
-  } catch (error) {
-    const fetchError = error as FetchError;
-    return { error: fetchError.resBody };
-  }
+export default async function changeEmail(
+  username: string,
+  data: ChangeEmailSchema
+): Promise<Result<User, any>> {
+  const result = await fetchAPI(`/users/${username}/change-email/`, {
+    method: 'POST',
+    body: JSON.stringify(data),
+    authorized: true,
+  });
 
-  return null;
+  revalidatePath(`/users/${username}/`);
+
+  return result;
 }

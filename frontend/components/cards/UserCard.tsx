@@ -76,8 +76,8 @@ export function UserHoverCard({ username }: UserHoverCardProps) {
   const handleHover = async (open: boolean) => {
     if (open && !user) {
       setLoading(true);
-      const res = await getUser(username);
-      setUser(res);
+      const data = await getUser(username);
+      setUser(data);
       setLoading(false);
     }
   };

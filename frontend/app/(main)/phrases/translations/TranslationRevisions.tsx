@@ -37,8 +37,8 @@ export function TranslationRevisionsModal({
 
   const handleOpen = async (open: boolean) => {
     if (open && revisions.length === 0) {
-      const res = await getTranslationRevisions(translation.id);
-      setRevisions(res.results);
+      const { results } = await getTranslationRevisions(translation.id);
+      setRevisions(results);
     }
   };
 

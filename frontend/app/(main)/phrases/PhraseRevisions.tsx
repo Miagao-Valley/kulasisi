@@ -35,8 +35,8 @@ export function PhraseRevisionsModal({ phrase }: PhraseRevisionsModalProps) {
 
   const handleOpen = async (open: boolean) => {
     if (open && revisions.length === 0) {
-      const res = await getPhraseRevisions(phrase.id);
-      setRevisions(res.results);
+      const { results } = await getPhraseRevisions(phrase.id);
+      setRevisions(results);
     }
   };
 

@@ -1,28 +1,22 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import fetcher, { FetchError } from '@/utils/fetcher';
-import getToken from '../tokens/getToken';
+import { fetchAPI } from '@/utils/fetchAPI';
+import { User } from '@/types/users';
+import { DeleteUserSchema } from '../schemas/users';
+import { Result } from '@/utils/try-catch';
 
-export default async function deleteUser(username: string, data: object) {
-  try {
-    const promise = fetcher(
-      `/users/${username}/delete/`,
-      {
-        method: 'DELETE',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      },
-      getToken(),
-    );
-    await promise;
-  } catch (error) {
-    const fetchError = error as FetchError;
-    return { error: fetchError.resBody };
-  }
+export default async function deleteUser(
+  username: string,
+  data: DeleteUserSchema
+): Promise<Result<User, any>> {
+  const result = await fetchAPI(`/users/${username}/delete/`, {
+    method: 'DELETE',
+    body: JSON.stringify(data),
+    authorized: true,
+  });
 
-  revalidatePath(`/users`);
+  revalidatePath(`/users/`);
+
+  return result;
 }

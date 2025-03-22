@@ -1,70 +1,38 @@
 'use server';
 
-import fetcher, { FetchError } from '@/utils/fetcher';
+import { fetchAPI } from '@/utils/fetchAPI';
 import { WordleGame, WordleGameStats } from '@/types/games';
-import getToken from '../tokens/getToken';
+import { Result } from '@/utils/try-catch';
 
 export async function getWordleGame(
   lang: string,
   wordLength: number
-): Promise<{ result: WordleGame | null; error: any }> {
-  try {
-    const response = await fetcher(
-      `/games/wordle/${lang}/${wordLength}/`,
-      {
-        cache: 'no-store',
-      },
-      getToken()
-    );
-    return { result: response, error: null };
-  } catch (error) {
-    const fetchError = error as FetchError;
-    return { result: null, error: fetchError.resBody };
-  }
+): Promise<Result<WordleGame, any>> {
+  return await fetchAPI(`/games/wordle/${lang}/${wordLength}/`, {
+    authorized: true,
+    cache: 'no-store',
+  });
 }
 
 export async function submitWordleGuess(
   lang: string,
   wordLength: number,
   guess: string
-): Promise<{ result: { game: WordleGame } | null; error: any }> {
-  try {
-    const response = await fetcher(
-      `/games/wordle/${lang}/${wordLength}/`,
-      {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ guess }),
-      },
-      getToken()
-    );
-    return { result: response, error: null };
-  } catch (error) {
-    const fetchError = error as FetchError;
-    return { result: null, error: fetchError.resBody };
-  }
+): Promise<Result<{ game: WordleGame }, any>> {
+  return await fetchAPI(`/games/wordle/${lang}/${wordLength}/`, {
+    method: 'POST',
+    body: JSON.stringify({ guess }),
+    authorized: true,
+  });
 }
 
 export async function getWordleGameStats(
   lang?: string,
   wordLength?: number
-): Promise<{ result: WordleGameStats | null; error: any }> {
-  try {
-    const response = await fetcher(
-      `/games/wordle/stats/?${lang ? `lang=${lang}&` : ''}${
-        wordLength ? `len=${wordLength}` : ''
-      }`,
-      {
-        cache: 'no-store',
-      },
-      getToken()
-    );
-    return { result: response, error: null };
-  } catch (error) {
-    const fetchError = error as FetchError;
-    return { result: null, error: fetchError.resBody };
-  }
+): Promise<Result<WordleGameStats, any>> {
+  return await fetchAPI(`/games/wordle/stats/`, {
+    params: { lang: lang, word_length: wordLength },
+    authorized: true,
+    cache: 'no-store',
+  });
 }

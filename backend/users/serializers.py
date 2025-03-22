@@ -134,17 +134,18 @@ class UserSerializer(serializers.ModelSerializer):
 
         instance.save()
 
-        with transaction.atomic():
-            instance.language_proficiencies.all().delete()
+        if language_proficiencies_data:
+            with transaction.atomic():
+                instance.language_proficiencies.all().delete()
 
-            for proficiency_data in language_proficiencies_data:
-                lang = proficiency_data.get("lang")
-                if lang:
-                    LanguageProficiency.objects.create(
-                        user=instance,
-                        lang=lang,
-                        level=proficiency_data.get("level"),
-                    )
+                for proficiency_data in language_proficiencies_data:
+                    lang = proficiency_data.get("lang")
+                    if lang:
+                        LanguageProficiency.objects.create(
+                            user=instance,
+                            lang=lang,
+                            level=proficiency_data.get("level"),
+                        )
 
         return instance
 

@@ -8,7 +8,10 @@ import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { useForm } from 'react-hook-form';
 import setFormErrors from '@/utils/setFormErrors';
-import { z } from 'zod';
+import {
+  addDefinitionSchema,
+  AddDefinitionSchema,
+} from '@/lib/schemas/definitions';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Form,
@@ -26,23 +29,6 @@ import SourceForm from '@/components/forms/SourceForm';
 import WordsSelect from '@/components/forms/WordsSelect';
 
 const FORM_DATA_KEY = 'add-definition-forms';
-
-export const addDefinitionSchema = z.object({
-  word: z.object({
-    word: z.string(),
-    lang: z.string(),
-  }),
-  description: z.string().min(1, 'Description is required'),
-  lang: z.string().min(1, 'Language is required'),
-  pos: z.string().optional(),
-  synonyms: z.array(z.string()).optional(),
-  antonyms: z.array(z.string()).optional(),
-  usage_note: z.string().optional(),
-  source_title: z.string().optional(),
-  source_link: z.string().url().optional().or(z.literal('')),
-});
-
-export type AddDefinitionSchema = z.infer<typeof addDefinitionSchema>;
 
 interface Props {
   wordLang: string;
@@ -76,16 +62,16 @@ export default function AddDefinitionForm({
     }
   }, [form, word, wordLang]);
 
-  async function onSubmit(data: AddDefinitionSchema) {
+  async function onSubmit(formData: AddDefinitionSchema) {
     if (!auth.isAuthenticated) {
       toast.error('You need to sign in to post.');
       router.push(`/login?next=${pathname}`);
       return;
     }
 
-    const res = await addDefinition(wordLang, word, data);
-    if (res?.error) {
-      setFormErrors(res.error, form.setError);
+    const { data, error } = await addDefinition(formData);
+    if (error) {
+      setFormErrors(error, form.setError);
     } else {
       toast.success('Definition added');
       const savedData = JSON.parse(localStorage.getItem(FORM_DATA_KEY) || '{}');
@@ -97,7 +83,7 @@ export default function AddDefinitionForm({
       }
       localStorage.setItem(FORM_DATA_KEY, JSON.stringify(savedData));
     }
-    return res;
+    return { data, error };
   }
 
   useEffect(() => {

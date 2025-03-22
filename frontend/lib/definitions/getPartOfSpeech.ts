@@ -1,11 +1,15 @@
-import fetcher from '@/utils/fetcher';
+import { fetchAPI } from '@/utils/fetchAPI';
 import { PartOfSpeech } from '@/types/dictionary';
 
 export default async function getPartOfSpeech(
   abbr: string
 ): Promise<PartOfSpeech> {
-  const res = await fetcher(`/dictionary/parts-of-speech/${abbr}/`, {
-    cache: 'no-store',
-  });
-  return res;
+  const { data: fetchedData } = await fetchAPI(
+    `/dictionary/parts-of-speech/${abbr}/`,
+    {
+      cache: 'no-store',
+    }
+  );
+
+  return fetchedData;
 }

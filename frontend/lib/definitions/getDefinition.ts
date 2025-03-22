@@ -1,20 +1,21 @@
-'use server';
-
-import fetcher from '@/utils/fetcher';
-import getToken from '../tokens/getToken';
+import { fetchAPI } from '@/utils/fetchAPI';
 import { Definition } from '@/types/dictionary';
 
 export default async function getDefinition(id: number): Promise<Definition> {
-  const res = await fetcher(
+  const { data: fetchedData } = await fetchAPI(
     `/dictionary/definitions/${id}/`,
     {
+      authorized: true,
       cache: 'no-store',
-    },
-    getToken()
+    }
   );
-  if ('created_at' in res && 'updated_at' in res) {
-    res.created_at = new Date(res.created_at);
-    res.updated_at = new Date(res.updated_at);
+
+  if (fetchedData?.created_at) {
+    fetchedData.created_at = new Date(fetchedData.created_at);
   }
-  return res;
+  if (fetchedData?.updated_at) {
+    fetchedData.updated_at = new Date(fetchedData.updated_at);
+  }
+
+  return fetchedData;
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import { useAuth } from '@/components/providers/AuthProvider';
 import { useForm } from 'react-hook-form';
 import setFormErrors from '@/utils/setFormErrors';
-import { z } from 'zod';
+import { updateUserSchema, UpdateUserSchema } from '@/lib/schemas/users';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import { User, Gender } from '@/types/users';
@@ -31,20 +31,6 @@ import { LoadingButton } from '@/components/ui/loading-button';
 import { Button } from '@/components/ui/button';
 import { UserRoundIcon } from 'lucide-react';
 
-const updateUserSchema = z.object({
-  first_name: z.string().min(1, 'First name is required'),
-  last_name: z.string().min(1, 'Last name is required'),
-  date_of_birth: z.date(),
-  location: z.string().min(1, 'Location name is required'),
-  gender: z.nativeEnum(Gender, {
-    errorMap: () => ({ message: 'Invalid gender selection' }),
-  }),
-  bio: z.string().optional(),
-  website: z.string().url().optional().or(z.literal('')),
-});
-
-type UpdateUserSchema = z.infer<typeof updateUserSchema>;
-
 interface Props {
   user: User;
 }
@@ -65,13 +51,13 @@ export default function UpdateUserForm({ user }: Props) {
     },
   });
 
-  async function onSubmit(data: UpdateUserSchema) {
-    const res = await updateUser(user.username, data);
-    if (res?.error) {
-      setFormErrors(res.error, form.setError);
+  async function onSubmit(formData: UpdateUserSchema) {
+    const { data, error } = await updateUser(user.username, formData);
+    if (error) {
+      setFormErrors(error, form.setError);
     }
     auth.updateUser();
-    return res;
+    return { data, error };
   }
 
   return (

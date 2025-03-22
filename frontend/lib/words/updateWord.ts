@@ -1,33 +1,23 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import fetcher, { FetchError } from '@/utils/fetcher';
-import getToken from '../tokens/getToken';
+import { fetchAPI } from '@/utils/fetchAPI';
+import { Word } from '@/types/dictionary';
+import { UpdateWordSchema } from '@/lib/schemas/words';
+import { Result } from '@/utils/try-catch';
 
 export default async function updateWord(
   lang: string,
   word: string,
-  data: object,
-) {
-  try {
-    const promise = fetcher(
-      `/dictionary/${lang}/${word}/`,
-      {
-        method: 'PUT',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      },
-      getToken(),
-    );
-    await promise;
-  } catch (error) {
-    const fetchError = error as FetchError;
-    return { error: fetchError.resBody };
-  }
+  data: UpdateWordSchema
+): Promise<Result<Word, any>> {
+  const result = await fetchAPI(`/dictionary/${lang}/${word}/`, {
+    method: 'PUT',
+    body: JSON.stringify(data),
+    authorized: true,
+  });
 
-  revalidatePath(`dictionary/${lang}/${word}`);
-  return null;
+  revalidatePath(`dictionary/${lang}/${word}/`);
+
+  return result;
 }

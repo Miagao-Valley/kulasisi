@@ -1,14 +1,13 @@
-import fetcher from '@/utils/fetcher';
+import { fetchAPI } from '@/utils/fetchAPI';
 import { Category } from '@/types/phrases';
 
 export default async function getCategories(
-  queryParams: Record<string, any> = {},
+  params: Record<string, any> = {}
 ): Promise<Category[]> {
-  const queryString = new URLSearchParams(queryParams).toString();
-  const url = `/phrases/categories/${queryString ? `?${queryString}` : ''}`;
-
-  const res = await fetcher(url, {
+  const { data: fetchedData } = await fetchAPI(`/phrases/categories/`, {
+    params: params,
     cache: 'no-store',
   });
-  return res;
+
+  return fetchedData;
 }

@@ -27,7 +27,8 @@ export default function DeleteDefinitionModal({ wordLang, word, id }: Props) {
       <AlertDialogHeader>
         <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
         <AlertDialogDescription>
-          This action cannot be undone. This will permanently delete this entry.
+          This action cannot be undone. This will permanently delete this
+          definition.
         </AlertDialogDescription>
       </AlertDialogHeader>
 
@@ -40,10 +41,10 @@ export default function DeleteDefinitionModal({ wordLang, word, id }: Props) {
             setIsLoading(true);
             try {
               await deleteDefinition(wordLang, word, id);
-              toast.success('Entry deleted');
+              toast.success('Definition deleted');
             } catch (error) {
               console.error(error);
-              toast.error('Failed to delete the entry');
+              toast.error('Failed to delete the definition');
             } finally {
               setIsLoading(false);
             }

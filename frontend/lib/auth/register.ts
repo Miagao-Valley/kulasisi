@@ -1,36 +1,31 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import fetcher, { FetchError } from '@/utils/fetcher';
-import setToken from '../tokens/setToken';
+import { fetchAPI } from '@/utils/fetchAPI';
+import login from './login';
+import { RegisterSchema } from '@/lib/schemas/auth';
+import { Result } from '@/utils/try-catch';
+import { User } from '@/types/users';
 
-export default async function register(data: object) {
-  try {
-    await fetcher(`/register/`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
+export default async function register(
+  data: RegisterSchema
+): Promise<Result<User, any>> {
+  const result = await fetchAPI(`/register/`, {
+    method: 'POST',
+    body: JSON.stringify(data),
+  });
 
-    const { access, refresh } = await fetcher(`/token/`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
-
-    setToken(access);
-    setToken(refresh, 'refresh');
-  } catch (error) {
-    const fetchError = error as FetchError;
-    return { error: fetchError.resBody };
+  if (result.error) {
+    return result;
   }
 
-  revalidatePath('/users/');
-  revalidatePath('/');
+  revalidatePath(`/users/`);
+  revalidatePath(`/`);
+
+  await login({
+    username: result.data.username,
+    password: result.data.password,
+  });
+
+  return result;
 }
