@@ -24,8 +24,8 @@ export default function DiffText({
             part.added
               ? 'bg-success/40'
               : part.removed
-                ? 'bg-destructive/40 line-through'
-                : ''
+              ? 'bg-destructive/40 line-through'
+              : ''
           }`}
         >
           {part.value}

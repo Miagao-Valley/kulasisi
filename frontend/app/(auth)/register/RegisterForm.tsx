@@ -49,6 +49,12 @@ export default function RegisterForm() {
   const form = useForm<RegisterSchema>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
+      username: '',
+      email: '',
+      phone_number: '',
+      first_name: '',
+      last_name: '',
+      location: '',
       language_proficiencies: [
         { lang: 'tgl', level: LangProficiencyLevel.LimitedWorking },
       ],

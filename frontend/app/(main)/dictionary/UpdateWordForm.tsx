@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import updateWord from '@/lib/words/updateWord';
 import { Word } from '@/types/dictionary';
 import { cn } from '@/lib/utils';
@@ -17,7 +16,7 @@ import { Input } from '@/components/ui/input';
 
 interface Props {
   word: Word;
-  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsEditing: (isEditing: boolean) => void;
   className?: string;
 }
 

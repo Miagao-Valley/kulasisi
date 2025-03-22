@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 import { useWordleContext } from './WordleContext';
 import { WordleGameStatus } from '@/types/games';

@@ -1,4 +1,3 @@
-import React from 'react';
 import getWords from '@/lib/words/getWords';
 import { cn } from '@/lib/utils';
 import WordCard from './WordCard';
@@ -12,7 +11,6 @@ interface Props {
   targetLang?: string;
   searchTerm?: string;
   sortOption?: string;
-  isDescending?: boolean;
   filters?: Filter;
   page?: number;
   className?: string;
@@ -32,9 +30,9 @@ export default async function WordsList({
   const words = await getWords({
     search: searchTerm,
     ordering: sortOption,
-    lang__code: sourceLang || '',
-    contributor__username: filters?.contributor || '',
-    definitions__pos__abbr: filters?.pos || '',
+    lang__code: sourceLang,
+    contributor__username: filters?.contributor,
+    definitions__pos__abbr: filters?.pos,
     limit: limit,
     offset: limit * (page - 1),
   });

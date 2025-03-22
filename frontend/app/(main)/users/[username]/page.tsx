@@ -1,10 +1,4 @@
 import React, { Suspense } from 'react';
-import {
-  Tabs,
-  TabsList,
-  TabsTrigger,
-  TabsContent,
-} from '@/components/ui/tabs-with-url';
 import getUser from '@/lib/users/getUser';
 import Overview from './Overview';
 import StatsTab from './StatsTab';
@@ -20,6 +14,12 @@ import WordsList, {
 import DefinitionsList, {
   DefinitionsListSkeleton,
 } from '@/app/(main)/dictionary/definitions/DefinitionsList';
+import {
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  TabsContent,
+} from '@/components/ui/tabs-with-url';
 
 interface Props {
   params: {

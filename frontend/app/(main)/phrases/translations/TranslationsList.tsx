@@ -1,4 +1,3 @@
-import React from 'react';
 import getTranslations from '@/lib/translations/getTranslations';
 import { cn } from '@/lib/utils';
 import TranslationCard from './TranslationCard';
@@ -11,7 +10,6 @@ interface Props {
   phraseId?: number;
   searchTerm?: string;
   sortOption?: string;
-  isDescending?: boolean;
   filters?: Filter;
   page?: number;
   className?: string;

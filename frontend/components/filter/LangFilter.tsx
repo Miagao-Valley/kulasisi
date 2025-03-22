@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import LangSelect from '../forms/LangSelect';
@@ -26,7 +26,7 @@ export default function LangFilter({
 
   useEffect(() => {
     const currentSearchParams = new URLSearchParams(
-      Array.from(searchParams.entries()),
+      Array.from(searchParams.entries())
     );
 
     if (sourceLang) {

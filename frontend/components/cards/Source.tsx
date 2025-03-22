@@ -1,10 +1,12 @@
-import { LinkIcon } from 'lucide-react';
+'use client';
+
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { Button } from '../ui/button';
+import { LinkIcon } from 'lucide-react';
 
 interface Props {
   source_title?: string;

@@ -1,10 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { User } from '@/types/users';
 import getUser from '@/lib/users/getUser';
 import shortenNum from '@/lib/utils/shortenNum';
+import { LangHoverCard } from './LangCard';
 import {
   HoverCard,
   HoverCardContent,
@@ -13,8 +15,6 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Card } from '../ui/card';
-import { cn } from '@/lib/utils';
-import { LangHoverCard } from './LangCard';
 
 interface UserCardProps {
   user: User;

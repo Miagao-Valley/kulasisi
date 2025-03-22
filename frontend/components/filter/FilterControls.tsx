@@ -1,4 +1,3 @@
-import React from 'react';
 import SearchInput from './SearchInput';
 import SortDropdown, { SortOption } from './SortDropdown';
 import FilterMenu, { Filter, FilterOption } from './FilterMenu';

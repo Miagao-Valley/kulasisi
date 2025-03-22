@@ -1,4 +1,3 @@
-import React from 'react';
 import { Lang, LangProficiencyLevel } from '@/types/languages';
 import displayLangProficiency from '@/lib/utils/displayLangProficiency';
 import { Progress } from '@/components/ui/progress';

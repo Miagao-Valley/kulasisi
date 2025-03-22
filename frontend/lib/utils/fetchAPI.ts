@@ -25,11 +25,13 @@ export async function fetchAPI(
   options: FetchAPIOptions = {}
 ): Promise<Result<any, any>> {
   const { data, error } = await tryCatch(baseFetchAPI(path, options));
-  if (error) console.error(error);
-  return {
-    data,
-    error: error instanceof FetchError ? error.details : error,
-  };
+
+  const details = error instanceof FetchError ? error.details : error;
+  const status = error instanceof FetchError ? error.status : 'Unknown';
+
+  if (error) console.error(`${status} Error fetching ${path}:\n`, details);
+
+  return { data, error: details };
 }
 
 export async function baseFetchAPI(

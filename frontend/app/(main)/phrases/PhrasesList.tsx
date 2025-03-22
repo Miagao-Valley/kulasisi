@@ -12,7 +12,6 @@ interface Props {
   targetLang?: string;
   searchTerm?: string;
   sortOption?: string;
-  isDescending?: boolean;
   filters?: Filter;
   page?: number;
   className?: string;
@@ -32,9 +31,9 @@ export default async function PhrasesList({
   const phrases = await getPhrases({
     search: searchTerm,
     ordering: sortOption,
-    lang__code: sourceLang || '',
-    contributor__username: filters?.contributor || '',
-    categories__name: filters?.category || '',
+    lang__code: sourceLang,
+    contributor__username: filters?.contributor,
+    categories__name: filters?.category,
     limit: limit,
     offset: limit * (page - 1),
   });

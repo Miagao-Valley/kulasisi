@@ -3,7 +3,7 @@ import React from 'react';
 export default function applyHighlights(
   text: string,
   highlight?: string | RegExp,
-  highlightClass: string = 'bg-yellow-100',
+  highlightClass: string = 'bg-yellow-100'
 ): React.ReactNode[] {
   if (!highlight) return [text];
 
@@ -19,7 +19,7 @@ export default function applyHighlights(
     parts.push(
       <span className={highlightClass} key={offset}>
         {match}
-      </span>,
+      </span>
     );
     lastIndex = offset + match.length;
     return match;

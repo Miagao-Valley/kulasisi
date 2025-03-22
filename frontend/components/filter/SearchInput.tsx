@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useDebounce } from 'use-debounce';
 import { cn } from '@/lib/utils';
@@ -20,7 +20,7 @@ export default function SearchInput({ currentSearchTerm, className }: Props) {
 
   useEffect(() => {
     const currentSearchParams = new URLSearchParams(
-      Array.from(searchParams.entries()),
+      Array.from(searchParams.entries())
     );
     if (query) {
       currentSearchParams.set('q', query);

@@ -50,7 +50,7 @@ export default function FilterMenu({
 
   useEffect(() => {
     const currentSearchParams = new URLSearchParams(
-      Array.from(searchParams.entries()),
+      Array.from(searchParams.entries())
     );
 
     for (const [key, value] of Object.entries(filters)) {
@@ -99,7 +99,7 @@ export default function FilterMenu({
                 />
               ) : (
                 <div>No filters</div>
-              ),
+              )
             )}
           </div>
         </PopoverContent>
@@ -209,7 +209,7 @@ export function FilterSelect({
                       'ml-auto',
                       filters[name] === option.value
                         ? 'opacity-100'
-                        : 'opacity-0',
+                        : 'opacity-0'
                     )}
                   />
                 </CommandItem>

@@ -52,11 +52,12 @@ class Vote(models.Model):
     class Meta:
         verbose_name = "Vote"
         verbose_name_plural = "Votes"
+        # Ensures a user can only vote once per object.
         unique_together = (
             "user",
             "content_type",
             "object_id",
-        )  # Ensures a user can only vote once per object
+        )
 
     def __str__(self):
         return f"{self.get_value_display()} by {self.user.username} on {self.content_type.model} {self.object_id}"

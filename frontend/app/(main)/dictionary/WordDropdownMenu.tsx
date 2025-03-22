@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import { useAuth } from '@/components/providers/AuthProvider';
 import { Word } from '@/types/dictionary';
 import { WordRevisionsModal } from './WordRevisions';
@@ -18,7 +17,7 @@ import { Ellipsis } from 'lucide-react';
 
 interface Props {
   word: Word;
-  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsEditing: (isEditing: boolean) => void;
 }
 
 export default function WordDropdownMenu({ word, setIsEditing }: Props) {

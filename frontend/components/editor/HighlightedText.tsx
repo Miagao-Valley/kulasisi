@@ -1,4 +1,4 @@
-import React from 'react';
+import { Fragment } from 'react';
 import { useEditorContext } from './EditorContext';
 import { HighlightedToken } from './HighlightedToken';
 
@@ -27,14 +27,14 @@ export default function HighlightedText() {
         lastIndex = tokenEnd;
 
         return (
-          <React.Fragment key={idx}>
+          <Fragment key={idx}>
             {beforeToken.length != 0 && (
               <span className="whitespace-pre-wrap break-words">
                 {beforeToken}
               </span>
             )}
             <HighlightedToken token={token} />
-          </React.Fragment>
+          </Fragment>
         );
       })}
       {text.slice(lastIndex)} {/* Add remaining text after the last token */}

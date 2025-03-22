@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { useAuth } from '@/components/providers/AuthProvider';
-import Loading from '../loading';
 import AccountTab from './AccountTab';
 import UpdateUserForm from './UpdateUserForm';
 import {
@@ -17,7 +16,7 @@ export default function SettingsPage() {
   const auth = useAuth();
 
   if (!auth.user) {
-    return <Loading />;
+    return <div>No user found.</div>;
   }
 
   return (

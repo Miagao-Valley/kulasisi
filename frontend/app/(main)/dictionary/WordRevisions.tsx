@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import naturalTime from '@/lib/utils/naturalTime';
 import { Word, WordRevision } from '@/types/dictionary';
 import getWordRevisions from '@/lib/words/getWordRevisions';

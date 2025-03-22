@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import { EditorProvider } from '@/components/editor/EditorContext';
 import Editor from '@/components/editor/Editor';
 

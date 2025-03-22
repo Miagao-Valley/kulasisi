@@ -41,17 +41,17 @@ class PhraseSerializer(serializers.ModelSerializer):
         required=False,
         help_text="Categories the phrase belongs to.",
     )
-    best_translations = serializers.SerializerMethodField(
-        help_text="Best translations based on votes in different languages.."
-    )
-    translation_count = serializers.SerializerMethodField(
-        help_text="Total number of translations."
-    )
     vote_count = serializers.SerializerMethodField(
         help_text="Number of upvotes minus downvotes."
     )
     user_vote = serializers.SerializerMethodField(
         help_text="The user's vote for the phrase."
+    )
+    best_translations = serializers.SerializerMethodField(
+        help_text="Best translations based on votes in different languages.."
+    )
+    translation_count = serializers.SerializerMethodField(
+        help_text="Total number of translations."
     )
 
     class Meta:
@@ -101,32 +101,26 @@ class PhraseSerializer(serializers.ModelSerializer):
         )
 
         best_translations = []
-        langs = obj.translations.values("lang").distinct()
-
-        for l in langs:
-            lang_id = l["lang"]
-
-            try:
-                lang = Language.objects.get(id=lang_id)
-            except Language.DoesNotExist:
-                continue
-
+        for l in obj.translations.values("lang__code").distinct():
+            lang_code = l["lang__code"]
             best_translation = (
-                translations.filter(lang=lang).order_by("-vote_count").first()
+                translations.filter(lang__code=lang_code)
+                .order_by("-vote_count")
+                .first()
             )
-
             if best_translation:
                 best_translations.append(
                     (
-                        lang.code,
+                        lang_code,
                         best_translation.content,
                         best_translation.vote_count,
                     )
                 )
 
-        best_translations.sort(key=lambda x: x[2], reverse=True)
-
-        return OrderedDict((lang, desc) for lang, desc, _ in best_translations)
+        best_translations.sort(key=lambda definition: definition[2], reverse=True)
+        return OrderedDict(
+            (lang, description) for lang, description, _ in best_translations
+        )
 
     def get_translation_count(self, obj: Phrase) -> int:
         return obj.translations.count()

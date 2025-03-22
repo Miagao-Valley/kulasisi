@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import deleteWord from '@/lib/words/deleteWord';
 import { LoadingButton } from '@/components/ui/loading-button';
 import { toast } from 'sonner';

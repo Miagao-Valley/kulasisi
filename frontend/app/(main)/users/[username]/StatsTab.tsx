@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import { useAuth } from '@/components/providers/AuthProvider';
 import { useForm } from 'react-hook-form';
 import setFormErrors from '@/lib/utils/setFormErrors';
@@ -11,6 +10,7 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod';
 import updateLangProficiencies from '@/lib/users/updateLangProficiencies';
 import { User } from '@/types/users';
+import LangProficienciesForm from '@/components/forms/LangProficienciesForm';
 import {
   Form,
   FormControl,
@@ -18,7 +18,6 @@ import {
   FormItem,
   FormMessage,
 } from '@/components/ui/form';
-import LangProficienciesForm from '@/components/forms/LangProficienciesForm';
 import { H3 } from '@/components/ui/heading-with-anchor';
 import { LoadingButton } from '@/components/ui/loading-button';
 

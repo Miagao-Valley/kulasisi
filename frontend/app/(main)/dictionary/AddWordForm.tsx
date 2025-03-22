@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '@/components/providers/AuthProvider';
 import addWord from '@/lib/words/addWord';
@@ -10,6 +10,8 @@ import { useForm } from 'react-hook-form';
 import setFormErrors from '@/lib/utils/setFormErrors';
 import { addWordSchema, AddWordSchema } from '@/lib/schemas/words';
 import { zodResolver } from '@hookform/resolvers/zod';
+import LangSelect from '@/components/forms/LangSelect';
+import SourceForm from '@/components/forms/SourceForm';
 import {
   Form,
   FormControl,
@@ -19,8 +21,6 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { LoadingButton } from '@/components/ui/loading-button';
-import LangSelect from '@/components/forms/LangSelect';
-import SourceForm from '@/components/forms/SourceForm';
 
 const FORM_DATA_KEY = 'add-word-form';
 

@@ -9,6 +9,7 @@ import GameStats from './GameStats';
 import LangSelectWrapper from './LangSelectWrapper';
 import WordLengthSlider from './WordLengthSlider';
 import { H1 } from '@/components/ui/heading-with-anchor';
+import Link from 'next/link';
 
 interface Props {
   searchParams: { [key: string]: string | undefined };
@@ -45,7 +46,16 @@ export default function WordlePage({ searchParams }: Props) {
         </WordleProvider>
       ) : (
         <>
-          <div className="text-center">Please sign in to play Wordle.</div>
+          <div className="text-center">
+            Please{' '}
+            <Link
+              href={`/login?next=/games/wordle/`}
+              className="underline underline-offset-4"
+            >
+              sign in
+            </Link>{' '}
+            to play Wordle.
+          </div>
         </>
       )}
     </>

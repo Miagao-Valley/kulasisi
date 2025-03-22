@@ -1,6 +1,3 @@
-'use client';
-
-import React from 'react';
 import Link from 'next/link';
 import { Lang } from '@/types/languages';
 import { cn } from '@/lib/utils';
@@ -9,8 +6,8 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { Badge } from '@/components/ui/badge';
 import { H1 } from '@/components/ui/heading-with-anchor';
+import { Badge } from '@/components/ui/badge';
 
 interface Props {
   lang: Lang;

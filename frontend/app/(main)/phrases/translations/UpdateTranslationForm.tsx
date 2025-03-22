@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import updateTranslation from '@/lib/translations/updateTranslation';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
@@ -14,6 +13,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Translation } from '@/types/phrases';
 import { EditorProvider } from '@/components/editor/EditorContext';
 import Editor from '@/components/editor/Editor';
+import SourceForm from '@/components/forms/SourceForm';
 import {
   Form,
   FormControl,
@@ -21,14 +21,13 @@ import {
   FormItem,
   FormMessage,
 } from '@/components/ui/form';
-import { Button } from '@/components/ui/button';
 import { LoadingButton } from '@/components/ui/loading-button';
-import SourceForm from '@/components/forms/SourceForm';
+import { Button } from '@/components/ui/button';
 
 interface Props {
   translation: Translation;
   initialContent?: string;
-  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsEditing: (isEditing: boolean) => void;
   className?: string;
 }
 

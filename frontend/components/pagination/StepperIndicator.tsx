@@ -1,4 +1,3 @@
-import React from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
@@ -7,7 +6,7 @@ import { Check } from 'lucide-react';
 interface Props {
   numSteps: number;
   step: number;
-  setStep: React.Dispatch<React.SetStateAction<number>>;
+  setStep: (step: number) => void;
   className?: string;
 }
 

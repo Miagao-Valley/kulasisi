@@ -87,40 +87,55 @@ export default function PhraseCard({
         <EntryFooter entry={phrase} />
       </CardFooter>
 
-      {showTranslation &&
-        Object.keys(phrase.best_translations ?? {}).length > 0 && (
-          <div className="flex flex-col gap-1 text-xs bg-accent/20 rounded-sm p-2 px-3">
-            <div>
-              <span className="text-muted-foreground">
-                {phrase.translation_count}
-              </span>{' '}
-              <span className="font-semibold">Translations</span>
-            </div>
-
-            <div className="flex items-center gap-1">
-              {(() => {
-                const translations = phrase.best_translations;
-                const selectedLang =
-                  targetLang && translations[targetLang]
-                    ? targetLang
-                    : Object.keys(translations)[0];
-                const selectedTranslation = translations[selectedLang];
-
-                return (
-                  <>
-                    <LangHoverCard code={selectedLang} />
-                    <Link
-                      href={`/phrases/${phrase.id}?tab=translations`}
-                      className="hover:text-primary text-wrap truncate w-full"
-                    >
-                      {selectedTranslation}
-                    </Link>
-                  </>
-                );
-              })()}
-            </div>
-          </div>
-        )}
+      {showTranslation && (
+        <TranslationsPreview phrase={phrase} targetLang={targetLang} />
+      )}
     </Card>
+  );
+}
+
+function TranslationsPreview({
+  phrase,
+  targetLang,
+}: {
+  phrase: Phrase;
+  targetLang?: string;
+}) {
+  return (
+    <>
+      {Object.keys(phrase.best_translations ?? {}).length > 0 && (
+        <div className="flex flex-col gap-1 text-xs bg-accent/20 rounded-sm p-2 px-3">
+          <div>
+            <span className="text-muted-foreground">
+              {phrase.translation_count}
+            </span>{' '}
+            <span className="font-semibold">Translations</span>
+          </div>
+
+          <div className="flex items-center gap-1">
+            {(() => {
+              const translations = phrase.best_translations;
+              const selectedLang =
+                targetLang && translations[targetLang]
+                  ? targetLang
+                  : Object.keys(translations)[0];
+              const selectedTranslation = translations[selectedLang];
+
+              return (
+                <>
+                  <LangHoverCard code={selectedLang} />
+                  <Link
+                    href={`/phrases/${phrase.id}?tab=translations`}
+                    className="hover:text-primary text-wrap truncate w-full"
+                  >
+                    {selectedTranslation}
+                  </Link>
+                </>
+              );
+            })()}
+          </div>
+        </div>
+      )}
+    </>
   );
 }

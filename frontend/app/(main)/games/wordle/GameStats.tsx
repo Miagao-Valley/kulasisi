@@ -1,7 +1,10 @@
-import React, { useEffect, useState } from 'react';
+'use client';
+
+import { useEffect, useState } from 'react';
 import { useAuth } from '@/components/providers/AuthProvider';
 import { WordleGameStats } from '@/types/games';
 import { getWordleGameStats } from '@/lib/games/wordle';
+import { cn } from '@/lib/utils';
 import {
   Dialog,
   DialogContent,
@@ -9,10 +12,9 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { cn } from '@/lib/utils';
-import { ChartColumnBigIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
+import { ChartColumnBigIcon } from 'lucide-react';
 
 interface GameStatsProps {
   className?: string;

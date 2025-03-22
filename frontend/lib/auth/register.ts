@@ -23,8 +23,8 @@ export default async function register(
   revalidatePath(`/`);
 
   await login({
-    username: result.data.username,
-    password: result.data.password,
+    username: data.username,
+    password: data.password,
   });
 
   return result;

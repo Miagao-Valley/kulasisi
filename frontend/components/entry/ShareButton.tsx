@@ -1,4 +1,3 @@
-import React from 'react';
 import { Entry } from '@/types/core';
 import entryToPath from '@/lib/utils/entryToPath';
 import copyToClipboard from '@/lib/utils/copyToClipboard';

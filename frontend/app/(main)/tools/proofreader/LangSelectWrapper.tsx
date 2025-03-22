@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import getProofreaderLangs from '@/lib/proofreader/getProofreaderLangs';
 import LangSelect from '@/components/forms/LangSelect';
@@ -29,7 +29,7 @@ export default function LangSelectWrapper({
 
   useEffect(() => {
     const currentSearchParams = new URLSearchParams(
-      Array.from(searchParams.entries()),
+      Array.from(searchParams.entries())
     );
     if (selectedLang) {
       currentSearchParams.set('lang', selectedLang);

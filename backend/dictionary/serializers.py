@@ -7,6 +7,7 @@ from rest_framework import serializers
 from .models import Word, Definition, PartOfSpeech
 from users.models import User
 from languages.models import Language
+from core.serializers import DynamicFieldsSerializer
 
 
 class PartOfSpeechSerializer(serializers.ModelSerializer):
@@ -24,7 +25,7 @@ class PartOfSpeechSerializer(serializers.ModelSerializer):
         return super().update(instance, validated_data)
 
 
-class WordSerializer(serializers.ModelSerializer):
+class WordSerializer(DynamicFieldsSerializer):
     word = serializers.CharField(
         max_length=64, required=False, help_text="The word being defined."
     )
@@ -111,28 +112,20 @@ class WordSerializer(serializers.ModelSerializer):
         )
 
         best_definitions = []
-        langs = obj.definitions.values("lang").distinct()
-
-        for l in langs:
-            lang_id = l["lang"]
-
-            try:
-                lang = Language.objects.get(id=lang_id)
-            except Language.DoesNotExist:
-                continue
-
+        for l in obj.definitions.values("lang__code").distinct():
+            lang_code = l["lang__code"]
             best_definition = (
-                definitions.filter(lang=lang).order_by("-vote_count").first()
+                definitions.filter(lang__code=lang_code).order_by("-vote_count").first()
             )
-
             if best_definition:
                 best_definitions.append(
-                    (lang.code, best_definition.description, best_definition.vote_count)
+                    (lang_code, best_definition.description, best_definition.vote_count)
                 )
 
-        best_definitions.sort(key=lambda x: x[2], reverse=True)
-
-        return OrderedDict((lang, desc) for lang, desc, _ in best_definitions)
+        best_definitions.sort(key=lambda definition: definition[2], reverse=True)
+        return OrderedDict(
+            (lang, description) for lang, description, _ in best_definitions
+        )
 
     def get_definition_count(self, obj: Word) -> int:
         return obj.definitions.count()
@@ -158,8 +151,8 @@ class WordHistorySerializer(serializers.ModelSerializer):
 
 
 class DefinitionSerializer(serializers.ModelSerializer):
-    word = serializers.SerializerMethodField(
-        required=False, help_text="The word being defined."
+    word = WordSerializer(
+        required=False, fields=["word", "lang"], help_text="The word being defined."
     )
     lang = serializers.SlugRelatedField(
         queryset=Language.objects.all(),
@@ -180,6 +173,7 @@ class DefinitionSerializer(serializers.ModelSerializer):
         queryset=PartOfSpeech.objects.all(),
         slug_field="abbr",
         required=False,
+        allow_null=True,
         help_text="The part of speech for the definition.",
     )
     synonyms = serializers.SlugRelatedField(
@@ -228,13 +222,6 @@ class DefinitionSerializer(serializers.ModelSerializer):
             "vote_count": {"read_only": True},
             "user_vote": {"read_only": True},
         }
-
-    class WordData(TypedDict):
-        word: str
-        lang: str
-
-    def get_word(self, obj: Definition) -> Optional[WordData]:
-        return {"word": obj.word.word, "lang": obj.word.lang.code} if obj.word else None
 
     def get_contributor_reputation(self, obj: Definition) -> int:
         return obj.contributor.get_reputation()

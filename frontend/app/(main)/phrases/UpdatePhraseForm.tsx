@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import updatePhrase from '@/lib/phrases/updatePhrase';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
@@ -26,7 +25,7 @@ import CategoriesSelect from '@/components/forms/CategoriesSelect';
 
 interface Props {
   phrase: Phrase;
-  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsEditing: (isEditing: boolean) => void;
   className?: string;
 }
 

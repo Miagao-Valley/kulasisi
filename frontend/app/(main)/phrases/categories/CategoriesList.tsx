@@ -1,4 +1,3 @@
-import React from 'react';
 import getCategories from '@/lib/phrases/getCategories';
 import { cn } from '@/lib/utils';
 import CategoryCard from '@/components/cards/CategoryCard';

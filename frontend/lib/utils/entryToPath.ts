@@ -14,23 +14,23 @@ export default function entryToPath(
   backend: boolean = true
 ): string {
   if (isPhrase(entry)) {
-    return `/phrases/${entry.id}/`;
+    return `phrases/${entry.id}`;
   }
 
   if (isTranslation(entry)) {
     return backend
-      ? `/phrases/translations/${entry.id}/`
-      : `/phrases/${entry.phrase}/`;
+      ? `phrases/translations/${entry.id}`
+      : `phrases/${entry.phrase}`;
   }
 
   if (isWord(entry)) {
-    return `/dictionary/${entry.lang}/${entry.word}/`;
+    return `dictionary/${entry.lang}/${entry.word}`;
   }
 
   if (isDefinition(entry)) {
     return backend
-      ? `/dictionary/definitions/${entry.id}/`
-      : `/dictionary/${entry.word.lang}/${entry.word.word}/`;
+      ? `dictionary/definitions/${entry.id}`
+      : `dictionary/${entry.word.lang}/${entry.word.word}`;
   }
 
   throw new Error('Invalid entry type');

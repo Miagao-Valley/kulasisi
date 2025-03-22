@@ -1,4 +1,3 @@
-import React from 'react';
 import googleTranslate from '@/lib/phrases/googleTranslate';
 import { cn } from '@/lib/utils';
 import { Card, CardContent } from '@/components/ui/card';

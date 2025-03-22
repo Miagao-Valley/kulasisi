@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
+import { cn } from '@/lib/utils';
 import { Word } from '@/types/dictionary';
 import getWord from '@/lib/words/getWord';
 import {
@@ -11,7 +12,6 @@ import {
 } from '@/components/ui/hover-card';
 import { Badge, badgeVariants } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
-import { cn } from '@/lib/utils';
 
 interface Props {
   lang: string;

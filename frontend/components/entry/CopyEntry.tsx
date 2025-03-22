@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+'use client';
+
+import { useState } from 'react';
 import { Entry } from '@/types/core';
 import { isPhrase, isTranslation } from '@/types/phrases';
 import { isDefinition, isWord } from '@/types/dictionary';

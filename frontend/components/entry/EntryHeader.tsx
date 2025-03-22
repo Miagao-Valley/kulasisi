@@ -1,6 +1,3 @@
-'use client';
-
-import React from 'react';
 import naturalTime from '@/lib/utils/naturalTime';
 import { Phrase, Translation } from '@/types/phrases';
 import { Word, Definition } from '@/types/dictionary';

@@ -57,12 +57,12 @@ INSTALLED_APPS = [
     "dictionary",
     "proofreader",
     "games",
-    "drf_redesign",
-    "drf_spectacular",
     "rest_framework",
     "corsheaders",
     "django_filters",
     "simple_history",
+    "drf_spectacular",
+    "drf_redesign",
 ]
 
 MIDDLEWARE = [
@@ -167,6 +167,14 @@ STORAGES = {
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
+# Cross-Origin Resource Sharing (CORS)
+# https://pypi.org/project/django-cors-headers/
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWS_CREDENTIALS = True
+
+
+# Rest Framework
+# https://www.django-rest-framework.org/
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
@@ -183,13 +191,8 @@ REST_FRAMEWORK = {
 }
 
 
-SPECTACULAR_SETTINGS = {
-    "TITLE": "Kulasisi API",
-    "DESCRIPTION": "This is the Kulasisi API.",
-    "VERSION": "1.0.0",
-    "SERVE_INCLUDE_SCHEMA": False,
-}
-
+# Simple JWT
+# https://django-rest-framework-simplejwt.readthedocs.io/
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
@@ -197,5 +200,11 @@ SIMPLE_JWT = {
 }
 
 
-CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOWS_CREDENTIALS = True
+# Spectacular
+# https://drf-spectacular.readthedocs.io/
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Kulasisi API",
+    "DESCRIPTION": "This is the Kulasisi API.",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+}

@@ -1,4 +1,5 @@
-import React from 'react';
+'use client';
+
 import { cva } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 import { useWordleContext } from './WordleContext';
@@ -15,6 +16,7 @@ const keys = [
 interface KeyboardProps {
   className?: string;
 }
+
 export default function Keyboard({ className }: KeyboardProps) {
   const { addLetter, removeLetter, submitGuess } = useWordleContext();
 

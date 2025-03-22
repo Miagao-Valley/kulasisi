@@ -1,4 +1,3 @@
-import React from 'react';
 import { useWordleContext } from './WordleContext';
 import Board from './Board';
 import Keyboard from './Keyboard';

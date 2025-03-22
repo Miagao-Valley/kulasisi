@@ -69,6 +69,7 @@ export default async function DefinitionsSection({
         sortingOptions={sortingOptions}
         filters={filters}
         filterOptions={filterOptions}
+        className="my-1"
       />
       <Suspense fallback={<DefinitionsListSkeleton />}>
         <DefinitionsList

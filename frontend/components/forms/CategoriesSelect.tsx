@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import getCategories from '@/lib/phrases/getCategories';
 import { cn } from '@/lib/utils';
 import ListSelector from '../ui/list-selector';

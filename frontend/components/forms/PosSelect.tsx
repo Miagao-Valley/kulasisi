@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PartOfSpeech } from '@/types/dictionary';
 import getPartsOfSpeech from '@/lib/definitions/getPartsOfSpeech';
 import { cn } from '@/lib/utils';
@@ -66,7 +66,11 @@ export default function PosSelect({
           size="sm"
           role="combobox"
           aria-expanded={open}
-          className={cn('justify-between gap-1 px-1', className)}
+          className={cn(
+            'justify-between gap-1 px-1',
+            error && 'border border-destructive',
+            className
+          )}
         >
           <ChevronsUpDown className="opacity-50" />
           {selectedPos ? (
@@ -91,7 +95,7 @@ export default function PosSelect({
         >
           <CommandInput
             placeholder={`Search part of speech...`}
-            className={cn('h-9', error && 'border border-destructive')}
+            className={'h-9'}
           />
           <CommandList>
             {error && (

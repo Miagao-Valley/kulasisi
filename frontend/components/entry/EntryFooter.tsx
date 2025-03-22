@@ -1,6 +1,3 @@
-'use client';
-
-import React from 'react';
 import { Phrase, Translation } from '@/types/phrases';
 import { Word, Definition } from '@/types/dictionary';
 import { cn } from '@/lib/utils';

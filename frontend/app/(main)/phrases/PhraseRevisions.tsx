@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import naturalTime from '@/lib/utils/naturalTime';
 import { Phrase, PhraseRevision } from '@/types/phrases';
 import getPhraseRevisions from '@/lib/phrases/getPhraseRevisions';

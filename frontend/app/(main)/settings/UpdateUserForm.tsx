@@ -1,4 +1,5 @@
-import React from 'react';
+'use client';
+
 import { useAuth } from '@/components/providers/AuthProvider';
 import { useForm } from 'react-hook-form';
 import setFormErrors from '@/lib/utils/setFormErrors';

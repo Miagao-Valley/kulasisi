@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -38,7 +38,7 @@ export default function SortDropdown({
 
   useEffect(() => {
     const currentSearchParams = new URLSearchParams(
-      Array.from(searchParams.entries()),
+      Array.from(searchParams.entries())
     );
     if (sortOption) {
       currentSearchParams.set('sort', sortOption);
@@ -50,7 +50,7 @@ export default function SortDropdown({
 
   const toggleSort = () => {
     setSortOption(
-      (prev) => (prev.startsWith('-') ? prev.slice(1) : `-${prev}`), // Toggle the sort order
+      (prev) => (prev.startsWith('-') ? prev.slice(1) : `-${prev}`) // Toggle the sort order
     );
   };
 
@@ -77,7 +77,7 @@ export default function SortDropdown({
               {sortingOptions.find(
                 (option) =>
                   option.value.replace(/^-/g, '') ===
-                  sortOption.replace(/^-/g, ''),
+                  sortOption.replace(/^-/g, '')
               )?.label || 'None'}
             </b>
           </Button>

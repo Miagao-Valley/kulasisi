@@ -86,40 +86,55 @@ export default function WordCard({
         <EntryFooter entry={word} />
       </CardFooter>
 
-      {showDefinition &&
-        Object.keys(word.best_definitions ?? {}).length > 0 && (
-          <div className="flex flex-col gap-1 text-xs bg-accent/20 rounded-sm p-2 px-3">
-            <div>
-              <span className="text-muted-foreground">
-                {word.definition_count}
-              </span>{' '}
-              <span className="font-semibold">Definitions</span>
-            </div>
-
-            <div className="flex items-center gap-1">
-              {(() => {
-                const definitions = word.best_definitions;
-                const selectedLang =
-                  targetLang && definitions[targetLang]
-                    ? targetLang
-                    : Object.keys(definitions)[0];
-                const selectedDefinition = definitions[selectedLang];
-
-                return (
-                  <>
-                    <LangHoverCard code={selectedLang} />
-                    <Link
-                      href={`/dictionary/${word.lang}/${word.word}?tab=definitions`}
-                      className="hover:text-primary text-wrap truncate"
-                    >
-                      {selectedDefinition}
-                    </Link>
-                  </>
-                );
-              })()}
-            </div>
-          </div>
-        )}
+      {showDefinition && (
+        <DefinitionPreview word={word} targetLang={targetLang} />
+      )}
     </Card>
+  );
+}
+
+function DefinitionPreview({
+  word,
+  targetLang,
+}: {
+  word: Word;
+  targetLang?: string;
+}) {
+  return (
+    <>
+      {Object.keys(word.best_definitions ?? {}).length > 0 && (
+        <div className="flex flex-col gap-1 text-xs bg-accent/20 rounded-sm p-2 px-3">
+          <div>
+            <span className="text-muted-foreground">
+              {word.definition_count}
+            </span>{' '}
+            <span className="font-semibold">Definitions</span>
+          </div>
+
+          <div className="flex items-center gap-1">
+            {(() => {
+              const definitions = word.best_definitions;
+              const selectedLang =
+                targetLang && definitions[targetLang]
+                  ? targetLang
+                  : Object.keys(definitions)[0];
+              const selectedDefinition = definitions[selectedLang];
+
+              return (
+                <>
+                  <LangHoverCard code={selectedLang} />
+                  <Link
+                    href={`/dictionary/${word.lang}/${word.word}?tab=definitions`}
+                    className="hover:text-primary text-wrap truncate"
+                  >
+                    {selectedDefinition}
+                  </Link>
+                </>
+              );
+            })()}
+          </div>
+        </div>
+      )}
+    </>
   );
 }

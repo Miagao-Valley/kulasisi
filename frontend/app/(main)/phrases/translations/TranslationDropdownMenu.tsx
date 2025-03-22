@@ -18,7 +18,7 @@ import { Ellipsis } from 'lucide-react';
 
 interface Props {
   translation: Translation;
-  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsEditing: (isEditing: boolean) => void;
 }
 
 export default function TranslationDropdownMenu({

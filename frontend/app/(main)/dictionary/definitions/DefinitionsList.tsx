@@ -1,4 +1,3 @@
-import React from 'react';
 import getDefinitions from '@/lib/definitions/getDefinitions';
 import { cn } from '@/lib/utils';
 import DefinitionCard from './DefinitionCard';
@@ -12,7 +11,6 @@ interface Props {
   word?: string;
   searchTerm?: string;
   sortOption?: string;
-  isDescending?: boolean;
   filters?: Filter;
   page?: number;
   className?: string;

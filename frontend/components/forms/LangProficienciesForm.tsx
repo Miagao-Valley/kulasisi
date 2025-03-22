@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Lang, LangProficiencyLevel } from '@/types/languages';
 import displayLangProficiency from '@/lib/utils/displayLangProficiency';
 import getLangs from '@/lib/langs/getLangs';

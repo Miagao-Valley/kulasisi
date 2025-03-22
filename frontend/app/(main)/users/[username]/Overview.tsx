@@ -1,14 +1,13 @@
 'use client';
 
-import React from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/components/providers/AuthProvider';
 import { User } from '@/types/users';
 import { cn } from '@/lib/utils';
 import { badgeVariants } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { H1 } from '@/components/ui/heading-with-anchor';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { H1 } from '@/components/ui/heading-with-anchor';
+import { Button } from '@/components/ui/button';
 import {
   CakeSliceIcon,
   CalendarFoldIcon,

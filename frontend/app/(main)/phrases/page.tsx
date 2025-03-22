@@ -64,7 +64,6 @@ export default async function PhrasesPage({ searchParams }: Props) {
           <LangFilter
             currentSourceLang={sourceLang}
             currentTargetLang={targetLang}
-            className=""
           />
           <FilterControls
             sortOption={sortOption}

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Lang } from '@/types/languages';
 import getLangs from '@/lib/langs/getLangs';
 import { cn } from '@/lib/utils';

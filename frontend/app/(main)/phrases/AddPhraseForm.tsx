@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '@/components/providers/AuthProvider';
 import addPhrase from '@/lib/phrases/addPhrase';
@@ -12,6 +12,10 @@ import { addPhraseSchema, AddPhraseSchema } from '@/lib/schemas/phrases';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { EditorProvider } from '@/components/editor/EditorContext';
 import Editor from '@/components/editor/Editor';
+import LangSelect from '@/components/forms/LangSelect';
+import CategoriesSelect from '@/components/forms/CategoriesSelect';
+import UsageNoteForm from '@/components/forms/UsageNoteForm';
+import SourceForm from '@/components/forms/SourceForm';
 import {
   Form,
   FormControl,
@@ -20,10 +24,6 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { LoadingButton } from '@/components/ui/loading-button';
-import LangSelect from '@/components/forms/LangSelect';
-import UsageNoteForm from '@/components/forms/UsageNoteForm';
-import SourceForm from '@/components/forms/SourceForm';
-import CategoriesSelect from '@/components/forms/CategoriesSelect';
 
 const FORM_DATA_KEY = 'add-phrase-form';
 
@@ -37,7 +37,6 @@ export default function AddPhraseForm({ className = '' }: Props) {
   const pathname = usePathname();
 
   const form = useForm<AddPhraseSchema>({
-    mode: 'onTouched',
     resolver: zodResolver(addPhraseSchema),
   });
 

@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import { useAuth } from '@/components/providers/AuthProvider';
 import { Definition } from '@/types/dictionary';
 import DeleteDefinitionModal from './DeleteDefinitionModal';
@@ -18,7 +17,7 @@ import { DefinitionRevisionsModal } from './DefinitionRevisions';
 
 interface Props {
   definition: Definition;
-  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsEditing: (isEditing: boolean) => void;
 }
 
 export default function DefinitionDropdownMenu({

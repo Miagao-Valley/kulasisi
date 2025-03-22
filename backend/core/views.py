@@ -83,7 +83,7 @@ class HomeFeedView(GenericAPIView):
             combined_queryset, request, view=self
         )
 
-        # Bulk fetch model instances to avoid N+1 queries.
+        # Bulk fetch model instances.
         phrase_ids = [
             item["id"]
             for item in paginated_queryset

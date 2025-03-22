@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import updateDefinition from '@/lib/definitions/updateDefinition';
 import { Definition } from '@/types/dictionary';
 import { cn } from '@/lib/utils';
@@ -29,7 +28,7 @@ import WordsSelect from '@/components/forms/WordsSelect';
 
 interface Props {
   definition: Definition;
-  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsEditing: (isEditing: boolean) => void;
   className?: string;
 }
 
