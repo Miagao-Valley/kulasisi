@@ -23,7 +23,7 @@ export default async function GoogleTranslateCard({
   }
 
   return (
-    <Card className={cn(className, `shadow-none'}`)}>
+    <Card className={cn(className)}>
       <CardContent>
         <p className="text-base mb-2 whitespace-pre-line">
           <a

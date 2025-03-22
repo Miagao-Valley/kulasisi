@@ -28,12 +28,7 @@ export default function UserCard({
   className = '',
 }: UserCardProps) {
   return (
-    <Card
-      className={cn(
-        className,
-        `shadow-none ${clickable && 'hover:bg-accent/40'}`
-      )}
-    >
+    <Card className={cn(className, clickable && 'hover:bg-accent/40')}>
       <div className="flex gap-2">
         <Avatar>
           <>

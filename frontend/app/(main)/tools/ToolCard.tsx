@@ -25,7 +25,7 @@ export default function ToolCard({
   className = '',
 }: Props) {
   return (
-    <Card className={cn(className, `shadow-none text-center`)}>
+    <Card className={cn(className, `text-center`)}>
       <CardHeader className="p-0 flex flex-col justify-center items-center">
         {icon}
         <h2 className="text-xl font-bold hover:text-primary">

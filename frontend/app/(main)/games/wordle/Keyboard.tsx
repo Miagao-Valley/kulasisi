@@ -74,7 +74,7 @@ export function Key({
       variant="outline"
       size="sm"
       className={cn(
-        'min-w-4 max-w-8 aspect-square rounded-sm text-lg font-bold border-2 shadow-none select-none',
+        'min-w-4 max-w-8 aspect-square rounded-sm text-lg font-bold border-2 select-none',
         'hover:scale-110 hover:duration-200 hover:ease-in-out',
         keyVariants({
           status: getGuessStatus(

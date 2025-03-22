@@ -73,7 +73,7 @@ export default function FlaggedTokenCard({
       className={cn(
         className,
         clickable && 'hover:bg-accent/40',
-        'flex flex-col gap-1 shadow-none'
+        'flex flex-col gap-1'
       )}
     >
       {/* Info */}

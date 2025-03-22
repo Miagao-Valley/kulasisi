@@ -26,12 +26,7 @@ export default function PosCard({
   className = '',
 }: PosCardProps) {
   return (
-    <Card
-      className={cn(
-        className,
-        `shadow-none ${clickable && 'hover:bg-accent/40'}`
-      )}
-    >
+    <Card className={cn(className, clickable && 'hover:bg-accent/40')}>
       <div className="flex flex-col gap-1">
         <div className="flex gap-1">
           <Badge variant="secondary" className="truncate flex justify-center">

@@ -37,7 +37,7 @@ export default function DefinitionCard({
     <Card
       className={cn(
         className,
-        `flex flex-col gap-2 border-transparent shadow-none ${
+        `flex flex-col gap-2 border-transparent ${
           clickable && 'hover:bg-accent/40'
         }`
       )}

@@ -40,7 +40,7 @@ export default function WordCard({
     <Card
       className={cn(
         className,
-        `flex flex-col gap-1 border-transparent shadow-none ${
+        `flex flex-col gap-1 border-transparent ${
           clickable && 'hover:bg-accent/40'
         }`
       )}
