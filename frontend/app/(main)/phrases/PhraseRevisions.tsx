@@ -1,10 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import naturalTime from '@/lib/utils/naturalTime';
+import { naturalTime } from '@/lib/utils/naturalTime';
 import { Phrase, PhraseRevision } from '@/types/phrases';
-import getPhraseRevisions from '@/lib/phrases/getPhraseRevisions';
-import DiffText from '@/components/DiffText';
+import { getPhraseRevisions } from '@/lib/phrases/getPhraseRevisions';
+import { DiffText } from '@/components/DiffText';
 import { UserHoverCard } from '@/components/cards/UserCard';
 import {
   Accordion,

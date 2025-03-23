@@ -11,7 +11,7 @@ interface WordLengthSliderProps {
   className?: string;
 }
 
-export default function WordLengthSlider({
+export function WordLengthSlider({
   currentLength,
   className,
 }: WordLengthSliderProps) {

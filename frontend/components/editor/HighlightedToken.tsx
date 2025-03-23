@@ -3,7 +3,7 @@ import { cva } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 import { useEditorContext } from './EditorContext';
 import { FlaggedToken } from '@/types/proofreader';
-import FlaggedTokenCard from './FlaggedTokenCard';
+import { FlaggedTokenCard } from './FlaggedTokenCard';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 
 const tokenUnderlineVariants = cva(
@@ -24,7 +24,7 @@ const tokenUnderlineVariants = cva(
       level: 'error',
       active: false,
     },
-  },
+  }
 );
 
 const tokenBgVariants = cva(
@@ -45,7 +45,7 @@ const tokenBgVariants = cva(
       level: 'error',
       active: false,
     },
-  },
+  }
 );
 
 interface HighlightedTokenProps {
@@ -104,7 +104,7 @@ export function HighlightedToken({
           'outline-none ring-0 whitespace-pre-wrap break-words',
           tokenUnderlineVariants({ level: token.level, active: active }),
           active && tokenBgVariants({ level: token.level, active: active }),
-          isMounted ? 'scale-x-100 opacity-100' : 'scale-x-0 opacity-0',
+          isMounted ? 'scale-x-100 opacity-100' : 'scale-x-0 opacity-0'
         )}
       >
         {token.token}

@@ -1,10 +1,10 @@
 import { useWordleContext } from './WordleContext';
-import Board from './Board';
-import Keyboard from './Keyboard';
-import GameEndModal from './GameEndModal';
+import { Board } from './Board';
+import { Keyboard } from './Keyboard';
+import { GameEndModal } from './GameEndModal';
 import { Spinner } from '@/components/ui/spinner';
 
-export default function WordleGame() {
+export function WordleGame() {
   const { loading, error } = useWordleContext();
 
   return (

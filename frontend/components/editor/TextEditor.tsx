@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, ChangeEvent } from 'react';
 import { cn } from '@/lib/utils';
 import { useEditorContext } from './EditorContext';
-import HighlightedText from './HighlightedText';
+import { HighlightedText } from './HighlightedText';
 import {
   AutosizeTextarea,
   AutosizeTextAreaProps,
@@ -113,4 +113,4 @@ const TextEditor: React.FC<TextEditorProps> = ({
   );
 };
 
-export default TextEditor;
+export { TextEditor };

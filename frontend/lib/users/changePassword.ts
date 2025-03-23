@@ -6,7 +6,7 @@ import { User } from '@/types/users';
 import { ChangePasswordSchema } from '../schemas/users';
 import { Result } from '@/lib/utils/try-catch';
 
-export default async function changePassword(
+export async function changePassword(
   username: string,
   data: ChangePasswordSchema
 ): Promise<Result<User, any>> {

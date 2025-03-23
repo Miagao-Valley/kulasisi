@@ -3,11 +3,11 @@
 import { useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { useAuth } from '@/components/providers/AuthProvider';
-import addDefinition from '@/lib/definitions/addDefinition';
+import { addDefinition } from '@/lib/definitions/addDefinition';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { useForm } from 'react-hook-form';
-import setFormErrors from '@/lib/utils/setFormErrors';
+import { setFormErrors } from '@/lib/utils/setFormErrors';
 import {
   addDefinitionSchema,
   AddDefinitionSchema,
@@ -22,11 +22,11 @@ import {
 } from '@/components/ui/form';
 import { AutosizeTextarea } from '@/components/ui/autoresize-textarea';
 import { LoadingButton } from '@/components/ui/loading-button';
-import LangSelect from '@/components/forms/LangSelect';
-import PosSelect from '@/components/forms/PosSelect';
-import UsageNoteForm from '@/components/forms/UsageNoteForm';
-import SourceForm from '@/components/forms/SourceForm';
-import WordsSelect from '@/components/forms/WordsSelect';
+import { LangSelect } from '@/components/forms/LangSelect';
+import { PosSelect } from '@/components/forms/PosSelect';
+import { UsageNoteForm } from '@/components/forms/UsageNoteForm';
+import { SourceForm } from '@/components/forms/SourceForm';
+import { WordsSelect } from '@/components/forms/WordsSelect';
 
 const FORM_DATA_KEY = 'add-definition-forms';
 
@@ -36,11 +36,7 @@ interface Props {
   className?: string;
 }
 
-export default function AddDefinitionForm({
-  wordLang,
-  word,
-  className = '',
-}: Props) {
+export function AddDefinitionForm({ wordLang, word, className = '' }: Props) {
   const auth = useAuth();
   const router = useRouter();
   const pathname = usePathname();

@@ -4,7 +4,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
 import { Button } from '../ui/button';
 import { PanelRightClose, PanelRightOpen } from 'lucide-react';
 
-export default function CustomSidebarTrigger() {
+export function CustomSidebarTrigger() {
   const { isMobile, open, toggleSidebar } = useSidebar();
   const { os } = useKbd();
 

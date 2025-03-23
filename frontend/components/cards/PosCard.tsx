@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { PartOfSpeech } from '@/types/dictionary';
-import getPartOfSpeech from '@/lib/definitions/getPartOfSpeech';
+import { getPartOfSpeech } from '@/lib/definitions/getPartOfSpeech';
 import {
   HoverCard,
   HoverCardContent,
@@ -20,7 +20,7 @@ interface PosCardProps {
   className?: string;
 }
 
-export default function PosCard({
+export function PosCard({
   pos,
   clickable = true,
   className = '',

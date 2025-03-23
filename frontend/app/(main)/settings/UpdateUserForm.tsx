@@ -2,13 +2,13 @@
 
 import { useAuth } from '@/components/providers/AuthProvider';
 import { useForm } from 'react-hook-form';
-import setFormErrors from '@/lib/utils/setFormErrors';
+import { setFormErrors } from '@/lib/utils/setFormErrors';
 import { updateUserSchema, UpdateUserSchema } from '@/lib/schemas/users';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import { User, Gender } from '@/types/users';
-import displayGender from '@/lib/utils/displayGender';
-import updateUser from '@/lib/users/updateUser';
+import { displayGender } from '@/lib/utils/displayGender';
+import { updateUser } from '@/lib/users/updateUser';
 import {
   Form,
   FormControl,
@@ -36,7 +36,7 @@ interface Props {
   user: User;
 }
 
-export default function UpdateUserForm({ user }: Props) {
+export function UpdateUserForm({ user }: Props) {
   const auth = useAuth();
 
   const form = useForm<UpdateUserSchema>({

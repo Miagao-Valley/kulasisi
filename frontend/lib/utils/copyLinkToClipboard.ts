@@ -1,4 +1,4 @@
-import copyToClipboard from './copyToClipboard';
+import { copyToClipboard } from './copyToClipboard';
 
 /**
  * Copies a generated URL to the clipboard and shows a success message.
@@ -6,7 +6,7 @@ import copyToClipboard from './copyToClipboard';
  * @param url - The URL or path to append to the base URL.
  * @param base - The base URL (defaults to the current window's origin).
  */
-export default function copyLinkToClipboard(
+export function copyLinkToClipboard(
   url: string,
   base: string = window.location.origin
 ) {

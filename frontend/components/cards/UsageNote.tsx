@@ -16,7 +16,7 @@ interface Props {
   note: string;
 }
 
-export default function UsageNote({ note }: Props) {
+export function UsageNote({ note }: Props) {
   const isMobile = useIsMobile();
 
   const [open, setOpen] = useState(false);

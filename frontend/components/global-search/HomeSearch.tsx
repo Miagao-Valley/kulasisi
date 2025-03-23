@@ -1,7 +1,7 @@
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../providers/AuthProvider';
 import { useGlobalSearch } from './GlobalSearch';
-import logout from '@/lib/auth/logout';
+import { logout } from '@/lib/auth/logout';
 import { CommandGroup, CommandItem } from '../ui/command';
 import {
   BookAIcon,

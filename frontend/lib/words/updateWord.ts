@@ -6,7 +6,7 @@ import { Word } from '@/types/dictionary';
 import { UpdateWordSchema } from '@/lib/schemas/words';
 import { Result } from '@/lib/utils/try-catch';
 
-export default async function updateWord(
+export async function updateWord(
   lang: string,
   word: string,
   data: UpdateWordSchema

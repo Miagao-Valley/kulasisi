@@ -3,7 +3,7 @@
 import { useAuth } from '@/components/providers/AuthProvider';
 import { Phrase } from '@/types/phrases';
 import { PhraseRevisionsModal } from './PhraseRevisions';
-import DeletePhraseModal from './DeletePhraseModal';
+import { DeletePhraseModal } from './DeletePhraseModal';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -20,7 +20,7 @@ interface Props {
   setIsEditing: (isEditing: boolean) => void;
 }
 
-export default function PhraseDropdownMenu({ phrase, setIsEditing }: Props) {
+export function PhraseDropdownMenu({ phrase, setIsEditing }: Props) {
   const auth = useAuth();
 
   return (

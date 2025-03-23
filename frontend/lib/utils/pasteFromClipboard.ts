@@ -6,7 +6,7 @@ import { toast } from 'sonner';
  * @param onPaste - The callback function that will be called with the clipboard text.
  * @param message - Message to display after text is pasted.
  */
-export default async function pasteFromClipboard(
+export async function pasteFromClipboard(
   onPaste: (clipboardText: string) => void,
   message: string = 'Text pasted from clipboard.'
 ) {

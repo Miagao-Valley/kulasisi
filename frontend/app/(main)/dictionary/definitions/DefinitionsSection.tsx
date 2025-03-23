@@ -1,22 +1,19 @@
 import React, { Suspense } from 'react';
 import { Word } from '@/types/dictionary';
-import AddDefinitionForm from './AddDefinitionForm';
-import DefinitionsList, { DefinitionsListSkeleton } from './DefinitionsList';
+import { AddDefinitionForm } from './AddDefinitionForm';
+import { DefinitionsList, DefinitionsListSkeleton } from './DefinitionsList';
 import { SortOption } from '@/components/filter/SortDropdown';
 import { FilterOption } from '@/components/filter/FilterMenu';
-import getLangs from '@/lib/langs/getLangs';
-import getPartsOfSpeech from '@/lib/definitions/getPartsOfSpeech';
-import FilterControls from '@/components/filter/FilterControls';
+import { getLangs } from '@/lib/langs/getLangs';
+import { getPartsOfSpeech } from '@/lib/definitions/getPartsOfSpeech';
+import { FilterControls } from '@/components/filter/FilterControls';
 
 interface Props {
   word: Word;
   searchParams: { [key: string]: string | undefined };
 }
 
-export default async function DefinitionsSection({
-  searchParams,
-  word,
-}: Props) {
+export async function DefinitionsSection({ searchParams, word }: Props) {
   const searchTerm = searchParams.q || '';
   const sortOption = searchParams.sort || '-vote_count';
   const lang = searchParams.lang || '';

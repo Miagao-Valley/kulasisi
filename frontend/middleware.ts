@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import getAuth from './lib/auth/getAuth';
+import { getAuth } from './lib/auth/getAuth';
 
 const protectedRoutes: string[] = ['/settings'];
 const restrictedRoutes: string[] = ['/login', '/register'];

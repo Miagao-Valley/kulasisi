@@ -2,7 +2,7 @@ import { fetchAPI } from '@/lib/utils/fetchAPI';
 import { Paginated } from '@/types/core';
 import { WordRevision } from '@/types/dictionary';
 
-export default async function getWordRevisions(
+export async function getWordRevisions(
   lang: string,
   word: string
 ): Promise<Paginated<WordRevision[]>> {

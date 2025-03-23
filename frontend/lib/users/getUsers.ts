@@ -2,7 +2,7 @@ import { fetchAPI } from '@/lib/utils/fetchAPI';
 import { Paginated } from '@/types/core';
 import { User } from '@/types/users';
 
-export default async function getUsers(
+export async function getUsers(
   params: Record<string, any> = {}
 ): Promise<Paginated<User[]>> {
   const { data: fetchedData } = await fetchAPI(`/users/`, {

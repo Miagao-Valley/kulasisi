@@ -17,7 +17,7 @@ interface Props {
   className?: string;
 }
 
-export default function ToolCard({
+export function ToolCard({
   name,
   description,
   icon,

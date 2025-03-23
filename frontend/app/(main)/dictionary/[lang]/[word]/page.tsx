@@ -1,7 +1,7 @@
 import React from 'react';
-import getWord from '@/lib/words/getWord';
-import WordCard from '../../WordCard';
-import DefinitionsSection from '../../definitions/DefinitionsSection';
+import { getWord } from '@/lib/words/getWord';
+import { WordCard } from '../../WordCard';
+import { DefinitionsSection } from '../../definitions/DefinitionsSection';
 import {
   Tabs,
   TabsContent,

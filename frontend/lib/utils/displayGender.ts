@@ -6,7 +6,7 @@ import { Gender } from '@/types/users';
  * @param gender - The gender code (M, F, O, N) to convert to a readable string.
  * @returns The human-readable gender string, or 'Unknown' if the code is not recognized.
  */
-const displayGender = (gender: Gender): string => {
+export function displayGender(gender: Gender): string {
   const genderLookup = {
     [Gender.Male]: 'Male',
     [Gender.Female]: 'Female',
@@ -15,6 +15,4 @@ const displayGender = (gender: Gender): string => {
   };
 
   return genderLookup[gender] ?? 'Unknown';
-};
-
-export default displayGender;
+}

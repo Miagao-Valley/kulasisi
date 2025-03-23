@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '../providers/AuthProvider';
 import { Entry, VoteValue } from '@/types/core';
-import vote from '@/lib/vote/vote';
+import { vote } from '@/lib/vote/vote';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { ArrowBigUp, ArrowBigDown } from 'lucide-react';
@@ -13,7 +13,7 @@ interface Props {
   entry: Entry;
 }
 
-export default function VoteActions({ entry }: Props) {
+export function VoteActions({ entry }: Props) {
   const auth = useAuth();
   const router = useRouter();
   const pathname = usePathname();

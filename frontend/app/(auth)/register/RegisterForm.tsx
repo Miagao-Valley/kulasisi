@@ -5,20 +5,20 @@ import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { useAuth } from '@/components/providers/AuthProvider';
 import Link from 'next/link';
 import { LangProficiencyLevel } from '@/types/languages';
-import register from '@/lib/auth/register';
-import GetStarted from './steps/GetStarted';
-import Contact from './steps/Contact';
-import Personal from './steps/Personal';
-import Experience from './steps/Experience';
-import NavButtons from './NavButtons';
-import StepperIndicator from '@/components/pagination/StepperIndicator';
+import { register } from '@/lib/auth/register';
+import { GetStarted } from './steps/GetStarted';
+import { Contact } from './steps/Contact';
+import { Personal } from './steps/Personal';
+import { Experience } from './steps/Experience';
+import { NavButtons } from './NavButtons';
+import { StepperIndicator } from '@/components/pagination/StepperIndicator';
 import { useForm } from 'react-hook-form';
-import setFormErrors from '@/lib/utils/setFormErrors';
+import { setFormErrors } from '@/lib/utils/setFormErrors';
 import { registerSchema, RegisterSchema } from '@/lib/schemas/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormMessage } from '@/components/ui/form';
 import { H1 } from '@/components/ui/heading-with-anchor';
-import Logo from '@/components/brand/logo';
+import { AppLogo } from '@/components/brand/app-logo';
 
 const FORM_DATA_KEY = 'register-form';
 
@@ -32,7 +32,7 @@ const steps = [
   { name: 'Experience', fields: ['language_proficiencies'] },
 ];
 
-export default function RegisterForm() {
+export function RegisterForm() {
   const router = useRouter();
   const auth = useAuth();
   const searchParams = useSearchParams();
@@ -115,7 +115,7 @@ export default function RegisterForm() {
     <div className="flex flex-col gap-6">
       <div className="flex flex-col items-center gap-1">
         <Link href="/" className="flex flex-col items-center">
-          <Logo className="w-12 mb-4" />
+          <AppLogo className="w-12 mb-4" />
           <span className="sr-only">kulasisi</span>
         </Link>
         <h1 className="text-xl font-bold">Welcome to kulasisi</h1>

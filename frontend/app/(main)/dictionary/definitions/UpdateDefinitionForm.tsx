@@ -1,11 +1,11 @@
 'use client';
 
-import updateDefinition from '@/lib/definitions/updateDefinition';
+import { updateDefinition } from '@/lib/definitions/updateDefinition';
 import { Definition } from '@/types/dictionary';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { useForm } from 'react-hook-form';
-import setFormErrors from '@/lib/utils/setFormErrors';
+import { setFormErrors } from '@/lib/utils/setFormErrors';
 import {
   updateDefinitionSchema,
   UpdateDefinitionSchema,
@@ -21,10 +21,10 @@ import {
 import { AutosizeTextarea } from '@/components/ui/autoresize-textarea';
 import { Button } from '@/components/ui/button';
 import { LoadingButton } from '@/components/ui/loading-button';
-import PosSelect from '@/components/forms/PosSelect';
-import UsageNoteForm from '@/components/forms/UsageNoteForm';
-import SourceForm from '@/components/forms/SourceForm';
-import WordsSelect from '@/components/forms/WordsSelect';
+import { PosSelect } from '@/components/forms/PosSelect';
+import { UsageNoteForm } from '@/components/forms/UsageNoteForm';
+import { SourceForm } from '@/components/forms/SourceForm';
+import { WordsSelect } from '@/components/forms/WordsSelect';
 
 interface Props {
   definition: Definition;
@@ -32,7 +32,7 @@ interface Props {
   className?: string;
 }
 
-export default function UpdateDefinitionForm({
+export function UpdateDefinitionForm({
   definition,
   setIsEditing,
   className = '',

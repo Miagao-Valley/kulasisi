@@ -4,14 +4,14 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Definition } from '@/types/dictionary';
 import { cn } from '@/lib/utils';
-import EntryHeader from '@/components/entry/EntryHeader';
-import EntryFooter from '@/components/entry/EntryFooter';
-import Source from '@/components/cards/Source';
-import UsageNote from '@/components/cards/UsageNote';
+import { EntryHeader } from '@/components/entry/EntryHeader';
+import { EntryFooter } from '@/components/entry/EntryFooter';
+import { Source } from '@/components/cards/Source';
+import { UsageNote } from '@/components/cards/UsageNote';
 import { PosHoverCard } from '@/components/cards/PosCard';
-import WordHoverCard from '@/components/cards/WordHoverCard';
-import DefinitionDropdownMenu from './DefinitionDropdownMenu';
-import UpdateDefinitionForm from './UpdateDefinitionForm';
+import { WordHoverCard } from '@/components/cards/WordHoverCard';
+import { DefinitionDropdownMenu } from './DefinitionDropdownMenu';
+import { UpdateDefinitionForm } from './UpdateDefinitionForm';
 import {
   Card,
   CardContent,
@@ -26,7 +26,7 @@ interface Props {
   className?: string;
 }
 
-export default function DefinitionCard({
+export function DefinitionCard({
   definition,
   clickable = true,
   className = '',

@@ -38,7 +38,7 @@ interface Props {
   className?: string;
 }
 
-export default function FilterMenu({
+export function FilterMenu({
   filterOptions,
   currentFilters,
   className,

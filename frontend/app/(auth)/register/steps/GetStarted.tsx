@@ -16,7 +16,7 @@ interface Props {
   className?: string;
 }
 
-export default function GetStarted({ form, className }: Props) {
+export function GetStarted({ form, className }: Props) {
   return (
     <div className={cn(className, 'flex flex-col gap-3')}>
       <FormField

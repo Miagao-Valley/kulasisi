@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useGlobalSearch } from './GlobalSearch';
 import { Lang } from '@/types/languages';
-import getLangs from '@/lib/langs/getLangs';
+import { getLangs } from '@/lib/langs/getLangs';
 import { CommandGroup, CommandItem } from '../ui/command';
 
 export function LangsSearch() {

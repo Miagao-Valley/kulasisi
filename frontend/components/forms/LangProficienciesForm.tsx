@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import { Lang, LangProficiencyLevel } from '@/types/languages';
-import displayLangProficiency from '@/lib/utils/displayLangProficiency';
-import getLangs from '@/lib/langs/getLangs';
-import MultipleSelector, { Option } from '@/components/ui/multiple-selector';
+import { displayLangProficiency } from '@/lib/utils/displayLangProficiency';
+import { getLangs } from '@/lib/langs/getLangs';
+import { MultipleSelector, Option } from '@/components/ui/multiple-selector';
 import { Slider } from '@/components/ui/slider';
 import { LangHoverCard } from '../cards/LangCard';
 
@@ -19,7 +19,7 @@ interface Props {
   disabled?: boolean;
 }
 
-export default function LangProficienciesForm({
+export function LangProficienciesForm({
   selectedLangProficiencies,
   setSelectedLangProficiencies,
   disabled = false,

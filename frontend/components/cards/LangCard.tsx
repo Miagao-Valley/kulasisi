@@ -3,9 +3,9 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import shortenNum from '@/lib/utils/shortenNum';
+import { shortenNum } from '@/lib/utils/shortenNum';
 import { Lang } from '@/types/languages';
-import getLang from '@/lib/langs/getLang';
+import { getLang } from '@/lib/langs/getLang';
 import {
   HoverCard,
   HoverCardContent,
@@ -21,7 +21,7 @@ interface LangCardProps {
   className?: string;
 }
 
-export default function LangCard({
+export function LangCard({
   lang,
   clickable = true,
   className = '',

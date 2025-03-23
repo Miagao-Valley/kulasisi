@@ -1,6 +1,6 @@
 import { fetchAPI } from '@/lib/utils/fetchAPI';
 
-export default async function getWordlist(
+export async function getWordlist(
   params: Record<string, any> = {}
 ): Promise<string[]> {
   const { data: fetchedData } = await fetchAPI(`/dictionary/`, {

@@ -20,7 +20,7 @@ interface GameStatsProps {
   className?: string;
 }
 
-export default function GameStats({ className = '' }: GameStatsProps) {
+export function GameStats({ className = '' }: GameStatsProps) {
   const auth = useAuth();
   const [gameStats, setGameStats] = useState<WordleGameStats | null>(null);
   const [loading, setLoading] = useState(false);

@@ -1,6 +1,6 @@
 import React from 'react';
-import AddPhraseForm from '../phrases/AddPhraseForm';
-import AddWordForm from '../dictionary/AddWordForm';
+import { AddPhraseForm } from '../phrases/AddPhraseForm';
+import { AddWordForm } from '../dictionary/AddWordForm';
 import {
   Tabs,
   TabsContent,

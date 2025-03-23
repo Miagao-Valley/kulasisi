@@ -15,7 +15,7 @@ interface Props {
   form: UseFormReturn<RegisterSchema, any, undefined>;
 }
 
-export default function NavButtons({
+export function NavButtons({
   step,
   numSteps,
   setStep,

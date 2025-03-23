@@ -4,14 +4,14 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { Phrase } from '@/types/phrases';
 import { cn } from '@/lib/utils';
-import EntryHeader from '@/components/entry/EntryHeader';
-import EntryFooter from '@/components/entry/EntryFooter';
+import { EntryHeader } from '@/components/entry/EntryHeader';
+import { EntryFooter } from '@/components/entry/EntryFooter';
 import { LangHoverCard } from '@/components/cards/LangCard';
-import Source from '@/components/cards/Source';
-import UsageNote from '@/components/cards/UsageNote';
+import { Source } from '@/components/cards/Source';
+import { UsageNote } from '@/components/cards/UsageNote';
 import { CategoryHoverCard } from '@/components/cards/CategoryCard';
-import PhraseDropdownMenu from './PhraseDropdownMenu';
-import UpdatePhraseForm from './UpdatePhraseForm';
+import { PhraseDropdownMenu } from './PhraseDropdownMenu';
+import { UpdatePhraseForm } from './UpdatePhraseForm';
 import {
   Card,
   CardContent,
@@ -27,7 +27,7 @@ interface Props {
   className?: string;
 }
 
-export default function PhraseCard({
+export function PhraseCard({
   phrase,
   targetLang,
   clickable = false,

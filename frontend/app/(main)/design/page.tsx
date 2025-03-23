@@ -1,6 +1,6 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
-import Wordmark from '@/components/brand/wordmark';
+import { AppWordmark } from '@/components/brand/app-wordmark';
 import { H1, H2, H3, H4, H5, H6 } from '@/components/ui/heading-with-anchor';
 import {
   Card,
@@ -44,7 +44,7 @@ export default function DesignPage() {
 
       <H2 anchor="logo">Logo</H2>
       <div className="w-full flex items-center justify-center">
-        <Wordmark className="w-full md:w-1/3 sm:w-1/2" />
+        <AppWordmark className="w-full md:w-1/3 sm:w-1/2" />
       </div>
 
       <H2 anchor="colors">Colors</H2>

@@ -1,9 +1,9 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
-import copyToClipboard from '@/lib/utils/copyToClipboard';
-import pasteFromClipboard from '@/lib/utils/pasteFromClipboard';
+import { copyToClipboard } from '@/lib/utils/copyToClipboard';
+import { pasteFromClipboard } from '@/lib/utils/pasteFromClipboard';
 import { useEditorContext } from './EditorContext';
-import CharCountProgress from './CharCountProgress';
+import { CharCountProgress } from './CharCountProgress';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import {
@@ -112,4 +112,4 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({ className }) => {
   );
 };
 
-export default EditorToolbar;
+export { EditorToolbar };

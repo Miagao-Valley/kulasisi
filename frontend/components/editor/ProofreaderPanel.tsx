@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEditorContext } from './EditorContext';
-import FlaggedTokenCard from './FlaggedTokenCard';
+import { FlaggedTokenCard } from './FlaggedTokenCard';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '../ui/skeleton';
@@ -56,4 +56,4 @@ const ProofreaderPanel: React.FC = () => {
   );
 };
 
-export default ProofreaderPanel;
+export { ProofreaderPanel };

@@ -1,7 +1,7 @@
 import React from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { Gender } from '@/types/users';
-import displayGender from '@/lib/utils/displayGender';
+import { displayGender } from '@/lib/utils/displayGender';
 import { RegisterSchema } from '@/lib/schemas/auth';
 import { cn } from '@/lib/utils';
 import {
@@ -25,7 +25,7 @@ interface Props {
   className?: string;
 }
 
-export default function Personal({ form, className }: Props) {
+export function Personal({ form, className }: Props) {
   return (
     <div className={cn(className, 'flex flex-col gap-3')}>
       <div className="flex flex-col sm:flex-row gap-2">

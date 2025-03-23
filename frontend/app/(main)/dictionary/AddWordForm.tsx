@@ -3,15 +3,15 @@
 import { useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '@/components/providers/AuthProvider';
-import addWord from '@/lib/words/addWord';
+import { addWord } from '@/lib/words/addWord';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { useForm } from 'react-hook-form';
-import setFormErrors from '@/lib/utils/setFormErrors';
+import { setFormErrors } from '@/lib/utils/setFormErrors';
 import { addWordSchema, AddWordSchema } from '@/lib/schemas/words';
 import { zodResolver } from '@hookform/resolvers/zod';
-import LangSelect from '@/components/forms/LangSelect';
-import SourceForm from '@/components/forms/SourceForm';
+import { LangSelect } from '@/components/forms/LangSelect';
+import { SourceForm } from '@/components/forms/SourceForm';
 import {
   Form,
   FormControl,
@@ -28,7 +28,7 @@ interface Props {
   className?: string;
 }
 
-export default function AddWordForm({ className = '' }: Props) {
+export function AddWordForm({ className = '' }: Props) {
   const auth = useAuth();
   const router = useRouter();
   const pathname = usePathname();

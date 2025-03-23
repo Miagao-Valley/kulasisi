@@ -8,7 +8,7 @@ import {
   FormItem,
   FormMessage,
 } from '@/components/ui/form';
-import LanguageProficienciesForm from '@/components/forms/LangProficienciesForm';
+import { LangProficienciesForm } from '@/components/forms/LangProficienciesForm';
 import { H3 } from '@/components/ui/heading-with-anchor';
 
 interface Props {
@@ -16,7 +16,7 @@ interface Props {
   className?: string;
 }
 
-export default function Experience({ form, className }: Props) {
+export function Experience({ form, className }: Props) {
   return (
     <div className={cn(className, 'flex flex-col gap-3')}>
       <H3 className="!text-base m-0">Language Proficiency</H3>
@@ -26,7 +26,7 @@ export default function Experience({ form, className }: Props) {
         render={({ field }) => (
           <FormItem>
             <FormControl>
-              <LanguageProficienciesForm
+              <LangProficienciesForm
                 selectedLangProficiencies={field.value}
                 setSelectedLangProficiencies={(value) =>
                   form.setValue('language_proficiencies', value)

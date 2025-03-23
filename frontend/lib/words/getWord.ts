@@ -1,10 +1,7 @@
 import { fetchAPI } from '@/lib/utils/fetchAPI';
 import { Word } from '@/types/dictionary';
 
-export default async function getWord(
-  lang: string,
-  word: string
-): Promise<Word> {
+export async function getWord(lang: string, word: string): Promise<Word> {
   const { data: fetchedData } = await fetchAPI(`/dictionary/${lang}/${word}/`, {
     authorized: true,
     cache: 'no-store',

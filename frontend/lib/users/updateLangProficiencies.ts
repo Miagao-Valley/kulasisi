@@ -6,7 +6,7 @@ import { User } from '@/types/users';
 import { LangProficienciesSchema } from '../schemas/users';
 import { Result } from '@/lib/utils/try-catch';
 
-export default async function updateLangProficiencies(
+export async function updateLangProficiencies(
   username: string,
   data: LangProficienciesSchema
 ): Promise<Result<User, any>> {

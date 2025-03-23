@@ -3,19 +3,19 @@
 import { useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '@/components/providers/AuthProvider';
-import addPhrase from '@/lib/phrases/addPhrase';
+import { addPhrase } from '@/lib/phrases/addPhrase';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { useForm } from 'react-hook-form';
-import setFormErrors from '@/lib/utils/setFormErrors';
+import { setFormErrors } from '@/lib/utils/setFormErrors';
 import { addPhraseSchema, AddPhraseSchema } from '@/lib/schemas/phrases';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { EditorProvider } from '@/components/editor/EditorContext';
-import Editor from '@/components/editor/Editor';
-import LangSelect from '@/components/forms/LangSelect';
-import CategoriesSelect from '@/components/forms/CategoriesSelect';
-import UsageNoteForm from '@/components/forms/UsageNoteForm';
-import SourceForm from '@/components/forms/SourceForm';
+import { Editor } from '@/components/editor/Editor';
+import { LangSelect } from '@/components/forms/LangSelect';
+import { CategoriesSelect } from '@/components/forms/CategoriesSelect';
+import { UsageNoteForm } from '@/components/forms/UsageNoteForm';
+import { SourceForm } from '@/components/forms/SourceForm';
 import {
   Form,
   FormControl,
@@ -31,7 +31,7 @@ interface Props {
   className?: string;
 }
 
-export default function AddPhraseForm({ className = '' }: Props) {
+export function AddPhraseForm({ className = '' }: Props) {
   const auth = useAuth();
   const router = useRouter();
   const pathname = usePathname();

@@ -6,7 +6,7 @@ import { User } from '@/types/users';
 import { UpdateUserSchema } from '../schemas/users';
 import { Result } from '@/lib/utils/try-catch';
 
-export default async function updateUser(
+export async function updateUser(
   username: string,
   data: UpdateUserSchema
 ): Promise<Result<User, any>> {

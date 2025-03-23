@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { Word } from '@/types/dictionary';
-import getWord from '@/lib/words/getWord';
+import { getWord } from '@/lib/words/getWord';
 import {
   HoverCard,
   HoverCardContent,
@@ -18,7 +18,7 @@ interface Props {
   word: string;
 }
 
-export default function WordHoverCard({ lang, word }: Props) {
+export function WordHoverCard({ lang, word }: Props) {
   const [wordObj, setWordObj] = useState<Word | null>(null);
   const [loading, setLoading] = useState(true);
 

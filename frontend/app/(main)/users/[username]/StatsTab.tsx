@@ -2,15 +2,15 @@
 
 import { useAuth } from '@/components/providers/AuthProvider';
 import { useForm } from 'react-hook-form';
-import setFormErrors from '@/lib/utils/setFormErrors';
+import { setFormErrors } from '@/lib/utils/setFormErrors';
 import {
   langProficienciesSchema,
   LangProficienciesSchema,
 } from '@/lib/schemas/users';
 import { zodResolver } from '@hookform/resolvers/zod';
-import updateLangProficiencies from '@/lib/users/updateLangProficiencies';
+import { updateLangProficiencies } from '@/lib/users/updateLangProficiencies';
 import { User } from '@/types/users';
-import LangProficienciesForm from '@/components/forms/LangProficienciesForm';
+import { LangProficienciesForm } from '@/components/forms/LangProficienciesForm';
 import {
   Form,
   FormControl,
@@ -25,7 +25,7 @@ interface Props {
   user: User;
 }
 
-export default function StatsTab({ user }: Props) {
+export function StatsTab({ user }: Props) {
   const auth = useAuth();
 
   const form = useForm<LangProficienciesSchema>({

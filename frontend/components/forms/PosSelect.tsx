@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { PartOfSpeech } from '@/types/dictionary';
-import getPartsOfSpeech from '@/lib/definitions/getPartsOfSpeech';
+import { getPartsOfSpeech } from '@/lib/definitions/getPartsOfSpeech';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import {
@@ -30,7 +30,7 @@ interface Props {
   className?: string;
 }
 
-export default function PosSelect({
+export function PosSelect({
   selectedPos,
   setSelectedPos,
   include = [],

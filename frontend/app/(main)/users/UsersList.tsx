@@ -1,8 +1,8 @@
 import React from 'react';
-import getUsers from '@/lib/users/getUsers';
+import { getUsers } from '@/lib/users/getUsers';
 import { cn } from '@/lib/utils';
-import ListPagination from '@/components/pagination/ListPagination';
-import UserCard from '@/components/cards/UserCard';
+import { ListPagination } from '@/components/pagination/ListPagination';
+import { UserCard } from '@/components/cards/UserCard';
 import { Skeleton } from '@/components/ui/skeleton';
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
   className?: string;
 }
 
-export default async function UsersList({
+export async function UsersList({
   searchTerm,
   sortOption,
   page,

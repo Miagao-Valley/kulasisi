@@ -6,7 +6,7 @@ import { Translation } from '@/types/phrases';
 import { UpdateTranslationSchema } from '@/lib/schemas/translations';
 import { Result } from '@/lib/utils/try-catch';
 
-export default async function updateTranslation(
+export async function updateTranslation(
   phraseId: number,
   id: number,
   data: UpdateTranslationSchema

@@ -2,7 +2,7 @@ import React from 'react';
 import { cookies, headers } from 'next/headers';
 import type { Metadata } from 'next';
 import '../globals.css';
-import getOs from '@/lib/utils/getOs';
+import { getOs } from '@/lib/utils/getOs';
 import { AuthProvider } from '../../components/providers/AuthProvider';
 import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/app-sidebar/AppSidebar';

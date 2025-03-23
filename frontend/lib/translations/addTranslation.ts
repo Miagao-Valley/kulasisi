@@ -6,7 +6,7 @@ import { Translation } from '@/types/phrases';
 import { AddTranslationSchema } from '@/lib/schemas/translations';
 import { Result } from '@/lib/utils/try-catch';
 
-export default async function addTranslation(
+export async function addTranslation(
   data: AddTranslationSchema
 ): Promise<Result<Translation, any>> {
   const result = await fetchAPI(`/phrases/translations/`, {

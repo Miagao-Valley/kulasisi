@@ -3,12 +3,12 @@
 import React, { useEffect, useCallback } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
-import proofread from '@/lib/proofreader/proofread';
+import { proofread } from '@/lib/proofreader/proofread';
 import { useEditorContext } from './EditorContext';
 import { FlaggedToken, flaggedTokenLevelValue } from '@/types/proofreader';
-import TextEditor, { TextEditorProps } from './TextEditor';
-import ProofreaderPanel from './ProofreaderPanel';
-import EditorToolbar from './EditorToolbar';
+import { TextEditor, TextEditorProps } from './TextEditor';
+import { ProofreaderPanel } from './ProofreaderPanel';
+import { EditorToolbar } from './EditorToolbar';
 import {
   ResizableHandle,
   ResizablePanel,
@@ -134,4 +134,4 @@ const Editor: React.FC<EditorProps> = ({
   );
 };
 
-export default Editor;
+export { Editor };

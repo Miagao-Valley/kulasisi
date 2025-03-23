@@ -6,7 +6,7 @@ import { Definition } from '@/types/dictionary';
 import { AddDefinitionSchema } from '@/lib/schemas/definitions';
 import { Result } from '@/lib/utils/try-catch';
 
-export default async function addDefinition(
+export async function addDefinition(
   data: AddDefinitionSchema
 ): Promise<Result<Definition, any>> {
   const result = await fetchAPI(`/dictionary/definitions/`, {

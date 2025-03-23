@@ -14,7 +14,7 @@ interface Props {
   showTitle?: boolean;
 }
 
-export default function Source({
+export function Source({
   source_title = '',
   source_link = '',
   showTitle = false,

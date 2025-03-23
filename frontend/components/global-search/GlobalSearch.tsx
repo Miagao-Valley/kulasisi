@@ -64,7 +64,7 @@ export const useGlobalSearch = () => {
   return context;
 };
 
-export default function GlobalSearch() {
+export function GlobalSearch() {
   const { open, setOpen, inputValue, setInputValue, loading } =
     useGlobalSearch();
   const isMobile = useIsMobile();

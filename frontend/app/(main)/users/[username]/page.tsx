@@ -1,17 +1,21 @@
 import React, { Suspense } from 'react';
-import getUser from '@/lib/users/getUser';
-import Overview from './Overview';
-import StatsTab from './StatsTab';
-import PhrasesList, {
+import { getUser } from '@/lib/users/getUser';
+import { Overview } from './Overview';
+import { StatsTab } from './StatsTab';
+import {
+  PhrasesList,
   PhrasesListSkeleton,
 } from '@/app/(main)/phrases/PhrasesList';
-import TranslationsList, {
+import {
+  TranslationsList,
   TranslationsListSkeleton,
 } from '@/app/(main)/phrases/translations/TranslationsList';
-import WordsList, {
+import {
+  WordsList,
   WordsListSkeleton,
 } from '@/app/(main)/dictionary/WordsList';
-import DefinitionsList, {
+import {
+  DefinitionsList,
   DefinitionsListSkeleton,
 } from '@/app/(main)/dictionary/definitions/DefinitionsList';
 import {

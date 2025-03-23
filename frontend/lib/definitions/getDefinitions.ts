@@ -2,7 +2,7 @@ import { fetchAPI } from '@/lib/utils/fetchAPI';
 import { Paginated } from '@/types/core';
 import { Definition } from '@/types/dictionary';
 
-export default async function getDefinitions(
+export async function getDefinitions(
   wordLang?: string,
   word?: string,
   params: Record<string, any> = {}

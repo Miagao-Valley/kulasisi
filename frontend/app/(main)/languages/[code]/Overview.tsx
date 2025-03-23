@@ -14,7 +14,7 @@ interface Props {
   className?: string;
 }
 
-export default function Overview({ lang, className = '' }: Props) {
+export function Overview({ lang, className = '' }: Props) {
   return (
     <div className={cn(className, 'flex flex-col gap-1')}>
       <Link href={`https://iso639-3.sil.org/code/${lang.code}/`}>

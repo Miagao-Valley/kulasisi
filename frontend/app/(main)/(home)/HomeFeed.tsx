@@ -3,10 +3,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { isPhrase } from '@/types/phrases';
 import { isWord } from '@/types/dictionary';
-import getHomeFeed from '@/lib/core/getHomeFeed';
+import { getHomeFeed } from '@/lib/core/getHomeFeed';
 import { cn } from '@/lib/utils';
-import PhraseCard from '../phrases/PhraseCard';
-import WordCard from '../dictionary/WordCard';
+import { PhraseCard } from '../phrases/PhraseCard';
+import { WordCard } from '../dictionary/WordCard';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Separator } from '@/components/ui/separator';
 
@@ -14,7 +14,7 @@ interface Props {
   className?: string;
 }
 
-export default function HomeFeed({ className = '' }: Props) {
+export function HomeFeed({ className = '' }: Props) {
   const limit = 15;
   const [page, setPage] = useState(1);
   const [feed, setFeed] = useState<any[]>([]);

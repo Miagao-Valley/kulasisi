@@ -1,4 +1,4 @@
-import naturalTime from '@/lib/utils/naturalTime';
+import { naturalTime } from '@/lib/utils/naturalTime';
 import { Phrase, Translation } from '@/types/phrases';
 import { Word, Definition } from '@/types/dictionary';
 import { cn } from '@/lib/utils';
@@ -10,7 +10,7 @@ interface Props {
   className?: string;
 }
 
-export default function EntryHeader({ entry, className = '' }: Props) {
+export function EntryHeader({ entry, className = '' }: Props) {
   return (
     <div className={cn(className, 'flex flex-row gap-1 items-center text-sm')}>
       <LangHoverCard code={entry.lang} />

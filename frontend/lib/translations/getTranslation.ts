@@ -1,7 +1,7 @@
 import { fetchAPI } from '@/lib/utils/fetchAPI';
 import { Translation } from '@/types/phrases';
 
-export default async function getTranslation(id: number): Promise<Translation> {
+export async function getTranslation(id: number): Promise<Translation> {
   const { data: fetchedData } = await fetchAPI(`/phrases/translations/${id}/`, {
     authorized: true,
     cache: 'no-store',

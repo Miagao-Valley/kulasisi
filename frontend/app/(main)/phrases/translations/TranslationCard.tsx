@@ -4,11 +4,11 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Translation } from '@/types/phrases';
 import { cn } from '@/lib/utils';
-import EntryHeader from '@/components/entry/EntryHeader';
-import EntryFooter from '@/components/entry/EntryFooter';
-import Source from '@/components/cards/Source';
-import TranslationDropdownMenu from './TranslationDropdownMenu';
-import UpdateTranslationForm from './UpdateTranslationForm';
+import { EntryHeader } from '@/components/entry/EntryHeader';
+import { EntryFooter } from '@/components/entry/EntryFooter';
+import { Source } from '@/components/cards/Source';
+import { TranslationDropdownMenu } from './TranslationDropdownMenu';
+import { UpdateTranslationForm } from './UpdateTranslationForm';
 import {
   Card,
   CardContent,
@@ -22,7 +22,7 @@ interface Props {
   className?: string;
 }
 
-export default function TranslationCard({
+export function TranslationCard({
   translation,
   clickable = true,
   className = '',

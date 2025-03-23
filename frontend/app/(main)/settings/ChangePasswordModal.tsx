@@ -2,13 +2,13 @@
 
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
-import setFormErrors from '@/lib/utils/setFormErrors';
+import { setFormErrors } from '@/lib/utils/setFormErrors';
 import {
   changePasswordSchema,
   ChangePasswordSchema,
 } from '@/lib/schemas/users';
 import { zodResolver } from '@hookform/resolvers/zod';
-import changePassword from '@/lib/users/changePassword';
+import { changePassword } from '@/lib/users/changePassword';
 import { Button } from '@/components/ui/button';
 import {
   DialogContent,

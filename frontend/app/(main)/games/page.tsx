@@ -1,5 +1,5 @@
 import React from 'react';
-import GameCard from './GameCard';
+import { GameCard } from './GameCard';
 import { H1 } from '@/components/ui/heading-with-anchor';
 import { Grid2x2Icon } from 'lucide-react';
 

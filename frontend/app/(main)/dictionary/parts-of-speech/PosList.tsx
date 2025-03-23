@@ -1,7 +1,7 @@
 import React from 'react';
-import getPartsOfSpeech from '@/lib/definitions/getPartsOfSpeech';
+import { getPartsOfSpeech } from '@/lib/definitions/getPartsOfSpeech';
 import { cn } from '@/lib/utils';
-import PosCard from '@/components/cards/PosCard';
+import { PosCard } from '@/components/cards/PosCard';
 import { Skeleton } from '@/components/ui/skeleton';
 
 interface Props {
@@ -10,7 +10,7 @@ interface Props {
   className?: string;
 }
 
-export default async function PosList({
+export async function PosList({
   searchTerm,
   sortOption,
   className = '',

@@ -2,7 +2,7 @@ import { fetchAPI } from '@/lib/utils/fetchAPI';
 import { Paginated } from '@/types/core';
 import { Phrase } from '@/types/phrases';
 
-export default async function getPhrases(
+export async function getPhrases(
   params: Record<string, any> = {}
 ): Promise<Paginated<Phrase[]>> {
   const { data: fetchedData } = await fetchAPI(`/phrases/`, {

@@ -1,4 +1,4 @@
-const getOs = (userAgent: string | null): string | null => {
+export function getOs(userAgent: string | null): string | null {
   if (!userAgent) return null;
 
   const ua = userAgent.toLowerCase();
@@ -10,6 +10,4 @@ const getOs = (userAgent: string | null): string | null => {
   if (ua.includes('like mac') || ua.includes('ios')) return 'ios';
 
   return null;
-};
-
-export default getOs;
+}

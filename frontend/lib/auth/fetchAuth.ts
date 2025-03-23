@@ -1,6 +1,6 @@
 import { AuthType } from '@/types/users';
 
-export default async function fetchAuth(): Promise<AuthType | null> {
+export async function fetchAuth(): Promise<AuthType | null> {
   const url = new URL('/api/me/', process.env.NEXT_PUBLIC_BASE_URL);
 
   const response = await fetch(url, {

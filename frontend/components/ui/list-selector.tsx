@@ -1,7 +1,8 @@
 'use client';
 
 import { forwardRef } from 'react';
-import MultipleSelector, {
+import {
+  MultipleSelector,
   MultipleSelectorProps,
   MultipleSelectorRef,
   Option,
@@ -57,9 +58,9 @@ const ListSelector = forwardRef<MultipleSelectorRef, ListSelectorProps>(
         onSearch={handleSearch}
       />
     );
-  },
+  }
 );
 
 ListSelector.displayName = 'ListSelector';
 
-export default ListSelector;
+export { ListSelector };

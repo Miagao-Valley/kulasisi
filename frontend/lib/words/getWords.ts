@@ -2,7 +2,7 @@ import { fetchAPI } from '@/lib/utils/fetchAPI';
 import { Paginated } from '@/types/core';
 import { Word } from '@/types/dictionary';
 
-export default async function getWords(
+export async function getWords(
   params: Record<string, any> = {}
 ): Promise<Paginated<Word[]>> {
   const { data: fetchedData } = await fetchAPI(`/dictionary/`, {

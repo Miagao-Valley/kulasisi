@@ -10,7 +10,7 @@ interface BoardProps {
   className?: string;
 }
 
-export default function Board({ className }: BoardProps) {
+export function Board({ className }: BoardProps) {
   const { guesses } = useWordleContext();
 
   return (

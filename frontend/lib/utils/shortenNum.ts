@@ -4,7 +4,7 @@
  * @param num - The number to shorten.
  * @returns A string representing the shortened version of the number with an appropriate unit (k, m, b, t).
  */
-export default function shortenNum(num: number): string {
+export function shortenNum(num: number): string {
   // Return numbers less than 1k as is
   if (num < 1000) {
     return num.toString();

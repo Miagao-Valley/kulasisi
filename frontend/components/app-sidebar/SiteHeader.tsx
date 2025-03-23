@@ -4,15 +4,16 @@ import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { buttonVariants } from '@/components/ui/button';
 import { useSidebar } from '@/components/ui/sidebar';
-import GlobalSearch, {
+import {
+  GlobalSearch,
   GlobalSearchProvider,
 } from '../global-search/GlobalSearch';
-import CustomSidebarTrigger from './CustomSidebarTrigger';
-import ThemeToggle from './ThemeToggle';
+import { CustomSidebarTrigger } from './CustomSidebarTrigger';
+import { ThemeToggle } from './ThemeToggle';
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
 import { Separator } from '../ui/separator';
-import Logo from '../brand/logo';
-import Wordmark from '../brand/wordmark';
+import { AppLogo } from '../brand/app-logo';
+import { AppWordmark } from '../brand/app-wordmark';
 import { FeatherIcon } from 'lucide-react';
 
 export function SiteHeader() {
@@ -27,9 +28,9 @@ export function SiteHeader() {
             <Separator orientation="vertical" className="h-4 mx-1" />
             <Link href="/">
               {isMobile ? (
-                <Logo className="h-6" />
+                <AppLogo className="h-6" />
               ) : (
-                <Wordmark className="h-12 mx-1" />
+                <AppWordmark className="h-12 mx-1" />
               )}
             </Link>
           </div>

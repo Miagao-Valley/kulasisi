@@ -6,7 +6,7 @@ import { User } from '@/types/users';
 import { ChangeEmailSchema } from '../schemas/users';
 import { Result } from '@/lib/utils/try-catch';
 
-export default async function changeEmail(
+export async function changeEmail(
   username: string,
   data: ChangeEmailSchema
 ): Promise<Result<User, any>> {

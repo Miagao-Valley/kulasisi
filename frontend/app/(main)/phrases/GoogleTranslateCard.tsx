@@ -1,4 +1,4 @@
-import googleTranslate from '@/lib/phrases/googleTranslate';
+import { googleTranslate } from '@/lib/phrases/googleTranslate';
 import { cn } from '@/lib/utils';
 import { Card, CardContent } from '@/components/ui/card';
 
@@ -9,7 +9,7 @@ interface Props {
   className?: string;
 }
 
-export default async function GoogleTranslateCard({
+export async function GoogleTranslateCard({
   text,
   source,
   target,

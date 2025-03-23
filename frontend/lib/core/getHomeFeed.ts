@@ -5,7 +5,7 @@ import { Paginated } from '@/types/core';
 import { Phrase } from '@/types/phrases';
 import { Word } from '@/types/dictionary';
 
-export default async function getHomeFeed(
+export async function getHomeFeed(
   params: Record<string, any> = {}
 ): Promise<Paginated<Phrase[] | Word[]>> {
   const { data: fetchedData } = await fetchAPI(`/core/home-feed/`, {

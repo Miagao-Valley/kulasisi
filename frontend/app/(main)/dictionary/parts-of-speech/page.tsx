@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
-import PosList, { PosListSkeleton } from './PosList';
+import { PosList, PosListSkeleton } from './PosList';
 import { SortOption } from '@/components/filter/SortDropdown';
-import FilterControls from '@/components/filter/FilterControls';
+import { FilterControls } from '@/components/filter/FilterControls';
 import { H1 } from '@/components/ui/heading-with-anchor';
 
 interface Props {

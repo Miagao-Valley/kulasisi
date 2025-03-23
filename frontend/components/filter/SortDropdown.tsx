@@ -26,7 +26,7 @@ interface Props {
   className?: string;
 }
 
-export default function SortDropdown({
+export function SortDropdown({
   currentSortOption,
   sortingOptions,
   className,

@@ -10,7 +10,7 @@ interface Props {
   className?: string;
 }
 
-export default function StepperIndicator({
+export function StepperIndicator({
   numSteps,
   step,
   setStep,

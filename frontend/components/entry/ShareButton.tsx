@@ -1,6 +1,6 @@
 import { Entry } from '@/types/core';
-import entryToPath from '@/lib/utils/entryToPath';
-import copyToClipboard from '@/lib/utils/copyToClipboard';
+import { entryToPath } from '@/lib/utils/entryToPath';
+import { copyToClipboard } from '@/lib/utils/copyToClipboard';
 import {
   Dialog,
   DialogHeader,
@@ -17,7 +17,7 @@ interface Props {
   entry: Entry;
 }
 
-export default function ShareButton({ entry }: Props) {
+export function ShareButton({ entry }: Props) {
   const url = new URL(entryToPath(entry), process.env.NEXT_PUBLIC_BASE_URL);
 
   return (

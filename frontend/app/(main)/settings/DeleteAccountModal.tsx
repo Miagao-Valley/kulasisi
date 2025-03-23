@@ -3,11 +3,11 @@
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/components/providers/AuthProvider';
 import { useForm } from 'react-hook-form';
-import setFormErrors from '@/lib/utils/setFormErrors';
+import { setFormErrors } from '@/lib/utils/setFormErrors';
 import { deleteUserSchema, DeleteUserSchema } from '@/lib/schemas/users';
 import { zodResolver } from '@hookform/resolvers/zod';
-import logout from '@/lib/auth/logout';
-import deleteUser from '@/lib/users/deleteUser';
+import { logout } from '@/lib/auth/logout';
+import { deleteUser } from '@/lib/users/deleteUser';
 import { Button } from '@/components/ui/button';
 import {
   DialogContent,

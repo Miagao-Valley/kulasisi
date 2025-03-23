@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import deletePhrase from '@/lib/phrases/deletePhrase';
+import { deletePhrase } from '@/lib/phrases/deletePhrase';
 import { LoadingButton } from '@/components/ui/loading-button';
 import { toast } from 'sonner';
 import {
@@ -17,7 +17,7 @@ interface Props {
   id: number;
 }
 
-export default function DeletePhraseModal({ id }: Props) {
+export function DeletePhraseModal({ id }: Props) {
   const [isLoading, setIsLoading] = useState(false);
 
   return (

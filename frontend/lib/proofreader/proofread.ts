@@ -5,7 +5,7 @@ import { revalidatePath } from 'next/cache';
 import { FlaggedToken, ProofreaderStats } from '@/types/proofreader';
 import { Result } from '@/lib/utils/try-catch';
 
-export default async function proofread(
+export async function proofread(
   text: string,
   lang: string
 ): Promise<

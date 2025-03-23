@@ -2,14 +2,14 @@
 
 import { useEffect, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
-import getProofreaderLangs from '@/lib/proofreader/getProofreaderLangs';
-import LangSelect from '@/components/forms/LangSelect';
+import { getProofreaderLangs } from '@/lib/proofreader/getProofreaderLangs';
+import { LangSelect } from '@/components/forms/LangSelect';
 
 interface LangSelectWrapperProps {
   currentSelectedLang: string;
 }
 
-export default function LangSelectWrapper({
+export function LangSelectWrapper({
   currentSelectedLang,
 }: LangSelectWrapperProps) {
   const router = useRouter();

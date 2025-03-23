@@ -1,6 +1,6 @@
-import getCategories from '@/lib/phrases/getCategories';
+import { getCategories } from '@/lib/phrases/getCategories';
 import { cn } from '@/lib/utils';
-import CategoryCard from '@/components/cards/CategoryCard';
+import { CategoryCard } from '@/components/cards/CategoryCard';
 import { Skeleton } from '@/components/ui/skeleton';
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
   className?: string;
 }
 
-export default async function CategoriesList({
+export async function CategoriesList({
   searchTerm,
   sortOption,
   className = '',

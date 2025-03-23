@@ -1,7 +1,7 @@
-import getDefinitions from '@/lib/definitions/getDefinitions';
+import { getDefinitions } from '@/lib/definitions/getDefinitions';
 import { cn } from '@/lib/utils';
-import DefinitionCard from './DefinitionCard';
-import ListPagination from '@/components/pagination/ListPagination';
+import { DefinitionCard } from './DefinitionCard';
+import { ListPagination } from '@/components/pagination/ListPagination';
 import { Filter } from '@/components/filter/FilterMenu';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Separator } from '@/components/ui/separator';
@@ -16,7 +16,7 @@ interface Props {
   className?: string;
 }
 
-export default async function DefinitionsList({
+export async function DefinitionsList({
   wordLang,
   word,
   searchTerm = '',

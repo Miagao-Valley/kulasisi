@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import deleteWord from '@/lib/words/deleteWord';
+import { deleteWord } from '@/lib/words/deleteWord';
 import { LoadingButton } from '@/components/ui/loading-button';
 import { toast } from 'sonner';
 import {
@@ -18,7 +18,7 @@ interface Props {
   word: string;
 }
 
-export default function DeleteWordModal({ lang, word }: Props) {
+export function DeleteWordModal({ lang, word }: Props) {
   const [isLoading, setIsLoading] = useState(false);
 
   return (

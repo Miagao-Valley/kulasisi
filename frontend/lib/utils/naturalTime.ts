@@ -4,7 +4,7 @@
  * @param date - The date to compare to the current time.
  * @returns A string representing the relative time (e.g., "3 days ago").
  */
-export default function naturalTime(date: Date): string {
+export function naturalTime(date: Date): string {
   const now = new Date();
 
   // Calculate the difference in seconds between the current time and the provided date

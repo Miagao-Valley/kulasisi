@@ -9,8 +9,8 @@ import {
   ReactNode,
 } from 'react';
 import { User } from '@/types/users';
-import fetchAuth from '@/lib/auth/fetchAuth';
-import getUser from '@/lib/users/getUser';
+import { fetchAuth } from '@/lib/auth/fetchAuth';
+import { getUser } from '@/lib/users/getUser';
 
 export interface AuthContextType {
   isAuthenticated: boolean;

@@ -1,7 +1,7 @@
 import { fetchAPI } from '@/lib/utils/fetchAPI';
 import { User } from '@/types/users';
 
-export default async function getUser(username: string): Promise<User> {
+export async function getUser(username: string): Promise<User> {
   const { data: fetchedData } = await fetchAPI(`/users/${username}/`, {
     cache: 'no-store',
   });

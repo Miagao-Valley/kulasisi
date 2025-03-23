@@ -28,7 +28,7 @@ interface Props<T extends SourceSchema> {
   form: UseFormReturn<T, any, undefined>;
 }
 
-export default function SourceForm<T extends SourceSchema>({ form }: Props<T>) {
+export function SourceForm<T extends SourceSchema>({ form }: Props<T>) {
   const [sourceLabel, setSourceLabel] = useState<string>(
     form.watch('source_title' as Path<T>)?.trim() ||
       form.watch('source_link' as Path<T>)?.trim() ||

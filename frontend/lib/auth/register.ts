@@ -2,12 +2,12 @@
 
 import { revalidatePath } from 'next/cache';
 import { fetchAPI } from '@/lib/utils/fetchAPI';
-import login from './login';
+import { login } from './login';
 import { RegisterSchema } from '@/lib/schemas/auth';
 import { Result } from '@/lib/utils/try-catch';
 import { User } from '@/types/users';
 
-export default async function register(
+export async function register(
   data: RegisterSchema
 ): Promise<Result<User, any>> {
   const result = await fetchAPI(`/register/`, {

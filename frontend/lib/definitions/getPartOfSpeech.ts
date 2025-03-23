@@ -1,9 +1,7 @@
 import { fetchAPI } from '@/lib/utils/fetchAPI';
 import { PartOfSpeech } from '@/types/dictionary';
 
-export default async function getPartOfSpeech(
-  abbr: string
-): Promise<PartOfSpeech> {
+export async function getPartOfSpeech(abbr: string): Promise<PartOfSpeech> {
   const { data: fetchedData } = await fetchAPI(
     `/dictionary/parts-of-speech/${abbr}/`,
     {

@@ -1,8 +1,8 @@
 import React from 'react';
-import getPhrases from '@/lib/phrases/getPhrases';
+import { getPhrases } from '@/lib/phrases/getPhrases';
 import { cn } from '@/lib/utils';
-import PhraseCard from './PhraseCard';
-import ListPagination from '@/components/pagination/ListPagination';
+import { PhraseCard } from './PhraseCard';
+import { ListPagination } from '@/components/pagination/ListPagination';
 import { Filter } from '@/components/filter/FilterMenu';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Separator } from '@/components/ui/separator';
@@ -17,7 +17,7 @@ interface Props {
   className?: string;
 }
 
-export default async function PhrasesList({
+export async function PhrasesList({
   sourceLang = '',
   targetLang = '',
   searchTerm = '',

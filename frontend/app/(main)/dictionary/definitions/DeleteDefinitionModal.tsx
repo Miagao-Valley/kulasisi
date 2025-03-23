@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import deleteDefinition from '@/lib/definitions/deleteDefinition';
+import { deleteDefinition } from '@/lib/definitions/deleteDefinition';
 import { LoadingButton } from '@/components/ui/loading-button';
 import { toast } from 'sonner';
 import {
@@ -19,7 +19,7 @@ interface Props {
   id: number;
 }
 
-export default function DeleteDefinitionModal({ wordLang, word, id }: Props) {
+export function DeleteDefinitionModal({ wordLang, word, id }: Props) {
   const [isLoading, setIsLoading] = useState(false);
 
   return (

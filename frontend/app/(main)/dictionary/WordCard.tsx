@@ -4,13 +4,13 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { Word } from '@/types/dictionary';
 import { cn } from '@/lib/utils';
-import EntryHeader from '@/components/entry/EntryHeader';
-import EntryFooter from '@/components/entry/EntryFooter';
+import { EntryHeader } from '@/components/entry/EntryHeader';
+import { EntryFooter } from '@/components/entry/EntryFooter';
 import { LangHoverCard } from '@/components/cards/LangCard';
-import Source from '@/components/cards/Source';
+import { Source } from '@/components/cards/Source';
 import { PosHoverCard } from '@/components/cards/PosCard';
-import WordDropdownMenu from './WordDropdownMenu';
-import UpdateWordForm from './UpdateWordForm';
+import { WordDropdownMenu } from './WordDropdownMenu';
+import { UpdateWordForm } from './UpdateWordForm';
 import {
   Card,
   CardContent,
@@ -27,7 +27,7 @@ interface Props {
   className?: string;
 }
 
-export default function WordCard({
+export function WordCard({
   word,
   targetLang,
   clickable = false,

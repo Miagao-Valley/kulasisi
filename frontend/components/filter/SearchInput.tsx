@@ -11,7 +11,7 @@ interface Props {
   className?: string;
 }
 
-export default function SearchInput({ currentSearchTerm, className }: Props) {
+export function SearchInput({ currentSearchTerm, className }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
 

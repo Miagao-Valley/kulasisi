@@ -57,7 +57,7 @@ interface Props {
   className?: string;
 }
 
-export default function FlaggedTokenCard({
+export function FlaggedTokenCard({
   token,
   concise = false,
   clickable = true,

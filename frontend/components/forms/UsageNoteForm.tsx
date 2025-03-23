@@ -26,9 +26,7 @@ interface Props<T extends UsageNoteSchema> {
   form: UseFormReturn<T, any, undefined>;
 }
 
-export default function UsageNoteForm<T extends UsageNoteSchema>({
-  form,
-}: Props<T>) {
+export function UsageNoteForm<T extends UsageNoteSchema>({ form }: Props<T>) {
   return (
     <Popover>
       <PopoverTrigger asChild>

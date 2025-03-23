@@ -2,8 +2,8 @@
 
 import React from 'react';
 import { useAuth } from '@/components/providers/AuthProvider';
-import AccountTab from './AccountTab';
-import UpdateUserForm from './UpdateUserForm';
+import { AccountTab } from './AccountTab';
+import { UpdateUserForm } from './UpdateUserForm';
 import {
   Tabs,
   TabsContent,

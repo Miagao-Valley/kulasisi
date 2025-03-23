@@ -3,18 +3,18 @@
 import { useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '@/components/providers/AuthProvider';
-import addTranslation from '@/lib/translations/addTranslation';
+import { addTranslation } from '@/lib/translations/addTranslation';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { useForm } from 'react-hook-form';
-import setFormErrors from '@/lib/utils/setFormErrors';
+import { setFormErrors } from '@/lib/utils/setFormErrors';
 import {
   addTranslationSchema,
   AddTranslationSchema,
 } from '@/lib/schemas/translations';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { EditorProvider } from '@/components/editor/EditorContext';
-import Editor from '@/components/editor/Editor';
+import { Editor } from '@/components/editor/Editor';
 import {
   Form,
   FormControl,
@@ -23,8 +23,8 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { LoadingButton } from '@/components/ui/loading-button';
-import LangSelect from '@/components/forms/LangSelect';
-import SourceForm from '@/components/forms/SourceForm';
+import { LangSelect } from '@/components/forms/LangSelect';
+import { SourceForm } from '@/components/forms/SourceForm';
 
 const FORM_DATA_KEY = 'add-translation-forms';
 
@@ -34,7 +34,7 @@ interface Props {
   className?: string;
 }
 
-export default function AddTranslationForm({
+export function AddTranslationForm({
   phraseId,
   originalLang,
   className = '',

@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import LangSelect from '../forms/LangSelect';
+import { LangSelect } from '../forms/LangSelect';
 import { Button } from '../ui/button';
 import { ArrowLeftRight } from 'lucide-react';
 
@@ -13,7 +13,7 @@ interface Props {
   className?: string;
 }
 
-export default function LangFilter({
+export function LangFilter({
   currentSourceLang,
   currentTargetLang,
   className,

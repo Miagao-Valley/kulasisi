@@ -1,7 +1,7 @@
 import React from 'react';
-import getPhrase from '@/lib/phrases/getPhrase';
-import PhraseCard from '../PhraseCard';
-import TranslationsSection from '../translations/TranslationsSection';
+import { getPhrase } from '@/lib/phrases/getPhrase';
+import { PhraseCard } from '../PhraseCard';
+import { TranslationsSection } from '../translations/TranslationsSection';
 import {
   Tabs,
   TabsContent,

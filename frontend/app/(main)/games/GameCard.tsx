@@ -17,7 +17,7 @@ interface Props {
   className?: string;
 }
 
-export default function GameCard({
+export function GameCard({
   name,
   description,
   icon,

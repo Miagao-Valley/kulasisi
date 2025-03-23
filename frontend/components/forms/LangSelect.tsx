@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Lang } from '@/types/languages';
-import getLangs from '@/lib/langs/getLangs';
+import { getLangs } from '@/lib/langs/getLangs';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import {
@@ -32,7 +32,7 @@ interface Props {
   className?: string;
 }
 
-export default function LangSelect({
+export function LangSelect({
   selectedLang,
   setSelectedLang,
   include = [],

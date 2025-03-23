@@ -1,10 +1,10 @@
 'use client';
 
-import updateTranslation from '@/lib/translations/updateTranslation';
+import { updateTranslation } from '@/lib/translations/updateTranslation';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { useForm } from 'react-hook-form';
-import setFormErrors from '@/lib/utils/setFormErrors';
+import { setFormErrors } from '@/lib/utils/setFormErrors';
 import {
   updateTranslationSchema,
   UpdateTranslationSchema,
@@ -12,8 +12,8 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Translation } from '@/types/phrases';
 import { EditorProvider } from '@/components/editor/EditorContext';
-import Editor from '@/components/editor/Editor';
-import SourceForm from '@/components/forms/SourceForm';
+import { Editor } from '@/components/editor/Editor';
+import { SourceForm } from '@/components/forms/SourceForm';
 import {
   Form,
   FormControl,
@@ -31,7 +31,7 @@ interface Props {
   className?: string;
 }
 
-export default function UpdateTranslationForm({
+export function UpdateTranslationForm({
   translation,
   setIsEditing,
   className = '',

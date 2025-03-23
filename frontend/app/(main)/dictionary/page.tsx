@@ -1,14 +1,14 @@
 import React, { Suspense } from 'react';
 import Link from 'next/link';
-import getPartOfSpeech from '@/lib/definitions/getPartOfSpeech';
-import getPartsOfSpeech from '@/lib/definitions/getPartsOfSpeech';
-import WordsList, { WordsListSkeleton } from './WordsList';
+import { getPartOfSpeech } from '@/lib/definitions/getPartOfSpeech';
+import { getPartsOfSpeech } from '@/lib/definitions/getPartsOfSpeech';
+import { WordsList, WordsListSkeleton } from './WordsList';
 import { SortOption } from '@/components/filter/SortDropdown';
 import { FilterOption } from '@/components/filter/FilterMenu';
-import FilterControls from '@/components/filter/FilterControls';
-import WordSearch from './WordSearch';
-import LangFilter from '@/components/filter/LangFilter';
-import PosCard from '@/components/cards/PosCard';
+import { FilterControls } from '@/components/filter/FilterControls';
+import { WordSearch } from './WordSearch';
+import { LangFilter } from '@/components/filter/LangFilter';
+import { PosCard } from '@/components/cards/PosCard';
 import {
   Tooltip,
   TooltipTrigger,

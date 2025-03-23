@@ -1,6 +1,6 @@
-import SearchInput from './SearchInput';
-import SortDropdown, { SortOption } from './SortDropdown';
-import FilterMenu, { Filter, FilterOption } from './FilterMenu';
+import { SearchInput } from './SearchInput';
+import { SortDropdown, SortOption } from './SortDropdown';
+import { FilterMenu, Filter, FilterOption } from './FilterMenu';
 import { cn } from '@/lib/utils';
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
   className?: string;
 }
 
-export default function FilterControls({
+export function FilterControls({
   searchTerm,
   sortOption,
   sortingOptions,

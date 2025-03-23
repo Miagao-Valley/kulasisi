@@ -1,5 +1,5 @@
 import { FetchError } from './fetchError';
-import getToken from '@/lib/tokens/getToken';
+import { getToken } from '@/lib/tokens/getToken';
 import { tryCatch, Result } from '@/lib/utils/try-catch';
 
 interface FetchAPIOptions extends RequestInit {

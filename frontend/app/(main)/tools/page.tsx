@@ -1,5 +1,5 @@
 import React from 'react';
-import ToolCard from './ToolCard';
+import { ToolCard } from './ToolCard';
 import { H1 } from '@/components/ui/heading-with-anchor';
 import { SpellCheckIcon } from 'lucide-react';
 

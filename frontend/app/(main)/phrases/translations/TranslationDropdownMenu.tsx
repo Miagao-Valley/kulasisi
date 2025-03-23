@@ -4,7 +4,7 @@ import React from 'react';
 import { useAuth } from '@/components/providers/AuthProvider';
 import { Translation } from '@/types/phrases';
 import { TranslationRevisionsModal } from './TranslationRevisions';
-import DeleteTranslationModal from './DeleteTranslationModal';
+import { DeleteTranslationModal } from './DeleteTranslationModal';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -21,10 +21,7 @@ interface Props {
   setIsEditing: (isEditing: boolean) => void;
 }
 
-export default function TranslationDropdownMenu({
-  translation,
-  setIsEditing,
-}: Props) {
+export function TranslationDropdownMenu({ translation, setIsEditing }: Props) {
   const auth = useAuth();
 
   return (

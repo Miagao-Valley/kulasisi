@@ -6,7 +6,7 @@ import { Phrase } from '@/types/phrases';
 import { UpdatePhraseSchema } from '@/lib/schemas/phrases';
 import { Result } from '@/lib/utils/try-catch';
 
-export default async function updatePhrase(
+export async function updatePhrase(
   id: number,
   data: UpdatePhraseSchema
 ): Promise<Result<Phrase, any>> {

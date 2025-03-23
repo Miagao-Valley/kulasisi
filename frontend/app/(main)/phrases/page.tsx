@@ -1,15 +1,15 @@
 import React, { Suspense } from 'react';
 import Link from 'next/link';
-import getCategory from '@/lib/phrases/getCategory';
-import getCategories from '@/lib/phrases/getCategories';
-import PhrasesList, { PhrasesListSkeleton } from './PhrasesList';
+import { getCategory } from '@/lib/phrases/getCategory';
+import { getCategories } from '@/lib/phrases/getCategories';
+import { PhrasesList, PhrasesListSkeleton } from './PhrasesList';
 import { SortOption } from '@/components/filter/SortDropdown';
 import { FilterOption } from '@/components/filter/FilterMenu';
-import FilterControls from '@/components/filter/FilterControls';
-import PhraseSearch from './PhraseSearch';
-import LangFilter from '@/components/filter/LangFilter';
-import CategoryCard from '@/components/cards/CategoryCard';
-import GoogleTranslateCard from './GoogleTranslateCard';
+import { FilterControls } from '@/components/filter/FilterControls';
+import { PhraseSearch } from './PhraseSearch';
+import { LangFilter } from '@/components/filter/LangFilter';
+import { CategoryCard } from '@/components/cards/CategoryCard';
+import { GoogleTranslateCard } from './GoogleTranslateCard';
 import {
   Tooltip,
   TooltipTrigger,

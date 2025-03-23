@@ -2,7 +2,7 @@
 
 import { fetchAPI } from '@/lib/utils/fetchAPI';
 
-export default async function getProofreaderLangs(
+export async function getProofreaderLangs(
   params: Record<string, any> = {}
 ): Promise<string[]> {
   const { data: fetchedData } = await fetchAPI(`/proofreader/languages/`, {

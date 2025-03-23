@@ -9,10 +9,7 @@ import { isDefinition, isWord } from '@/types/dictionary';
  * @param backend - If true, generates a path for backend usage, otherwise for frontend.
  * @returns The corresponding path string for the entry.
  */
-export default function entryToPath(
-  entry: Entry,
-  backend: boolean = true
-): string {
+export function entryToPath(entry: Entry, backend: boolean = true): string {
   if (isPhrase(entry)) {
     return `phrases/${entry.id}`;
   }

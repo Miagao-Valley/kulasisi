@@ -6,7 +6,7 @@ import { LangProficiencyLevel } from '@/types/languages';
  * @param level - The proficiency level code (1 to 5).
  * @returns The corresponding proficiency level as a string, or 'Unknown' if the code is invalid.
  */
-const displayLangProficiency = (level: LangProficiencyLevel): string => {
+export function displayLangProficiency(level: LangProficiencyLevel): string {
   const proficiencyLookup = {
     [LangProficiencyLevel.Elementary]: 'Elementary',
     [LangProficiencyLevel.LimitedWorking]: 'Limited Working',
@@ -16,6 +16,4 @@ const displayLangProficiency = (level: LangProficiencyLevel): string => {
   };
 
   return proficiencyLookup[level] ?? 'Unknown';
-};
-
-export default displayLangProficiency;
+}

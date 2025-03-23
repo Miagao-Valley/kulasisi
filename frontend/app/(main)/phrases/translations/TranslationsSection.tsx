@@ -1,22 +1,19 @@
 import React, { Suspense } from 'react';
 import { Phrase } from '@/types/phrases';
-import getLangs from '@/lib/langs/getLangs';
-import AddTranslationForm from './AddTranslationForm';
-import TranslationsList, { TranslationsListSkeleton } from './TranslationsList';
-import GoogleTranslateCard from '../GoogleTranslateCard';
+import { getLangs } from '@/lib/langs/getLangs';
+import { AddTranslationForm } from './AddTranslationForm';
+import { TranslationsList, TranslationsListSkeleton } from './TranslationsList';
+import { GoogleTranslateCard } from '../GoogleTranslateCard';
 import { SortOption } from '@/components/filter/SortDropdown';
 import { FilterOption } from '@/components/filter/FilterMenu';
-import FilterControls from '@/components/filter/FilterControls';
+import { FilterControls } from '@/components/filter/FilterControls';
 
 interface Props {
   phrase: Phrase;
   searchParams: { [key: string]: string | undefined };
 }
 
-export default async function TranslationsSection({
-  searchParams,
-  phrase,
-}: Props) {
+export async function TranslationsSection({ searchParams, phrase }: Props) {
   const searchTerm = searchParams.q || '';
   const sortOption = searchParams.sort || '-vote_count';
   const lang = searchParams.lang || '';

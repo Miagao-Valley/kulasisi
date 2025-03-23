@@ -1,6 +1,6 @@
-import CircularProgress from '../ui/circular-progress';
+import { CircularProgress } from '../ui/circular-progress';
 
-export default function CharCountProgress({
+export function CharCountProgress({
   charCount,
   maxCharCount,
 }: {

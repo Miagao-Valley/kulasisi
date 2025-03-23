@@ -2,7 +2,7 @@ import { Fragment } from 'react';
 import { useEditorContext } from './EditorContext';
 import { HighlightedToken } from './HighlightedToken';
 
-export default function HighlightedText() {
+export function HighlightedText() {
   const { text, flaggedTokens } = useEditorContext();
 
   if (!flaggedTokens || flaggedTokens.length === 0) {

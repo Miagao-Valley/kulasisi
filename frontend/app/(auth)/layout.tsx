@@ -5,9 +5,9 @@ import '../globals.css';
 import { AuthProvider } from '../../components/providers/AuthProvider';
 import { Toaster } from '@/components/ui/sonner';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';
-import ThemeToggle from '@/components/app-sidebar/ThemeToggle';
+import { ThemeToggle } from '@/components/app-sidebar/ThemeToggle';
 import Link from 'next/link';
-import Wordmark from '@/components/brand/wordmark';
+import { AppWordmark } from '@/components/brand/app-wordmark';
 import { TooltipProvider } from '@/components/ui/tooltip';
 
 export const metadata: Metadata = {
@@ -40,7 +40,7 @@ export default function RootLayout({
                         href="/"
                         className="flex items-center gap-1 text-primary"
                       >
-                        <Wordmark className="w-24" />
+                        <AppWordmark className="w-24" />
                       </Link>
                       <ThemeToggle />
                     </div>

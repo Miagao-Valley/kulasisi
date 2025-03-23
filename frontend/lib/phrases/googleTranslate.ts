@@ -1,7 +1,7 @@
 import { fetchAPI } from '@/lib/utils/fetchAPI';
 import { Result } from '@/lib/utils/try-catch';
 
-export default async function googleTranslate(
+export async function googleTranslate(
   text: string,
   source: string,
   target: string

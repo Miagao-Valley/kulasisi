@@ -6,7 +6,7 @@ import { Phrase } from '@/types/phrases';
 import { AddPhraseSchema } from '@/lib/schemas/phrases';
 import { Result } from '@/lib/utils/try-catch';
 
-export default async function addPhrase(
+export async function addPhrase(
   data: AddPhraseSchema
 ): Promise<Result<Phrase, any>> {
   const result = await fetchAPI(`/phrases/`, {

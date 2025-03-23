@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function applyHighlights(
+export function applyHighlights(
   text: string,
   highlight?: string | RegExp,
   highlightClass: string = 'bg-yellow-100'

@@ -3,10 +3,10 @@
 import 'server-only';
 
 import { fetchAPI } from '@/lib/utils/fetchAPI';
-import getToken from './getToken';
-import getPayload from './getPayload';
+import { getToken } from './getToken';
+import { getPayload } from './getPayload';
 
-export default async function updateToken() {
+export async function updateToken() {
   const payload = await getPayload();
   const refreshToken = await getToken('refresh');
   const payloadRefresh = await getPayload('refresh');

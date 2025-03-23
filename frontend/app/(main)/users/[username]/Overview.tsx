@@ -21,7 +21,7 @@ interface Props {
   className?: string;
 }
 
-export default function Overview({ user, className = '' }: Props) {
+export function Overview({ user, className = '' }: Props) {
   const auth = useAuth();
 
   return (

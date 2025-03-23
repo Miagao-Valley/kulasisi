@@ -1,7 +1,7 @@
 'use server';
 
-import deleteTokens from '../tokens/deleteToken';
+import { deleteTokens } from '../tokens/deleteToken';
 
-export default async function logout() {
+export async function logout() {
   await deleteTokens();
 }

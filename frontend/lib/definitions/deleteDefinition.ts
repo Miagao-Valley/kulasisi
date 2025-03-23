@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { fetchAPI } from '@/lib/utils/fetchAPI';
 
-export default async function deleteDefinition(
+export async function deleteDefinition(
   wordLang: string,
   word: string,
   id: number

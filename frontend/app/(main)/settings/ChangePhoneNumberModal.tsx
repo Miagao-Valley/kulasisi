@@ -3,13 +3,13 @@
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/components/providers/AuthProvider';
 import { useForm } from 'react-hook-form';
-import setFormErrors from '@/lib/utils/setFormErrors';
+import { setFormErrors } from '@/lib/utils/setFormErrors';
 import {
   changePhoneNumberSchema,
   ChangePhoneNumberSchema,
 } from '@/lib/schemas/users';
 import { zodResolver } from '@hookform/resolvers/zod';
-import changePhoneNumber from '@/lib/users/changePhoneNumber';
+import { changePhoneNumber } from '@/lib/users/changePhoneNumber';
 import { Button } from '@/components/ui/button';
 import {
   DialogContent,

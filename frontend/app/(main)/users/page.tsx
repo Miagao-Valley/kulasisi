@@ -1,8 +1,8 @@
 import React, { Suspense } from 'react';
-import UsersList, { UsersListSkeleton } from './UsersList';
+import { UsersList, UsersListSkeleton } from './UsersList';
 import { SortOption } from '@/components/filter/SortDropdown';
 import { H1 } from '@/components/ui/heading-with-anchor';
-import FilterControls from '@/components/filter/FilterControls';
+import { FilterControls } from '@/components/filter/FilterControls';
 
 interface Props {
   searchParams: { [key: string]: string | undefined };

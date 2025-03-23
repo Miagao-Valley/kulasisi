@@ -1,9 +1,9 @@
 'use server';
 
 import { AuthType, Payload } from '@/types/users';
-import getPayload from '../tokens/getPayload';
+import { getPayload } from '../tokens/getPayload';
 
-export default async function getAuth(): Promise<AuthType> {
+export async function getAuth(): Promise<AuthType> {
   const authData: Payload | null = await getPayload();
 
   const auth = {

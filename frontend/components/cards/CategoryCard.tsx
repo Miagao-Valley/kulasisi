@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { Category } from '@/types/phrases';
-import getCategory from '@/lib/phrases/getCategory';
+import { getCategory } from '@/lib/phrases/getCategory';
 import {
   HoverCard,
   HoverCardContent,
@@ -20,7 +20,7 @@ interface CategoryCardProps {
   className?: string;
 }
 
-export default function CategoryCard({
+export function CategoryCard({
   category,
   clickable = true,
   className = '',

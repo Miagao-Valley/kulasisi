@@ -2,11 +2,11 @@
 
 import { revalidatePath } from 'next/cache';
 import { fetchAPI } from '@/lib/utils/fetchAPI';
-import setToken from '../tokens/setToken';
+import { setToken } from '../tokens/setToken';
 import { LoginSchema } from '@/lib/schemas/auth';
 import { Result } from '@/lib/utils/try-catch';
 
-export default async function login(
+export async function login(
   credentials: LoginSchema
 ): Promise<Result<{ access: string; refresh: string }, any>> {
   const result = await fetchAPI(`/token/`, {

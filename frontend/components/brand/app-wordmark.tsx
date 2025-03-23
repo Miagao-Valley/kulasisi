@@ -3,7 +3,7 @@ interface Props {
   className?: string;
 }
 
-export default function Wordmark({ size = 96, className = '' }: Props) {
+export function AppWordmark({ size = 96, className = '' }: Props) {
   return (
     <svg
       id="wordmark"

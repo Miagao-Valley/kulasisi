@@ -4,9 +4,9 @@ import React from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/components/providers/AuthProvider';
-import login from '@/lib/auth/login';
+import { login } from '@/lib/auth/login';
 import { useForm } from 'react-hook-form';
-import setFormErrors from '@/lib/utils/setFormErrors';
+import { setFormErrors } from '@/lib/utils/setFormErrors';
 import { loginSchema, LoginSchema } from '@/lib/schemas/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
@@ -19,9 +19,9 @@ import {
 import { FloatingLabelInput } from '@/components/ui/floating-label-input';
 import { PasswordInput } from '@/components/ui/password-input';
 import { LoadingButton } from '@/components/ui/loading-button';
-import Logo from '@/components/brand/logo';
+import { AppLogo } from '@/components/brand/app-logo';
 
-export default function LoginForm() {
+export function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const auth = useAuth();
@@ -52,7 +52,7 @@ export default function LoginForm() {
     <div className="flex flex-col gap-6">
       <div className="flex flex-col items-center gap-1">
         <Link href="/" className="flex flex-col items-center">
-          <Logo className="w-12 mb-4" />
+          <AppLogo className="w-12 mb-4" />
           <span className="sr-only">kulasisi</span>
         </Link>
         <h1 className="text-xl font-bold">Welcome to kulasisi</h1>

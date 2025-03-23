@@ -2,7 +2,7 @@ import { fetchAPI } from '@/lib/utils/fetchAPI';
 import { Paginated } from '@/types/core';
 import { PhraseRevision } from '@/types/phrases';
 
-export default async function getPhraseRevisions(
+export async function getPhraseRevisions(
   id: number
 ): Promise<Paginated<PhraseRevision[]>> {
   const { data: fetchedData } = await fetchAPI(`/phrases/${id}/history/`, {

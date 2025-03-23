@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache';
 import { fetchAPI } from '@/lib/utils/fetchAPI';
 import { redirect } from 'next/navigation';
 
-export default async function deleteWord(lang: string, word: string) {
+export async function deleteWord(lang: string, word: string) {
   await fetchAPI(`/dictionary/${lang}/${word}/`, {
     method: 'DELETE',
     authorized: true,

@@ -4,10 +4,10 @@ import React, { useEffect } from 'react';
 import { useAuth } from '@/components/providers/AuthProvider';
 import { useSidebar } from '@/components/ui/sidebar';
 import { WordleProvider } from './WordleContext';
-import WordleGame from './WordleGame';
-import GameStats from './GameStats';
-import LangSelectWrapper from './LangSelectWrapper';
-import WordLengthSlider from './WordLengthSlider';
+import { WordleGame } from './WordleGame';
+import { GameStats } from './GameStats';
+import { LangSelectWrapper } from './LangSelectWrapper';
+import { WordLengthSlider } from './WordLengthSlider';
 import { H1 } from '@/components/ui/heading-with-anchor';
 import Link from 'next/link';
 

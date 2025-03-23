@@ -1,7 +1,7 @@
 import { fetchAPI } from '@/lib/utils/fetchAPI';
 import { Phrase } from '@/types/phrases';
 
-export default async function getPhrase(id: number): Promise<Phrase> {
+export async function getPhrase(id: number): Promise<Phrase> {
   const { data: fetchedData } = await fetchAPI(`/phrases/${id}/`, {
     authorized: true,
     cache: 'no-store',

@@ -1,17 +1,17 @@
 'use client';
 
-import updateWord from '@/lib/words/updateWord';
+import { updateWord } from '@/lib/words/updateWord';
 import { Word } from '@/types/dictionary';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { useForm } from 'react-hook-form';
-import setFormErrors from '@/lib/utils/setFormErrors';
+import { setFormErrors } from '@/lib/utils/setFormErrors';
 import { updateWordSchema, UpdateWordSchema } from '@/lib/schemas/words';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormMessage } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
 import { LoadingButton } from '@/components/ui/loading-button';
-import SourceForm from '@/components/forms/SourceForm';
+import { SourceForm } from '@/components/forms/SourceForm';
 import { Input } from '@/components/ui/input';
 
 interface Props {
@@ -20,11 +20,7 @@ interface Props {
   className?: string;
 }
 
-export default function UpdateWordForm({
-  word,
-  setIsEditing,
-  className = '',
-}: Props) {
+export function UpdateWordForm({ word, setIsEditing, className = '' }: Props) {
   const form = useForm<UpdateWordSchema>({
     resolver: zodResolver(updateWordSchema),
     defaultValues: {

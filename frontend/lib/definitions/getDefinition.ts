@@ -1,7 +1,7 @@
 import { fetchAPI } from '@/lib/utils/fetchAPI';
 import { Definition } from '@/types/dictionary';
 
-export default async function getDefinition(id: number): Promise<Definition> {
+export async function getDefinition(id: number): Promise<Definition> {
   const { data: fetchedData } = await fetchAPI(
     `/dictionary/definitions/${id}/`,
     {

@@ -11,7 +11,7 @@ import { Button } from '@/components/ui/button';
 import { MoonIcon, SunIcon, SunMoonIcon } from 'lucide-react';
 import { Spinner } from '../ui/spinner';
 
-export default function ThemeToggle() {
+export function ThemeToggle() {
   const { setTheme, theme } = useTheme();
   const [mounted, setMounted] = useState(false);
 

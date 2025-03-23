@@ -17,7 +17,7 @@ interface KeyboardProps {
   className?: string;
 }
 
-export default function Keyboard({ className }: KeyboardProps) {
+export function Keyboard({ className }: KeyboardProps) {
   const { addLetter, removeLetter, submitGuess } = useWordleContext();
 
   const handleKeyClick = (key: string) => () => {

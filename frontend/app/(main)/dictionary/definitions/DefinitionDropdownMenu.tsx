@@ -2,7 +2,7 @@
 
 import { useAuth } from '@/components/providers/AuthProvider';
 import { Definition } from '@/types/dictionary';
-import DeleteDefinitionModal from './DeleteDefinitionModal';
+import { DeleteDefinitionModal } from './DeleteDefinitionModal';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -20,10 +20,7 @@ interface Props {
   setIsEditing: (isEditing: boolean) => void;
 }
 
-export default function DefinitionDropdownMenu({
-  definition,
-  setIsEditing,
-}: Props) {
+export function DefinitionDropdownMenu({ definition, setIsEditing }: Props) {
   const auth = useAuth();
 
   return (

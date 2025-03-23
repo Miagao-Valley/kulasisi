@@ -1,5 +1,5 @@
 import { Lang, LangProficiencyLevel } from '@/types/languages';
-import displayLangProficiency from '@/lib/utils/displayLangProficiency';
+import { displayLangProficiency } from '@/lib/utils/displayLangProficiency';
 import { Progress } from '@/components/ui/progress';
 import { H3 } from '@/components/ui/heading-with-anchor';
 
@@ -7,7 +7,7 @@ interface Props {
   lang: Lang;
 }
 
-export default function StatsTab({ lang }: Props) {
+export function StatsTab({ lang }: Props) {
   return (
     <div className="flex flex-col gap-3">
       <div>

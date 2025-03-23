@@ -25,7 +25,7 @@ interface Props {
   className: string;
 }
 
-export default function ListPagination({
+export function ListPagination({
   numPages,
   currentPage,
   next,

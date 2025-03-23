@@ -5,7 +5,7 @@ import {
   AutosizeTextAreaProps,
   AutosizeTextAreaRef,
 } from './autoresize-textarea';
-import applyHighlights from '../applyHighlights';
+import { applyHighlights } from '../applyHighlights';
 
 interface HighlightedTextareaProps extends AutosizeTextAreaProps {
   highlight?: string | RegExp;
@@ -34,7 +34,7 @@ const HighlightedTextarea: React.FC<HighlightedTextareaProps> = ({
         ref={backdropRef}
         className={cn(
           'absolute top-0 left-0 w-full h-full overflow-auto whitespace-pre-wrap break-words',
-          className,
+          className
         )}
       >
         <div>{applyHighlights(text as string, highlight, highlightClass)}</div>
@@ -46,7 +46,7 @@ const HighlightedTextarea: React.FC<HighlightedTextareaProps> = ({
         onInput={handleInput}
         className={cn(
           'relative z-10 w-full h-full bg-transparent text-transparent caret-gray-800',
-          className,
+          className
         )}
         {...props}
       />
@@ -54,4 +54,4 @@ const HighlightedTextarea: React.FC<HighlightedTextareaProps> = ({
   );
 };
 
-export default HighlightedTextarea;
+export { HighlightedTextarea };

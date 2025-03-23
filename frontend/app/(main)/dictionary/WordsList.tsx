@@ -1,7 +1,7 @@
-import getWords from '@/lib/words/getWords';
+import { getWords } from '@/lib/words/getWords';
 import { cn } from '@/lib/utils';
-import WordCard from './WordCard';
-import ListPagination from '@/components/pagination/ListPagination';
+import { WordCard } from './WordCard';
+import { ListPagination } from '@/components/pagination/ListPagination';
 import { Filter } from '@/components/filter/FilterMenu';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Separator } from '@/components/ui/separator';
@@ -16,7 +16,7 @@ interface Props {
   className?: string;
 }
 
-export default async function WordsList({
+export async function WordsList({
   sourceLang = '',
   targetLang = '',
   searchTerm = '',

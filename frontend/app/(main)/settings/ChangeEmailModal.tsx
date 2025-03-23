@@ -3,10 +3,10 @@
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/components/providers/AuthProvider';
 import { useForm } from 'react-hook-form';
-import setFormErrors from '@/lib/utils/setFormErrors';
+import { setFormErrors } from '@/lib/utils/setFormErrors';
 import { changeEmailSchema, ChangeEmailSchema } from '@/lib/schemas/users';
 import { zodResolver } from '@hookform/resolvers/zod';
-import changeEmail from '@/lib/users/changeEmail';
+import { changeEmail } from '@/lib/users/changeEmail';
 import { Button } from '@/components/ui/button';
 import {
   DialogContent,

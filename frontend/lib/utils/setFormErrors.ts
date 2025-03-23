@@ -5,7 +5,7 @@
  * @param errors - An object containing error details, where keys are field names or special error keys (e.g., 'detail').
  * @param setError - A function to set the error for a specific field or a special error (e.g., 'root.serverError').
  */
-export default function setFormErrors<T>(
+export function setFormErrors<T>(
   errors: Record<string, any>,
   setError: (
     field: keyof T | 'root.serverError', // Field or special error key

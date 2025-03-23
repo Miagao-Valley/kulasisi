@@ -6,7 +6,7 @@ import { Definition } from '@/types/dictionary';
 import { UpdateDefinitionSchema } from '../schemas/definitions';
 import { Result } from '@/lib/utils/try-catch';
 
-export default async function updateDefinition(
+export async function updateDefinition(
   wordLang: string,
   word: string,
   id: number,

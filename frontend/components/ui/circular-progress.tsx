@@ -79,4 +79,4 @@ const CircularProgress = ({
   );
 };
 
-export default CircularProgress;
+export { CircularProgress };

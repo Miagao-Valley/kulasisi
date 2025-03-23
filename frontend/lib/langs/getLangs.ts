@@ -2,7 +2,7 @@ import { fetchAPI } from '@/lib/utils/fetchAPI';
 import { Paginated } from '@/types/core';
 import { Lang } from '@/types/languages';
 
-export default async function getLangs(
+export async function getLangs(
   params: Record<string, any> = {}
 ): Promise<Paginated<Lang[]>> {
   const { data: fetchedData } = await fetchAPI(`/languages/`, {

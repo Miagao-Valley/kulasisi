@@ -1,7 +1,7 @@
 import React from 'react';
-import getLangs from '@/lib/langs/getLangs';
+import { getLangs } from '@/lib/langs/getLangs';
 import { cn } from '@/lib/utils';
-import LangCard from '@/components/cards/LangCard';
+import { LangCard } from '@/components/cards/LangCard';
 import { Skeleton } from '@/components/ui/skeleton';
 
 interface Props {
@@ -10,7 +10,7 @@ interface Props {
   className?: string;
 }
 
-export default async function LangsList({
+export async function LangsList({
   searchTerm,
   sortOption,
   className = '',

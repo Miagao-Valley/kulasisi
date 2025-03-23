@@ -3,7 +3,7 @@ interface Props {
   className?: string;
 }
 
-export default function Logo({ size = 36, className = '' }: Props) {
+export function AppLogo({ size = 36, className = '' }: Props) {
   return (
     <svg
       id="logo"

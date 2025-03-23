@@ -1,15 +1,15 @@
 'use client';
 
-import updatePhrase from '@/lib/phrases/updatePhrase';
+import { updatePhrase } from '@/lib/phrases/updatePhrase';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { useForm } from 'react-hook-form';
-import setFormErrors from '@/lib/utils/setFormErrors';
+import { setFormErrors } from '@/lib/utils/setFormErrors';
 import { updatePhraseSchema, UpdatePhraseSchema } from '@/lib/schemas/phrases';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Phrase } from '@/types/phrases';
 import { EditorProvider } from '@/components/editor/EditorContext';
-import Editor from '@/components/editor/Editor';
+import { Editor } from '@/components/editor/Editor';
 import {
   Form,
   FormControl,
@@ -19,9 +19,9 @@ import {
 } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
 import { LoadingButton } from '@/components/ui/loading-button';
-import UsageNoteForm from '@/components/forms/UsageNoteForm';
-import SourceForm from '@/components/forms/SourceForm';
-import CategoriesSelect from '@/components/forms/CategoriesSelect';
+import { UsageNoteForm } from '@/components/forms/UsageNoteForm';
+import { SourceForm } from '@/components/forms/SourceForm';
+import { CategoriesSelect } from '@/components/forms/CategoriesSelect';
 
 interface Props {
   phrase: Phrase;
@@ -29,7 +29,7 @@ interface Props {
   className?: string;
 }
 
-export default function UpdatePhraseForm({
+export function UpdatePhraseForm({
   phrase,
   setIsEditing,
   className = '',

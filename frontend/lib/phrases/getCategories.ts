@@ -1,7 +1,7 @@
 import { fetchAPI } from '@/lib/utils/fetchAPI';
 import { Category } from '@/types/phrases';
 
-export default async function getCategories(
+export async function getCategories(
   params: Record<string, any> = {}
 ): Promise<Category[]> {
   const { data: fetchedData } = await fetchAPI(`/phrases/categories/`, {

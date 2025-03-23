@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
-import LangsList, { LangsListSkeleton } from './LangsList';
+import { LangsList, LangsListSkeleton } from './LangsList';
 import { SortOption } from '@/components/filter/SortDropdown';
-import FilterControls from '@/components/filter/FilterControls';
+import { FilterControls } from '@/components/filter/FilterControls';
 import { H1 } from '@/components/ui/heading-with-anchor';
 
 interface Props {

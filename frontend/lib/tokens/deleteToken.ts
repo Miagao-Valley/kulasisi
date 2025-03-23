@@ -7,7 +7,7 @@ import { cookies } from 'next/headers';
 const tokenName = 'auth-token';
 const tokenRefreshName = 'auth-refresh-token';
 
-export default async function deleteTokens(type: string = '') {
+export async function deleteTokens(type: string = '') {
   if (type === 'access') {
     return cookies().delete(tokenName);
   }

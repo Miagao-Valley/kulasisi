@@ -3,7 +3,7 @@
 import { useAuth } from '@/components/providers/AuthProvider';
 import { Word } from '@/types/dictionary';
 import { WordRevisionsModal } from './WordRevisions';
-import DeleteWordModal from './DeleteWordModal';
+import { DeleteWordModal } from './DeleteWordModal';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -20,7 +20,7 @@ interface Props {
   setIsEditing: (isEditing: boolean) => void;
 }
 
-export default function WordDropdownMenu({ word, setIsEditing }: Props) {
+export function WordDropdownMenu({ word, setIsEditing }: Props) {
   const auth = useAuth();
 
   return (

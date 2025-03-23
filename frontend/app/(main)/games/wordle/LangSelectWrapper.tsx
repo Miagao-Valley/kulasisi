@@ -3,14 +3,14 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import LangSelect from '@/components/forms/LangSelect';
+import { LangSelect } from '@/components/forms/LangSelect';
 
 interface LangSelectWrapperProps {
   currentSelectedLang: string;
   className?: string;
 }
 
-export default function LangSelectWrapper({
+export function LangSelectWrapper({
   currentSelectedLang,
   className,
 }: LangSelectWrapperProps) {

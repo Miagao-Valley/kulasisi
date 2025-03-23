@@ -1,6 +1,6 @@
 import React from 'react';
-import EditorWrapper from './EditorWrapper';
-import LangSelectWrapper from './LangSelectWrapper';
+import { EditorWrapper } from './EditorWrapper';
+import { LangSelectWrapper } from './LangSelectWrapper';
 import { H1 } from '@/components/ui/heading-with-anchor';
 
 interface Props {

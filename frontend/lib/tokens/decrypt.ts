@@ -8,9 +8,7 @@ import { Payload } from '@/types/users';
 const key = new TextEncoder().encode(process.env.SECRET_KEY || '');
 const algorithm = 'HS256';
 
-export default async function decrypt(
-  authToken?: string
-): Promise<Payload | null> {
+export async function decrypt(authToken?: string): Promise<Payload | null> {
   if (!authToken) {
     return null;
   }

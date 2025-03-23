@@ -1,7 +1,7 @@
-import getTranslations from '@/lib/translations/getTranslations';
+import { getTranslations } from '@/lib/translations/getTranslations';
 import { cn } from '@/lib/utils';
-import TranslationCard from './TranslationCard';
-import ListPagination from '@/components/pagination/ListPagination';
+import { TranslationCard } from './TranslationCard';
+import { ListPagination } from '@/components/pagination/ListPagination';
 import { Filter } from '@/components/filter/FilterMenu';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Separator } from '@/components/ui/separator';
@@ -15,7 +15,7 @@ interface Props {
   className?: string;
 }
 
-export default async function TranslationsList({
+export async function TranslationsList({
   phraseId,
   searchTerm = '',
   sortOption = 'content',

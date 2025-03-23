@@ -6,9 +6,7 @@ import { Word } from '@/types/dictionary';
 import { AddWordSchema } from '@/lib/schemas/words';
 import { Result } from '@/lib/utils/try-catch';
 
-export default async function addWord(
-  data: AddWordSchema
-): Promise<Result<Word, any>> {
+export async function addWord(data: AddWordSchema): Promise<Result<Word, any>> {
   const result = await fetchAPI(`/dictionary/`, {
     method: 'POST',
     body: JSON.stringify(data),

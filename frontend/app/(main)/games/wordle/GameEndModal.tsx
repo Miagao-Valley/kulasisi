@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 
-export default function GameEndModal() {
+export function GameEndModal() {
   const { wordLength, solution, gameStatus, resetGame } = useWordleContext();
   const [isOpen, setIsOpen] = useState(gameStatus !== WordleGameStatus.Playing);
 

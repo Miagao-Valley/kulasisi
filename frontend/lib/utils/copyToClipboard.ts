@@ -6,7 +6,7 @@ import { toast } from 'sonner';
  * @param text - The text to be copied.
  * @param message - Message to display after text is copied.
  */
-export default function copyToClipboard(
+export function copyToClipboard(
   text: string,
   message: string = 'Text copied to clipboard.'
 ) {

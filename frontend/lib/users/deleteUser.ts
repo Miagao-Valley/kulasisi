@@ -6,7 +6,7 @@ import { User } from '@/types/users';
 import { DeleteUserSchema } from '../schemas/users';
 import { Result } from '@/lib/utils/try-catch';
 
-export default async function deleteUser(
+export async function deleteUser(
   username: string,
   data: DeleteUserSchema
 ): Promise<Result<User, any>> {

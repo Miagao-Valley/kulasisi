@@ -8,7 +8,7 @@ import { Payload } from '@/types/users';
 const key = new TextEncoder().encode(process.env.SECRET_KEY || '');
 const algorithm = 'HS256';
 
-export default async function encrypt(
+export async function encrypt(
   payload: Payload,
   exp: string = '15m'
 ): Promise<string> {

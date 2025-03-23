@@ -6,7 +6,7 @@ import { User } from '@/types/users';
 import { ChangePhoneNumberSchema } from '../schemas/users';
 import { Result } from '@/lib/utils/try-catch';
 
-export default async function changePhoneNumber(
+export async function changePhoneNumber(
   username: string,
   data: ChangePhoneNumberSchema
 ): Promise<Result<User, any>> {

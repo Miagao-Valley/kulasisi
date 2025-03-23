@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { useAuth } from '../providers/AuthProvider';
-import logout from '@/lib/auth/logout';
+import { logout } from '@/lib/auth/logout';
 import Link from 'next/link';
 import {
   SidebarMenu,

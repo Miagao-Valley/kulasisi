@@ -3,15 +3,12 @@
 import 'server-only';
 
 import { cookies } from 'next/headers';
-import decrypt from './decrypt';
+import { decrypt } from './decrypt';
 
 const tokenName = 'auth-token';
 const tokenRefreshName = 'auth-refresh-token';
 
-export default async function setToken(
-  authToken?: string,
-  type: string = 'access',
-) {
+export async function setToken(authToken?: string, type: string = 'access') {
   if (!authToken) {
     return null;
   }

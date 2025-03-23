@@ -2,7 +2,7 @@ import { fetchAPI } from '@/lib/utils/fetchAPI';
 import { Paginated } from '@/types/core';
 import { TranslationRevision } from '@/types/phrases';
 
-export default async function getTranslationRevisions(
+export async function getTranslationRevisions(
   id: number
 ): Promise<Paginated<TranslationRevision[]>> {
   const { data: fetchedData } = await fetchAPI(
