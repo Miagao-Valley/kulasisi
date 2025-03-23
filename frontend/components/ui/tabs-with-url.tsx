@@ -45,7 +45,7 @@ export const Tabs = (props: {
 
       return pathname + (asString ? '?' + asString : '');
     },
-    [searchParams, props.searchParam],
+    [searchParams, props.searchParam]
   );
 
   return (
@@ -59,7 +59,7 @@ const useContext = () => {
   const context = React.useContext(TabsContext);
   if (!context) {
     throw new Error(
-      'Tabs compound components cannot be rendered outside the Tabs component',
+      'Tabs compound components cannot be rendered outside the Tabs component'
     );
   }
 
@@ -75,7 +75,7 @@ export const TabsList = (props: {
       {...props}
       className={cn(
         'inline-flex items-center justify-center p-1',
-        props.className,
+        props.className
       )}
     />
   );
@@ -93,7 +93,7 @@ export const TabsTrigger = (props: {
       {...props}
       className={cn(
         'inline-flex items-center justify-center whitespace-nowrap px-3 py-1.5 text-sm font-medium ring-offset-background data-[state=active]:border-b-2 data-[state=active]:border-primary data-[state=active]:text-foreground text-muted-foreground',
-        props.className,
+        props.className
       )}
       data-state={context.selected === props.value ? 'active' : 'inactive'}
       href={context.hrefFor(props.value)}
@@ -119,7 +119,7 @@ export const TabsContent = (props: {
       {...props}
       className={cn(
         'mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
-        props.className,
+        props.className
       )}
     />
   );

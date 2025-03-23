@@ -48,8 +48,8 @@ export async function baseFetchAPI(
         value == null || value === ''
           ? []
           : Array.isArray(value)
-          ? value.map((v) => [key, v])
-          : [[key, value]]
+            ? value.map((v) => [key, v])
+            : [[key, value]]
       )
     );
 

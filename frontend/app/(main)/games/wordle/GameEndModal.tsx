@@ -25,9 +25,12 @@ export function GameEndModal() {
   // Show dialog if game status is not playing
   useEffect(() => {
     if (gameStatus !== WordleGameStatus.Playing) {
-      const timer = setTimeout(() => {
-        setIsOpen(true);
-      }, wordLength * 200 + 500);
+      const timer = setTimeout(
+        () => {
+          setIsOpen(true);
+        },
+        wordLength * 200 + 500
+      );
 
       return () => clearTimeout(timer);
     }
