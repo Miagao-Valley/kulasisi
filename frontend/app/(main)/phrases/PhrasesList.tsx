@@ -28,7 +28,7 @@ export async function PhrasesList({
 }: Props) {
   const limit = 15;
 
-  const phrases = await getPhrases({
+  const { results: phrases, pagination } = await getPhrases({
     search: searchTerm,
     ordering: sortOption,
     lang__code: sourceLang,
@@ -41,9 +41,9 @@ export async function PhrasesList({
   return (
     <>
       <ul className={cn(className, 'flex flex-col')}>
-        {phrases && phrases.results && phrases.results.length > 0 ? (
+        {phrases.length > 0 ? (
           <>
-            {phrases.results.map(async (phrase) => {
+            {phrases.map(async (phrase) => {
               return (
                 <li key={phrase.id}>
                   <PhraseCard
@@ -65,10 +65,10 @@ export async function PhrasesList({
       </ul>
       <ListPagination
         className="my-5 flex justify-center"
-        numPages={phrases?.num_pages || 1}
+        numPages={pagination.num_pages || 1}
         currentPage={page}
-        next={!!phrases?.next}
-        prev={!!phrases?.previous}
+        next={!!pagination.next}
+        prev={!!pagination.previous}
       />
     </>
   );

@@ -32,15 +32,15 @@ export function HomeFeed({ className = '' }: Props) {
     setLoading(true);
 
     try {
-      const data = await getHomeFeed({
+      const { results: entries, pagination } = await getHomeFeed({
         limit,
         offset: limit * (currentPage - 1),
       });
-      if (!data) return;
+      if (!entries) return;
 
       // Fetch additional data for each entry.
       const enriched = await Promise.all(
-        data.results.map(async (entry: any) => {
+        entries.map(async (entry: any) => {
           return {
             ...entry,
             type: isPhrase(entry) ? 'phrase' : isWord(entry) ? 'word' : '',
@@ -49,7 +49,7 @@ export function HomeFeed({ className = '' }: Props) {
       );
 
       setFeed((prev) => [...prev, ...enriched]);
-      setHasNext(!!data.next);
+      setHasNext(!!pagination.next);
     } catch (error) {
       console.error('Error fetching home feed:', error);
     } finally {

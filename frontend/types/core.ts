@@ -19,8 +19,11 @@ export interface PaginationDetails {
   num_pages: number;
   current_page: number;
   count: number;
-  next: string;
-  previous: string;
+  next: string | null;
+  previous: string | null;
 }
 
-export type Paginated<T> = PaginationDetails & { results: T };
+export interface Paginated<T> {
+  pagination: PaginationDetails;
+  results: T;
+}

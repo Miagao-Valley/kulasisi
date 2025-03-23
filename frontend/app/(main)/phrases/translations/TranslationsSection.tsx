@@ -19,7 +19,7 @@ export async function TranslationsSection({ searchParams, phrase }: Props) {
   const lang = searchParams.lang || '';
   const page = Number(searchParams.page || 1);
 
-  const langs = await getLangs();
+  const { results: langs } = await getLangs();
 
   const filters = { lang: lang };
 
@@ -35,7 +35,7 @@ export async function TranslationsSection({ searchParams, phrase }: Props) {
       label: 'Language',
       name: 'lang',
       type: 'select',
-      options: langs.results
+      options: langs
         .filter(({ code }) => code !== phrase.lang)
         .map(({ code, name }) => ({ label: name, value: code })),
     },

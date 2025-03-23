@@ -27,24 +27,26 @@ export async function DefinitionsList({
 }: Props) {
   const limit = 15;
 
-  const definitions = await getDefinitions(wordLang, word, {
-    search: searchTerm,
-    ordering: sortOption,
-    lang__code: filters?.lang,
-    contributor__username: filters?.contributor,
-    pos__abbr: filters?.pos,
-    limit: limit,
-    offset: limit * (page - 1),
-  });
+  const { results: definitions, pagination } = await getDefinitions(
+    wordLang,
+    word,
+    {
+      search: searchTerm,
+      ordering: sortOption,
+      lang__code: filters?.lang,
+      contributor__username: filters?.contributor,
+      pos__abbr: filters?.pos,
+      limit: limit,
+      offset: limit * (page - 1),
+    }
+  );
 
   return (
     <>
       <ul className={cn(className, 'flex flex-col')}>
-        {definitions &&
-        definitions.results &&
-        definitions.results.length > 0 ? (
+        {definitions.length > 0 ? (
           <>
-            {definitions.results.map(async (definition) => {
+            {definitions.map(async (definition) => {
               return (
                 <li key={definition.id}>
                   <Separator className="my-2" />
@@ -64,10 +66,10 @@ export async function DefinitionsList({
       </ul>
       <ListPagination
         className="my-5 flex justify-center"
-        numPages={definitions?.num_pages || 1}
+        numPages={pagination.num_pages || 1}
         currentPage={page}
-        next={!!definitions?.next}
-        prev={!!definitions?.previous}
+        next={!!pagination.next}
+        prev={!!pagination.previous}
       />
     </>
   );

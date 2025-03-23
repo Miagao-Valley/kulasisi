@@ -15,7 +15,7 @@ export async function LangsList({
   sortOption,
   className = '',
 }: Props) {
-  const langs = await getLangs({
+  const { results: langs } = await getLangs({
     search: searchTerm,
     ordering: sortOption,
   });
@@ -27,8 +27,8 @@ export async function LangsList({
         'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'
       )}
     >
-      {langs && langs.results && langs.results.length > 0 ? (
-        langs.results.map((lang) => (
+      {langs.length > 0 ? (
+        langs.map((lang) => (
           <li key={lang.code}>
             <LangCard lang={lang} className="w-full h-full" />
           </li>

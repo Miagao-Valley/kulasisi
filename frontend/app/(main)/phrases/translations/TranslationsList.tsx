@@ -25,23 +25,24 @@ export async function TranslationsList({
 }: Props) {
   const limit = 15;
 
-  const translations = await getTranslations(phraseId, {
-    search: searchTerm,
-    ordering: sortOption,
-    lang__code: filters?.lang,
-    contributor__username: filters?.contributor,
-    limit: limit,
-    offset: limit * (page - 1),
-  });
+  const { results: translations, pagination } = await getTranslations(
+    phraseId,
+    {
+      search: searchTerm,
+      ordering: sortOption,
+      lang__code: filters?.lang,
+      contributor__username: filters?.contributor,
+      limit: limit,
+      offset: limit * (page - 1),
+    }
+  );
 
   return (
     <>
       <ul className={cn(className, 'flex flex-col')}>
-        {translations &&
-        translations.results &&
-        translations.results.length > 0 ? (
+        {translations.length > 0 ? (
           <>
-            {translations.results.map(async (translation) => {
+            {translations.map(async (translation) => {
               return (
                 <li key={translation.id}>
                   <Separator className="my-2" />
@@ -61,10 +62,10 @@ export async function TranslationsList({
       </ul>
       <ListPagination
         className="my-5 flex justify-center"
-        numPages={translations?.num_pages || 1}
+        numPages={pagination.num_pages || 1}
         currentPage={page}
-        next={!!translations?.next}
-        prev={!!translations?.previous}
+        next={!!pagination.next}
+        prev={!!pagination.previous}
       />
     </>
   );

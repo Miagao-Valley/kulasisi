@@ -27,7 +27,7 @@ export async function WordsList({
 }: Props) {
   const limit = 15;
 
-  const words = await getWords({
+  const { results: words, pagination } = await getWords({
     search: searchTerm,
     ordering: sortOption,
     lang__code: sourceLang,
@@ -40,9 +40,9 @@ export async function WordsList({
   return (
     <>
       <ul className={cn(className, 'flex flex-col')}>
-        {words && words.results && words.results.length > 0 ? (
+        {words.length > 0 ? (
           <>
-            {words.results.map(async (word) => {
+            {words.map(async (word) => {
               return (
                 <li key={word.id}>
                   <WordCard
@@ -64,10 +64,10 @@ export async function WordsList({
       </ul>
       <ListPagination
         className="my-5 flex justify-center"
-        numPages={words?.num_pages || 1}
+        numPages={pagination.num_pages || 1}
         currentPage={page}
-        next={!!words?.next}
-        prev={!!words?.previous}
+        next={!!pagination.next}
+        prev={!!pagination.previous}
       />
     </>
   );

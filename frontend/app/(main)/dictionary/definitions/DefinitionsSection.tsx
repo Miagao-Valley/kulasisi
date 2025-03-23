@@ -20,7 +20,7 @@ export async function DefinitionsSection({ searchParams, word }: Props) {
   const pos = searchParams.pos || '';
   const page = Number(searchParams.page || 1);
 
-  const langs = await getLangs();
+  const { results: langs } = await getLangs();
   const partsOfSpeech = await getPartsOfSpeech();
 
   const filters = { lang: lang, pos: pos };
@@ -38,7 +38,7 @@ export async function DefinitionsSection({ searchParams, word }: Props) {
       label: 'Language',
       name: 'lang',
       type: 'select',
-      options: langs.results
+      options: langs
         .filter(({ code }) => code !== word.lang)
         .map(({ code, name }) => ({ label: name, value: code })),
     },

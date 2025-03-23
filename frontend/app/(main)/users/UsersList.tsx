@@ -19,7 +19,7 @@ export async function UsersList({
   className = '',
 }: Props) {
   const limit = 10;
-  const users = await getUsers({
+  const { results: users, pagination } = await getUsers({
     search: searchTerm,
     ordering: sortOption,
     limit: limit,
@@ -34,8 +34,8 @@ export async function UsersList({
           'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'
         )}
       >
-        {users && users.results && users.results.length > 0 ? (
-          users.results.map((user) => (
+        {users.length > 0 ? (
+          users.map((user) => (
             <li key={user.id}>
               <UserCard user={user} className="w-full h-full" />
             </li>
@@ -48,10 +48,10 @@ export async function UsersList({
       </ul>
       <ListPagination
         className="my-5 flex justify-center"
-        numPages={users?.num_pages || 1}
+        numPages={pagination.num_pages || 1}
         currentPage={page}
-        next={!!users?.next}
-        prev={!!users?.previous}
+        next={!!pagination.next}
+        prev={!!pagination.previous}
       />
     </>
   );

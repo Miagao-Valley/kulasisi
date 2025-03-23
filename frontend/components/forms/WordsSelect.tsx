@@ -34,18 +34,14 @@ export function WordsSelect({
 
   useEffect(() => {
     const fetchWords = async () => {
-      const { results } = await getWords();
-      const filteredWords = results.filter((result) => {
+      const { results: words } = await getWords();
+      const filteredWords = words.filter((word) => {
         if (include.length > 0) {
-          return (
-            include.includes(result.word) && (!lang || result.lang === lang)
-          );
+          return include.includes(word.word) && (!lang || word.lang === lang);
         } else if (exclude.length > 0) {
-          return (
-            !exclude.includes(result.word) && (!lang || result.lang === lang)
-          );
+          return !exclude.includes(word.word) && (!lang || word.lang === lang);
         }
-        return !lang || result.lang === lang;
+        return !lang || word.lang === lang;
       });
       const uniqueWords = new Set(filteredWords.map((word) => word.word));
       setWordOptions(Array.from(uniqueWords));
