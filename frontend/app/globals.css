@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.borderless-input {
-  @apply !border-transparent !outline-none !shadow-none !ring-0 !ring-offset-0;
-}
-
 @layer base {
   :root {
     --background: 48 50% 96.1%;
@@ -22,6 +18,7 @@
     --muted-foreground: 40 7.9% 62.9%;
     --accent: 92.7 12.6% 82.9%;
     --accent-foreground: 90.9 28.2% 22.9%;
+    --selection: 90 40.1% 60%;
     --success: 131 54% 45%;
     --success-foreground: 48 50% 96.1%;
     --destructive: 0 94% 65%;
@@ -62,8 +59,9 @@
     --muted-foreground: 40 3.1% 54.1%;
     --accent: 92.7 12.1% 17.8%;
     --accent-foreground: 85.7 10.4% 86.9%;
-    --success: 131 54% 25%;
-    --success-foreground: 48 50% 96.1%;
+    --selection: 90 40.1% 37.8%;
+    --success: 131 54% 35%;
+    --success-foreground: 131 81% 7%;
     --destructive: 0 90% 63%;
     --destructive-foreground: 0 27% 24%;
     --warning: 48 100% 70%;
@@ -83,18 +81,56 @@
     --sidebar-border: 40 6.5% 18%;
     --sidebar-ring: 90 45.1% 47.8%;
   }
-
-  ::selection {
-    color: hsl(var(--accent-foreground));
-    background: hsl(var(--accent));
-  }
 }
 
 @layer base {
   * {
     @apply border-border;
   }
+
+  html {
+    @apply scroll-smooth;
+  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground overscroll-none;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Custom scrollbar styling. */
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--border));
+    border-radius: 5px;
+  }
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--border)) transparent;
+  }
+
+  ::selection {
+    color: hsl(var(--foreground));
+    background: hsl(var(--selection));
+  }
+}
+
+@layer utilities {
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .borderless-input {
+    @apply !border-transparent !outline-none !shadow-none !ring-0 !ring-offset-0;
   }
 }
