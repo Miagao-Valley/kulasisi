@@ -1,8 +1,14 @@
 import React, { Suspense } from 'react';
+import { Metadata } from 'next';
 import { PosList, PosListSkeleton } from './PosList';
 import { SortOption } from '@/components/filter/SortDropdown';
 import { FilterControls } from '@/components/filter/FilterControls';
 import { H1 } from '@/components/ui/heading-with-anchor';
+
+export const metadata: Metadata = {
+  title: 'Parts of Speech',
+  description: 'Search for parts of speech of words.',
+};
 
 interface Props {
   searchParams: { [key: string]: string | undefined };

@@ -1,4 +1,5 @@
 import React, { Suspense } from 'react';
+import { Metadata } from 'next';
 import Link from 'next/link';
 import { getCategory } from '@/lib/phrases/getCategory';
 import { getCategories } from '@/lib/phrases/getCategories';
@@ -21,6 +22,19 @@ import { FeatherIcon } from 'lucide-react';
 
 interface Props {
   searchParams: { [key: string]: string | undefined };
+}
+
+export async function generateMetadata({
+  searchParams,
+}: Props): Promise<Metadata> {
+  const { sl: sourceLang = '', category: categoryName = '' } = searchParams;
+
+  return {
+    title: `${categoryName && '#' + categoryName + ' | '}${
+      sourceLang && sourceLang.toUpperCase() + ' '
+    }Phrasebook`,
+    description: 'Search for phrases and their translations.',
+  };
 }
 
 export default async function PhrasesPage({ searchParams }: Props) {

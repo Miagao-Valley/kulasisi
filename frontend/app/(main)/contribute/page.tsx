@@ -1,4 +1,5 @@
 import React from 'react';
+import { Metadata } from 'next';
 import { AddPhraseForm } from '../phrases/AddPhraseForm';
 import { AddWordForm } from '../dictionary/AddWordForm';
 import {
@@ -8,6 +9,11 @@ import {
   TabsTrigger,
 } from '@/components/ui/tabs-with-url';
 import { H1 } from '@/components/ui/heading-with-anchor';
+
+export const metadata: Metadata = {
+  title: 'Contribute to Kulasisi',
+  description: 'Get involved by contributing.',
+};
 
 export default function AddPhrasePage() {
   return (

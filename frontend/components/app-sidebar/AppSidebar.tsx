@@ -11,6 +11,7 @@ import { NavUser } from './NavUser';
 import { NavLang } from './NavLang';
 import { NavTools } from './NavTools';
 import { NavGames } from './NavGames';
+import { NavResources } from './NavResources';
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
@@ -24,6 +25,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavLang />
         <NavTools />
         <NavGames />
+        <NavResources />
       </SidebarContent>
       <SidebarFooter>
         <NavUser />

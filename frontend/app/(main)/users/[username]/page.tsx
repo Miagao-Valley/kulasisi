@@ -1,4 +1,5 @@
 import React, { Suspense } from 'react';
+import { Metadata } from 'next';
 import { getUser } from '@/lib/users/getUser';
 import { Overview } from './Overview';
 import { StatsTab } from './StatsTab';
@@ -28,6 +29,17 @@ import {
 interface Props {
   params: {
     username: string;
+  };
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { username } = params;
+
+  const user = await getUser(username);
+
+  return {
+    title: `${user.username} (${user.first_name} ${user.last_name})`,
+    description: `${user.username} (${user.first_name} ${user.last_name})`,
   };
 }
 

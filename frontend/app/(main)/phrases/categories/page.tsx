@@ -1,8 +1,14 @@
 import React, { Suspense } from 'react';
+import { Metadata } from 'next';
 import { CategoriesList, CategoriesListSkeleton } from './CategoriesList';
 import { SortOption } from '@/components/filter/SortDropdown';
 import { FilterControls } from '@/components/filter/FilterControls';
 import { H1 } from '@/components/ui/heading-with-anchor';
+
+export const metadata: Metadata = {
+  title: 'Categories',
+  description: 'Search for categories of phrases.',
+};
 
 interface Props {
   searchParams: { [key: string]: string | undefined };

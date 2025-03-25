@@ -114,10 +114,12 @@ export function RegisterForm() {
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col items-center gap-1">
-        <Link href="/" className="flex flex-col items-center">
-          <AppLogo className="w-12 mb-4" />
-          <span className="sr-only">kulasisi</span>
-        </Link>
+        <div className="motion-preset-bounce motion-duration-300 motion-delay-75 motion-ease-bounce">
+          <Link href="/">
+            <AppLogo className="w-12 mb-4 motion-preset-seesaw-lg" />
+            <span className="sr-only">kulasisi</span>
+          </Link>
+        </div>
         <h1 className="text-xl font-bold">Welcome to kulasisi</h1>
         <div className="text-center text-sm">
           Already have an account?{' '}

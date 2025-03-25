@@ -14,12 +14,15 @@ import {
 import { Button } from '@/components/ui/button';
 
 export function GameEndModal() {
-  const { wordLength, solution, gameStatus, resetGame } = useWordleContext();
+  const { wordLength, solution, gameStatus, resetGame, loading } =
+    useWordleContext();
   const [isOpen, setIsOpen] = useState(gameStatus !== WordleGameStatus.Playing);
 
   const handlePlayAgain = () => {
-    resetGame();
     setIsOpen(false);
+    setTimeout(() => {
+      resetGame();
+    }, 100);
   };
 
   // Show dialog if game status is not playing
@@ -41,13 +44,15 @@ export function GameEndModal() {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            {gameStatus === WordleGameStatus.Win
-              ? 'Congratulations!'
-              : 'Game Over'}
+            {loading
+              ? 'Loading...'
+              : gameStatus === WordleGameStatus.Win
+                ? 'Congratulations!'
+                : 'Game Over'}
           </DialogTitle>
           <DialogDescription>
             <div>
-              {gameStatus === WordleGameStatus.Win
+              {!loading && gameStatus === WordleGameStatus.Win
                 ? 'You guessed the word correctly!'
                 : `The correct word was: "${solution}"`}
             </div>

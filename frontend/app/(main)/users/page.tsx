@@ -3,6 +3,12 @@ import { UsersList, UsersListSkeleton } from './UsersList';
 import { SortOption } from '@/components/filter/SortDropdown';
 import { H1 } from '@/components/ui/heading-with-anchor';
 import { FilterControls } from '@/components/filter/FilterControls';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Users',
+  description: 'Search for users that contribute to Kulasisi.',
+};
 
 interface Props {
   searchParams: { [key: string]: string | undefined };

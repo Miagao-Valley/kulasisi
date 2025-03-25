@@ -7,6 +7,7 @@ import { AuthProvider } from '../../components/providers/AuthProvider';
 import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/app-sidebar/AppSidebar';
 import { SiteHeader } from '@/components/app-sidebar/SiteHeader';
+import { Footer } from '@/components/footer/Footer';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';
 import { KbdProvider } from '@/components/ui/kbd';
 import { TooltipProvider } from '@/components/ui/tooltip';
@@ -15,9 +16,49 @@ import { Bricolage_Grotesque } from 'next/font/google';
 
 export const font = Bricolage_Grotesque({ subsets: ['latin'] });
 
-export const metadata: Metadata = {
+export const siteMetadata = {
   title: 'Kulasisi',
-  description: 'Kulasisi description',
+  description:
+    'Kulasisi is a collaborative community for Philippine languages.',
+  keywords: [
+    'Languages',
+    'Philippines',
+    'Filipino',
+    'Tagalog',
+    'Phrasebook',
+    'Dictionary',
+  ],
+  baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
+  imagePath: '/images/kulasisi-illustration.png',
+  twitterHandle: '@kulasisi',
+};
+
+export const metadata: Metadata = {
+  title: siteMetadata.title,
+  description: siteMetadata.description,
+  keywords: siteMetadata.keywords,
+  openGraph: {
+    title: siteMetadata.title,
+    description: siteMetadata.description,
+    url: siteMetadata.baseUrl,
+    siteName: siteMetadata.title,
+    images: [
+      {
+        url: new URL(siteMetadata.imagePath, siteMetadata.baseUrl).href,
+        width: 1200,
+        height: 630,
+        alt: siteMetadata.title,
+      },
+    ],
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    site: siteMetadata.twitterHandle,
+    title: siteMetadata.title,
+    description: siteMetadata.description,
+    images: [new URL(siteMetadata.imagePath, siteMetadata.baseUrl).href],
+  },
 };
 
 export default async function RootLayout({
@@ -54,7 +95,10 @@ export default async function RootLayout({
                     <div className="flex flex-1">
                       <AppSidebar />
                       <SidebarInset>
-                        <main className="p-4">{children}</main>
+                        <div className="flex flex-col w-full min-h-screen">
+                          <main className="p-4 flex-grow">{children}</main>
+                          <Footer />
+                        </div>
                       </SidebarInset>
                     </div>
                   </SidebarProvider>

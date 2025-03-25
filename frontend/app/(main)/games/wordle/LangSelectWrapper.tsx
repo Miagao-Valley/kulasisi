@@ -1,9 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useAuth } from '@/components/providers/AuthProvider';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
+import { toast } from 'sonner';
 import { LangSelect } from '@/components/forms/LangSelect';
+import { DEFAULT_LANG } from './WordleContext';
 
 interface LangSelectWrapperProps {
   currentSelectedLang: string;
@@ -14,10 +17,13 @@ export function LangSelectWrapper({
   currentSelectedLang,
   className,
 }: LangSelectWrapperProps) {
+  const { isAuthenticated } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const [selectedLang, setSelectedLang] = useState(currentSelectedLang);
+  const [selectedLang, setSelectedLang] = useState(
+    isAuthenticated ? currentSelectedLang : DEFAULT_LANG
+  );
 
   useEffect(() => {
     const currentSearchParams = new URLSearchParams(
@@ -36,6 +42,12 @@ export function LangSelectWrapper({
       selectedLang={selectedLang}
       setSelectedLang={(lang) => setSelectedLang(lang)}
       className={cn(className)}
+      disabled={!isAuthenticated}
+      onClick={() => {
+        if (!isAuthenticated) {
+          toast.error('Sign in to change the word length.');
+        }
+      }}
     />
   );
 }

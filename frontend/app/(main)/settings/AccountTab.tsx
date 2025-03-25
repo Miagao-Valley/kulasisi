@@ -1,4 +1,5 @@
-import { User } from '@/types/users';
+'use client';
+
 import { ChangeEmailModal } from './ChangeEmailModal';
 import { ChangePhoneNumberModal } from './ChangePhoneNumberModal';
 import { ChangePasswordModal } from './ChangePasswordModal';
@@ -7,12 +8,15 @@ import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { H2, H3 } from '@/components/ui/heading-with-anchor';
 import { PenIcon } from 'lucide-react';
+import { useAuth } from '@/components/providers/AuthProvider';
 
-interface Props {
-  user: User;
-}
+export function AccountTab() {
+  const { user } = useAuth();
 
-export function AccountTab({ user }: Props) {
+  if (!user) {
+    return null;
+  }
+
   return (
     <div className="flex flex-col gap-5">
       <div>

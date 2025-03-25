@@ -6,7 +6,7 @@ import { setFormErrors } from '@/lib/utils/setFormErrors';
 import { updateUserSchema, UpdateUserSchema } from '@/lib/schemas/users';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
-import { User, Gender } from '@/types/users';
+import { Gender } from '@/types/users';
 import { displayGender } from '@/lib/utils/displayGender';
 import { updateUser } from '@/lib/users/updateUser';
 import {
@@ -32,33 +32,36 @@ import { LoadingButton } from '@/components/ui/loading-button';
 import { Button } from '@/components/ui/button';
 import { UserRoundIcon } from 'lucide-react';
 
-interface Props {
-  user: User;
-}
-
-export function UpdateUserForm({ user }: Props) {
+export function UpdateUserForm() {
   const auth = useAuth();
 
   const form = useForm<UpdateUserSchema>({
     resolver: zodResolver(updateUserSchema),
     defaultValues: {
-      first_name: user.first_name || '',
-      last_name: user.last_name || '',
+      first_name: auth?.user?.first_name || '',
+      last_name: auth?.user?.last_name || '',
       // date_of_birth: user.date_of_birth,
-      location: user.location || '',
+      location: auth?.user?.location || '',
       // gender: user.gender || '',
-      bio: user.bio || '',
-      website: user.website || '',
+      bio: auth?.user?.bio || '',
+      website: auth?.user?.website || '',
     },
   });
 
   async function onSubmit(formData: UpdateUserSchema) {
-    const { data, error } = await updateUser(user.username, formData);
+    const { data, error } = await updateUser(
+      auth?.user?.username || '',
+      formData
+    );
     if (error) {
       setFormErrors(error, form.setError);
     }
     auth.updateUser();
     return { data, error };
+  }
+
+  if (!auth.user) {
+    return null;
   }
 
   return (
@@ -71,7 +74,7 @@ export function UpdateUserForm({ user }: Props) {
           <div className="flex">
             <H2 anchor="general">General</H2>
             <Button variant="outline" className="ms-auto" asChild>
-              <Link href={`/users/${user.username}`}>
+              <Link href={`/users/${auth?.user?.username}`}>
                 <UserRoundIcon /> View Profile
               </Link>
             </Button>

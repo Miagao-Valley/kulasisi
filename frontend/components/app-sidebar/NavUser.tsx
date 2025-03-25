@@ -154,10 +154,6 @@ export function NavUser() {
     <SidebarMenu>
       {open ? (
         <>
-          <span className="text-sm text-center truncate w-full my-2">
-            Sign in to enjoy all the features.
-          </span>
-
           <SidebarMenuItem>
             <Button variant="outline" className="w-full" asChild>
               <Link href={`/login?next=${pathname}`}>Sign in</Link>

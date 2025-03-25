@@ -1,4 +1,5 @@
 import React from 'react';
+import { Metadata } from 'next';
 import { cn } from '@/lib/utils';
 import { AppWordmark } from '@/components/brand/app-wordmark';
 import { H1, H2, H3, H4, H5, H6 } from '@/components/ui/heading-with-anchor';
@@ -23,6 +24,11 @@ import {
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ThumbsUpIcon } from 'lucide-react';
+
+export const metadata: Metadata = {
+  title: 'Design',
+  description: 'Design elements and guidelines for Kulasisi.',
+};
 
 interface ColorCardProps {
   name: string;

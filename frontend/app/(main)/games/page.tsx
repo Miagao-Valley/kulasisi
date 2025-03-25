@@ -1,7 +1,13 @@
 import React from 'react';
+import { Metadata } from 'next';
 import { GameCard } from './GameCard';
 import { H1 } from '@/components/ui/heading-with-anchor';
 import { Grid2x2Icon } from 'lucide-react';
+
+export const metadata: Metadata = {
+  title: 'Games',
+  description: 'Language games to play.',
+};
 
 const games = [
   {

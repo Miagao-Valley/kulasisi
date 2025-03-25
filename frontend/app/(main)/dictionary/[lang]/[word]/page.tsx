@@ -1,4 +1,5 @@
 import React from 'react';
+import { Metadata } from 'next';
 import { getWord } from '@/lib/words/getWord';
 import { WordCard } from '../../WordCard';
 import { DefinitionsSection } from '../../definitions/DefinitionsSection';
@@ -15,6 +16,19 @@ interface Props {
     word: string;
   };
   searchParams: { [key: string]: string | undefined };
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { lang, word: word_param } = params;
+
+  const word = await getWord(lang, word_param);
+
+  return {
+    title: `${word.word} | ${word.lang.toUpperCase()} Dictionary`,
+    description: `${word.word} (${word.lang.toUpperCase()}) - ${
+      Object.keys(word.best_definitions)[0] || 'No definition'
+    }`,
+  };
 }
 
 export default async function PostPage({ params, searchParams }: Props) {

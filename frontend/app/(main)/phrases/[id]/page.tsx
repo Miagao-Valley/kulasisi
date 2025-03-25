@@ -1,4 +1,5 @@
 import React from 'react';
+import { Metadata } from 'next';
 import { getPhrase } from '@/lib/phrases/getPhrase';
 import { PhraseCard } from '../PhraseCard';
 import { TranslationsSection } from '../translations/TranslationsSection';
@@ -14,6 +15,21 @@ interface Props {
     id: string;
   };
   searchParams: { [key: string]: string | undefined };
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const id = Number(params.id);
+
+  const phrase = await getPhrase(id);
+  const truncatedContent =
+    phrase.content.length > 50
+      ? phrase.content.slice(0, 50) + '...'
+      : phrase.content;
+
+  return {
+    title: `${truncatedContent} | ${phrase.lang.toUpperCase()} Phrasebook`,
+    description: `${truncatedContent} (${phrase.lang.toUpperCase()})`,
+  };
 }
 
 export default async function PhrasePage({ params, searchParams }: Props) {

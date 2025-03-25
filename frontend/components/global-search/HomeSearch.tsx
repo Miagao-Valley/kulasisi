@@ -5,6 +5,8 @@ import { logout } from '@/lib/auth/logout';
 import { CommandGroup, CommandItem } from '../ui/command';
 import {
   BookAIcon,
+  BrushIcon,
+  CodeIcon,
   FeatherIcon,
   Gamepad2Icon,
   Grid2X2Icon,
@@ -13,13 +15,17 @@ import {
   LogInIcon,
   LogOutIcon,
   MessageSquareQuoteIcon,
+  PenIcon,
   PlusCircleIcon,
   SearchIcon,
+  SettingsIcon,
   SpellCheckIcon,
   TagsIcon,
+  UserRoundIcon,
   UsersRoundIcon,
   WrenchIcon,
 } from 'lucide-react';
+import { AppLogo } from '../brand/app-logo';
 
 export function HomeSearch({ searchLangs }: { searchLangs: () => void }) {
   const { setOpen, setLoading } = useGlobalSearch();
@@ -128,7 +134,46 @@ export function HomeSearch({ searchLangs }: { searchLangs: () => void }) {
     },
   ];
 
+  const ResourceItems = [
+    {
+      name: 'About Kulasisi',
+      command: () => router.push('/about/'),
+      icon: AppLogo,
+    },
+    {
+      name: 'Design',
+      keywords: ['styles'],
+      command: () => router.push('/design/'),
+      icon: BrushIcon,
+    },
+    {
+      name: 'Source',
+      keywords: ['code'],
+      command: () =>
+        window.open('https://github.com/Miagao-Valley/kulasisi', '_blank'),
+      icon: CodeIcon,
+    },
+  ];
+
   const AuthItems = [
+    {
+      name: 'Settings',
+      command: () => router.push('/settings/'),
+      icon: SettingsIcon,
+      disabled: !auth.isAuthenticated,
+    },
+    {
+      name: 'View Profile',
+      command: () => router.push(`/users/${auth.user?.username}/`),
+      icon: UserRoundIcon,
+      disabled: !auth.isAuthenticated,
+    },
+    {
+      name: 'Edit Profile',
+      command: () => router.push('/settings?tab=profile'),
+      icon: PenIcon,
+      disabled: !auth.isAuthenticated,
+    },
     {
       name: 'Sign In',
       keywords: ['login'],
@@ -231,6 +276,22 @@ export function HomeSearch({ searchLangs }: { searchLangs: () => void }) {
 
       <CommandGroup heading="Games">
         {GameItems.map((item) => (
+          <CommandItem
+            key={item.name}
+            keywords={item.keywords}
+            onSelect={() => {
+              item.command();
+              setOpen(false);
+            }}
+          >
+            <item.icon />
+            <span>{item.name}</span>
+          </CommandItem>
+        ))}
+      </CommandGroup>
+
+      <CommandGroup heading="Resources">
+        {ResourceItems.map((item) => (
           <CommandItem
             key={item.name}
             keywords={item.keywords}

@@ -1,7 +1,13 @@
 import React from 'react';
+import { Metadata } from 'next';
 import { ToolCard } from './ToolCard';
 import { H1 } from '@/components/ui/heading-with-anchor';
 import { SpellCheckIcon } from 'lucide-react';
+
+export const metadata: Metadata = {
+  title: 'Tools',
+  description: 'Language tools to help you.',
+};
 
 const tools = [
   {

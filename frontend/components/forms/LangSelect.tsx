@@ -30,6 +30,8 @@ interface Props {
   placeholder?: string;
   error?: string;
   className?: string;
+  onClick?: () => void;
+  disabled?: boolean;
 }
 
 export function LangSelect({
@@ -41,6 +43,8 @@ export function LangSelect({
   placeholder,
   error,
   className = '',
+  onClick,
+  disabled = false,
 }: Props) {
   const [langs, setLangs] = useState<Lang[]>([]);
   const [open, setOpen] = useState(false);
@@ -75,6 +79,8 @@ export function LangSelect({
             error && 'text-destructive',
             className
           )}
+          onClick={onClick}
+          disabled={disabled}
         >
           {showChevrons && <ChevronsUpDown className="opacity-50" />}
           {selectedLang ? (

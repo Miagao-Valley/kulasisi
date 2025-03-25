@@ -8,12 +8,24 @@ import React, {
   useCallback,
   useRef,
 } from 'react';
+import { useAuth } from '@/components/providers/AuthProvider';
 import { toast } from 'sonner';
 import { WordleGameStatus } from '@/types/games';
 import { getWordleGame, submitWordleGuess } from '@/lib/games/wordle';
 
-const DEFAULT_WORD_LENGTH = 5;
-const DEFAULT_MAX_GUESSES = 6;
+export const DEFAULT_LANG = 'eng';
+export const DEFAULT_WORD_LENGTH = 5;
+export const DEFAULT_MAX_GUESSES = 6;
+
+const fallbackSolutions = [
+  'HELLO',
+  'WORLD',
+  'CRANE',
+  'EAGLE',
+  'GOOSE',
+  'ROBIN',
+  'RAVEN',
+];
 
 export type GuessStatus = 'correct' | 'present' | 'absent' | 'empty';
 
@@ -39,15 +51,24 @@ interface WordleContextType {
 const WordleContext = createContext<WordleContextType | undefined>(undefined);
 
 export const WordleProvider = ({
-  lang,
-  wordLength = DEFAULT_WORD_LENGTH,
+  lang: langParam = DEFAULT_LANG,
+  wordLength: wordLengthProp = DEFAULT_WORD_LENGTH,
   children,
 }: {
-  lang: string;
+  lang?: string;
   wordLength?: number;
   children: React.ReactNode;
 }) => {
+  const auth = useAuth();
+
   const maxGuesses = DEFAULT_MAX_GUESSES;
+  const [lang, setLang] = useState(
+    auth.isAuthenticated ? langParam : DEFAULT_LANG
+  );
+  const [wordLength, setWordLength] = useState(
+    auth.isAuthenticated ? wordLengthProp : DEFAULT_WORD_LENGTH
+  );
+
   const [solution, setSolution] = useState('');
   const [guesses, setGuesses] = useState<string[]>(Array(maxGuesses).fill(''));
   const [currentGuessIdx, setCurrentGuessIdx] = useState<number>(0);
@@ -61,7 +82,23 @@ export const WordleProvider = ({
   // Cache to store invalid words
   const invalidWordsCache = useRef<Set<string>>(new Set());
 
+  useEffect(() => {
+    if (auth.isAuthenticated) setLang(langParam);
+  }, [langParam, auth.isAuthenticated]);
+
+  useEffect(() => {
+    if (auth.isAuthenticated) setWordLength(wordLengthProp);
+  }, [wordLengthProp, auth.isAuthenticated]);
+
   const fetchGameState = useCallback(async () => {
+    // Use fallback solution if user is not authenticated
+    if (!auth.isAuthenticated) {
+      const fallbackSolution =
+        fallbackSolutions[Math.floor(Math.random() * fallbackSolutions.length)];
+      setSolution(fallbackSolution.toUpperCase());
+      return;
+    }
+
     setLoading(true);
     const { data: fetchedGameState, error: err } = await getWordleGame(
       lang,
@@ -160,6 +197,24 @@ export const WordleProvider = ({
 
     setIsLastGuessValid(true);
 
+    // Validate guess manually if user is not authenticated
+    if (!auth.isAuthenticated) {
+      setGuesses((prevGuesses) => {
+        const newGuesses = [...prevGuesses];
+        newGuesses[currentGuessIdx] = currentGuess;
+        return newGuesses;
+      });
+      setCurrentGuessIdx((prevIdx) => prevIdx + 1);
+
+      if (currentGuess.toUpperCase() === solution.toUpperCase()) {
+        setGameStatus(WordleGameStatus.Win);
+      } else if (currentGuessIdx + 1 >= maxGuesses) {
+        setGameStatus(WordleGameStatus.Lose);
+      }
+
+      return;
+    }
+
     const { data, error } = await submitWordleGuess(
       lang,
       wordLength,
@@ -182,6 +237,7 @@ export const WordleProvider = ({
       setGameStatus(game_status);
     }
   }, [
+    solution,
     guesses,
     currentGuessIdx,
     lang,
@@ -189,6 +245,7 @@ export const WordleProvider = ({
     maxGuesses,
     gameStatus,
     loading,
+    auth.isAuthenticated,
   ]);
 
   // Get game state on mount

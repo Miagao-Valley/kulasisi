@@ -1,9 +1,9 @@
-import { Spinner } from '@/components/ui/spinner';
+import { AppSpinner } from '@/components/brand/app-spinner';
 
 export default function Loading() {
   return (
-    <div className="p-3 flex justify-center items-center">
-      <Spinner size="large" />
+    <div className="w-full h-full p-3 flex flex-col gap-2 justify-center items-center text-muted-foreground">
+      <AppSpinner />
     </div>
   );
 }

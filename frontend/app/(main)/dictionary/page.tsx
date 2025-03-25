@@ -1,4 +1,5 @@
 import React, { Suspense } from 'react';
+import { Metadata } from 'next';
 import Link from 'next/link';
 import { getPartOfSpeech } from '@/lib/definitions/getPartOfSpeech';
 import { getPartsOfSpeech } from '@/lib/definitions/getPartsOfSpeech';
@@ -20,6 +21,19 @@ import { FeatherIcon } from 'lucide-react';
 
 interface Props {
   searchParams: { [key: string]: string | undefined };
+}
+
+export async function generateMetadata({
+  searchParams,
+}: Props): Promise<Metadata> {
+  const { sl: sourceLang = '', pos: posCode = '' } = searchParams;
+
+  return {
+    title: `${posCode && posCode.toUpperCase() + ' | '}${
+      sourceLang && sourceLang.toUpperCase() + ' '
+    }Dictionary`,
+    description: 'Search for words and their definitions.',
+  };
 }
 
 export default async function DictionaryPage({ searchParams }: Props) {

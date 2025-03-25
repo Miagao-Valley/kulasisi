@@ -1,4 +1,5 @@
 import React, { Suspense } from 'react';
+import { Metadata } from 'next';
 import { getLang } from '@/lib/langs/getLang';
 import { Overview } from './Overview';
 import { StatsTab } from './StatsTab';
@@ -28,6 +29,17 @@ import {
 interface Props {
   params: {
     code: string;
+  };
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { code } = params;
+
+  const lang = await getLang(code);
+
+  return {
+    title: `${lang.name} | Language`,
+    description: `${lang.name} (${lang.code.toUpperCase()})`,
   };
 }
 

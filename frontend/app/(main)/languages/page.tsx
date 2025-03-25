@@ -1,8 +1,14 @@
 import React, { Suspense } from 'react';
+import { Metadata } from 'next';
 import { LangsList, LangsListSkeleton } from './LangsList';
 import { SortOption } from '@/components/filter/SortDropdown';
 import { FilterControls } from '@/components/filter/FilterControls';
 import { H1 } from '@/components/ui/heading-with-anchor';
+
+export const metadata: Metadata = {
+  title: 'Languages',
+  description: 'Search for Philippine languages.',
+};
 
 interface Props {
   searchParams: { [key: string]: string | undefined };

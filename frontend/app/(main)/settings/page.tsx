@@ -1,7 +1,5 @@
-'use client';
-
 import React from 'react';
-import { useAuth } from '@/components/providers/AuthProvider';
+import { Metadata } from 'next';
 import { AccountTab } from './AccountTab';
 import { UpdateUserForm } from './UpdateUserForm';
 import {
@@ -12,13 +10,12 @@ import {
 } from '@/components/ui/tabs-with-url';
 import { H1 } from '@/components/ui/heading-with-anchor';
 
+export const metadata: Metadata = {
+  title: 'Settings',
+  description: 'Update your account.',
+};
+
 export default function SettingsPage() {
-  const auth = useAuth();
-
-  if (!auth.user) {
-    return <div>No user found.</div>;
-  }
-
   return (
     <>
       <H1>Settings</H1>
@@ -30,10 +27,10 @@ export default function SettingsPage() {
         </TabsList>
 
         <TabsContent value="account">
-          <AccountTab user={auth.user} />
+          <AccountTab />
         </TabsContent>
         <TabsContent value="profile">
-          <UpdateUserForm user={auth.user} />
+          <UpdateUserForm />
         </TabsContent>
       </Tabs>
     </>
