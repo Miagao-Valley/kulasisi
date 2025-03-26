@@ -50,7 +50,6 @@ export function DeleteAccountModal({ username }: Props) {
     } else {
       await logout();
       auth.updateAuth();
-      auth.updateUser();
       router.push('/register/');
     }
     return { data, error };

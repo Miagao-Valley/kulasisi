@@ -90,7 +90,6 @@ export function RegisterForm() {
       });
     } else {
       auth.updateAuth();
-      auth.updateUser();
       router.push('/');
       localStorage.removeItem(FORM_DATA_KEY);
     }

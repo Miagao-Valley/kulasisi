@@ -18,8 +18,8 @@ export async function login(
     return result;
   }
 
-  setToken(result.data.access);
-  setToken(result.data.refresh, 'refresh');
+  await setToken(result.data.access);
+  await setToken(result.data.refresh, 'refresh');
 
   revalidatePath(`/`);
 

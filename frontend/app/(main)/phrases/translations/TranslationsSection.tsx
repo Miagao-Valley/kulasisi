@@ -8,28 +8,29 @@ import { SortOption } from '@/components/filter/SortDropdown';
 import { FilterOption } from '@/components/filter/FilterMenu';
 import { FilterControls } from '@/components/filter/FilterControls';
 
+const sortingOptions: SortOption[] = [
+  { label: 'Content', value: 'content' },
+  { label: 'Votes ', value: '-vote_count' },
+  { label: 'Date updated ', value: '-updated_at' },
+  { label: 'Date created', value: '-created_at' },
+];
+
 interface Props {
   phrase: Phrase;
   searchParams: { [key: string]: string | undefined };
 }
 
 export async function TranslationsSection({ searchParams, phrase }: Props) {
-  const searchTerm = searchParams.q || '';
-  const sortOption = searchParams.sort || '-vote_count';
-  const lang = searchParams.lang || '';
+  const {
+    q: searchTerm = '',
+    sort: sortOption = '-vote_count',
+    lang = '',
+  } = searchParams;
   const page = Number(searchParams.page || 1);
 
   const { results: langs } = await getLangs();
 
   const filters = { lang: lang };
-
-  const sortingOptions: SortOption[] = [
-    { label: 'Content', value: 'content' },
-    { label: 'Votes ', value: '-vote_count' },
-    { label: 'Date updated ', value: '-updated_at' },
-    { label: 'Date created', value: '-created_at' },
-  ];
-
   const filterOptions: FilterOption[] = [
     {
       label: 'Language',

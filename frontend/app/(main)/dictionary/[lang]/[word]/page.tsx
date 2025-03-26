@@ -11,15 +11,16 @@ import {
 } from '@/components/ui/tabs-with-url';
 
 interface Props {
-  params: {
+  params: Promise<{
     lang: string;
     word: string;
-  };
-  searchParams: { [key: string]: string | undefined };
+  }>;
+  searchParams: Promise<{ [key: string]: string | undefined }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { lang, word: word_param } = params;
+  const resolvedParams = await params;
+  const { lang, word: word_param } = resolvedParams;
 
   const word = await getWord(lang, word_param);
 
@@ -32,7 +33,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function PostPage({ params, searchParams }: Props) {
-  const word = await getWord(params.lang, params.word);
+  const resolvedSearchParams = await searchParams;
+  const resolvedParams = await params;
+  const word = await getWord(resolvedParams.lang, resolvedParams.word);
 
   return (
     <>
@@ -44,7 +47,7 @@ export default async function PostPage({ params, searchParams }: Props) {
         </TabsList>
 
         <TabsContent value="definitions">
-          <DefinitionsSection word={word} searchParams={searchParams} />
+          <DefinitionsSection word={word} searchParams={resolvedSearchParams} />
         </TabsContent>
       </Tabs>
     </>

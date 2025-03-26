@@ -6,7 +6,7 @@ import { fetchAPI } from '@/lib/utils/fetchAPI';
 import { getToken } from './getToken';
 import { getPayload } from './getPayload';
 
-export async function updateToken() {
+export async function updateToken(): Promise<string | null> {
   const payload = await getPayload();
   const refreshToken = await getToken('refresh');
   const payloadRefresh = await getPayload('refresh');

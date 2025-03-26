@@ -12,12 +12,13 @@ export const metadata: Metadata = {
 };
 
 interface Props {
-  searchParams: { [key: string]: string | undefined };
+  searchParams: Promise<{ [key: string]: string | undefined }>;
 }
 
-export default function WordlePage({ searchParams }: Props) {
-  const lang = searchParams.lang || 'eng';
-  const wordLength = parseInt(searchParams.len || '5');
+export default async function WordlePage({ searchParams }: Props) {
+  const resolvedSearchParams = await searchParams;
+  const { lang = 'eng' } = resolvedSearchParams;
+  const wordLength = parseInt(resolvedSearchParams.len || '5');
 
   return (
     <>

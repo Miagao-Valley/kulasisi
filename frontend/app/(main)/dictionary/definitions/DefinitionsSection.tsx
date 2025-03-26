@@ -8,31 +8,32 @@ import { getLangs } from '@/lib/langs/getLangs';
 import { getPartsOfSpeech } from '@/lib/definitions/getPartsOfSpeech';
 import { FilterControls } from '@/components/filter/FilterControls';
 
+const sortingOptions: SortOption[] = [
+  { label: 'Description', value: 'description' },
+  { label: 'POS ', value: 'pos__abbr' },
+  { label: 'Votes ', value: '-vote_count' },
+  { label: 'Date updated ', value: '-updated_at' },
+  { label: 'Date created', value: '-created_at' },
+];
+
 interface Props {
   word: Word;
   searchParams: { [key: string]: string | undefined };
 }
 
 export async function DefinitionsSection({ searchParams, word }: Props) {
-  const searchTerm = searchParams.q || '';
-  const sortOption = searchParams.sort || '-vote_count';
-  const lang = searchParams.lang || '';
-  const pos = searchParams.pos || '';
+  const {
+    q: searchTerm = '',
+    sort: sortOption = '-vote_count',
+    lang = '',
+    pos = '',
+  } = searchParams;
   const page = Number(searchParams.page || 1);
 
   const { results: langs } = await getLangs();
   const partsOfSpeech = await getPartsOfSpeech();
 
   const filters = { lang: lang, pos: pos };
-
-  const sortingOptions: SortOption[] = [
-    { label: 'Description', value: 'description' },
-    { label: 'POS ', value: 'pos__abbr' },
-    { label: 'Votes ', value: '-vote_count' },
-    { label: 'Date updated ', value: '-updated_at' },
-    { label: 'Date created', value: '-created_at' },
-  ];
-
   const filterOptions: FilterOption[] = [
     {
       label: 'Language',

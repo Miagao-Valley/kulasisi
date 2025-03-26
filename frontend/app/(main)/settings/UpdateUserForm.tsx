@@ -56,7 +56,7 @@ export function UpdateUserForm() {
     if (error) {
       setFormErrors(error, form.setError);
     }
-    auth.updateUser();
+    auth.updateAuth();
     return { data, error };
   }
 

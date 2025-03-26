@@ -10,11 +10,12 @@ export const metadata: Metadata = {
 };
 
 interface Props {
-  searchParams: { [key: string]: string | undefined };
+  searchParams: Promise<{ [key: string]: string | undefined }>;
 }
 
 export default async function ProofreaderPage({ searchParams }: Props) {
-  const lang = searchParams.lang || 'eng';
+  const resolvedSearchParams = await searchParams;
+  const { lang = '' } = resolvedSearchParams;
 
   return (
     <>

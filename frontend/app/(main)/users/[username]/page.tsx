@@ -27,13 +27,14 @@ import {
 } from '@/components/ui/tabs-with-url';
 
 interface Props {
-  params: {
+  params: Promise<{
     username: string;
-  };
+  }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { username } = params;
+  const resolvedParams = await params;
+  const { username } = resolvedParams;
 
   const user = await getUser(username);
 
@@ -44,7 +45,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function UserPage({ params }: Props) {
-  const user = await getUser(params.username);
+  const resolvedParams = await params;
+  const { username } = resolvedParams;
+
+  const user = await getUser(username);
 
   return (
     <>

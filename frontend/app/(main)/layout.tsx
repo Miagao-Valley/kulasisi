@@ -66,7 +66,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const headersRes = await headers();
   const os = getOs(headersRes.get('user-agent'));
   const defaultOpen = cookieStore.get('sidebar_state')
@@ -74,7 +74,7 @@ export default async function RootLayout({
     : true;
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={font.className}>
         <div className="[--header-height:calc(theme(spacing.14))]">
           <AuthProvider>

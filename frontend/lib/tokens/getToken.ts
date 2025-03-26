@@ -7,8 +7,10 @@ import { cookies } from 'next/headers';
 const tokenName = 'auth-token';
 const tokenRefreshName = 'auth-refresh-token';
 
-export async function getToken(type: string = 'access') {
+export async function getToken(
+  type: string = 'access'
+): Promise<string | undefined> {
+  const cookieStore = await cookies();
   const cookieName = type === 'refresh' ? tokenRefreshName : tokenName;
-
-  return cookies().get(cookieName)?.value;
+  return cookieStore.get(cookieName)?.value;
 }

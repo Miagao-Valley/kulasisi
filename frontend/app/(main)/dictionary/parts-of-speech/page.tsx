@@ -5,24 +5,25 @@ import { SortOption } from '@/components/filter/SortDropdown';
 import { FilterControls } from '@/components/filter/FilterControls';
 import { H1 } from '@/components/ui/heading-with-anchor';
 
+const sortingOptions: SortOption[] = [
+  { label: 'Abbreviation', value: 'abbr' },
+  { label: 'Name', value: 'name' },
+  { label: 'Description', value: 'description' },
+];
+
 export const metadata: Metadata = {
   title: 'Parts of Speech',
   description: 'Search for parts of speech of words.',
 };
 
 interface Props {
-  searchParams: { [key: string]: string | undefined };
+  searchParams: Promise<{ [key: string]: string | undefined }>;
 }
 
 export default async function LangsPage({ searchParams }: Props) {
-  const searchTerm = searchParams.q || '';
-  const sortOption = searchParams.sort || 'name';
-
-  const sortingOptions: SortOption[] = [
-    { label: 'Abbreviation', value: 'abbr' },
-    { label: 'Name', value: 'name' },
-    { label: 'Description', value: 'description' },
-  ];
+  const resolvedSearchParams = await searchParams;
+  const { q: searchTerm = '', sort: sortOption = 'name' } =
+    resolvedSearchParams;
 
   return (
     <>

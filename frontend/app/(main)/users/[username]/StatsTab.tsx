@@ -43,7 +43,7 @@ export function StatsTab({ user }: Props) {
     if (error) {
       setFormErrors(error, form.setError);
     }
-    auth.updateUser();
+    auth.updateAuth();
     return { data, error };
   }
 
