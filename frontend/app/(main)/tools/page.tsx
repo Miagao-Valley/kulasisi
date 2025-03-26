@@ -13,7 +13,7 @@ const tools = [
   {
     name: 'Proofreader',
     description: 'Check your writing for errors and improvements.',
-    icon: <SpellCheckIcon className="w-8 h-8" />,
+    icon: <SpellCheckIcon className="size-8" />,
     url: '/tools/proofreader/',
   },
 ];

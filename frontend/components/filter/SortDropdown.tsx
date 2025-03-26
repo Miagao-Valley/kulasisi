@@ -55,17 +55,17 @@ export function SortDropdown({
   };
 
   return (
-    <div className={cn(className, 'flex flex-row')}>
+    <div className={cn(className, 'flex flex-row items-center')}>
       <Button
         variant="ghost"
-        size="sm"
-        className="p-1 h-fit"
+        size="icon"
+        className="p-1 w-fit h-fit"
         onClick={toggleSort}
       >
         {sortOption.startsWith('-') ? (
-          <ArrowDownWideNarrow className="h-2 w-2" />
+          <ArrowDownWideNarrow />
         ) : (
-          <ArrowUpNarrowWide className="h-2 w-2" />
+          <ArrowUpNarrowWide />
         )}
       </Button>
 

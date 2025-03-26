@@ -11,7 +11,7 @@ export function StatsTab({ lang }: Props) {
   return (
     <div className="flex flex-col gap-3">
       <div>
-        <H3 className="!text-lg" anchor="members">
+        <H3 className="text-lg!" anchor="members">
           {lang.user_count} Members
         </H3>
         <div className="flex flex-col gap-3">
@@ -31,7 +31,7 @@ export function StatsTab({ lang }: Props) {
       </div>
 
       <div>
-        <H3 className="!text-lg" anchor="contribution">
+        <H3 className="text-lg!" anchor="contribution">
           Contribution
         </H3>
         <div className="grid grid-cols-2 gap-4">

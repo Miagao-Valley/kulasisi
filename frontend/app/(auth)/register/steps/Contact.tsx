@@ -11,7 +11,7 @@ import {
 import { FloatingLabelInput } from '@/components/ui/floating-label-input';
 
 interface Props {
-  form: UseFormReturn<RegisterSchema, any, undefined>;
+  form: UseFormReturn<RegisterSchema>;
   className?: string;
 }
 

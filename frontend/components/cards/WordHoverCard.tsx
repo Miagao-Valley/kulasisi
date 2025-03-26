@@ -65,7 +65,7 @@ export function WordHoverCard({ lang, word }: Props) {
 
             <div className="flex gap-1 items-center">
               {loading ? (
-                <Skeleton className="w-8 h-4" />
+                <Skeleton className="size-8" />
               ) : (
                 wordObj?.parts_of_speech.slice(0, 3).map((pos) => (
                   <Badge variant="secondary" key={pos}>

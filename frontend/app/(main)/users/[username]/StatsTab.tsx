@@ -43,14 +43,14 @@ export function StatsTab({ user }: Props) {
     if (error) {
       setFormErrors(error, form.setError);
     }
-    auth.updateUser();
+    auth.updateAuth();
     return { data, error };
   }
 
   return (
     <div className="flex flex-col gap-3">
       <div>
-        <H3 className="!text-lg" anchor="language-proficiency">
+        <H3 className="text-lg!" anchor="language-proficiency">
           Language Proficiency
         </H3>
         <Form {...form}>
@@ -98,7 +98,7 @@ export function StatsTab({ user }: Props) {
       </div>
 
       <div>
-        <H3 className="!text-lg" anchor="contribution">
+        <H3 className="text-lg!" anchor="contribution">
           Contribution
         </H3>
         <div className="grid grid-cols-2 gap-4">

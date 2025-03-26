@@ -21,7 +21,7 @@ export function SiteHeader() {
 
   return (
     <header className="flex sticky top-0 z-50 w-full items-center border-b bg-background">
-      <div className="flex h-[--header-height] w-full items-center gap-2 px-2">
+      <div className="flex h-(--header-height) w-full items-center gap-2 px-2">
         <div className="w-full p-2 flex items-center justify-between gap-2">
           <div className="flex gap-0 items-center">
             <CustomSidebarTrigger />

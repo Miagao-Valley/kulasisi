@@ -35,7 +35,7 @@ export function Overview({ user, className = '' }: Props) {
             </AvatarFallback>
           </Avatar>
           <div>
-            <H1 className="!text-2xl truncate m-0">
+            <H1 className="text-2xl! truncate m-0">
               {user.first_name} {user.last_name}
             </H1>
             <span>@{user.username}</span>

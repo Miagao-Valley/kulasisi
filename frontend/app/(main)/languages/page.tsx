@@ -5,28 +5,29 @@ import { SortOption } from '@/components/filter/SortDropdown';
 import { FilterControls } from '@/components/filter/FilterControls';
 import { H1 } from '@/components/ui/heading-with-anchor';
 
+const sortingOptions: SortOption[] = [
+  { label: 'Name', value: 'name' },
+  { label: 'Members', value: '-user_count' },
+  { label: 'Proficiency', value: '-avg_proficiency' },
+  { label: 'Phrases', value: '-phrase_count' },
+  { label: 'Translations', value: '-translation_count' },
+  { label: 'Words', value: '-word_count' },
+  { label: 'Definitions', value: '-definition_count' },
+];
+
 export const metadata: Metadata = {
   title: 'Languages',
   description: 'Search for Philippine languages.',
 };
 
 interface Props {
-  searchParams: { [key: string]: string | undefined };
+  searchParams: Promise<{ [key: string]: string | undefined }>;
 }
 
 export default async function LangsPage({ searchParams }: Props) {
-  const searchTerm = searchParams.q || '';
-  const sortOption = searchParams.sort || '-user_count';
-
-  const sortingOptions: SortOption[] = [
-    { label: 'Name', value: 'name' },
-    { label: 'Members', value: '-user_count' },
-    { label: 'Proficiency', value: '-avg_proficiency' },
-    { label: 'Phrases', value: '-phrase_count' },
-    { label: 'Translations', value: '-translation_count' },
-    { label: 'Words', value: '-word_count' },
-    { label: 'Definitions', value: '-definition_count' },
-  ];
+  const resolvedSearchParams = await searchParams;
+  const { q: searchTerm = '', sort: sortOption = '-user_count' } =
+    resolvedSearchParams;
 
   return (
     <>

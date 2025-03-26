@@ -21,8 +21,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { Checkbox } from '@/components/ui/checkbox';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Label } from '@/components/ui/label';
 import { ThumbsUpIcon } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -169,20 +172,37 @@ export default function DesignPage() {
         </Card>
       </div>
 
-      <H3 anchor="inputs">Inputs</H3>
+      <H3 anchor="inputs">Form</H3>
       <div className="mb-3 flex flex-col gap-3">
         <Input placeholder="Text input" />
         <FloatingLabelInput label="Floating label input" />
         <Textarea placeholder="Text area" />
         <Select>
-          <SelectTrigger className="w-[180px]">
+          <SelectTrigger>
             <SelectValue placeholder="Choice" />
           </SelectTrigger>
+
           <SelectContent>
             <SelectItem value="a">Apple</SelectItem>
             <SelectItem value="b">Banana</SelectItem>
             <SelectItem value="c">Coconut</SelectItem>
           </SelectContent>
+
+          <div className="flex items-center space-x-1">
+            <Checkbox id="checkbox" />
+            <Label htmlFor="checkbox">Check this box</Label>
+          </div>
+
+          <RadioGroup defaultValue="option-one">
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="option-one" id="option-one" />
+              <Label htmlFor="option-one">Option One</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="option-two" id="option-two" />
+              <Label htmlFor="option-two">Option Two</Label>
+            </div>
+          </RadioGroup>
         </Select>
       </div>
     </div>

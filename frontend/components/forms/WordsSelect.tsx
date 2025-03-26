@@ -66,7 +66,7 @@ export function WordsSelect({
       message={error && <p className="text-center text-destructive">{error}</p>}
       disabled={disabled}
       className={cn(
-        '!text-xs border-0 bg-accent/20',
+        'text-xs! border-0 bg-accent/20',
         error && 'border border-destructive',
         className
       )}

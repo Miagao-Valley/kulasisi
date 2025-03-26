@@ -47,9 +47,9 @@ export function CopyEntry({ entry }: Props) {
           disabled={isCopied}
         >
           {isCopied ? (
-            <CheckIcon className="w-4 h-4" />
+            <CheckIcon className="size-4" />
           ) : (
-            <CopyIcon className="w-4 h-4" />
+            <CopyIcon className="size-4" />
           )}
         </Button>
       </TooltipTrigger>

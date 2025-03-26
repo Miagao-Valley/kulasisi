@@ -21,7 +21,7 @@ import {
 import { DateTimePicker } from '@/components/ui/datetime-picker';
 
 interface Props {
-  form: UseFormReturn<RegisterSchema, any, undefined>;
+  form: UseFormReturn<RegisterSchema>;
   className?: string;
 }
 

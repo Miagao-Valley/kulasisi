@@ -25,7 +25,7 @@ type SourceSchema = {
 };
 
 interface Props<T extends SourceSchema> {
-  form: UseFormReturn<T, any, undefined>;
+  form: UseFormReturn<T>;
 }
 
 export function SourceForm<T extends SourceSchema>({ form }: Props<T>) {

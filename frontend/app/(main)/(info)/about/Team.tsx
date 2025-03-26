@@ -1,6 +1,6 @@
 import { H2 } from '@/components/ui/heading-with-anchor';
 import { Card } from '@/components/ui/card';
-import { ExternalLinkIcon } from 'lucide-react';
+import { ExternalLink } from '@/components/ui/external-link';
 import { SiGithub } from '@icons-pack/react-simple-icons';
 
 const temContent = {
@@ -45,7 +45,7 @@ export function Team() {
             <div className="flex flex-col gap-1 text-muted-foreground">
               {member?.socials?.map((social) => (
                 <a key={social.name} href={social.url} target="_blank">
-                  <social.icon className="w-4 h-4" />
+                  <social.icon className="size-4" />
                   <span className="sr-only">{social.name}</span>
                 </a>
               ))}
@@ -56,21 +56,14 @@ export function Team() {
         <Card className="border-primary border-2">
           <div className="flex flex-col mb-3">
             <h3 className="text-lg">
-              <a
-                href={contribPage}
-                target="_blank"
-                className="flex items-center gap-1 underline underline-offset-4"
-              >
-                <ExternalLinkIcon className="w-4 h-4" />
-                Could be you?
-              </a>
+              <ExternalLink href={contribPage}>Could be you?</ExternalLink>
             </h3>
             <p className="text-sm text-muted-foreground">Your role</p>
           </div>
 
           <div className="flex flex-col gap-1 text-muted-foreground">
             <a href={contribPage} target="_blank">
-              <SiGithub className="w-4 h-4" />
+              <SiGithub className="size-4" />
               <span className="sr-only">github</span>
             </a>
           </div>

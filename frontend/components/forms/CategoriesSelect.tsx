@@ -58,7 +58,7 @@ export function CategoriesSelect({
       emptyIndicator={<p className="text-center">No results found</p>}
       message={error && <p className="text-center text-destructive">{error}</p>}
       className={cn(
-        '!text-xs border-0 bg-accent/20',
+        'text-xs! border-0 bg-accent/20',
         error && 'border border-destructive',
         className
       )}

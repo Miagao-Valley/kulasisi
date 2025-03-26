@@ -12,7 +12,7 @@ import { FloatingLabelInput } from '@/components/ui/floating-label-input';
 import { PasswordInput } from '@/components/ui/password-input';
 
 interface Props {
-  form: UseFormReturn<RegisterSchema, any, undefined>;
+  form: UseFormReturn<RegisterSchema>;
   className?: string;
 }
 

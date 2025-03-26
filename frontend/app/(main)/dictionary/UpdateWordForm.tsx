@@ -52,7 +52,7 @@ export function UpdateWordForm({ word, setIsEditing, className = '' }: Props) {
 
         <Input
           type="text"
-          className="p-0 !text-xl font-bold borderless-input bg-transparent"
+          className="p-0 text-xl! font-bold borderless bg-transparent"
           value={word.word}
           disabled
         />

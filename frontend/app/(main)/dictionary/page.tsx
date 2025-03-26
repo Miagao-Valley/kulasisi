@@ -19,14 +19,22 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { FeatherIcon } from 'lucide-react';
 
+const sortingOptions: SortOption[] = [
+  { label: 'Word', value: 'word' },
+  { label: 'Votes ', value: '-vote_count' },
+  { label: 'Date updated ', value: '-updated_at' },
+  { label: 'Date created', value: '-created_at' },
+];
+
 interface Props {
-  searchParams: { [key: string]: string | undefined };
+  searchParams: Promise<{ [key: string]: string | undefined }>;
 }
 
 export async function generateMetadata({
   searchParams,
 }: Props): Promise<Metadata> {
-  const { sl: sourceLang = '', pos: posCode = '' } = searchParams;
+  const resolvedSearchParams = await searchParams;
+  const { sl: sourceLang = '', pos: posCode = '' } = resolvedSearchParams;
 
   return {
     title: `${posCode && posCode.toUpperCase() + ' | '}${
@@ -37,25 +45,20 @@ export async function generateMetadata({
 }
 
 export default async function DictionaryPage({ searchParams }: Props) {
-  const searchTerm = searchParams.q || '';
-  const sortOption = searchParams.sort || '-vote_count';
-  const sourceLang = searchParams.sl || '';
-  const targetLang = searchParams.tl || '';
-  const posCode = searchParams.pos || '';
-  const page = Number(searchParams.page || 1);
-
-  const filters = { pos: posCode };
+  const resolvedSearchParams = await searchParams;
+  const {
+    q: searchTerm = '',
+    sort: sortOption = '-vote_count',
+    sl: sourceLang = '',
+    tl: targetLang = '',
+    pos: posCode = '',
+  } = resolvedSearchParams;
+  const page = Number(resolvedSearchParams.page || 1);
 
   const pos = posCode ? await getPartOfSpeech(posCode) : null;
   const partsOfSpeech = await getPartsOfSpeech();
 
-  const sortingOptions: SortOption[] = [
-    { label: 'Word', value: 'word' },
-    { label: 'Votes ', value: '-vote_count' },
-    { label: 'Date updated ', value: '-updated_at' },
-    { label: 'Date created', value: '-created_at' },
-  ];
-
+  const filters = { pos: posCode };
   const filterOptions: FilterOption[] = [
     {
       label: 'POS',
@@ -82,7 +85,7 @@ export default async function DictionaryPage({ searchParams }: Props) {
             sortingOptions={sortingOptions}
             filters={filters}
             filterOptions={filterOptions}
-            className="!w-fit my-1"
+            className="w-fit! my-1"
           />
           <Tooltip>
             <TooltipTrigger asChild>

@@ -12,14 +12,14 @@ import { LangProficienciesForm } from '@/components/forms/LangProficienciesForm'
 import { H3 } from '@/components/ui/heading-with-anchor';
 
 interface Props {
-  form: UseFormReturn<RegisterSchema, any, undefined>;
+  form: UseFormReturn<RegisterSchema>;
   className?: string;
 }
 
 export function Experience({ form, className }: Props) {
   return (
     <div className={cn(className, 'flex flex-col gap-3')}>
-      <H3 className="!text-base m-0">Language Proficiency</H3>
+      <H3 className="text-base! m-0">Language Proficiency</H3>
       <FormField
         control={form.control}
         name="language_proficiencies"

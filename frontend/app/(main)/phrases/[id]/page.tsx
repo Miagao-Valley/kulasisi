@@ -11,14 +11,15 @@ import {
 } from '@/components/ui/tabs-with-url';
 
 interface Props {
-  params: {
+  params: Promise<{
     id: string;
-  };
-  searchParams: { [key: string]: string | undefined };
+  }>;
+  searchParams: Promise<{ [key: string]: string | undefined }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const id = Number(params.id);
+  const resolvedParams = await params;
+  const id = Number(resolvedParams.id);
 
   const phrase = await getPhrase(id);
   const truncatedContent =
@@ -33,7 +34,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function PhrasePage({ params, searchParams }: Props) {
-  const id = Number(params.id);
+  const resolvedSearchParams = await searchParams;
+  const resolvedSarams = await params;
+  const id = Number(resolvedSarams.id);
   const phrase = await getPhrase(id);
 
   return (
@@ -46,7 +49,10 @@ export default async function PhrasePage({ params, searchParams }: Props) {
         </TabsList>
 
         <TabsContent value="translations">
-          <TranslationsSection phrase={phrase} searchParams={searchParams} />
+          <TranslationsSection
+            phrase={phrase}
+            searchParams={resolvedSearchParams}
+          />
         </TabsContent>
       </Tabs>
     </>

@@ -27,13 +27,14 @@ import {
 } from '@/components/ui/tabs-with-url';
 
 interface Props {
-  params: {
+  params: Promise<{
     code: string;
-  };
+  }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { code } = params;
+  const resolvedParams = await params;
+  const { code } = resolvedParams;
 
   const lang = await getLang(code);
 
@@ -44,7 +45,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function LanguagePage({ params }: Props) {
-  const lang = await getLang(params.code);
+  const resolvedParams = await params;
+  const { code } = resolvedParams;
+
+  const lang = await getLang(code);
 
   return (
     <>

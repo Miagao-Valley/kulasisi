@@ -15,7 +15,7 @@ import {
   CommandInput,
   CommandEmpty,
 } from '@/components/ui/command';
-import { Dialog, DialogContent } from '../ui/dialog';
+import { Dialog, DialogContent, DialogTitle } from '../ui/dialog';
 import { Spinner } from '../ui/spinner';
 import { Button } from '../ui/button';
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
@@ -131,6 +131,7 @@ export function GlobalSearch() {
 
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="overflow-hidden p-0">
+          <DialogTitle className="sr-only">Search</DialogTitle>
           <Command
             ref={ref}
             className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5"
@@ -174,25 +175,27 @@ export function GlobalSearch() {
               {activePage === 'langs' && <LangsSearch />}
             </CommandList>
 
-            <div className="flex items-center gap-2 p-2">
-              <div className="flex items-center gap-1 text-muted-foreground text-xs">
-                <Kbd keyName="ArrowUp" />
-                <Kbd keyName="ArrowDown" />
-                to navigate
+            {!isMobile && (
+              <div className="flex items-center gap-2 p-2">
+                <div className="flex items-center gap-1 text-muted-foreground text-xs">
+                  <Kbd keyName="ArrowUp" />
+                  <Kbd keyName="ArrowDown" />
+                  to navigate
+                </div>
+                <div className="flex items-center gap-1 text-muted-foreground text-xs">
+                  <Kbd keyName="Enter" />
+                  to select
+                </div>
+                <div className="flex items-center gap-1 text-muted-foreground text-xs">
+                  <Kbd keyName="Backspace" />
+                  move to parent
+                </div>
+                <div className="flex items-center gap-1 text-muted-foreground text-xs">
+                  <Kbd keyName="Escape" />
+                  to close
+                </div>
               </div>
-              <div className="flex items-center gap-1 text-muted-foreground text-xs">
-                <Kbd keyName="Enter" />
-                to select
-              </div>
-              <div className="flex items-center gap-1 text-muted-foreground text-xs">
-                <Kbd keyName="Backspace" />
-                move to parent
-              </div>
-              <div className="flex items-center gap-1 text-muted-foreground text-xs">
-                <Kbd keyName="Escape" />
-                to close
-              </div>
-            </div>
+            )}
           </Command>
         </DialogContent>
       </Dialog>

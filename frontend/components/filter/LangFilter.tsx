@@ -57,7 +57,7 @@ export function LangFilter({
         showChevrons={false}
         placeholder="any"
       />
-      <Button variant="ghost" className="p-1 h-fit" onClick={swapLangs}>
+      <Button variant="ghost" size="icon" className="p-1 w-fit h-fit" onClick={swapLangs}>
         <ArrowLeftRight />
       </Button>
       <LangSelect

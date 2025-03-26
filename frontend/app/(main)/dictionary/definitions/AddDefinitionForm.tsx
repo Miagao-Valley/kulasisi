@@ -45,6 +45,14 @@ export function AddDefinitionForm({ wordLang, word, className = '' }: Props) {
     resolver: zodResolver(addDefinitionSchema),
     defaultValues: {
       word: { word: word, lang: wordLang },
+      description: '',
+      lang: '',
+      pos: '',
+      synonyms: [],
+      antonyms: [],
+      usage_note: '',
+      source_title: '',
+      source_link: '',
     },
   });
 
@@ -112,7 +120,7 @@ export function AddDefinitionForm({ wordLang, word, className = '' }: Props) {
             <FormItem>
               <FormControl>
                 <AutosizeTextarea
-                  className="p-1 text-xl resize-none borderless-input"
+                  className="p-1 text-xl resize-none borderless"
                   placeholder="Enter your definition"
                   {...field}
                 />

@@ -47,6 +47,10 @@ export function AddTranslationForm({
     resolver: zodResolver(addTranslationSchema),
     defaultValues: {
       phrase: phraseId,
+      content: '',
+      lang: '',
+      source_title: '',
+      source_link: '',
     },
   });
 

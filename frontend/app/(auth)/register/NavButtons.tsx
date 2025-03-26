@@ -12,7 +12,7 @@ interface Props {
   step: number;
   setStep: React.Dispatch<React.SetStateAction<number>>;
   reachedEnd: boolean;
-  form: UseFormReturn<RegisterSchema, any, undefined>;
+  form: UseFormReturn<RegisterSchema>;
 }
 
 export function NavButtons({
@@ -23,7 +23,7 @@ export function NavButtons({
   form,
 }: Props) {
   return (
-    <div className="flex justify-between items-center gap-4 mt-4">
+    <div className="flex justify-between items-center gap-2 mt-4">
       <Button
         variant="ghost"
         type="button"
@@ -35,7 +35,7 @@ export function NavButtons({
 
       {reachedEnd && (
         <LoadingButton
-          className="w-full"
+          className="flex-1"
           type="submit"
           loading={form.formState.isSubmitting}
         >

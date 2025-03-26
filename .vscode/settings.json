@@ -12,6 +12,10 @@
   "[python]": {
     "editor.defaultFormatter": "ms-python.black-formatter"
   },
+  "files.associations": {
+    "*.css": "tailwindcss",
+    "*.scss": "tailwindcss"
+  },
   "tailwindCSS.includeLanguages": {
     "html": "HTML",
     "javascript": "javascript",

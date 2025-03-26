@@ -32,7 +32,7 @@ export function PhraseSearch({ currentSearchTerm, className }: Props) {
 
   return (
     <AutosizeTextarea
-      className={cn(className, 'p-1 !text-lg resize-none borderless-input')}
+      className={cn(className, 'p-1 text-lg! resize-none borderless')}
       value={searchTerm}
       placeholder="Enter a phrase to translate"
       onChange={(e) => setSearchTerm(e.target.value)}

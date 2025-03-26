@@ -7,7 +7,7 @@ import { FlaggedTokenCard } from './FlaggedTokenCard';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 
 const tokenUnderlineVariants = cva(
-  'outline-none ring-0 underline underline-offset-4 transition-all duration-300 ease-in-out transform',
+  'outline-hidden ring-0 underline underline-offset-4 transition-all duration-300 ease-in-out transform',
   {
     variants: {
       level: {
@@ -101,7 +101,7 @@ export function HighlightedToken({
       <PopoverTrigger
         className={cn(
           className,
-          'outline-none ring-0 whitespace-pre-wrap break-words',
+          'outline-hidden ring-0 whitespace-pre-wrap break-words',
           tokenUnderlineVariants({ level: token.level, active: active }),
           active && tokenBgVariants({ level: token.level, active: active }),
           isMounted ? 'scale-x-100 opacity-100' : 'scale-x-0 opacity-0'

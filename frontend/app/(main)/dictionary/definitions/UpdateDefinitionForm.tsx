@@ -83,7 +83,7 @@ export function UpdateDefinitionForm({
             <FormItem>
               <FormControl>
                 <AutosizeTextarea
-                  className="p-1 text-base resize-none borderless-input bg-transparent"
+                  className="p-1 text-base resize-none borderless bg-transparent"
                   placeholder="Enter updated definition"
                   autoFocus
                   {...field}

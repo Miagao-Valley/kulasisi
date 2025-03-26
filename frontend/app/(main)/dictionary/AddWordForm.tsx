@@ -35,6 +35,12 @@ export function AddWordForm({ className = '' }: Props) {
 
   const form = useForm<AddWordSchema>({
     resolver: zodResolver(addWordSchema),
+    defaultValues: {
+      word: '',
+      lang: '',
+      source_title: '',
+      source_link: '',
+    },
   });
 
   useEffect(() => {
@@ -88,7 +94,7 @@ export function AddWordForm({ className = '' }: Props) {
             <FormItem>
               <FormControl>
                 <Input
-                  className="p-1 !text-3xl font-bold borderless-input"
+                  className="p-1 text-3xl! font-bold borderless"
                   type="text"
                   placeholder="word"
                   {...field}

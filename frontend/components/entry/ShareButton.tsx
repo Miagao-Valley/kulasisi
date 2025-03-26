@@ -30,7 +30,7 @@ export function ShareButton({ entry }: Props) {
               size="icon"
               className="w-fit h-fit p-1 px-2 bg-transparent"
             >
-              <Share2Icon className="w-4 h-4" />
+              <Share2Icon className="size-4" />
             </Button>
           </DialogTrigger>
         </TooltipTrigger>

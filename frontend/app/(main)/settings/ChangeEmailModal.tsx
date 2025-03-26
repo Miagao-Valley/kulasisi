@@ -47,7 +47,7 @@ export function ChangeEmailModal({ username }: Props) {
     if (error) {
       setFormErrors(error, form.setError);
     } else {
-      auth.updateUser();
+      auth.updateAuth();
       router.refresh();
     }
     return { data, error };

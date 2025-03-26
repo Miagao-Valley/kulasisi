@@ -23,7 +23,7 @@ export interface UsageNoteSchema {
 }
 
 interface Props<T extends UsageNoteSchema> {
-  form: UseFormReturn<T, any, undefined>;
+  form: UseFormReturn<T>;
 }
 
 export function UsageNoteForm<T extends UsageNoteSchema>({ form }: Props<T>) {

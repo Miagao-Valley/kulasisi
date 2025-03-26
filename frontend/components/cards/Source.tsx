@@ -24,17 +24,17 @@ export function Source({
       <TooltipTrigger asChild>
         <Button
           variant="ghost"
-          size="sm"
-          className={`p-1 h-fit ${source_link && 'text-primary'}`}
+          size="icon"
+          className={`p-1 w-fit h-fit ${source_link && 'text-primary'}`}
           asChild={!!source_link}
         >
           <a
             href={source_link || '#'}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex !gap-0 max-w-36 md:max-w-48"
+            className="flex gap-0! max-w-36 md:max-w-48"
           >
-            <LinkIcon className="w-3" />
+            <LinkIcon />
             {showTitle && (
               <span className="ms-1 truncate w-fit">
                 {source_title || source_link}

@@ -5,8 +5,11 @@ import 'server-only';
 import { decrypt } from './decrypt';
 import { getToken } from './getToken';
 import { updateToken } from './updateToken';
+import { Payload } from '@/types/users';
 
-export async function getPayload(type: string = 'access') {
+export async function getPayload(
+  type: string = 'access'
+): Promise<Payload | null> {
   const authToken = await getToken(type);
   const payload = await decrypt(authToken);
 

@@ -46,7 +46,6 @@ const Editor: React.FC<EditorProps> = ({
         const { data, error } = await proofread(text, lang);
 
         if (error) {
-          console.error('Error in proofread data: ', error);
           setError(error);
 
           setFlaggedTokens([]);
@@ -103,12 +102,12 @@ const Editor: React.FC<EditorProps> = ({
       <ResizablePanelGroup
         autoSaveId="persistence"
         direction={isMobile ? 'vertical' : 'horizontal'}
-        className="min-h-6 !flex-col md:!flex-row gap-3"
+        className="min-h-6 flex-col! md:flex-row! gap-3"
       >
         <ResizablePanel
           defaultSize={75}
           minSize={30}
-          className="!basis-auto md:!basis-0"
+          className="basis-auto! md:basis-0!"
         >
           <TextEditor onValueChange={onValueChange} {...props} />
         </ResizablePanel>
@@ -121,7 +120,7 @@ const Editor: React.FC<EditorProps> = ({
             <ResizablePanel
               defaultSize={25}
               minSize={20}
-              className="!basis-auto md:!basis-0"
+              className="basis-auto! md:basis-0!"
             >
               <ProofreaderPanel />
             </ResizablePanel>

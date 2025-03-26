@@ -5,7 +5,7 @@ import { pasteFromClipboard } from '@/lib/utils/pasteFromClipboard';
 import { useEditorContext } from './EditorContext';
 import { CharCountProgress } from './CharCountProgress';
 import { Button } from '@/components/ui/button';
-import { Spinner } from '@/components/ui/spinner';
+import { LoadingButton } from '../ui/loading-button';
 import {
   CopyIcon,
   SpellCheck2Icon,
@@ -85,23 +85,22 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({ className }) => {
         {/* Toggle proofreader */}
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button
-              aria-label="Toggle proofreader"
+            <LoadingButton
+              type="button"
               variant={showProofreader ? 'secondary' : 'ghost'}
               size="icon"
               className="w-fit h-fit p-1 rounded-full"
+              aria-label="Toggle proofreader"
               onClick={() => setShowProofreader(!showProofreader)}
-              disabled={loading}
-              type="button"
+              loading={loading}
             >
-              {loading ? (
-                <Spinner />
-              ) : stats.flagged_count === 0 ? (
-                <SpellCheckIcon />
-              ) : (
-                <SpellCheck2Icon />
-              )}
-            </Button>
+              {!loading &&
+                (stats.flagged_count === 0 ? (
+                  <SpellCheckIcon />
+                ) : (
+                  <SpellCheck2Icon />
+                ))}
+            </LoadingButton>
           </TooltipTrigger>
           <TooltipContent>
             {showProofreader ? 'Hide proofreader' : 'Show proofreader'}{' '}

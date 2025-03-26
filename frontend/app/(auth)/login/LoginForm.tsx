@@ -42,7 +42,6 @@ export function LoginForm() {
       setFormErrors(error, form.setError);
     } else {
       auth.updateAuth();
-      auth.updateUser();
       router.push(next || '/');
     }
     return { data, error };

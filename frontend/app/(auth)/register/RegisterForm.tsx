@@ -50,6 +50,7 @@ export function RegisterForm() {
     resolver: zodResolver(registerSchema),
     defaultValues: {
       username: '',
+      password: '',
       email: '',
       phone_number: '',
       first_name: '',
@@ -90,7 +91,6 @@ export function RegisterForm() {
       });
     } else {
       auth.updateAuth();
-      auth.updateUser();
       router.push('/');
       localStorage.removeItem(FORM_DATA_KEY);
     }
@@ -141,10 +141,10 @@ export function RegisterForm() {
             {form.formState.errors.root?.serverError?.message}
           </FormMessage>
 
-          <GetStarted form={form} className={step !== 0 ? '!hidden' : ''} />
-          <Contact form={form} className={step !== 1 ? '!hidden' : ''} />
-          <Personal form={form} className={step !== 2 ? '!hidden' : ''} />
-          <Experience form={form} className={step !== 3 ? '!hidden' : ''} />
+          <GetStarted form={form} className={step !== 0 ? 'hidden!' : ''} />
+          <Contact form={form} className={step !== 1 ? 'hidden!' : ''} />
+          <Personal form={form} className={step !== 2 ? 'hidden!' : ''} />
+          <Experience form={form} className={step !== 3 ? 'hidden!' : ''} />
 
           <NavButtons
             step={step}

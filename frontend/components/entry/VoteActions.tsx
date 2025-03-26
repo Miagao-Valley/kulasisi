@@ -68,6 +68,7 @@ export function VoteActions({ entry }: Props) {
     <div className="p-0 flex items-center rounded-md border">
       <Button
         variant="ghost"
+        size="icon"
         className="p-1 w-fit h-fit"
         type="button"
         disabled={isLoading}
@@ -88,6 +89,7 @@ export function VoteActions({ entry }: Props) {
 
       <Button
         variant="ghost"
+        size="icon"
         className="p-1 w-fit h-fit"
         type="button"
         disabled={isLoading}

@@ -65,12 +65,12 @@ const TextEditor: React.FC<TextEditorProps> = ({
     if (!textarea || !highlight) return;
 
     const syncScroll = () => {
-      highlight.scrollTop = textarea.textArea.scrollTop;
-      highlight.scrollLeft = textarea.textArea.scrollLeft;
+      highlight.scrollTop = textarea.textArea?.scrollTop || 0;
+      highlight.scrollLeft = textarea.textArea?.scrollLeft || 0;
     };
 
-    textarea.textArea.addEventListener('scroll', syncScroll);
-    return () => textarea.textArea.removeEventListener('scroll', syncScroll);
+    textarea.textArea?.addEventListener('scroll', syncScroll);
+    return () => textarea.textArea?.removeEventListener('scroll', syncScroll);
   }, []);
 
   return (
@@ -84,7 +84,7 @@ const TextEditor: React.FC<TextEditorProps> = ({
         <div
           ref={highlightRef}
           className={cn(
-            'borderless-input p-0 m-0 me-3 rounded-none text-base absolute top-0 left-0 w-full h-full text-transparent overflow-auto whitespace-pre-wrap break-words',
+            'borderless p-0 m-0 me-3 rounded-none text-base absolute top-0 left-0 w-full h-full text-transparent overflow-auto whitespace-pre-wrap break-words',
             className
           )}
         >
@@ -102,7 +102,7 @@ const TextEditor: React.FC<TextEditorProps> = ({
         onClick={handleCursorPosition}
         spellCheck={false}
         className={cn(
-          'borderless-input p-0 m-0 me-3 rounded-none text-base relative z-10 w-full h-full bg-transparent',
+          'borderless p-0 m-0 me-3 rounded-none text-base relative z-10 w-full h-full bg-transparent',
           className
         )}
         minHeight={10}

@@ -25,7 +25,8 @@ export function StepperIndicator({
         >
           <Button
             variant={idx <= step ? 'default' : 'outline'}
-            className={`rounded-full ${idx <= step ? 'hover:bg-primary' : ''}`}
+            size="icon"
+            className={cn('rounded-full', idx <= step && 'hover:bg-primary')}
             onClick={() => setStep(idx)}
           >
             {idx < step ? <Check /> : idx + 1}
@@ -33,7 +34,10 @@ export function StepperIndicator({
           {idx !== numSteps - 1 && (
             <Separator
               orientation="horizontal"
-              className={cn(`w-3/4 h-0.5`, idx < step && 'bg-primary')}
+              className={cn(
+                `w-3/4 h-0.5 border-2 transition-all`,
+                idx < step && 'border-primary'
+              )}
             />
           )}
         </div>

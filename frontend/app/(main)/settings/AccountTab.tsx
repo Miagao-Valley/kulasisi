@@ -24,7 +24,7 @@ export function AccountTab() {
 
         <ul className="flex flex-col gap-4">
           <li className="flex items-center gap-3">
-            <H3 className="!text-base m-0 me-auto" anchor="email-address">
+            <H3 className="text-base! m-0 me-auto" anchor="email-address">
               Email
             </H3>
 
@@ -40,7 +40,7 @@ export function AccountTab() {
           </li>
 
           <li className="flex items-center gap-3">
-            <H3 className="!text-base m-0 me-auto" anchor="phone-number">
+            <H3 className="text-base! m-0 me-auto" anchor="phone-number">
               Phone number
             </H3>
 
@@ -56,7 +56,7 @@ export function AccountTab() {
           </li>
 
           <li className="flex items-center gap-3">
-            <H3 className="!text-base m-0 me-auto" anchor="password">
+            <H3 className="text-base! m-0 me-auto" anchor="password">
               Password
             </H3>
 
@@ -77,7 +77,7 @@ export function AccountTab() {
 
         <ul className="flex flex-col gap-4">
           <li className="flex items-center gap-3">
-            <H3 className="!text-base m-0 me-auto" anchor="delete-account">
+            <H3 className="text-base! m-0 me-auto" anchor="delete-account">
               Delete Account
             </H3>
 

@@ -38,6 +38,14 @@ export function AddPhraseForm({ className = '' }: Props) {
 
   const form = useForm<AddPhraseSchema>({
     resolver: zodResolver(addPhraseSchema),
+    defaultValues: {
+      content: '',
+      lang: '',
+      categories: [],
+      usage_note: '',
+      source_title: '',
+      source_link: '',
+    },
   });
 
   useEffect(() => {

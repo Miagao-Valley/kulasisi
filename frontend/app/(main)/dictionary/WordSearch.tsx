@@ -32,7 +32,7 @@ export function WordSearch({ currentSearchTerm, className }: Props) {
 
   return (
     <Input
-      className={cn(className, 'p-1 !text-xl font-semibold borderless-input')}
+      className={cn(className, 'p-1 text-xl! font-semibold borderless')}
       type="text"
       value={searchTerm}
       placeholder="Enter a word to define"

@@ -13,7 +13,7 @@ const games = [
   {
     name: 'Wordle',
     description: 'Can you guess the hidden word?',
-    icon: <Grid2x2Icon className="w-8 h-8" />,
+    icon: <Grid2x2Icon className="size-8" />,
     url: '/games/wordle/',
   },
 ];

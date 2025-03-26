@@ -9,14 +9,13 @@ import {
   ReactNode,
 } from 'react';
 import { User } from '@/types/users';
-import { fetchAuth } from '@/lib/auth/fetchAuth';
+import { getAuth } from '@/lib/auth/getAuth';
 import { getUser } from '@/lib/users/getUser';
 
 export interface AuthContextType {
   isAuthenticated: boolean;
   user: User | null;
   updateAuth: () => void;
-  updateUser: () => void;
   isLoading: boolean;
 }
 
@@ -36,24 +35,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
    * Fetches the authentication data from the server and updates the context.
    */
   const updateAuth = useCallback(async () => {
-    const authData = await fetchAuth();
-    if (typeof authData?.isAuthenticated === 'boolean') {
+    const authData = await getAuth();
+    if (typeof authData?.isAuthenticated === 'boolean' && authData?.username) {
       setIsAuthenticated(authData.isAuthenticated);
-    } else {
-      setIsAuthenticated(false);
-      setUser(null);
-    }
-  }, []);
-
-  const updateUser = useCallback(async () => {
-    const authData = await fetchAuth();
-    if (authData?.username) {
       const userData = await getUser(authData?.username);
-      setUser(userData);
-    } else {
-      setIsAuthenticated(false);
-      setUser(null);
+      if (userData) {
+        setUser(userData);
+        return;
+      }
     }
+
+    setIsAuthenticated(false);
+    setUser(null);
   }, []);
 
   // Initialize the auth state from localStorage if available, otherwise fetch it
@@ -75,7 +68,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     updateAuth();
     setIsLoading(false);
-  }, [updateAuth, updateUser]);
+  }, [updateAuth]);
 
   // Persist the auth state to localStorage whenever it changes
   useEffect(() => {
@@ -91,7 +84,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         isAuthenticated,
         user,
         updateAuth,
-        updateUser,
         isLoading,
       }}
     >

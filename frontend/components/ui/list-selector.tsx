@@ -1,10 +1,8 @@
 'use client';
 
-import { forwardRef } from 'react';
 import {
   MultipleSelector,
   MultipleSelectorProps,
-  MultipleSelectorRef,
   Option,
 } from './multiple-selector';
 
@@ -18,48 +16,45 @@ type ListSelectorProps = Omit<
   onSearch?: (value: string) => Promise<string[]>;
 };
 
-const ListSelector = forwardRef<MultipleSelectorRef, ListSelectorProps>(
-  (props, ref) => {
-    const { defaultOptions, value, onChange, onSearch, ...restProps } = props;
+const ListSelector = ({ ...props }: ListSelectorProps) => {
+  const { defaultOptions, value, onChange, onSearch, ...restProps } = props;
 
-    const transformedOptions: Option[] = defaultOptions?.map((option) => ({
-      value: option,
-      label: option,
-    }));
+  const transformedOptions: Option[] = defaultOptions?.map((option) => ({
+    value: option,
+    label: option,
+  }));
 
-    const transformedValue: Option[] = value?.map((option) => ({
-      value: option,
-      label: option,
-    }));
+  const transformedValue: Option[] = value?.map((option) => ({
+    value: option,
+    label: option,
+  }));
 
-    const handleChange = (newValue: Option[]) => {
-      const newStringValue = newValue.map((option) => option.value);
-      onChange(newStringValue);
-    };
+  const handleChange = (newValue: Option[]) => {
+    const newStringValue = newValue.map((option) => option.value);
+    onChange(newStringValue);
+  };
 
-    const handleSearch = async (q: string) => {
-      if (onSearch) {
-        const result = await onSearch(q);
-        return result.map((option) => ({
-          value: option,
-          label: option,
-        }));
-      }
-      return [];
-    };
+  const handleSearch = async (q: string) => {
+    if (onSearch) {
+      const result = await onSearch(q);
+      return result.map((option) => ({
+        value: option,
+        label: option,
+      }));
+    }
+    return [];
+  };
 
-    return (
-      <MultipleSelector
-        ref={ref}
-        {...restProps}
-        defaultOptions={transformedOptions}
-        value={transformedValue}
-        onChange={handleChange}
-        onSearch={handleSearch}
-      />
-    );
-  }
-);
+  return (
+    <MultipleSelector
+      {...restProps}
+      defaultOptions={transformedOptions}
+      value={transformedValue}
+      onChange={handleChange}
+      onSearch={handleSearch}
+    />
+  );
+};
 
 ListSelector.displayName = 'ListSelector';
 

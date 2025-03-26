@@ -56,7 +56,7 @@ export function UpdateUserForm() {
     if (error) {
       setFormErrors(error, form.setError);
     }
-    auth.updateUser();
+    auth.updateAuth();
     return { data, error };
   }
 
@@ -85,7 +85,7 @@ export function UpdateUserForm() {
           </FormMessage>
 
           <div>
-            <H3 className="!text-base mb-1" anchor="name">
+            <H3 className="text-base! mb-1" anchor="name">
               Name
             </H3>
             <div className="flex flex-col sm:flex-row gap-2">
@@ -121,7 +121,7 @@ export function UpdateUserForm() {
           </div>
 
           <div>
-            <H3 className="!text-base mb-1" anchor="birthdate">
+            <H3 className="text-base! mb-1" anchor="birthdate">
               Birthdate
             </H3>
             <FormField
@@ -145,7 +145,7 @@ export function UpdateUserForm() {
           </div>
 
           <div>
-            <H3 className="!text-base mb-1" anchor="location">
+            <H3 className="text-base! mb-1" anchor="location">
               Location
             </H3>
             <FormField
@@ -163,7 +163,7 @@ export function UpdateUserForm() {
           </div>
 
           <div>
-            <H3 className="!text-base mb-1" anchor="gender">
+            <H3 className="text-base! mb-1" anchor="gender">
               Gender
             </H3>
             <FormField
@@ -192,7 +192,7 @@ export function UpdateUserForm() {
           </div>
 
           <div>
-            <H3 className="!text-base mb-1" anchor="bio">
+            <H3 className="text-base! mb-1" anchor="bio">
               Bio
             </H3>
             <FormField
@@ -210,7 +210,7 @@ export function UpdateUserForm() {
           </div>
 
           <div>
-            <H3 className="!text-base mb-1" anchor="website">
+            <H3 className="text-base! mb-1" anchor="website">
               Website
             </H3>
             <FormField

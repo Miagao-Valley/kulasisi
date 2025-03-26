@@ -12,34 +12,35 @@ export interface ButtonProps
   loading?: boolean;
 }
 
-const LoadingButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  (
-    {
-      className,
-      loading = false,
-      children,
-      disabled,
-      variant,
-      size,
-      asChild = false,
-      ...props
-    },
-    ref
-  ) => {
-    const Comp = asChild ? Slot : 'button';
-    return (
-      <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
-        ref={ref}
-        disabled={loading || disabled}
-        {...props}
-      >
-        {loading && <Loader2 className="h-5 w-5 animate-spin" />}
-        <Slottable>{children}</Slottable>
-      </Comp>
-    );
-  }
-);
+const LoadingButton = ({
+  ref,
+  className,
+  loading = false,
+  children,
+  disabled,
+  variant,
+  size,
+  asChild = false,
+  ...props
+}: ButtonProps & {
+  ref?: React.RefObject<HTMLButtonElement>;
+}) => {
+  const Comp = asChild ? Slot : 'button';
+  return (
+    <Comp
+      className={cn(
+        'flex items-center justify-center gap-1',
+        buttonVariants({ variant, size, className })
+      )}
+      ref={ref}
+      disabled={loading || disabled}
+      {...props}
+    >
+      {loading && <Loader2 className="size-4 animate-spin" />}
+      <Slottable>{children}</Slottable>
+    </Comp>
+  );
+};
 LoadingButton.displayName = 'LoadingButton';
 
 export { LoadingButton };
