@@ -4,6 +4,21 @@ info:
   version: 1.0.0
   description: This is the Kulasisi API.
 paths:
+  /core/home-feed/:
+    get:
+      operationId: core_home_feed_retrieve
+      tags:
+      - core
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HomeFeed'
+          description: ''
   /dictionary/:
     get:
       operationId: dictionary_list
@@ -719,6 +734,81 @@ paths:
       responses:
         '204':
           description: No response body
+  /games/wordle/{lang_code}/{word_length}/:
+    get:
+      operationId: games_wordle_retrieve
+      parameters:
+      - in: path
+        name: lang_code
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: word_length
+        schema:
+          type: integer
+        required: true
+      tags:
+      - games
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WordleGame'
+          description: ''
+    post:
+      operationId: games_wordle_create
+      parameters:
+      - in: path
+        name: lang_code
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: word_length
+        schema:
+          type: integer
+        required: true
+      tags:
+      - games
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WordleGuess'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/WordleGuess'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/WordleGuess'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WordleGuess'
+          description: ''
+  /games/wordle/stats/:
+    get:
+      operationId: games_wordle_stats_retrieve
+      tags:
+      - games
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WordleGameStats'
+          description: ''
   /languages/:
     get:
       operationId: languages_list
@@ -1483,6 +1573,46 @@ paths:
               schema:
                 $ref: '#/components/schemas/Vote'
           description: ''
+  /proofreader/:
+    post:
+      operationId: proofreader_create
+      description: View for proofreading text.
+      tags:
+      - proofreader
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Proofreader'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Proofreader'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Proofreader'
+        required: true
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Proofreader'
+          description: ''
+  /proofreader/languages/:
+    get:
+      operationId: proofreader_languages_retrieve
+      description: View for listing supported languages in the proofreader.
+      tags:
+      - proofreader
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
   /register/:
     post:
       operationId: register_create
@@ -1899,6 +2029,7 @@ components:
         pos:
           type: string
           description: The part of speech for the definition.
+          nullable: true
         synonyms:
           type: array
           items:
@@ -1938,6 +2069,10 @@ components:
           type: integer
           readOnly: true
           description: Number of upvotes minus downvotes.
+        user_vote:
+          type: integer
+          readOnly: true
+          description: The user's vote for the definition.
       required:
       - antonyms
       - contributor_reputation
@@ -1946,6 +2081,7 @@ components:
       - id
       - synonyms
       - updated_at
+      - user_vote
       - vote_count
     DefinitionHistory:
       type: object
@@ -1967,6 +2103,62 @@ components:
       - description
       - history_date
       - history_id
+    FlaggedToken:
+      type: object
+      properties:
+        offset:
+          type: integer
+          description: The offset of the token in the text.
+        token:
+          type: string
+          description: The flagged token.
+        rule_id:
+          type: string
+          description: The ID for the rule broken.
+        message:
+          type: string
+          description: The message corresponding to the rule broken.
+        level:
+          allOf:
+          - $ref: '#/components/schemas/FlaggedTokenLevelEnum'
+          description: |-
+            The level of the rule broken.
+
+            * `error` - error
+            * `warning` - warning
+            * `info` - info
+        suggestions:
+          type: array
+          items:
+            type: string
+          description: List of suggestions for the flagged token.
+      required:
+      - level
+      - message
+      - offset
+      - rule_id
+      - suggestions
+      - token
+    FlaggedTokenLevelEnum:
+      enum:
+      - error
+      - warning
+      - info
+      type: string
+      description: |-
+        * `error` - error
+        * `warning` - warning
+        * `info` - info
+    GameStatusEnum:
+      enum:
+      - playing
+      - win
+      - lose
+      type: string
+      description: |-
+        * `playing` - Playing
+        * `win` - Win
+        * `lose` - Lose
     GenderEnum:
       enum:
       - M
@@ -2040,6 +2232,20 @@ components:
       - original
       - text
       - translated
+    HomeFeed:
+      oneOf:
+      - $ref: '#/components/schemas/Phrase'
+      - $ref: '#/components/schemas/Word'
+      discriminator:
+        propertyName: entry_type
+        mapping:
+          Phrase: '#/components/schemas/Phrase'
+          Word: '#/components/schemas/Word'
+    LangEnum:
+      enum:
+      - eng
+      type: string
+      description: '* `eng` - eng'
     Language:
       type: object
       properties:
@@ -2098,7 +2304,7 @@ components:
           description: The language for which the proficiency is recorded.
         level:
           allOf:
-          - $ref: '#/components/schemas/LevelEnum'
+          - $ref: '#/components/schemas/LanguageProficiencyLevelEnum'
           description: |-
             The proficiency level of the user in this language.
 
@@ -2111,7 +2317,7 @@ components:
           maximum: 9223372036854775807
       required:
       - level
-    LevelEnum:
+    LanguageProficiencyLevelEnum:
       enum:
       - 1
       - 2
@@ -2416,6 +2622,7 @@ components:
         pos:
           type: string
           description: The part of speech for the definition.
+          nullable: true
         synonyms:
           type: array
           items:
@@ -2455,6 +2662,10 @@ components:
           type: integer
           readOnly: true
           description: Number of upvotes minus downvotes.
+        user_vote:
+          type: integer
+          readOnly: true
+          description: The user's vote for the definition.
     PatchedPartOfSpeech:
       type: object
       properties:
@@ -2524,6 +2735,10 @@ components:
           type: integer
           readOnly: true
           description: Number of upvotes minus downvotes.
+        user_vote:
+          type: integer
+          readOnly: true
+          description: The user's vote for the phrase.
         best_translations:
           type: object
           additionalProperties:
@@ -2580,6 +2795,10 @@ components:
           type: integer
           readOnly: true
           description: Number of upvotes minus downvotes.
+        user_vote:
+          type: integer
+          readOnly: true
+          description: The user's vote for the translation.
     PatchedUser:
       type: object
       properties:
@@ -2717,15 +2936,6 @@ components:
             type: string
           readOnly: true
           description: Parts of speech for the word.
-        best_definition:
-          type: string
-          readOnly: true
-          description: The best definition for the word.
-        best_definitions:
-          type: object
-          additionalProperties: {}
-          readOnly: true
-          description: Best definitions based on votes in different languages.
         source_title:
           type: string
           nullable: true
@@ -2749,6 +2959,20 @@ components:
           type: integer
           readOnly: true
           description: Number of upvotes minus downvotes.
+        user_vote:
+          type: integer
+          readOnly: true
+          description: The user's vote for the word.
+        best_definitions:
+          type: object
+          additionalProperties:
+            type: string
+          readOnly: true
+          description: Best definitions based on votes in different languages.
+        definition_count:
+          type: integer
+          readOnly: true
+          description: Total number of definitions.
     Phrase:
       type: object
       properties:
@@ -2802,6 +3026,10 @@ components:
           type: integer
           readOnly: true
           description: Number of upvotes minus downvotes.
+        user_vote:
+          type: integer
+          readOnly: true
+          description: The user's vote for the phrase.
         best_translations:
           type: object
           additionalProperties:
@@ -2820,6 +3048,7 @@ components:
       - id
       - translation_count
       - updated_at
+      - user_vote
       - vote_count
     PhraseHistory:
       type: object
@@ -2841,6 +3070,37 @@ components:
       - content
       - history_date
       - history_id
+    Proofreader:
+      type: object
+      properties:
+        text:
+          type: string
+          writeOnly: true
+          description: Text to be proofread.
+        lang:
+          allOf:
+          - $ref: '#/components/schemas/LangEnum'
+          writeOnly: true
+          description: |-
+            The language of the text.
+
+            * `eng` - eng
+        flagged_tokens:
+          type: array
+          items:
+            $ref: '#/components/schemas/FlaggedToken'
+          readOnly: true
+          description: The flagged tokens.
+        stats:
+          allOf:
+          - $ref: '#/components/schemas/Stats'
+          readOnly: true
+          description: Statistics for token count, flagged count, and correctness.
+      required:
+      - flagged_tokens
+      - lang
+      - stats
+      - text
     SourceEnum:
       enum:
       - auto
@@ -2865,6 +3125,23 @@ components:
         * `pam` - pam
         * `pag` - pag
         * `war` - war
+    Stats:
+      type: object
+      properties:
+        token_count:
+          type: integer
+          description: Total token count in the text.
+        flagged_count:
+          type: integer
+          description: Number of flagged tokens.
+        correctness:
+          type: number
+          format: double
+          description: A score representing the correctness of the text.
+      required:
+      - correctness
+      - flagged_count
+      - token_count
     TargetEnum:
       enum:
       - auto
@@ -2947,12 +3224,17 @@ components:
           type: integer
           readOnly: true
           description: Number of upvotes minus downvotes.
+        user_vote:
+          type: integer
+          readOnly: true
+          description: The user's vote for the translation.
       required:
       - content
       - contributor_reputation
       - created_at
       - id
       - updated_at
+      - user_vote
       - vote_count
     TranslationHistory:
       type: object
@@ -3157,15 +3439,6 @@ components:
             type: string
           readOnly: true
           description: Parts of speech for the word.
-        best_definition:
-          type: string
-          readOnly: true
-          description: The best definition for the word.
-        best_definitions:
-          type: object
-          additionalProperties: {}
-          readOnly: true
-          description: Best definitions based on votes in different languages.
         source_title:
           type: string
           nullable: true
@@ -3189,14 +3462,29 @@ components:
           type: integer
           readOnly: true
           description: Number of upvotes minus downvotes.
+        user_vote:
+          type: integer
+          readOnly: true
+          description: The user's vote for the word.
+        best_definitions:
+          type: object
+          additionalProperties:
+            type: string
+          readOnly: true
+          description: Best definitions based on votes in different languages.
+        definition_count:
+          type: integer
+          readOnly: true
+          description: Total number of definitions.
       required:
-      - best_definition
       - best_definitions
       - contributor_reputation
       - created_at
+      - definition_count
       - id
       - parts_of_speech
       - updated_at
+      - user_vote
       - vote_count
     WordHistory:
       type: object
@@ -3220,6 +3508,80 @@ components:
       - history_date
       - history_id
       - word
+    WordleGame:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        player:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+        lang:
+          type: string
+          description: The unique code for the language (e.g., 'eng' for English).
+        word_length:
+          type: integer
+          maximum: 7
+          minimum: 3
+        max_guesses:
+          type: integer
+          maximum: 10
+          minimum: 1
+        solution:
+          type: string
+          maxLength: 7
+        guesses: {}
+        game_status:
+          $ref: '#/components/schemas/GameStatusEnum'
+        date_start:
+          type: string
+          format: date-time
+          readOnly: true
+        date_end:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - date_end
+      - date_start
+      - id
+      - lang
+      - player
+      - solution
+    WordleGameStats:
+      type: object
+      properties:
+        total_games:
+          type: integer
+        games_won:
+          type: integer
+        games_lost:
+          type: integer
+        win_rate:
+          type: number
+          format: double
+      required:
+      - games_lost
+      - games_won
+      - total_games
+      - win_rate
+    WordleGuess:
+      type: object
+      properties:
+        guess:
+          type: string
+          writeOnly: true
+          maxLength: 7
+          minLength: 3
+        game:
+          allOf:
+          - $ref: '#/components/schemas/WordleGame'
+          readOnly: true
+      required:
+      - game
+      - guess
   securitySchemes:
     jwtAuth:
       type: http
