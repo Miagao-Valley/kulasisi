@@ -33,4 +33,11 @@ END
 echo "Collecting static files..."
 python manage.py collectstatic --noinput || true
 
-exec "$@"
+# Start server depending on DJANGO_ENV
+if [ "$DJANGO_ENV" = "production" ]; then
+  echo "Starting production server"
+  exec gunicorn kulasisi.wsgi:application --bind 0.0.0.0:$PORT --workers 4
+else
+  echo "Starting dev server"
+  exec python manage.py runserver 0.0.0.0:8000
+fi
