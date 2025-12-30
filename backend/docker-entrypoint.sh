@@ -3,7 +3,7 @@ set -e
 
 if [ "$DJANGO_ENV" = "production" ]; then
     echo "Starting Gunicorn (production) early"
-    gunicorn kulasisi.wsgi:application \
+    gunicorn backend.wsgi:application \
         --bind 0.0.0.0:$PORT \
         --workers ${WEB_CONCURRENCY:-4} &
 fi
