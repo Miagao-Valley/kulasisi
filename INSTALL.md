@@ -1,130 +1,175 @@
-# Installing Kulasisi
+# Installation Guide
 
-This guide provides the steps to set up both the frontend and backend of the Kulasisi project.
+This guide provides the steps to set up the project.
 
-## 1. Clone the Repository
+---
 
-First, clone the repository to your local machine:
+## Table of Contents
 
-```
+- [Clone the Repository](#clone-the-repository)
+- [Environment Variables](#environment-variables)
+- [Option 1: Using Docker (Recommended)](#option-1-using-docker-recommended)
+  - [Prerequisites](#prerequisites)
+  - [Set Up](#set-up)
+    - [Option 1: Using Make (Recommended)](#option-1-using-make-recommended)
+    - [Option 2: Using Docker Compose](#option-2-using-docker-compose)
+  - [Usage](#usage)
+- [Option 2: Using Manual Setup](#option-2-using-manual-setup)
+  - [Prerequisites](#prerequisites-1)
+  - [Set Up the Backend](#set-up-the-backend)
+  - [Set Up the Frontend](#set-up-the-frontend)
+  - [Usage](#usage-1)
+
+---
+
+## Clone the Repository
+
+Clone the repository to your local machine. You can use SSH (recommended) or HTTPS:
+
+```sh
+# Using SSH (requires SSH key)
+git clone git@github.com:Miagao-Valley/kulasisi.git
+
+# Using HTTPS
 git clone https://github.com/Miagao-Valley/kulasisi.git
+
+# Or clone your forked version
+git clone git@github.com:<your-username>/kulasisi.git
 ```
 
-## 2. Set Up the Backend
+## Environment Variables
 
-### 2.1 Navigate to the Backend Directory
+Copy the example `.env` files and replace with your own values.
+Make sure to replace `SECRET_KEY` with a secure key that is the same for both backend and frontend.
 
-Go into the backend directory:
-
+```sh
+cp backend/.env.example backend/.env
+cp frontend/.env.example frontend/.env.local
 ```
+
+## Option 1: Using Docker (Recommended)
+
+### Prerequisites
+
+- [Docker](https://docs.docker.com/get-docker/) (version 20.10 or higher)
+- [Docker Compose](https://docs.docker.com/compose/install/) (version 2.0 or higher)
+- [Make](https://www.gnu.org/software/make/) (optional, for using Makefile commands)
+
+### Set Up
+
+#### Option 1: Using Make (Recommended)
+
+```sh
+# First time setup
+make install
+
+# Start development environment
+make dev
+```
+
+#### Option 2: Using Docker Compose
+
+```sh
+# Build images
+docker-compose build
+
+# Start services
+docker-compose up -d
+```
+
+### Usage
+
+Services will be available at:
+
+- **Frontend**: http://localhost:3000
+- **Backend API**: http://localhost:8000
+- **Django Admin**: http://localhost:8000/admin
+  - Default credentials: `admin` / `admin123`
+- **PostgreSQL**: localhost:5432
+
+See [Makefile](Makefile) or run `make help` for a list of available commands.
+
+## Option 2: Using Manual Setup
+
+### Prerequisites
+
+- [Python 3.11+](https://www.python.org/downloads/) – required for the backend.
+- [Poetry](https://python-poetry.org/docs/#installation) – dependency management for the backend.
+- [Node.js & npm](https://nodejs.org/en/download/) – required for the frontend.
+
+### Set Up the Backend
+
+#### Navigate to the Backend Directory
+
+```sh
 cd backend
 ```
 
-### 2.2 Install Dependencies
+#### Install Dependencies
 
-[Poetry](https://python-poetry.org/) manages dependencies for the backend. To install Poetry, follow this [guide](https://python-poetry.org/docs/#installation).
-
-Install the required backend dependencies:
-
-```
+```sh
 poetry install
 ```
 
-Poetry will automatically create a virtual environment.
+#### Run Migrations
 
-### 2.3 Run Migrations
-
-Run database migrations:
-
-```
+```sh
 python manage.py migrate
 ```
 
-### 2.4 Create a Superuser
+#### Create a Superuser (Admin User)
 
-Create an admin superuser for the backend:
-
-```
+```sh
 python manage.py createsuperuser
 ```
 
 Follow the prompts to set a username, email, and password.
 
-### 2.5 Load fixtures and initial data
+#### Load Fixtures and Initial Data
 
 To load initial data for languages, categories, and parts of speech, run the following command:
 
-```
+```sh
 python manage.py loaddata languages/fixtures/languages.json phrases/fixtures/categories.json dictionary/fixtures/parts_of_speech.json
 ```
 
-Optionally, you can import phrasebook and dictionary entries from a file with the commands below. Replace <file> with the path to your file:
+Optionally, to import phrasebook and dictionary entries from a file, run the following commands:
 
-```
+```sh
 python manage.py import_phrasebook <file> -c <contributor>
 python manage.py import_dictionary <file> -c <contributor>
 ```
 
 Dummy data is available in the `/data` directories for testing.
 
-### 2.6 Set Environment Variables
+### Set Up the Frontend
 
-Create a `.env` file with the following content:
+#### Navigate to the Frontend Directory
 
-```
-echo "DEBUG=True" >> .env
-echo "SECRET_KEY='<secret key>'" >> .env
-```
-
-Make sure to replace `<secret key>` with a secure key for your project.
-
-## 3. Set Up the Frontend
-
-### 3.1 Navigate to the Frontend Directory
-
-Go into the frontend directory:
-
-```
-cd ../frontend
+```sh
+cd frontend
 ```
 
-### 3.2 Install Dependencies
+#### Install Dependencies
 
-Install the required frontend dependencies:
-
-```
+```sh
 npm install
 ```
 
-### 3.3 Set Environment Variables
+### Usage
 
-Create a `.env.local` file with the following content:
+#### Start the Backend Server
 
-```
-echo "NODE_ENV='development'" >> .env.local
-echo "SECRET_KEY='<secret key>'" >> .env.local
-```
-
-Make sure to replace `<secret key>` with a secure key for your project.
-
-## 4. Usage
-
-### 4.1 Start the Backend Server
-
-Run the backend server:
-
-```
+```sh
 python manage.py runserver
 ```
 
-The backend server will be available at `http://127.0.0.1:8000`.
+The backend server will be available at [http://127.0.0.1:8000](http://127.0.0.1:8000).
 
-### 4.2 Start the Frontend Server
+#### Start the Frontend Server
 
-Run the frontend server:
-
-```
+```sh
 npm run dev
 ```
 
-The frontend will be available at `http://localhost:3000`.
+The frontend will be available at [http://localhost:3000](http://localhost:3000).
