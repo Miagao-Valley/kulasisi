@@ -30,10 +30,14 @@ export function WordleGame() {
       ) : error ? (
         <div className="text-center">{error.message}</div>
       ) : (
-        <div className="flex flex-col gap-2 justify-center items-center">
+        <div className="flex flex-col gap-4 justify-center items-center">
           <GameEndModal />
-          <Board className="mb-5" />
-          <Keyboard />
+          <div>
+            <Board />
+          </div>
+          <div>
+            <Keyboard />
+          </div>
         </div>
       )}
     </>
