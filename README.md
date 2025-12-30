@@ -44,5 +44,5 @@ This project belongs to the open-source community named [Miagao Valley](https://
   <img src="https://github.com/Miagao-Valley/mv-site/assets/113810517/d92a2263-b553-4939-b946-ac8997ca407b" height="30" />
 </div>
 <div align="center">
-  Miagao Valley 🇵🇭
+  Miagao Valley
 </div>
