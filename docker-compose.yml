@@ -1,0 +1,65 @@
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: kulasisi_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=kulasisi
+      - POSTGRES_USER=kulasisi
+      - POSTGRES_PASSWORD=kulasisi123
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U kulasisi"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: kulasisi-backend
+    volumes:
+      - ./backend:/app
+      - static_volume:/app/staticfiles
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=True
+      - SECRET_KEY=very-insecure-dev-key-change-in-production
+      - DATABASE_URL=postgresql://kulasisi:kulasisi123@db:5432/kulasisi
+      - DB_NAME=kulasisi
+      - DB_USER=kulasisi
+      - DB_PASSWORD=kulasisi123
+      - DB_HOST=db
+      - DB_PORT=5432
+    depends_on:
+      db:
+        condition: service_healthy
+    command: python manage.py runserver 0.0.0.0:8000
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      target: dev
+    container_name: kulasisi-frontend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+      - /app/.next
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - NEXT_PUBLIC_API_BASE_URL=http://kulasisi-backend:8000
+      - SECRET_KEY=very-insecure-dev-key-change-in-production
+    depends_on:
+      - backend
+    command: npm run dev
+
+volumes:
+  postgres_data:
+  static_volume:
