@@ -17,10 +17,11 @@ logging.basicConfig(
 logger = logging.getLogger("Proofreader")
 
 # Download nltk resources
-try:
-    nltk.data.find("tokenizers/punkt")
-except LookupError:
-    nltk.download("punkt")
+for resource in ("punkt", "punkt_tab"):
+    try:
+        nltk.data.find(f"tokenizers/{resource}")
+    except LookupError:
+        nltk.download(resource)
 
 SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
 
